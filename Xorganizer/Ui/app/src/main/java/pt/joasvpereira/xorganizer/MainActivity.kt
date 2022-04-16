@@ -3,22 +3,18 @@ package pt.joasvpereira.xorganizer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import pt.joasvpereira.xorganizer.ui.theme.XorganizerTheme
+import pt.joasvpereira.xorganizer.compose.MainScreen
+import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            XorganizerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
+            DynamicTheme {
+                MainScreen()
             }
         }
     }
@@ -32,7 +28,5 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    XorganizerTheme {
-        Greeting("Android")
-    }
+    DynamicTheme { MainScreen() }
 }
