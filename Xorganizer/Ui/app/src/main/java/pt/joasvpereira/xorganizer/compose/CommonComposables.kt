@@ -13,24 +13,26 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldColors
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +40,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
@@ -75,11 +78,11 @@ fun OnSurfaceOutlinedTextField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        focusedBorderColor = MaterialTheme.colors.onSurface,
-        unfocusedBorderColor = MaterialTheme.colors.onSurface.copy(alpha = .5f),
-        placeholderColor = MaterialTheme.colors.onSurface.copy(alpha = .5f),
-        focusedLabelColor = MaterialTheme.colors.onSurface.copy(alpha = .5f),
-        unfocusedLabelColor = MaterialTheme.colors.onSurface.copy(alpha = .5f)
+        focusedBorderColor = MaterialTheme.colorScheme.onSurface,
+        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f),
+        placeholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f),
+        focusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f),
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f)
     )
 ) {
     Surface {
@@ -110,8 +113,8 @@ fun OnSurfaceOutlinedTextField(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun IconSelector(
-    backgroundColor: Color = MaterialTheme.colors.secondary.copy(alpha = .7f),
-    iconTintColor: Color = MaterialTheme.colors.onSurface
+    backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f),
+    iconTintColor: Color = MaterialTheme.colorScheme.onSecondary
 ) {
     var expanded by remember { mutableStateOf(false) }
     var iconSelected by remember { mutableStateOf(LineAwesomeIcons.HomeSolid) }
@@ -198,7 +201,7 @@ fun IconSelector(
                             }
                         }
                     },
-                    buttons = {
+                    confirmButton = {
                         Row(
                             modifier = Modifier.padding(all = 8.dp),
                             horizontalArrangement = Arrangement.Center
@@ -253,34 +256,66 @@ fun ThemeColorsIndicator(
     borderStroke: BorderStroke = BorderStroke(width = 1.5.dp, color = Color.White)
 ) {
     DynamicTheme(themeOption) {
-        Row(
-            modifier = Modifier
-                .size(size)
-                .border(
-                    border = borderStroke,
-                    shape = CircleShape
+        Box {
+            Row(
+                modifier = Modifier
+                    .size(size)
+                    .border(
+                        border = borderStroke,
+                        shape = CircleShape
+                    )
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(.5f)
+                        .fillMaxHeight()
+                        .weight(1f)
+                        .background(
+                            color = MaterialTheme.colorScheme.secondary,
+                            shape = semiCircleRightShape
+                        )
                 )
-        ) {
-            Box(
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(.5f)
+                        .fillMaxHeight()
+                        .weight(1f)
+                        .background(
+                            color = MaterialTheme.colorScheme.tertiary,
+                            shape = semiCircleLeftShape
+                        )
+                )
+            }
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth(.5f)
-                    .fillMaxHeight()
-                    .weight(1f)
-                    .background(
-                        color = MaterialTheme.colors.primary,
-                        shape = semiCircleRightShape
+                    .size(size)
+                    .border(
+                        border = borderStroke,
+                        shape = CircleShape
                     )
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(.5f)
-                    .fillMaxHeight()
-                    .weight(1f)
-                    .background(
-                        color = MaterialTheme.colors.primaryVariant,
-                        shape = semiCircleLeftShape
-                    )
-            )
+                    .rotate(90f)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(.5f)
+                        .fillMaxHeight()
+                        .weight(1f)
+                        .background(
+                            color = Color.Transparent,
+                            shape = semiCircleRightShape
+                        )
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(.5f)
+                        .fillMaxHeight()
+                        .weight(1f)
+                        .background(
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = semiCircleLeftShape
+                        )
+                )
+            }
         }
     }
 }
@@ -288,20 +323,8 @@ fun ThemeColorsIndicator(
 @Preview
 @Composable
 fun ThemeColorsIndicatorPreview() {
-    DynamicTheme(ThemeOption.THEME_GREEN) {
+    DynamicTheme(ThemeOption.THEME_BLUE) {
         ThemeColorsIndicator()
-    }
-}
-
-@Composable
-fun MyStarTrek() {
-    Surface(
-        shape = semiCircleLeftShape,
-        color = Color.Yellow,
-        border = BorderStroke(3.dp, Color.Black),
-        modifier = Modifier.size(height = 100.dp, width = 50.dp)
-    ) {
-        Text(text = "012345678")
     }
 }
 
@@ -323,6 +346,15 @@ val semiCircleLeftShape = GenericShape { size, _ ->
     )
 }
 
+val semiCircleBottomShape = GenericShape { size, _ ->
+    arcTo(
+        rect = Rect(center = Offset(x = 0f, y = size.height / 2), size.width),
+        startAngleDegrees = -180f,
+        sweepAngleDegrees = 180f,
+        false
+    )
+}
+
 data class IconData(val painter: Painter, val contentDescription: String = "")
 
 @Composable
@@ -331,10 +363,15 @@ fun IconAndCounter(
     iconData: IconData,
     count: Int = 0
 ) {
-    Icon(
-        painter = iconData.painter,
-        contentDescription = iconData.contentDescription,
-        tint = color,
-        modifier = Modifier.size(16.dp)
-    )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            painter = iconData.painter,
+            contentDescription = iconData.contentDescription,
+            tint = color,
+            modifier = Modifier.size(16.dp)
+        )
+        Text(text = "$count", color = color)
+    }
 }

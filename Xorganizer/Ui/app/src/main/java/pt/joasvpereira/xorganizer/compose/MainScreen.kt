@@ -17,10 +17,12 @@ import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -62,11 +65,11 @@ fun MainScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.size(50.dp))
-                Text(text = "Welcome", style = MaterialTheme.typography.h1)
-                Text(text = "Joás V. Pereira", style = MaterialTheme.typography.h6)
+                Text(text = "Welcome", style = MaterialTheme.typography.titleLarge)
+                Text(text = "Joás V. Pereira", style = MaterialTheme.typography.titleSmall)
             }
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "Devisions: ", style = MaterialTheme.typography.h3)
+            Text(text = "Devisions: ", style = MaterialTheme.typography.titleMedium)
             LazyVerticalGrid(
                 cells = GridCells.Fixed(2),
                 contentPadding = PaddingValues(
@@ -118,6 +121,7 @@ fun AddActionItem(action: () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DivisionListItem(
     title: String,
@@ -129,14 +133,13 @@ fun DivisionListItem(
     onclick: ()-> Unit = {}
 ) {
     DynamicTheme(option = option) {
-        Card(
-            Modifier
-                .fillMaxWidth()
+        Card(onClick = onclick,
+            modifier = Modifier
                 .padding(4.dp)
-                .background(color = Color.Red, shape = RoundedCornerShape(5.dp))
-                .height(180.dp)
-                .clickable(onClick = onclick),
-            elevation = 5.dp
+                .fillMaxWidth()
+                .background(color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(5.dp))
+                .height(180.dp),
+            //elevation = CardElevation.shadowElevation(interactionSource = 5)
         ) {
             Box {
                 StyleShape(Modifier.align(Alignment.BottomEnd))
@@ -169,7 +172,8 @@ fun DivisionListItem(
                     ) {
                         IconAndCounter(
                             iconData = IconData(painterResource(R.drawable.ic_box), ""),
-                            count = boxCount
+                            count = boxCount,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
 
                         Spacer(modifier = Modifier.size(8.dp))
@@ -195,7 +199,7 @@ fun StyleShape(modifier: Modifier) {
                 .padding(bottom = 40.dp, end = 30.dp)
                 .size(40.dp)
                 .background(
-                    color = MaterialTheme.colors.secondary.copy(alpha = .4f),
+                    color = MaterialTheme.colorScheme.secondary.copy(alpha = .4f),
                     shape = CircleShape
                 )
         )
@@ -206,7 +210,7 @@ fun StyleShape(modifier: Modifier) {
                 .padding(bottom = 10.dp, end = 50.dp)
                 .size(60.dp)
                 .background(
-                    color = MaterialTheme.colors.secondary.copy(alpha = .4f),
+                    color = MaterialTheme.colorScheme.secondary.copy(alpha = .4f),
                     shape = CircleShape
                 )
         )
@@ -216,7 +220,7 @@ fun StyleShape(modifier: Modifier) {
                 .align(Alignment.BottomEnd)
                 .size(90.dp)
                 .background(
-                    color = MaterialTheme.colors.secondary.copy(alpha = .7f),
+                    color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f),
                     shape = RoundedCornerShape(topStart = 200.dp)
                 )
         )

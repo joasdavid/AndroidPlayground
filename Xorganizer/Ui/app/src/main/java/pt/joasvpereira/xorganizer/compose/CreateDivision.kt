@@ -10,8 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +37,7 @@ fun CreateDivisionScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = MaterialTheme.colors.surface),
+                    .background(color = MaterialTheme.colorScheme.surface),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -46,19 +47,19 @@ fun CreateDivisionScreen() {
 
                 Spacer(modifier = Modifier.size(20.dp))
 
-                OnSurfaceOutlinedTextField(
+                OutlinedTextField(
                     value = divisionNameText,
                     onValueChange = { divisionNameText = it },
                     label = { Text("Division name") },
                 )
                 Spacer(modifier = Modifier.size(20.dp))
-                OnSurfaceOutlinedTextField(
+                OutlinedTextField(
                     value = descriptionText,
                     onValueChange = { descriptionText = it },
                     label = { Text("description") }, maxLines = 2
                 )
                 Spacer(modifier = Modifier.size(20.dp))
-                Text(text = "Choose your color theme:")
+                Text(text = "Choose your color theme:", color = MaterialTheme.colorScheme.onPrimary)
                 Spacer(modifier = Modifier.size(5.dp))
                 Row {
                     Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_DEFAULT }) {
@@ -108,7 +109,7 @@ fun CreateDivisionScreen() {
             ) {
                 Text(
                     text = "Cancel",
-                    style = MaterialTheme.typography.h4.copy(color = Color.Red)
+                    style = MaterialTheme.typography.labelMedium.copy(color = Color.Red)
                 )
             }
 
@@ -118,14 +119,14 @@ fun CreateDivisionScreen() {
                     .size(100.dp)
                     .clip(shape = RoundedCornerShape(topStart = 900.dp))
                     .background(
-                        color = MaterialTheme.colors.secondary.copy(alpha = .7f)
+                        color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f)
                     ),
                 contentAlignment = Alignment.BottomEnd
             ) {
                 Text(
                     modifier = Modifier.padding(end = 20.dp, bottom = 20.dp),
                     text = "Save",
-                    style = MaterialTheme.typography.h4.copy(color = Color.White)
+                    style = MaterialTheme.typography.labelMedium.copy(color = Color.White)
                 )
             }
         }

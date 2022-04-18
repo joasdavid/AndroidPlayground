@@ -83,3 +83,21 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+
+# IntelliJ
+Xorganazier/ui/.idea/workspace.xml
+Xorganazier/ui/.idea/tasks.xml
+Xorganazier/ui/.idea/gradle.xml
+Xorganazier/ui/.idea/assetWizardSettings.xml
+Xorganazier/ui/.idea/dictionaries
+Xorganazier/ui/.idea/libraries
+# Android Studio 3 in .gitignore file.
+Xorganazier/ui/.idea/caches
+Xorganazier/ui/.idea/modules.xml
+# Comment next line if keeping position of elements in Navigation Editor is relevant for you
+Xorganazier/ui/.idea/navEditor.xml
+
+Xorganazier/ui/.idea//gradle.xml
+Xorganazier/ui/.idea/misc.xml
+Xorganazier/ui/.idea/inspectionProfiles/*
