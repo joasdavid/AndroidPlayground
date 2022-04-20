@@ -26,6 +26,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -251,7 +252,7 @@ fun IconSelector(
 
 @Composable
 fun ThemeColorsIndicator(
-    themeOption: ThemeOption = ThemeOption.THEME_DEFAULT,
+    themeOption: ThemeOption = ThemeOption.THEME_BLUE,
     size: Dp = 48.dp,
     borderStroke: BorderStroke = BorderStroke(width = 1.5.dp, color = Color.White)
 ) {
@@ -271,7 +272,7 @@ fun ThemeColorsIndicator(
                         .fillMaxHeight()
                         .weight(1f)
                         .background(
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = MaterialTheme.colorScheme.secondaryContainer,
                             shape = semiCircleRightShape
                         )
                 )
@@ -281,7 +282,7 @@ fun ThemeColorsIndicator(
                         .fillMaxHeight()
                         .weight(1f)
                         .background(
-                            color = MaterialTheme.colorScheme.tertiary,
+                            color = MaterialTheme.colorScheme.tertiaryContainer,
                             shape = semiCircleLeftShape
                         )
                 )
@@ -311,7 +312,7 @@ fun ThemeColorsIndicator(
                         .fillMaxHeight()
                         .weight(1f)
                         .background(
-                            color = MaterialTheme.colorScheme.primary,
+                            color = MaterialTheme.colorScheme.primaryContainer,
                             shape = semiCircleLeftShape
                         )
                 )
@@ -359,7 +360,7 @@ data class IconData(val painter: Painter, val contentDescription: String = "")
 
 @Composable
 fun IconAndCounter(
-    color: Color = Color.White,
+    color: Color = LocalContentColor.current,
     iconData: IconData,
     count: Int = 0
 ) {

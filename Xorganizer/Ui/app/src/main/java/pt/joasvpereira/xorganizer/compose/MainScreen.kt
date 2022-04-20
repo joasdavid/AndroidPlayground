@@ -1,5 +1,6 @@
 package pt.joasvpereira.xorganizer.compose
 
+import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,12 +18,16 @@ import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -70,6 +75,7 @@ fun MainScreen() {
             }
             Spacer(modifier = Modifier.size(20.dp))
             Text(text = "Devisions: ", style = MaterialTheme.typography.titleMedium)
+            Text(text = "Devisions: ")
             LazyVerticalGrid(
                 cells = GridCells.Fixed(2),
                 contentPadding = PaddingValues(
@@ -137,11 +143,13 @@ fun DivisionListItem(
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(5.dp))
-                .height(180.dp),
-            //elevation = CardElevation.shadowElevation(interactionSource = 5)
+                .clip(
+                    shape = RoundedCornerShape(5.dp)
+                )
+                .height(180.dp)
+            //elevation = CardElevation.shadowElevation(interactionSource = 5.dp)
         ) {
-            Box {
+            Box(Modifier.background(color = MaterialTheme.colorScheme.primaryContainer)) {
                 StyleShape(Modifier.align(Alignment.BottomEnd))
                 Column(
                     Modifier
@@ -151,18 +159,23 @@ fun DivisionListItem(
                     Icon(
                         imageVector = vectorImg,
                         contentDescription = "",
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp),
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
 
                     Spacer(modifier = Modifier.size(16.dp))
 
-                    Text(text = title)
+                    Text(text = title, color = MaterialTheme.colorScheme.onPrimaryContainer)
 
                     Spacer(modifier = Modifier.size(4.dp))
 
                     description.takeIf { it.isNotBlank() }?.run {
-                        Text(text = this, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                        Text(
+                            text = this,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
                     }
 
                     Spacer(modifier = Modifier.size(8.dp))
@@ -173,14 +186,15 @@ fun DivisionListItem(
                         IconAndCounter(
                             iconData = IconData(painterResource(R.drawable.ic_box), ""),
                             count = boxCount,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
 
                         Spacer(modifier = Modifier.size(8.dp))
 
                         IconAndCounter(
                             iconData = IconData(painterResource(R.drawable.ic_baseline_build_24), ""),
-                            count = childCount
+                            count = childCount,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
 
                     }
@@ -199,7 +213,7 @@ fun StyleShape(modifier: Modifier) {
                 .padding(bottom = 40.dp, end = 30.dp)
                 .size(40.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.secondary.copy(alpha = .4f),
+                    color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = .4f),
                     shape = CircleShape
                 )
         )
@@ -210,7 +224,7 @@ fun StyleShape(modifier: Modifier) {
                 .padding(bottom = 10.dp, end = 50.dp)
                 .size(60.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.secondary.copy(alpha = .4f),
+                    color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = .4f),
                     shape = CircleShape
                 )
         )
@@ -220,7 +234,7 @@ fun StyleShape(modifier: Modifier) {
                 .align(Alignment.BottomEnd)
                 .size(90.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f),
+                    color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = .7f),
                     shape = RoundedCornerShape(topStart = 200.dp)
                 )
         )
@@ -292,10 +306,48 @@ fun DivisionListItemPreview() {
     }
 }
 
-@Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun DivisionListItemPreviewDark() {
+    Column {
+        DivisionListItem(
+            title = "Division 1",
+            description = "Description 1",
+            vectorImg = LineAwesomeIcons.HomeSolid,
+            boxCount = 2,
+            childCount = 3
+        )
+        DivisionListItem(
+            title = "Division 2",
+            description = "",
+            vectorImg = LineAwesomeIcons.TableSolid,
+            boxCount = 1,
+            childCount = 4,
+            option = ThemeOption.THEME_PURPLE
+        )
+        DivisionListItem(
+            title = "Division 3",
+            description = "Long discription asdasldkslad;askd;lsak;dasdasdl",
+            vectorImg = LineAwesomeIcons.TableSolid,
+            boxCount = 100,
+            childCount = 40,
+            option = ThemeOption.THEME_GREEN
+        )
+    }
+}
+
+@Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    DynamicTheme {
+    DynamicTheme(ThemeOption.THEME_BLUE) {
+        MainScreen()
+    }
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun MainScreenPreviewDark() {
+    DynamicTheme(ThemeOption.THEME_BLUE) {
         MainScreen()
     }
 }

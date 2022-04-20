@@ -37,7 +37,7 @@ fun CreateDivisionScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.surface),
+                    .background(color = MaterialTheme.colorScheme.primaryContainer),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -65,14 +65,14 @@ fun CreateDivisionScreen() {
                     Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_DEFAULT }) {
                         ThemeColorsIndicator(ThemeOption.THEME_DEFAULT)
                     }
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_GREEN }) {
-                        ThemeColorsIndicator(ThemeOption.THEME_GREEN)
-                    }
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_PURPLE }) {
-                        ThemeColorsIndicator(ThemeOption.THEME_PURPLE)
-                    }
+                    //Spacer(modifier = Modifier.size(10.dp))
+                    //Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_GREEN }) {
+                    //    ThemeColorsIndicator(ThemeOption.THEME_GREEN)
+                    //}
+                    //Spacer(modifier = Modifier.size(10.dp))
+                    //Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_PURPLE }) {
+                    //    ThemeColorsIndicator(ThemeOption.THEME_PURPLE)
+                    //}
                     Spacer(modifier = Modifier.size(10.dp))
                     Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_BLUE }) {
                         ThemeColorsIndicator(ThemeOption.THEME_BLUE)
