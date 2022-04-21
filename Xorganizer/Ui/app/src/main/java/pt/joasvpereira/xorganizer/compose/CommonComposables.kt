@@ -1,11 +1,10 @@
 package com.joasvpereira.dev.mokeupui.compose.screen.organizer.main
 
+
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,25 +12,20 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,10 +37,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -56,60 +47,6 @@ import compose.icons.lineawesomeicons.HomeSolid
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
 
-@Composable
-fun OnSurfaceOutlinedTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    readOnly: Boolean = false,
-    textStyle: TextStyle = LocalTextStyle.current.copy(color = Color.White),
-    label: @Composable (() -> Unit)? = null,
-    placeholder: @Composable (() -> Unit)? = null,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    isError: Boolean = false,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    singleLine: Boolean = false,
-    maxLines: Int = Int.MAX_VALUE,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    shape: Shape = MaterialTheme.shapes.small,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        focusedBorderColor = MaterialTheme.colorScheme.onSurface,
-        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f),
-        placeholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f),
-        focusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f),
-        unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f)
-    )
-) {
-    Surface {
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            modifier = modifier,
-            enabled = enabled,
-            readOnly = readOnly,
-            textStyle = textStyle,
-            label = label,
-            placeholder = placeholder,
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            isError = isError,
-            visualTransformation = visualTransformation,
-            keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions,
-            singleLine = singleLine,
-            maxLines = maxLines,
-            interactionSource = interactionSource,
-            shape = shape,
-            colors = colors
-        )
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun IconSelector(
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f),
@@ -250,7 +187,7 @@ fun IconSelector(
 
 @Composable
 fun ThemeColorsIndicator(
-    themeOption: ThemeOption = ThemeOption.THEME_BLUE,
+    themeOption: ThemeOption = ThemeOption.THEME_DEFAULT,
     size: Dp = 48.dp,
     borderStroke: BorderStroke = BorderStroke(width = 1.5.dp, color = Color.White)
 ) {
@@ -285,6 +222,11 @@ fun ThemeColorsIndicator(
                         )
                 )
             }
+            Box(modifier = Modifier
+                .width(borderStroke.width)
+                .height(size)
+                .background(borderStroke.brush)
+                .align(Alignment.Center))
             Row(
                 modifier = Modifier
                     .size(size)
@@ -315,16 +257,20 @@ fun ThemeColorsIndicator(
                         )
                 )
             }
+            Box(modifier = Modifier
+                .width(size)
+                .height(1.dp)
+                .background(borderStroke.brush)
+                .align(Alignment.Center))
+
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0x989a82)
 @Composable
 fun ThemeColorsIndicatorPreview() {
-    DynamicTheme(ThemeOption.THEME_BLUE) {
         ThemeColorsIndicator()
-    }
 }
 
 val semiCircleRightShape = GenericShape { size, _ ->
@@ -340,15 +286,6 @@ val semiCircleLeftShape = GenericShape { size, _ ->
     arcTo(
         rect = Rect(center = Offset(x = 0f, y = size.height / 2), size.width),
         startAngleDegrees = -90f,
-        sweepAngleDegrees = 180f,
-        false
-    )
-}
-
-val semiCircleBottomShape = GenericShape { size, _ ->
-    arcTo(
-        rect = Rect(center = Offset(x = 0f, y = size.height / 2), size.width),
-        startAngleDegrees = -180f,
         sweepAngleDegrees = 180f,
         false
     )
