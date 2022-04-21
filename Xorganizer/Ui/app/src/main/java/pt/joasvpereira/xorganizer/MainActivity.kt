@@ -20,7 +20,6 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.CreateDivisio
 import pt.joasvpereira.xorganizer.compose.MainScreen
 import pt.joasvpereira.xorganizer.test.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.ui.theme.JetchatTheme
 import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -40,36 +39,38 @@ class MainActivity : ComponentActivity() {
 @ExperimentalMaterial3Api
 @Composable
 private fun MainContainer() {
-    DynamicTheme(option = ThemeOption.THEME_BLUE) {
+    DynamicTheme {
         Column {
             var pos by remember {
                 mutableStateOf(3)
             }
             Row {
                 Button(onClick = { pos = 0 }) {
-                    Text(text = "Dynamic")
+                    Text(text = "Default")
                 }
                 Button(onClick = { pos = 1 }) {
                     Text(text = "Blue")
                 }
-                Button(onClick = { pos = 3 }) {
-                    Text(text = "main")
-                }
                 Button(onClick = { pos = 2 }) {
-                    Text(text = "Create")
+                    Text(text = "Green")
+                }
+                Button(onClick = { pos = 3 }) {
+                    Text(text = "Main")
                 }
             }
             when (pos) {
-                0 -> JetchatTheme {
+                0 -> DynamicTheme {
                     ColorSchemeScreen()
                 }
                 1 -> DynamicTheme(ThemeOption.THEME_BLUE) {
                     ColorSchemeScreen()
                 }
                 2 -> DynamicTheme(ThemeOption.THEME_BLUE) {
-                    CreateDivisionScreen()
+                    ColorSchemeScreen()
                 }
-                3 -> MainScreen()
+                3 -> DynamicTheme {
+                    MainScreen()
+                }
             }
         }
     }

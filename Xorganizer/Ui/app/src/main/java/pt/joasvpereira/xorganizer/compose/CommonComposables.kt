@@ -13,12 +13,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -177,7 +175,7 @@ fun IconSelector(
                                 .fillMaxHeight(fraction = .8f)
                         ) {
                             LazyVerticalGrid(
-                                cells = GridCells.Fixed(3),
+                                columns = GridCells.Fixed(3),
                                 contentPadding = PaddingValues(
                                     start = 0.dp,
                                     top = 16.dp,

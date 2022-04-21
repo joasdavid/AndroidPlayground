@@ -14,20 +14,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardElevation
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -75,9 +70,8 @@ fun MainScreen() {
             }
             Spacer(modifier = Modifier.size(20.dp))
             Text(text = "Devisions: ", style = MaterialTheme.typography.titleMedium)
-            Text(text = "Devisions: ")
             LazyVerticalGrid(
-                cells = GridCells.Fixed(2),
+                columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(
                     start = 0.dp,
                     top = 16.dp,
@@ -135,7 +129,7 @@ fun DivisionListItem(
     vectorImg: ImageVector,
     boxCount: Int,
     childCount: Int,
-    option: ThemeOption = ThemeOption.THEME_BLUE,
+    option: ThemeOption = ThemeOption.THEME_DEFAULT,
     onclick: ()-> Unit = {}
 ) {
     DynamicTheme(option = option) {
@@ -247,7 +241,7 @@ data class itemTest(
     val vectorImg: ImageVector,
     val boxCount: Int,
     val childCount: Int,
-    val option: ThemeOption = ThemeOption.THEME_BLUE
+    val option: ThemeOption = ThemeOption.THEME_DEFAULT
 )
 
 val div = listOf(
@@ -264,7 +258,7 @@ val div = listOf(
         vectorImg = LineAwesomeIcons.TabletAltSolid,
         boxCount = 1,
         childCount = 4,
-        option = ThemeOption.THEME_PURPLE
+        option = ThemeOption.THEME_BLUE
     ),
     itemTest(
         title = "Division 3",
@@ -293,7 +287,7 @@ fun DivisionListItemPreview() {
             vectorImg = LineAwesomeIcons.TableSolid,
             boxCount = 1,
             childCount = 4,
-            option = ThemeOption.THEME_PURPLE
+            option = ThemeOption.THEME_BLUE
         )
         DivisionListItem(
             title = "Division 3",
@@ -323,7 +317,7 @@ fun DivisionListItemPreviewDark() {
             vectorImg = LineAwesomeIcons.TableSolid,
             boxCount = 1,
             childCount = 4,
-            option = ThemeOption.THEME_PURPLE
+            option = ThemeOption.THEME_BLUE
         )
         DivisionListItem(
             title = "Division 3",
@@ -339,16 +333,12 @@ fun DivisionListItemPreviewDark() {
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    DynamicTheme(ThemeOption.THEME_BLUE) {
         MainScreen()
-    }
 }
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MainScreenPreviewDark() {
-    DynamicTheme(ThemeOption.THEME_BLUE) {
         MainScreen()
-    }
 }
 
