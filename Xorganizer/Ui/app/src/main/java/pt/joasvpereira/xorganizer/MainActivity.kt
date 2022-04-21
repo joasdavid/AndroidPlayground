@@ -65,7 +65,7 @@ private fun MainContainer() {
                 1 -> DynamicTheme(ThemeOption.THEME_BLUE) {
                     ColorSchemeScreen()
                 }
-                2 -> DynamicTheme(ThemeOption.THEME_BLUE) {
+                2 -> DynamicTheme(ThemeOption.THEME_GREEN) {
                     ColorSchemeScreen()
                 }
                 3 -> DynamicTheme {
