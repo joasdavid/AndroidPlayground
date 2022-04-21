@@ -62,20 +62,11 @@ fun CreateDivisionScreen() {
                 Text(text = "Choose your color theme:", color = MaterialTheme.colorScheme.onPrimary)
                 Spacer(modifier = Modifier.size(5.dp))
                 Row {
-                    Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_DEFAULT }) {
-                        ThemeColorsIndicator(ThemeOption.THEME_DEFAULT)
-                    }
-                    //Spacer(modifier = Modifier.size(10.dp))
-                    //Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_GREEN }) {
-                    //    ThemeColorsIndicator(ThemeOption.THEME_GREEN)
-                    //}
-                    //Spacer(modifier = Modifier.size(10.dp))
-                    //Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_PURPLE }) {
-                    //    ThemeColorsIndicator(ThemeOption.THEME_PURPLE)
-                    //}
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Box(Modifier.clickable { selectedThemeOption = ThemeOption.THEME_BLUE }) {
-                        ThemeColorsIndicator(ThemeOption.THEME_BLUE)
+                    ThemeOption.values().forEachIndexed { index, option ->
+                        if(index != 0) Spacer(modifier = Modifier.size(10.dp))
+                        Box(Modifier.clickable { selectedThemeOption = option }) {
+                            ThemeColorsIndicator(option)
+                        }
                     }
                 }
             }
