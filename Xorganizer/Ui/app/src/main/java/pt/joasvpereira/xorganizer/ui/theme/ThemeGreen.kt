@@ -135,7 +135,7 @@ fun GreenTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable(
         colorScheme = colors,
         typography = AppTypography,
         //shapes = Shapes,
-        content = { Surface(content = content) }
+        content = content
         //content =  content
     )
 }

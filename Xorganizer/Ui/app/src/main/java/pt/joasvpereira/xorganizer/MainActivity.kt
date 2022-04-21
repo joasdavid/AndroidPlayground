@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.compose.MainScreen
 import pt.joasvpereira.xorganizer.test.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
@@ -28,8 +28,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column {
-                MainContainer()
+            DynamicTheme {
+                Surface {
+                    MainContainer()
+                }
             }
         }
     }
@@ -68,9 +70,7 @@ private fun MainContainer() {
                 2 -> DynamicTheme(ThemeOption.THEME_GREEN) {
                     ColorSchemeScreen()
                 }
-                3 -> DynamicTheme {
-                    MainScreen()
-                }
+                3 -> MainScreen()
             }
         }
     }
@@ -86,7 +86,11 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    DynamicTheme(ThemeOption.THEME_BLUE) { MainContainer() }
+    DynamicTheme {
+        Surface {
+            MainContainer()
+        }
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -94,5 +98,9 @@ fun DefaultPreview() {
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun DarkPreview() {
-    DynamicTheme(ThemeOption.THEME_BLUE) { MainContainer() }
+    DynamicTheme {
+        Surface {
+            MainContainer()
+        }
+    }
 }

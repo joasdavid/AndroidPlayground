@@ -148,7 +148,7 @@ fun DefaultTheme(isDarkTheme: Boolean = isSystemInDarkTheme(),
         colorScheme = colors,
         typography = AppTypography,
         //shapes = Shapes,
-        content = { Surface(content = content) }
+        content = content
         //content =  content
     )
 }
