@@ -31,13 +31,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val systemUiController = rememberSystemUiController()
-                systemUiController.setSystemBarsColor(
-                    color = Color.Transparent,
-                    darkIcons = !isSystemInDarkTheme()
-                )
-
-            DynamicTheme {
+            DynamicTheme(isToApplyToSystemUi = true) {
                 Surface {
                     MainContainer()
                 }

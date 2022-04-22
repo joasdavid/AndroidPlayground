@@ -32,7 +32,7 @@ fun CreateDivisionScreen() {
     var selectedThemeOption: ThemeOption by remember { mutableStateOf(ThemeOption.THEME_DEFAULT) }
     var divisionNameText by remember { mutableStateOf("") }
     var descriptionText by remember { mutableStateOf("") }
-    DynamicTheme(selectedThemeOption) {
+    DynamicTheme(selectedThemeOption, isToApplyToSystemUi = true) {
         Box {
             Column(
                 modifier = Modifier
