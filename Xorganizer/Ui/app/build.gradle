@@ -67,4 +67,6 @@ dependencies {
     implementation("br.com.devsrsouza.compose.icons.android:line-awesome:1.0.0")
     
     implementation("androidx.compose.material3:material3:1.0.0-alpha10")
+
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
 }
