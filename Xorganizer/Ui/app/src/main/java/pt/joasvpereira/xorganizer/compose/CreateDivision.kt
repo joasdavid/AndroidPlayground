@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
+import pt.joasvpereira.xorganizer.ui.theme.SystemUiOptions
 import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
 
 @Composable
@@ -32,7 +33,7 @@ fun CreateDivisionScreen() {
     var selectedThemeOption: ThemeOption by remember { mutableStateOf(ThemeOption.THEME_DEFAULT) }
     var divisionNameText by remember { mutableStateOf("") }
     var descriptionText by remember { mutableStateOf("") }
-    DynamicTheme(selectedThemeOption, isToApplyToSystemUi = true) {
+    DynamicTheme(selectedThemeOption, systemUiOptions = SystemUiOptions.OverrideSystemColor) {
         Box {
             Column(
                 modifier = Modifier

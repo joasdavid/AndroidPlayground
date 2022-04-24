@@ -1,10 +1,18 @@
 package pt.joasvpereira.xorganizer.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
+//region data objects
+data class Theme(
+    val color: ColorScheme,
+    val typography: Typography = AppTypography
+)
 
 enum class ThemeOption {
     THEME_DEFAULT,
@@ -12,27 +20,74 @@ enum class ThemeOption {
     THEME_GREEN;
 }
 
+sealed class SystemUiOptions {
+    object SetSystemColor : SystemUiOptions()
+    object OverrideSystemColor : SystemUiOptions()
+}
+//endregion
+
+//region Composables
 @Composable
 fun DynamicTheme(
     option: ThemeOption = ThemeOption.THEME_DEFAULT,
-    isToApplyToSystemUi: Boolean = false,
+    systemUiOptions: SystemUiOptions? = null,
+    isDarkTheme: Boolean = isSystemInDarkTheme(),
+    isDynamicColor: Boolean = true,
     content: @Composable() () -> Unit
 ) {
-    when (option) {
-        ThemeOption.THEME_BLUE -> BlueTheme(content = content)
-        ThemeOption.THEME_GREEN -> GreenTheme(content = content)
-        else -> DefaultTheme(content = content, isToApplyToSystemUi = isToApplyToSystemUi)
+    val themeToUse = when (option) {
+        ThemeOption.THEME_BLUE -> blueTheme(isDarkTheme)
+        ThemeOption.THEME_GREEN -> greenTheme(isDarkTheme)
+        else -> defaultTheme(
+            isDarkTheme = isDarkTheme,
+            isDynamicColor = isDynamicColor
+        )
     }
+
+    ApplyTheme(
+        parameters = themeToUse,
+        systemUiOptions = systemUiOptions,
+        isDarkTheme = isDarkTheme,
+        content = content
+    )
 }
 
 @Composable
-fun SetupSystemColor(
-    color: Color = MaterialTheme.colorScheme.background,
-    useDarkIcons: Boolean = !isSystemInDarkTheme()
+private fun ApplyTheme(
+    parameters: Theme,
+    systemUiOptions: SystemUiOptions?,
+    isDarkTheme: Boolean,
+    content: @Composable () -> Unit
 ) {
-        val systemUiController = rememberSystemUiController()
-            systemUiController.setSystemBarsColor(
-                color = color,
-                darkIcons = useDarkIcons
+
+    when (systemUiOptions) {
+        SystemUiOptions.OverrideSystemColor -> ApplySystemColor(
+            color = parameters.color.primaryContainer,
+            isDarkTheme = isDarkTheme
+        )
+        SystemUiOptions.SetSystemColor ->
+            ApplySystemColor(
+                color = parameters.color.background,
+                isDarkTheme = isDarkTheme
             )
+    }
+
+    MaterialTheme(
+        colorScheme = parameters.color,
+        typography = parameters.typography,
+        content = content
+    )
 }
+
+@Composable
+private fun ApplySystemColor(
+    color: Color = MaterialTheme.colorScheme.background,
+    isDarkTheme: Boolean
+) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(
+        color = color,
+        darkIcons = !isDarkTheme
+    )
+}
+//endregion

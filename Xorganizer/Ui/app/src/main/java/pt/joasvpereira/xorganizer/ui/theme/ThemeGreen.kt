@@ -1,8 +1,5 @@
 package pt.joasvpereira.xorganizer.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -125,25 +122,12 @@ private val DarkGreenColorPalette = darkColorScheme(
 )
 
 @Composable
-fun GreenTheme(darkTheme: Boolean = isSystemInDarkTheme(),
-        isToApplyToSystemUi: Boolean = false, content: @Composable() () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkGreenColorPalette
-    } else {
-        LightGreenColorPalette
-    }
-
-    isToApplyToSystemUi.IfTrue {
-        SetupSystemColor(
-            color = MaterialTheme.colorScheme.background
-        )
-    }
-
-    androidx.compose.material3.MaterialTheme(
-        colorScheme = colors,
-        typography = AppTypography,
-        //shapes = Shapes,
-        content = content
-        //content =  content
+fun greenTheme(darkTheme: Boolean,): Theme {
+    return Theme(
+        color = if (darkTheme) {
+            DarkGreenColorPalette
+        } else {
+            LightGreenColorPalette
+        }
     )
 }

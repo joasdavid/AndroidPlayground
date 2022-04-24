@@ -1,9 +1,7 @@
 package pt.joasvpereira.xorganizer.ui.theme
 
+import android.annotation.SuppressLint
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -11,7 +9,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 val default_light_primary = Color(0xFF8d4f00)
 val default_light_onPrimary = Color(0xFFffffff)
@@ -129,12 +126,11 @@ private val DarkDefaultColorPalette = darkColorScheme(
     outline = default_dark_outline,
 )
 
+@SuppressLint("NewApi")
 @Composable
-fun DefaultTheme(isDarkTheme: Boolean = isSystemInDarkTheme(),
-                 isDynamicColor: Boolean = true,
-                 isToApplyToSystemUi: Boolean = false,
-                 content: @Composable () -> Unit
-) {
+fun defaultTheme(isDarkTheme: Boolean,
+                 isDynamicColor: Boolean,
+): Theme {
     val dynamicColor = isDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val colors = when {
         dynamicColor && isDarkTheme -> {
@@ -147,32 +143,5 @@ fun DefaultTheme(isDarkTheme: Boolean = isSystemInDarkTheme(),
         else -> LightDefaultColorPalette
     }
 
-    isToApplyToSystemUi.IfTrue {
-        SetupSystemColor(
-            color = MaterialTheme.colorScheme.background,
-            useDarkIcons = !isDarkTheme
-        )
-    }
-
-    androidx.compose.material3.MaterialTheme(
-        colorScheme = colors,
-        typography = AppTypography,
-        //shapes = Shapes,
-        content = content
-        //content =  content
-    )
-}
-
-@Composable
-fun Boolean.IfTrue(callback: @Composable ()-> Unit) {
-    if(this) {
-        callback()
-    }
-}
-
-@Composable
-fun Boolean.IfFalse(callback: @Composable ()-> Unit)  {
-    if(!this) {
-        callback()
-    }
+    return Theme(color = colors)
 }
