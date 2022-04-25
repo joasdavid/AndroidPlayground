@@ -339,7 +339,7 @@ fun ThemeSelector(
         onSelectionOpenStateChanges = {expandable = !expandable},
         options = list.toList(),
         selectedOption = list.firstOrNull { it.first == selection },
-        previewContent = {
+        previewContent = { it,_ ->
             it?.let {
                 Row {
                     ThemeColorsIndicator(size = 24.dp, themeOption = it.first)

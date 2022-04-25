@@ -58,6 +58,7 @@ fun CreateDivisionScreen() {
                 Spacer(modifier = Modifier.size(20.dp))
                 OutlinedTextField(
                     value = descriptionText,
+                    enabled = false,
                     onValueChange = { descriptionText = it },
                     label = { Text("description") }, maxLines = 2
                 )
