@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,12 +22,16 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,8 +50,10 @@ import androidx.compose.ui.unit.dp
 import compose.icons.AllIcons
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.HomeSolid
+import pt.joasvpereira.xorganizer.compose.DropdownSelector
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
+import pt.joasvpereira.xorganizer.ui.theme.getAllThemesDetails
 
 @Composable
 fun IconSelector(
@@ -222,11 +230,13 @@ fun ThemeColorsIndicator(
                         )
                 )
             }
-            Box(modifier = Modifier
-                .width(borderStroke.width)
-                .height(size)
-                .background(borderStroke.brush)
-                .align(Alignment.Center))
+            Box(
+                modifier = Modifier
+                    .width(borderStroke.width)
+                    .height(size)
+                    .background(borderStroke.brush)
+                    .align(Alignment.Center)
+            )
             Row(
                 modifier = Modifier
                     .size(size)
@@ -257,11 +267,13 @@ fun ThemeColorsIndicator(
                         )
                 )
             }
-            Box(modifier = Modifier
-                .width(size)
-                .height(1.dp)
-                .background(borderStroke.brush)
-                .align(Alignment.Center))
+            Box(
+                modifier = Modifier
+                    .width(size)
+                    .height(1.dp)
+                    .background(borderStroke.brush)
+                    .align(Alignment.Center)
+            )
 
         }
     }
@@ -270,7 +282,7 @@ fun ThemeColorsIndicator(
 @Preview(showBackground = true, backgroundColor = 0x989a82)
 @Composable
 fun ThemeColorsIndicatorPreview() {
-        ThemeColorsIndicator()
+    ThemeColorsIndicator()
 }
 
 val semiCircleRightShape = GenericShape { size, _ ->
@@ -311,3 +323,78 @@ fun IconAndCounter(
         Text(text = "$count", color = color)
     }
 }
+
+@Composable
+fun ThemeSelector(
+    onThemeChosen: (ThemeOption) -> Unit
+) {
+    val list = getAllThemesDetails()
+    var selection by remember { mutableStateOf(list.firstOrNull()?.first) }
+    var expandable by remember { mutableStateOf(false) }
+    DropdownSelector(
+        modifier = Modifier
+            .height(TextFieldDefaults.MinHeight)
+            .width(TextFieldDefaults.MinWidth),
+        selectionOpenState = expandable,
+        onSelectionOpenStateChanges = {expandable = !expandable},
+        options = list.toList(),
+        selectedOption = list.firstOrNull { it.first == selection },
+        previewContent = {
+            it?.let {
+                Row {
+                    ThemeColorsIndicator(size = 24.dp, themeOption = it.first)
+                    SimpleSpace(size = 5.dp)
+                    Text(text = it.second)
+                }
+            }
+        },
+        onSelectedOptionChanges = {
+            selection = it.first
+            onThemeChosen(it.first)
+        }
+    ) {
+        Row(
+            Modifier
+                .heightIn(min = 48.dp)
+                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            ThemeColorsIndicator(size = 24.dp, themeOption = it.first)
+            SimpleSpace(size = 5.dp)
+            Text(text = it.second)
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0x989a82)
+@Composable
+fun ThemeSelectorPreview() {
+    ThemeSelector {}
+}
+
+@Preview(showBackground = true, backgroundColor = 0x989a82)
+@Composable
+fun ThemeSelectorExpandedContentPreview() {
+    Column {
+        Row(
+            Modifier
+                .heightIn(min = 48.dp)
+                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            ThemeColorsIndicator(size = 24.dp)
+            SimpleSpace(size = 5.dp)
+            Text(text = "this is a theme")
+        }
+        Row(
+            Modifier
+                .heightIn(min = 48.dp)
+                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            ThemeColorsIndicator(size = 24.dp)
+            SimpleSpace(size = 5.dp)
+            Text(text = "this is a theme")
+        }
+    }
+}
+
+@Composable
+fun SimpleSpace(size: Dp) {
+    Spacer(modifier = Modifier.size(size = size))
+}
+

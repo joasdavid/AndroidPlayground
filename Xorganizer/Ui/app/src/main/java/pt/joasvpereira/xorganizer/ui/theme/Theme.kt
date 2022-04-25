@@ -20,6 +20,12 @@ enum class ThemeOption {
     THEME_GREEN;
 }
 
+fun getAllThemesDetails() = listOf(
+    Pair(ThemeOption.THEME_DEFAULT,"System Theme"),
+    Pair(ThemeOption.THEME_BLUE,"Blue Theme"),
+    Pair(ThemeOption.THEME_GREEN,"Green Theme")
+)
+
 sealed class SystemUiOptions {
     object SetSystemColor : SystemUiOptions()
     object OverrideSystemColor : SystemUiOptions()
