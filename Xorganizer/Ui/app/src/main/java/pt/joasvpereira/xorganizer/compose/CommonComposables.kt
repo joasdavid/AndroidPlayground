@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -44,6 +45,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -57,11 +59,12 @@ import pt.joasvpereira.xorganizer.ui.theme.getAllThemesDetails
 
 @Composable
 fun IconSelector(
+    iconSelected: ImageVector,
+    onIconSelected: (ImageVector)-> Unit,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f),
     iconTintColor: Color = MaterialTheme.colorScheme.onSecondary
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var iconSelected by remember { mutableStateOf(LineAwesomeIcons.HomeSolid) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
@@ -137,7 +140,7 @@ fun IconSelector(
                                         modifier = Modifier
                                             .size(48.dp)
                                             .clickable {
-                                                iconSelected = currentItem
+                                                onIconSelected(currentItem)
                                                 expanded = false
                                             }
                                     )
@@ -333,8 +336,9 @@ fun ThemeSelector(
     var expandable by remember { mutableStateOf(false) }
     DropdownSelector(
         modifier = Modifier
-            .height(TextFieldDefaults.MinHeight)
-            .width(TextFieldDefaults.MinWidth),
+            .heightIn(min = TextFieldDefaults.MinHeight)
+            .widthIn(min = TextFieldDefaults.MinWidth)
+            .fillMaxWidth(),
         selectionOpenState = expandable,
         onSelectionOpenStateChanges = {expandable = !expandable},
         options = list.toList(),

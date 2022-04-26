@@ -54,6 +54,7 @@ import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
 @Composable
 fun MainScreen() {
     var ss: Boolean by remember { mutableStateOf(false) }
+    var selectedItemIndex: Int by remember { mutableStateOf(-1) }
     if (!ss) {
         Column(
             Modifier
@@ -87,7 +88,11 @@ fun MainScreen() {
                         vectorImg = div[index].vectorImg,
                         boxCount = div[index].boxCount,
                         childCount = div[index].childCount,
-                        option = div[index].option
+                        option = div[index].option,
+                        onclick = {
+                            selectedItemIndex = index
+                            ss = true
+                        }
                     )
                 }
                 item {
@@ -96,7 +101,22 @@ fun MainScreen() {
             }
         }
     } else {
-        CreateDivisionScreen()
+        CreateDivisionScreen(
+            itemTest = if (selectedItemIndex < 0) null else div[selectedItemIndex],
+            onClose = {
+                selectedItemIndex = -1
+                ss = !ss
+            },
+            onSave = {
+                if (selectedItemIndex < 0) {
+                    div.add(it)
+                } else {
+                    div[selectedItemIndex] = it
+                }
+                selectedItemIndex = -1
+                ss = !ss
+            }
+        )
     }
 }
 
@@ -131,10 +151,11 @@ fun DivisionListItem(
     boxCount: Int,
     childCount: Int,
     option: ThemeOption = ThemeOption.THEME_DEFAULT,
-    onclick: ()-> Unit = {}
+    onclick: () -> Unit = {}
 ) {
     DynamicTheme(option = option) {
-        Card(onClick = onclick,
+        Card(
+            onClick = onclick,
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth()
@@ -187,7 +208,10 @@ fun DivisionListItem(
                         Spacer(modifier = Modifier.size(8.dp))
 
                         IconAndCounter(
-                            iconData = IconData(painterResource(R.drawable.ic_baseline_build_24), ""),
+                            iconData = IconData(
+                                painterResource(R.drawable.ic_baseline_build_24),
+                                ""
+                            ),
                             count = childCount,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
@@ -245,7 +269,7 @@ data class itemTest(
     val option: ThemeOption = ThemeOption.THEME_DEFAULT
 )
 
-val div = listOf(
+val div = mutableListOf(
     itemTest(
         title = "Division 1",
         description = "Description 1",
@@ -334,12 +358,12 @@ fun DivisionListItemPreviewDark() {
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-        MainScreen()
+    MainScreen()
 }
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MainScreenPreviewDark() {
-        MainScreen()
+    MainScreen()
 }
 
