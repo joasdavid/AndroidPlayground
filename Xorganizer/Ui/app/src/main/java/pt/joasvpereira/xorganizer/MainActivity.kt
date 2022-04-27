@@ -4,6 +4,9 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -20,10 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.CreateDivisionScreen
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import pt.joasvpereira.xorganizer.compose.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.compose.MainScreen
 import pt.joasvpereira.xorganizer.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.test.color_scheme.ColorSchemeScreen
@@ -34,26 +37,102 @@ import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             DynamicTheme {
-                val navController = rememberNavController()
+                val navController = rememberAnimatedNavController()
                 Scaffold {
-                    NavHost(navController = navController, startDestination = ScreenNavigation.MainScreen.route) {
-                        composable(ScreenNavigation.MainScreen.route) {
+                    AnimatedNavHost(
+                        navController = navController,
+                        startDestination = ScreenNavigation.MainScreen.route
+                    ) {
+                        composable(
+                            ScreenNavigation.MainScreen.route,
+                            enterTransition = {
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.Left,
+                                    animationSpec = tween(700)
+                                )
+                            },
+                            exitTransition = {
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Left,
+                                    animationSpec = tween(700)
+                                )
+                            },
+                            popEnterTransition = {
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.Right,
+                                    animationSpec = tween(700)
+                                )
+                            },
+                            popExitTransition = {
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Right,
+                                    animationSpec = tween(700)
+                                )
+                            },
+                        ) {
                             DynamicTheme(systemUiOptions = SystemUiOptions.SetSystemColor) {
                                 MainScreen(navController)
                             }
                         }
-                        composable(ScreenNavigation.CreateDivisionScreen.route) { CreateDivisionScreen(navController) }
-                        composable(ScreenNavigation.TestColorDynamicScreen.route) {
+                        composable(
+                            ScreenNavigation.CreateDivisionScreen.route,
+                            enterTransition = {
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.Left,
+                                    animationSpec = tween(700)
+                                )
+                            },
+                            exitTransition = {
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Left,
+                                    animationSpec = tween(700)
+                                )
+                            },
+                            popEnterTransition = {
+                                slideIntoContainer(
+                                    AnimatedContentScope.SlideDirection.Right,
+                                    animationSpec = tween(700)
+                                )
+                            },
+                            popExitTransition = {
+                                slideOutOfContainer(
+                                    AnimatedContentScope.SlideDirection.Right,
+                                    animationSpec = tween(700)
+                                )
+                            },
+                        ) {
+                            CreateDivisionScreen(navController)
+                        }
+                        composable(
+                            ScreenNavigation.TestColorDynamicScreen.route,
+                            enterTransition = { null },
+                            exitTransition = { null },
+                            popEnterTransition = { null },
+                            popExitTransition = { null },
+                        ) {
                             DynamicTheme { ColorSchemeScreen() }
                         }
-                        composable(ScreenNavigation.TestColorBlueScreen.route) {
+                        composable(
+                            ScreenNavigation.TestColorBlueScreen.route,
+                            enterTransition = { null },
+                            exitTransition = { null },
+                            popEnterTransition = { null },
+                            popExitTransition = { null },
+                        ) {
                             DynamicTheme(ThemeOption.THEME_BLUE) { ColorSchemeScreen() }
                         }
-                        composable(ScreenNavigation.TestColorGreenScreen.route) {
+                        composable(
+                            ScreenNavigation.TestColorGreenScreen.route,
+                            enterTransition = { null },
+                            exitTransition = { null },
+                            popEnterTransition = { null },
+                            popExitTransition = { null },
+                        ) {
                             DynamicTheme(ThemeOption.THEME_GREEN) { ColorSchemeScreen() }
                         }
                     }
