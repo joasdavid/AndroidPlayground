@@ -35,15 +35,30 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.HomeSolid
+import pt.joasvpereira.xorganizer.compose.div
 import pt.joasvpereira.xorganizer.compose.itemTest
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.ui.theme.SystemUiOptions
 import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
 
 @Composable
-fun CreateDivisionScreen(
+fun CreateDivisionScreen(navController: NavController) {
+    CreateDivisionBody(
+        itemTest = null,
+        onClose = {
+            navController.popBackStack()
+        },
+        onSave = {
+            navController.popBackStack()
+        }
+    )
+}
+
+@Composable
+fun CreateDivisionBody(
     itemTest: itemTest? = null,
     onClose: () -> Unit = {},
     onSave: (itemTest) -> Unit = {}
@@ -56,16 +71,6 @@ fun CreateDivisionScreen(
     DynamicTheme(selectedThemeOption, systemUiOptions = SystemUiOptions.OverrideSystemColor) {
         Surface(color = MaterialTheme.colorScheme.primaryContainer) {
             Box(Modifier.fillMaxSize()) {
-                Icon(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .clip(CircleShape)
-                        .clickable { onClose() }
-                        .padding(24.dp)
-                        .size(24.dp),
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "Close Screen."
-                )
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -141,5 +146,5 @@ fun CreateDivisionScreen(
 @Preview
 @Composable
 fun CreateDivisionScreenPreview() {
-    CreateDivisionScreen()
+    CreateDivisionBody()
 }

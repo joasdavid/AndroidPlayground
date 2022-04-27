@@ -18,10 +18,15 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,7 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.CreateDivisionScreen
+import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.IconAndCounter
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.IconData
 import compose.icons.LineAwesomeIcons
@@ -47,19 +52,60 @@ import compose.icons.lineawesomeicons.PlusSolid
 import compose.icons.lineawesomeicons.TableSolid
 import compose.icons.lineawesomeicons.TabletAltSolid
 import pt.joasvpereira.xorganizer.R
+import pt.joasvpereira.xorganizer.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainScreen() {
-    var ss: Boolean by remember { mutableStateOf(false) }
-    var selectedItemIndex: Int by remember { mutableStateOf(-1) }
-    if (!ss) {
+fun MainScreen(navController: NavController) {
+    Surface {
+        val list = listOf(
+            SettingsMenuItem(
+                text = "Dynamic Theme",
+                distination = ScreenNavigation.TestColorDynamicScreen.route
+            ),
+            SettingsMenuItem(
+                text = "Blue Theme",
+                distination = ScreenNavigation.TestColorBlueScreen.route
+            ),
+            SettingsMenuItem(
+                text = "Green Theme",
+                distination = ScreenNavigation.TestColorGreenScreen.route
+            )
+        )
+        var settingsOpen by remember { mutableStateOf(false) }
+        MainScreenBody(
+            onAddNewItemClick = { navController.navigate("create_screen") },
+            onItemClick = {},
+            dropOpen = settingsOpen,
+            options = list,
+            onDropChanges = { settingsOpen = !settingsOpen},
+            onPositionSelected = {
+                navController.navigate(list[it].distination)
+            },
+        )
+    }
+}
+
+@Composable
+private fun MainScreenBody(
+    onItemClick: () -> Unit = {},
+    onAddNewItemClick: () -> Unit = {},
+    dropOpen: Boolean = false,
+    options: List<SettingsMenuItem> = emptyList(),
+    onDropChanges: (Boolean) -> Unit = {},
+    onPositionSelected: (Int) -> Unit = {}
+) {
+    Box {
+        SettingsMenu(Modifier.align(Alignment.TopEnd),
+            dropOpen = dropOpen,
+            options = options,
+            onDropChanges = onDropChanges,
+            onPositionSelected = onPositionSelected)
         Column(
             Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
                 .padding(horizontal = 16.dp)
         ) {
             Column(
@@ -90,33 +136,47 @@ fun MainScreen() {
                         childCount = div[index].childCount,
                         option = div[index].option,
                         onclick = {
-                            selectedItemIndex = index
-                            ss = true
+                            onItemClick()
                         }
                     )
                 }
                 item {
-                    AddActionItem(action = { ss = !ss })
+                    AddActionItem(action = onAddNewItemClick)
                 }
             }
         }
-    } else {
-        CreateDivisionScreen(
-            itemTest = if (selectedItemIndex < 0) null else div[selectedItemIndex],
-            onClose = {
-                selectedItemIndex = -1
-                ss = !ss
-            },
-            onSave = {
-                if (selectedItemIndex < 0) {
-                    div.add(it)
-                } else {
-                    div[selectedItemIndex] = it
-                }
-                selectedItemIndex = -1
-                ss = !ss
-            }
+    }
+}
+
+data class SettingsMenuItem(
+    val text: String,
+    val distination: String
+)
+
+@Composable
+fun SettingsMenu(
+    modifier: Modifier,
+    dropOpen: Boolean,
+    options: List<SettingsMenuItem>,
+    onDropChanges: (Boolean) -> Unit,
+    onPositionSelected: (Int) -> Unit
+) {
+    Box(modifier = modifier) {
+        Icon(
+            modifier = Modifier
+                .clip(CircleShape)
+                .clickable { onDropChanges(!dropOpen) }
+                .padding(24.dp)
+                .size(24.dp),
+            imageVector = Icons.Default.Settings,
+            contentDescription = "Settings"
         )
+
+        DropdownMenu(expanded = dropOpen, onDismissRequest = {onDropChanges(false)}) {
+            options.forEachIndexed { index, settingsMenuItem ->
+                DropdownMenuItem(text = { Text(settingsMenuItem.text) }, onClick = { onPositionSelected(index) })
+            }
+        }
     }
 }
 
@@ -358,12 +418,18 @@ fun DivisionListItemPreviewDark() {
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    DynamicTheme {
+        MainScreenBody()
+    }
 }
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MainScreenPreviewDark() {
-    MainScreen()
+    DynamicTheme {
+        Surface {
+            MainScreenBody()
+        }
+    }
 }
 
