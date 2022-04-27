@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.CreateDivisionScreen
+import pt.joasvpereira.xorganizer.compose.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.compose.MainScreen
 import pt.joasvpereira.xorganizer.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.test.color_scheme.ColorSchemeScreen
