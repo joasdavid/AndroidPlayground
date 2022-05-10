@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import pt.joasvpereira.xorganizer.compose.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.compose.MainScreen
 import pt.joasvpereira.xorganizer.compose.navigation.ScreenNavigation
+import pt.joasvpereira.xorganizer.demo.Demo
 import pt.joasvpereira.xorganizer.test.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.ui.theme.SystemUiOptions
@@ -38,26 +39,32 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DynamicTheme {
-                val navController = rememberNavController()
                 Scaffold {
-                    NavHost(navController = navController, startDestination = ScreenNavigation.MainScreen.route) {
-                        composable(ScreenNavigation.MainScreen.route) {
-                            DynamicTheme(systemUiOptions = SystemUiOptions.SetSystemColor) {
-                                MainScreen(navController)
-                            }
-                        }
-                        composable(ScreenNavigation.CreateDivisionScreen.route) { CreateDivisionScreen(navController) }
-                        composable(ScreenNavigation.TestColorDynamicScreen.route) {
-                            DynamicTheme { ColorSchemeScreen() }
-                        }
-                        composable(ScreenNavigation.TestColorBlueScreen.route) {
-                            DynamicTheme(ThemeOption.THEME_BLUE) { ColorSchemeScreen() }
-                        }
-                        composable(ScreenNavigation.TestColorGreenScreen.route) {
-                            DynamicTheme(ThemeOption.THEME_GREEN) { ColorSchemeScreen() }
-                        }
-                    }
+                    Demo()
+                    //HostContent()
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun HostContent() {
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = ScreenNavigation.MainScreen.route) {
+            composable(ScreenNavigation.MainScreen.route) {
+                DynamicTheme(systemUiOptions = SystemUiOptions.SetSystemColor) {
+                    MainScreen(navController)
+                }
+            }
+            composable(ScreenNavigation.CreateDivisionScreen.route) { CreateDivisionScreen(navController) }
+            composable(ScreenNavigation.TestColorDynamicScreen.route) {
+                DynamicTheme { ColorSchemeScreen() }
+            }
+            composable(ScreenNavigation.TestColorBlueScreen.route) {
+                DynamicTheme(ThemeOption.THEME_BLUE) { ColorSchemeScreen() }
+            }
+            composable(ScreenNavigation.TestColorGreenScreen.route) {
+                DynamicTheme(ThemeOption.THEME_GREEN) { ColorSchemeScreen() }
             }
         }
     }
