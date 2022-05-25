@@ -20,11 +20,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import pt.joasvpereira.xorganizer.compose.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.compose.MainScreen
+import pt.joasvpereira.xorganizer.compose.division.DivisionScreen
+import pt.joasvpereira.xorganizer.compose.folder.FolderScreen
+import pt.joasvpereira.xorganizer.compose.item.ItemScreen
 import pt.joasvpereira.xorganizer.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.test.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
@@ -46,6 +51,32 @@ class MainActivity : ComponentActivity() {
                                 MainScreen(navController)
                             }
                         }
+                        composable(
+                            ScreenNavigation.DivisionScreen.route,
+                            arguments = listOf(navArgument(ScreenNavigation.DivisionScreen.DIVISION_ID) {
+                                type = NavType.IntType
+                            })
+                        ) { DivisionScreen(navController = navController,
+                            id = it.arguments?.getInt(ScreenNavigation.DivisionScreen.DIVISION_ID,-1) ?: -1
+                        ) }
+                        composable(
+                            ScreenNavigation.FolderScreen.route,
+                            arguments = listOf(navArgument(ScreenNavigation.FolderScreen.FOLDER_ID) {
+                                type = NavType.IntType
+                            })
+                        ) { FolderScreen(
+                            navController = navController,
+                            id = it.arguments?.getInt(ScreenNavigation.FolderScreen.FOLDER_ID, -1) ?: -1
+                        ) }
+                        composable(
+                            ScreenNavigation.ItemScreen.route,
+                            arguments = listOf(navArgument(ScreenNavigation.ItemScreen.ITEM_ID) {
+                                type = NavType.IntType
+                            })
+                        ) { ItemScreen(
+                            navController = navController,
+                            id = it.arguments?.getInt(ScreenNavigation.ItemScreen.ITEM_ID, -1) ?: -1
+                        ) }
                         composable(ScreenNavigation.CreateDivisionScreen.route) { CreateDivisionScreen(navController) }
                         composable(ScreenNavigation.TestColorDynamicScreen.route) {
                             DynamicTheme { ColorSchemeScreen() }

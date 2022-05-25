@@ -52,6 +52,7 @@ import compose.icons.lineawesomeicons.PlusSolid
 import compose.icons.lineawesomeicons.TableSolid
 import compose.icons.lineawesomeicons.TabletAltSolid
 import pt.joasvpereira.xorganizer.R
+import pt.joasvpereira.xorganizer.compose.division.DivisionScreen
 import pt.joasvpereira.xorganizer.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
@@ -77,7 +78,10 @@ fun MainScreen(navController: NavController) {
         var settingsOpen by remember { mutableStateOf(false) }
         MainScreenBody(
             onAddNewItemClick = { navController.navigate("create_screen") },
-            onItemClick = {},
+            onItemClick = { itemTest ->
+                val id = div.indexOfFirst { it.title == itemTest.title }
+                navController.navigate(ScreenNavigation.DivisionScreen.createNavigationRoute(id))
+            },
             dropOpen = settingsOpen,
             options = list,
             onDropChanges = { settingsOpen = !settingsOpen},
@@ -90,7 +94,7 @@ fun MainScreen(navController: NavController) {
 
 @Composable
 private fun MainScreenBody(
-    onItemClick: () -> Unit = {},
+    onItemClick: (itemTest) -> Unit = {},
     onAddNewItemClick: () -> Unit = {},
     dropOpen: Boolean = false,
     options: List<SettingsMenuItem> = emptyList(),
@@ -136,7 +140,7 @@ private fun MainScreenBody(
                         childCount = div[index].childCount,
                         option = div[index].option,
                         onclick = {
-                            onItemClick()
+                            onItemClick(div[index])
                         }
                     )
                 }
