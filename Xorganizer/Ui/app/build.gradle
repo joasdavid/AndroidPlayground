@@ -75,4 +75,8 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
+
+    // Jetpack Compose
+    def koin_version= "3.2.0"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
 }

@@ -1,5 +1,8 @@
 package pt.joasvpereira.xorganizer.compose.division
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -22,9 +25,11 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Checkbox
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -33,21 +38,30 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.BedSolid
 import compose.icons.lineawesomeicons.HomeSolid
 import compose.icons.lineawesomeicons.TabletAltSolid
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import pt.joasvpereira.xorganizer.compose.common.CircleChart
 import pt.joasvpereira.xorganizer.compose.common.CircleChartItem
+import pt.joasvpereira.xorganizer.compose.common.add.CreateFolderBottomSheet
+import pt.joasvpereira.xorganizer.compose.common.add.CreateItemBottomSheet
 import pt.joasvpereira.xorganizer.compose.common.container.Folder
 import pt.joasvpereira.xorganizer.compose.common.holder.item.ItemHolder
 import pt.joasvpereira.xorganizer.compose.common.holder.search.SearchHolder
@@ -57,20 +71,60 @@ import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.ui.theme.SystemUiOptions
 import pt.joasvpereira.xorganizer.ui.theme.ThemeOption
 
-class DivisionScreenViewModel : ViewModel() {
+data class DivisionScreenUiState(
+    val division: itemTest = itemTest(
+        title = "",
+        description = "",
+        vectorImg = Icons.Default.Warning,
+        boxCount = 0,
+        childCount = 0
+    ),
+    val items: List<SingleItem> = emptyList(),
+    val boxes: List<SingleBox> = emptyList(),
+    val showAddOptions: Boolean = false,
+    val isCreateFolderOpen: Boolean = false,
+    val isCreateItemOpen: Boolean = false
+)
 
-    private var _id: Int = -1
-    private lateinit var _division: itemTest
-    val division: itemTest
-        get() = _division
+class DivisionScreenViewModel(private val id: Int = 0) : ViewModel() {
 
-    val percentageFolders: Float
-        get() = (_division.boxCount + _division.childCount).toFloat().run {
-            _division.boxCount / this
+    private val div = mutableListOf(
+        itemTest(
+            title = "Division 1",
+            description = "Description 1",
+            vectorImg = LineAwesomeIcons.HomeSolid,
+            boxCount = 2,
+            childCount = 3
+        ),
+        itemTest(
+            title = "Division 2",
+            description = "",
+            vectorImg = LineAwesomeIcons.TabletAltSolid,
+            boxCount = 1,
+            childCount = 1,
+            option = ThemeOption.THEME_BLUE
+        ),
+        itemTest(
+            title = "Division 3",
+            description = "Long discription asdasldkslad;askd;lsak;dasdasdl",
+            vectorImg = LineAwesomeIcons.BedSolid,
+            boxCount = 100,
+            childCount = 40,
+            option = ThemeOption.THEME_GREEN
+        )
+    )
+
+    val percentageFolders: Float by lazy {
+        (uiState.division.boxCount + uiState.division.childCount).toFloat().run {
+            uiState.division.boxCount / this
         }
+    }
 
-    val boxes: List<SingleBox>
-        get() = mutableListOf<SingleBox>().apply {
+    var uiState by mutableStateOf(DivisionScreenUiState())
+
+    init {
+        val division = div[id]
+        val boxes = mutableListOf<SingleBox>().apply {
             for (i in 0 until division.boxCount) {
                 add(
                     SingleBox(i, "Box $i", nrItems = i).run {
@@ -82,17 +136,7 @@ class DivisionScreenViewModel : ViewModel() {
                 )
             }
         }
-
-    val items: List<SingleItem>
-        get() = _items[_id]
-
-    fun fetchDivision(id: Int) {
-        _id = id
-        _division = div[id]
-    }
-
-    private val _items
-        get() = mutableListOf<List<SingleItem>>(
+        val items = mutableListOf<List<SingleItem>>(
             mutableListOf(
                 SingleItem(
                     title = "Carregador",
@@ -138,10 +182,10 @@ class DivisionScreenViewModel : ViewModel() {
                     tags = listOf("tipe c", "preto", "MI", "10v", "setOf2", "plug in", "pixel 5"),
                     isUsed = true
                 ),
-            ),
+            )
         ).apply {
             val lastList = mutableListOf<SingleItem>()
-            for (i in 0 until _division.childCount) {
+            for (i in 0 until division.childCount) {
                 lastList.add(
                     SingleItem(
                         title = "random item $i"
@@ -149,99 +193,165 @@ class DivisionScreenViewModel : ViewModel() {
                 )
             }
             add(lastList)
-        }
+        }[id]
 
-    private val div = mutableListOf(
-        itemTest(
-            title = "Division 1",
-            description = "Description 1",
-            vectorImg = LineAwesomeIcons.HomeSolid,
-            boxCount = 2,
-            childCount = 3
-        ),
-        itemTest(
-            title = "Division 2",
-            description = "",
-            vectorImg = LineAwesomeIcons.TabletAltSolid,
-            boxCount = 1,
-            childCount = 1,
-            option = ThemeOption.THEME_BLUE
-        ),
-        itemTest(
-            title = "Division 3",
-            description = "Long discription asdasldkslad;askd;lsak;dasdasdl",
-            vectorImg = LineAwesomeIcons.BedSolid,
-            boxCount = 100,
-            childCount = 40,
-            option = ThemeOption.THEME_GREEN
+
+        uiState = uiState.copy(
+            division = division,
+            boxes = boxes,
+            items = items
         )
-    )
+    }
+
+    fun fabClick() {
+        viewModelScope.launch {
+            uiState = uiState.copy(showAddOptions = true)
+            delay(20000)
+            uiState = uiState.copy(showAddOptions = false)
+        }
+    }
+
+    fun addFolderClick() {
+        uiState = uiState.copy(
+            showAddOptions = false,
+            isCreateFolderOpen = true
+        )
+    }
+
+    fun addItemClick() {
+        uiState = uiState.copy(
+            showAddOptions = false,
+            isCreateItemOpen = true
+        )
+    }
+
+    fun promptFolderClosed() {
+        uiState = uiState.copy(isCreateFolderOpen = false)
+    }
+
+    fun promptItemClosed() {
+        uiState = uiState.copy(isCreateItemOpen = false)
+    }
 }
 
 @Composable
 fun DivisionScreen(
-    id: Int,
-    viewModel: DivisionScreenViewModel = DivisionScreenViewModel(),
+    viewModel: DivisionScreenViewModel,
     navController: NavController? = null
 ) {
-    viewModel.fetchDivision(id)
-    val itemTest = viewModel.division
     DynamicTheme(
-        option = itemTest.option,
+        option = viewModel.uiState.division.option,
         systemUiOptions = SystemUiOptions.OverrideSystemColor
     ) {
-        DivisionContent(
-            divisionName = itemTest.title,
-            shieldImg = itemTest.vectorImg,
-            dataBox = viewModel.boxes,
-            dataItem = viewModel.items,
-            onBackClick = { navController?.popBackStack() },
-            percentageFolders = viewModel.percentageFolders,
-            percentageItems = 1f,
-            onBoxClick = { navController?.navigate(ScreenNavigation.FolderScreen.createNavigationRoute(it.id)) },
-            onItemClick = { navController?.navigate(ScreenNavigation.ItemScreen.createNavigationRoute(it)) },
-        )
+        Box {
+            DivisionContent(
+                viewModel.uiState,
+                onBackClick = { navController?.popBackStack() },
+                onBoxClick = { navController?.navigate(ScreenNavigation.FolderScreen.createNavigationRoute(it.id)) },
+                onItemClick = { navController?.navigate(ScreenNavigation.ItemScreen.createNavigationRoute(it)) },
+                percentageFolders = viewModel.percentageFolders,
+                onFabClick = { viewModel.fabClick() },
+                onAddFolderClick = { viewModel.addFolderClick() },
+                onAddItemClick = { viewModel.addItemClick() },
+            )
+            CreateFolderBottomSheet(
+                isExpanded = viewModel.uiState.isCreateFolderOpen,
+                onSaveClick = {
+                    viewModel.promptFolderClosed()
+                },
+                onCloseClick = {
+                    viewModel.promptFolderClosed()
+                }
+            )
+
+            CreateItemBottomSheet(
+                isExpanded = viewModel.uiState.isCreateItemOpen,
+                onSaveClick = {
+                    viewModel.promptItemClosed()
+                },
+                onCloseClick = {
+                    viewModel.promptItemClosed()
+                }
+            )
+        }
     }
 }
 
 @Composable
 fun DivisionContent(
-    divisionName: String,
-    shieldImg: ImageVector,
+    uiState: DivisionScreenUiState,
     percentageFolders: Float,
-    percentageItems: Float,
-    dataBox: List<SingleBox>,
-    dataItem: List<SingleItem>,
     onBoxClick: (SingleBox) -> Unit,
     onItemClick: (Int) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onFabClick: () -> Unit,
+    onAddFolderClick: () -> Unit,
+    onAddItemClick: () -> Unit,
 ) {
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.primaryContainer) {
         Column {
             DivisionDetailsHeader(
-                divisionName = divisionName,
-                shieldImg = shieldImg,
-                nrFolders = dataBox.size,
+                divisionName = uiState.division.title,
+                shieldImg = uiState.division.vectorImg,
+                nrFolders = uiState.boxes.size,
                 percentageFolders = percentageFolders,
-                nrItems = dataItem.size,
-                percentageItems = percentageItems,
+                nrItems = uiState.items.size,
+                percentageItems = if (uiState.items.isEmpty()) 0f else 1f,
                 onBackClick = onBackClick,
                 modifier = Modifier
             )
             DivisionContentBody(
-                dataBox = dataBox,
-                dataItem = dataItem,
+                dataBox = uiState.boxes,
+                dataItem = uiState.items,
                 onBoxClick = onBoxClick,
                 onItemClick = { onItemClick(it.id) })
         }
         Box(modifier = Modifier.fillMaxSize()) {
-            FloatingActionButton(
-                onClick = { /*TODO*/ },
+            AnimatedVisibility(
+                visible = !uiState.showAddOptions,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 10.dp)
+                    .padding(bottom = 10.dp),
+                enter = slideInVertically(initialOffsetY = { it * 2 }),
+                exit = slideOutVertically(targetOffsetY = { it * 2 }),
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                FloatingActionButton(
+                    onClick = { onFabClick() }
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                }
+            }
+            AnimatedVisibility(
+                visible = uiState.showAddOptions,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 10.dp),
+                enter = slideInVertically(initialOffsetY = { it * 2 }),
+                exit = slideOutVertically(targetOffsetY = { it * 2 }),
+            ) {
+                Row {
+                    FloatingActionButton(
+                        onClick = { onAddFolderClick() },
+                    ) {
+                        Folder(
+                            modifier = Modifier
+                                .size(width = 21.dp, height = 16.dp)
+                                .background(Color.Transparent),
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add, contentDescription = null,
+                                modifier = Modifier.size(8.dp)
+                            )
+                        }
+                    }
+                    SimpleSpace(size = 25.dp)
+                    FloatingActionButton(
+                        onClick = { onAddItemClick() },
+                    ) {
+                        Icon(imageVector = Icons.Default.AddCircle, contentDescription = null)
+                    }
+                }
             }
         }
     }
@@ -469,9 +579,9 @@ fun DivisionDetailsHeaderPreview() {
 
 //@Preview()
 @Composable
-fun DivisionScreenPreview(viewModel: DivisionScreenViewModel = DivisionScreenViewModel()) {
+fun DivisionScreenPreview(viewModel: DivisionScreenViewModel = DivisionScreenViewModel(1)) {
     DynamicTheme(ThemeOption.THEME_BLUE) {
-        DivisionScreen(0)
+        DivisionScreen(DivisionScreenViewModel(0))
     }
 }
 

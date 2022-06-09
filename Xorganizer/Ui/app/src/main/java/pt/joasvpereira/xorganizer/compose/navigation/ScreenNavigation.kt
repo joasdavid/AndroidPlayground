@@ -2,27 +2,36 @@ package pt.joasvpereira.xorganizer.compose.navigation
 
 sealed class ScreenNavigation(val route: String) {
     object MainScreen: ScreenNavigation(route = MAIN_SCREEN_ROUTE)
-    object CreateDivisionScreen: ScreenNavigation(route = CREATE_SCREEN_ROUTE)
+
+    object CreateDivisionScreen: ScreenNavigation(route = CREATE_DIVISION_SCREEN_ROUTE)
+
     object DivisionScreen: ScreenNavigation(route = DIVISION_SCREEN_ROUTE) {
         const val DIVISION_ID = ScreenNavigation.DIVISION_ID
         fun createNavigationRoute(id: Int) = "$DIVISION_SCREEN_BASE_ROUTE/$id"
     }
+
     object FolderScreen: ScreenNavigation(route = FOLDER_SCREEN_ROUTE) {
         const val FOLDER_ID = ScreenNavigation.FOLDER_ID
         fun createNavigationRoute(id: Int) = "$FOLDER_SCREEN_BASE_ROUTE/$id"
     }
+
     object ItemScreen: ScreenNavigation(route = ITEM_SCREEN_ROUTE) {
         const val ITEM_ID = ScreenNavigation.ITEM_ID
         fun createNavigationRoute(id: Int) = "$ITEM_SCREEN_BASE_ROUTE/$id"
     }
+
     object TestColorDynamicScreen: ScreenNavigation(route = DYNAMIC_SCREEN_ROUTE)
+
     object TestColorBlueScreen: ScreenNavigation(route = BLUE_SCREEN_ROUTE)
+
     object TestColorGreenScreen: ScreenNavigation(route = GREEN_SCREEN_ROUTE)
 
     companion object {
         private const val MAIN_SCREEN_ROUTE = "main_screen"
 
-        private const val CREATE_SCREEN_ROUTE = "create_screen"
+        private const val CREATE_DIVISION_SCREEN_ROUTE = "create_screen"
+
+        private const val CREATE_FOLDER_SHEET_ROUTE = "create_folder_screen"
 
         private const val DIVISION_ID = "divisionId"
         private const val DIVISION_SCREEN_BASE_ROUTE = "division_screen"

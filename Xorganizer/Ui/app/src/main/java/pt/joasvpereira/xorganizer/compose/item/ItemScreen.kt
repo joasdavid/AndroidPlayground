@@ -52,7 +52,7 @@ enum class Mode {
 
 data class ItemScreenUiState(val mode: Mode, val loading: Boolean, val item: SingleItem? = null)
 
-class ItemScreenViewModel(private val id: Int, private val mode: Mode) : ViewModel() {
+class ItemScreenViewModel(private val id: Int = 0, private val mode: Mode = Mode.READ) : ViewModel() {
     var uiState by mutableStateOf(
         ItemScreenUiState(
             mode = mode,
@@ -78,10 +78,8 @@ class ItemScreenViewModel(private val id: Int, private val mode: Mode) : ViewMod
 
 @Composable
 fun ItemScreen(
-    id: Int = -1,
-    mode: Mode = Mode.READ,
     navController: NavController? = null,
-    viewModel: ItemScreenViewModel = ItemScreenViewModel(id, mode)
+    viewModel: ItemScreenViewModel
 ) {
     DynamicTheme {
         ItemScreenContent(

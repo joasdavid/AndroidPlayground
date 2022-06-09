@@ -5,10 +5,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,17 +28,33 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import org.koin.android.ext.android.get
+import org.koin.androidx.compose.getKoin
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.ParametersDefinition
+import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.Qualifier
 import pt.joasvpereira.xorganizer.compose.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.compose.MainScreen
+import pt.joasvpereira.xorganizer.compose.common.add.CreateFolderBottomSheet
+import pt.joasvpereira.xorganizer.compose.common.add.TagColumn
+import pt.joasvpereira.xorganizer.compose.common.add.TagColumnState
 import pt.joasvpereira.xorganizer.compose.division.DivisionScreen
+import pt.joasvpereira.xorganizer.compose.division.DivisionScreenViewModel
 import pt.joasvpereira.xorganizer.compose.folder.FolderScreen
 import pt.joasvpereira.xorganizer.compose.item.ItemScreen
+import pt.joasvpereira.xorganizer.compose.item.ItemScreenViewModel
+import pt.joasvpereira.xorganizer.compose.item.Mode
 import pt.joasvpereira.xorganizer.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.test.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.ui.theme.DynamicTheme
@@ -43,8 +68,53 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DynamicTheme {
+                var tagColumnState by remember { mutableStateOf(TagColumnState(isEditOpen = true,listOfTags = mutableListOf("test", "XPTO", "test3"))) }
+                val roundedCornerShape200 = RoundedCornerShape(200.dp)
+                TagColumn(
+                    tagItemContent = { s: String ->
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 2.dp)
+                                .border(
+                                    1.dp,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = roundedCornerShape200
+                                )
+                                .clip(roundedCornerShape200)
+                                .padding(5.dp)
+                                .clickable { tagColumnState.listOfTags.add("Meh") }
+                        ) {
+                            Text(
+                                style = MaterialTheme.typography.labelSmall,
+                                text = s
+                            )
+                        }
+                    },
+                    addButton = {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 2.dp)
+                                .border(
+                                    1.dp,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = roundedCornerShape200
+                                )
+                                .clip(roundedCornerShape200)
+                                .padding(5.dp)
+                                .clickable { tagColumnState.isEditOpen = !tagColumnState.isEditOpen }
+                        ) {
+                            Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                        }
+                    },
+                    editorContent = {},
+                    tagColumnState = tagColumnState
+                )
                 val navController = rememberNavController()
-                Scaffold {
+                /*Scaffold {
                     NavHost(navController = navController, startDestination = ScreenNavigation.MainScreen.route) {
                         composable(ScreenNavigation.MainScreen.route) {
                             DynamicTheme(systemUiOptions = SystemUiOptions.SetSystemColor) {
@@ -56,9 +126,11 @@ class MainActivity : ComponentActivity() {
                             arguments = listOf(navArgument(ScreenNavigation.DivisionScreen.DIVISION_ID) {
                                 type = NavType.IntType
                             })
-                        ) { DivisionScreen(navController = navController,
-                            id = it.arguments?.getInt(ScreenNavigation.DivisionScreen.DIVISION_ID,-1) ?: -1
-                        ) }
+                        ) {
+                            val id = it.arguments?.getInt(ScreenNavigation.DivisionScreen.DIVISION_ID,-1) ?: -1
+                            val vm = getViewModel<DivisionScreenViewModel> { parametersOf(id) }
+                            DivisionScreen(navController = navController, viewModel = vm)
+                        }
                         composable(
                             ScreenNavigation.FolderScreen.route,
                             arguments = listOf(navArgument(ScreenNavigation.FolderScreen.FOLDER_ID) {
@@ -73,10 +145,19 @@ class MainActivity : ComponentActivity() {
                             arguments = listOf(navArgument(ScreenNavigation.ItemScreen.ITEM_ID) {
                                 type = NavType.IntType
                             })
-                        ) { ItemScreen(
-                            navController = navController,
-                            id = it.arguments?.getInt(ScreenNavigation.ItemScreen.ITEM_ID, -1) ?: -1
-                        ) }
+                        ) {
+                            val id = it.arguments?.getInt(ScreenNavigation.ItemScreen.ITEM_ID, -1) ?: -1
+                            val vm = getViewModel<ItemScreenViewModel> {
+                                parametersOf(
+                                    id,
+                                    Mode.READ
+                                )
+                            }
+                            ItemScreen(
+                                viewModel = vm,
+                                navController = navController
+                            )
+                        }
                         composable(ScreenNavigation.CreateDivisionScreen.route) { CreateDivisionScreen(navController) }
                         composable(ScreenNavigation.TestColorDynamicScreen.route) {
                             DynamicTheme { ColorSchemeScreen() }
@@ -88,7 +169,7 @@ class MainActivity : ComponentActivity() {
                             DynamicTheme(ThemeOption.THEME_GREEN) { ColorSchemeScreen() }
                         }
                     }
-                }
+                }*/
             }
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -32,6 +33,7 @@ fun Folder(
     color: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = contentColorFor(color),
     isDarkTheme: Boolean = isSystemInDarkTheme(),
+    contentAlignment: Alignment = Alignment.Center,
     content: @Composable () -> Unit = {}
 ) {
     ConstraintLayout(modifier = modifier) {
@@ -91,7 +93,9 @@ fun Folder(
             color = color,
             contentColor = contentColor
         ) {
-            content()
+            Box(contentAlignment = contentAlignment) {
+                content()
+            }
         }
 
         Box(
