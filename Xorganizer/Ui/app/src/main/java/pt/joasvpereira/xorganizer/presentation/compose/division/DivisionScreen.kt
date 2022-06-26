@@ -73,7 +73,10 @@ import pt.joasvpereira.xorganizer.presentation.compose.common.container.Folder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.item.ItemHolder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.search.SearchHolder
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
+import pt.joasvpereira.xorganizer.presentation.mapper.BoxMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
+import pt.joasvpereira.xorganizer.presentation.mapper.ItemMapper
+import pt.joasvpereira.xorganizer.presentation.mapper.mapToPresentationList
 import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.presentation.theme.SystemUiOptions
 import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
@@ -120,16 +123,10 @@ class DivisionScreenViewModel(
 
                 val param = SourceDivision(division.id)
 
+
                 launch {
-                    // TODO: create a mapper for box - SingleBox 
                     boxenUseCase.execute(param).map {
-                        val returnList = mutableListOf<SingleBox>()
-                        it.forEach {
-                            returnList.add(
-                                SingleBox(id = it.id, title = it.name, description = it.description, nrItems = 0)
-                            )
-                        }
-                        returnList
+                        BoxMapper().mapToPresentationList(it)
                     }.collect {
                         uiState = uiState.copy(
                             boxes = it
@@ -138,21 +135,8 @@ class DivisionScreenViewModel(
                 }
 
                 launch {
-                    // TODO: create a mapper for item - SingleItem 
                     itemsUseCase.execute(param).map {
-                        val returnList = mutableListOf<SingleItem>()
-                        it.forEach { value ->
-                            returnList.add(
-                                SingleItem(
-                                    id = value.id,
-                                    title = value.name,
-                                    description = value.description,
-                                    tags = value.tags,
-                                    isUsed = value.isUsed
-                                )
-                            )
-                        }
-                        returnList
+                        ItemMapper().mapToPresentationList(it)
                     }.collect {
                         uiState = uiState.copy(
                             items = it
