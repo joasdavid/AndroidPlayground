@@ -29,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,6 +55,8 @@ import compose.icons.lineawesomeicons.PlusSolid
 import compose.icons.lineawesomeicons.TableSolid
 import compose.icons.lineawesomeicons.TabletAltSolid
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.usecase.EmptyParams
@@ -72,17 +75,16 @@ class MainScreenViewModel(
     private val mapper: DivisionsMapper
 ) : ViewModel() {
 
-    private val _divisions: MutableList<DivisionHolder> = mutableListOf()
     var uiState by mutableStateOf(MainScreenUiState())
         private set
 
     init {
         viewModelScope.launch {
-            delay(180L)
-            uiState = uiState.copy(
-                divisions = divisionUseCase.execute(EmptyParams())
-                    .map { mapper.mapToPresentation(it) }
-            )
+            divisionUseCase.execute(EmptyParams()).map { it -> it.map { mapper.mapToPresentation(it) } }.collect {
+                uiState = uiState.copy(
+                    divisions = it
+                )
+            }
         }
     }
 }

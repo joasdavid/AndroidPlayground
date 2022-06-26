@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,19 +39,32 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ThemeSelector
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.HomeSolid
+import kotlinx.coroutines.launch
+import pt.joasvpereira.xorganizer.domain.model.DivisionCreationInfo
+import pt.joasvpereira.xorganizer.domain.usecase.division.ICreateDivisionsUseCase
+import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.presentation.theme.SystemUiOptions
 import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 @Composable
-fun CreateDivisionScreen(navController: NavController) {
+fun CreateDivisionScreen(navController: NavController, useCase: ICreateDivisionsUseCase) {
+    val scope = rememberCoroutineScope()
     CreateDivisionBody(
         DivisionHolder = null,
         onClose = {
             navController.popBackStack()
         },
         onSave = {
-            navController.popBackStack()
+            scope.launch {
+                useCase.execute(DivisionCreationInfo(
+                    it.title,
+                    it.description,
+                    it.option.ordinal
+                )).run {
+                    navController.popBackStack()
+                }
+            }
         }
     )
 }

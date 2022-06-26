@@ -36,6 +36,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import pt.joasvpereira.xorganizer.presentation.compose.common.add.TagColumn
@@ -152,7 +153,10 @@ class MainActivity : ComponentActivity() {
                                 navController = navController
                             )
                         }
-                        composable(ScreenNavigation.CreateDivisionScreen.route) { CreateDivisionScreen(navController) }
+                        composable(ScreenNavigation.CreateDivisionScreen.route) { CreateDivisionScreen(
+                            navController = navController,
+                            useCase = get()
+                        ) }
                         composable(ScreenNavigation.TestColorDynamicScreen.route) {
                             DynamicTheme { ColorSchemeScreen() }
                         }

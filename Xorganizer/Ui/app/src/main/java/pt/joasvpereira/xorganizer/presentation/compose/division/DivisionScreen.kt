@@ -52,15 +52,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import compose.icons.LineAwesomeIcons
-import compose.icons.lineawesomeicons.BedSolid
-import compose.icons.lineawesomeicons.HomeSolid
-import compose.icons.lineawesomeicons.TabletAltSolid
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import pt.joasvpereira.xorganizer.domain.model.Box
 import pt.joasvpereira.xorganizer.domain.model.Division
+import pt.joasvpereira.xorganizer.domain.model.StoredItem
+import pt.joasvpereira.xorganizer.domain.usecase.box.IBoxesUseCase
+import pt.joasvpereira.xorganizer.domain.usecase.box.SourceDivision
 import pt.joasvpereira.xorganizer.domain.usecase.division.DivisionId
 import pt.joasvpereira.xorganizer.domain.usecase.division.ISingleDivisionUseCase
+import pt.joasvpereira.xorganizer.domain.usecase.item.IItemsUseCase
+import pt.joasvpereira.xorganizer.presentation.compose.DivisionHolder
 import pt.joasvpereira.xorganizer.presentation.compose.common.CircleChart
 import pt.joasvpereira.xorganizer.presentation.compose.common.CircleChartItem
 import pt.joasvpereira.xorganizer.presentation.compose.common.add.CreateFolderBottomSheet
@@ -68,7 +72,6 @@ import pt.joasvpereira.xorganizer.presentation.compose.common.add.CreateItemBott
 import pt.joasvpereira.xorganizer.presentation.compose.common.container.Folder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.item.ItemHolder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.search.SearchHolder
-import pt.joasvpereira.xorganizer.presentation.compose.DivisionHolder
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
@@ -91,7 +94,12 @@ data class DivisionScreenUiState(
     val isCreateItemOpen: Boolean = false
 )
 
-class DivisionScreenViewModel(private val id: Int = 0, singleDivisionUseCase: ISingleDivisionUseCase) : ViewModel() {
+class DivisionScreenViewModel(
+    private val id: Int = 0,
+    singleDivisionUseCase: ISingleDivisionUseCase,
+    boxenUseCase: IBoxesUseCase,
+    itemsUseCase: IItemsUseCase,
+) : ViewModel() {
 
     val percentageFolders: Float by lazy {
         (uiState.division.boxCount + uiState.division.childCount).toFloat().run {
@@ -106,82 +114,51 @@ class DivisionScreenViewModel(private val id: Int = 0, singleDivisionUseCase: IS
             singleDivisionUseCase.execute(DivisionId(id))?.run {
                 val division = DivisionsMapper().mapToPresentation(this)
 
-                val boxes = mutableListOf<SingleBox>().apply {
-                    for (i in 0 until division.boxCount) {
-                        add(
-                            SingleBox(i, "Box $i", nrItems = i).run {
-                                if (i % 2 == 0) {
-                                    this.copy(description = "description $i")
-                                }
-                                this
-                            }
+                uiState = uiState.copy(
+                    division = division
+                )
+
+                val param = SourceDivision(division.id)
+
+                launch {
+                    // TODO: create a mapper for box - SingleBox 
+                    boxenUseCase.execute(param).map {
+                        val returnList = mutableListOf<SingleBox>()
+                        it.forEach {
+                            returnList.add(
+                                SingleBox(id = it.id, title = it.name, description = it.description, nrItems = 0)
+                            )
+                        }
+                        returnList
+                    }.collect {
+                        uiState = uiState.copy(
+                            boxes = it
                         )
                     }
                 }
-                val items = mutableListOf<List<SingleItem>>(
-                    mutableListOf(
-                        SingleItem(
-                            title = "Carregador",
-                            description = null,
-                            tags = listOf("tipe c"),
-                            isUsed = false
-                        ),
-                        SingleItem(
-                            title = "Carregador",
-                            description = null,
-                            tags = listOf("tipe c"),
-                            isUsed = false
-                        ),
-                        SingleItem(
-                            title = "cabo c to usb",
-                            description = null,
-                            tags = listOf("tipe c", "cabo", "usb"),
-                            isUsed = false
-                        ),
-                    ),
-                    mutableListOf(
-                        SingleItem(
-                            title = "Carregador",
-                            description = null,
-                            tags = listOf("tipe c"),
-                            isUsed = false
-                        ),
-                        SingleItem(
-                            title = "Carregador",
-                            description = null,
-                            tags = listOf("tipe c"),
-                            isUsed = false
-                        ),
-                        SingleItem(
-                            title = "cabo c to usb",
-                            description = null,
-                            tags = listOf("tipe c", "cabo", "usb"),
-                            isUsed = true
-                        ),
-                        SingleItem(
-                            title = "base wirelless",
-                            description = null,
-                            tags = listOf("tipe c", "preto", "MI", "10v", "setOf2", "plug in", "pixel 5"),
-                            isUsed = true
-                        ),
-                    )
-                ).apply {
-                    val lastList = mutableListOf<SingleItem>()
-                    for (i in 0 until division.childCount) {
-                        lastList.add(
-                            SingleItem(
-                                title = "random item $i"
-                            ),
+
+                launch {
+                    // TODO: create a mapper for item - SingleItem 
+                    itemsUseCase.execute(param).map {
+                        val returnList = mutableListOf<SingleItem>()
+                        it.forEach { value ->
+                            returnList.add(
+                                SingleItem(
+                                    id = value.id,
+                                    title = value.name,
+                                    description = value.description,
+                                    tags = value.tags,
+                                    isUsed = value.isUsed
+                                )
+                            )
+                        }
+                        returnList
+                    }.collect {
+                        uiState = uiState.copy(
+                            items = it
                         )
                     }
-                    add(lastList)
-                }[id-1]
-
-                uiState = uiState.copy(
-                    division = division,
-                    boxes = boxes,
-                    items = items
-                )
+                }
             }
         }
     }
@@ -562,17 +539,28 @@ fun DivisionDetailsHeaderPreview() {
 
 //@Preview()
 @Composable
-fun DivisionScreenPreview(viewModel: DivisionScreenViewModel = DivisionScreenViewModel(0, object : ISingleDivisionUseCase {
-    override suspend fun execute(params: DivisionId) = Division(
-        id = 0,
-        name = "",
-        description = "",
-        iconId = 0,
-        nrBox = 0,
-        nrItem = 0,
-        themeId = 0
+fun DivisionScreenPreview(
+    viewModel: DivisionScreenViewModel = DivisionScreenViewModel(
+        0,
+        object : ISingleDivisionUseCase {
+            override suspend fun execute(params: DivisionId) = Division(
+                id = 0,
+                name = "",
+                description = "",
+                iconId = 0,
+                nrBox = 0,
+                nrItem = 0,
+                themeId = 0
+            )
+        },
+        object : IBoxesUseCase {
+            override suspend fun execute(params: SourceDivision?) = emptyFlow<List<Box>>()
+        },
+        object : IItemsUseCase {
+            override suspend fun execute(params: SourceDivision?) = emptyFlow<List<StoredItem>>()
+        }
     )
-})) {
+) {
     DynamicTheme(ThemeOption.THEME_BLUE) {
         DivisionScreen(viewModel)
     }
