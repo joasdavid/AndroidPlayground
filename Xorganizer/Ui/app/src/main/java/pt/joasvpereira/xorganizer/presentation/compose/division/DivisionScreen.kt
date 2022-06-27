@@ -26,9 +26,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,12 +44,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolBarBackConfig
+import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolbarTitleCentered
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
@@ -78,7 +78,6 @@ import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.ItemMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.mapToPresentationList
 import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.presentation.theme.SystemUiOptions
 import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 data class DivisionScreenUiState(
@@ -184,8 +183,7 @@ fun DivisionScreen(
     navController: NavController? = null
 ) {
     DynamicTheme(
-        option = viewModel.uiState.division.option,
-        systemUiOptions = SystemUiOptions.OverrideSystemColor
+        option = viewModel.uiState.division.option
     ) {
         Box {
             DivisionContent(
@@ -314,11 +312,11 @@ fun DivisionDetailsHeader(
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .padding(bottom = 4.dp)
     ) {
-        DivisionToolBar(divisionName, onBackClick)
+        ToolbarTitleCentered(
+            title = divisionName,
+            toolBarBackConfig = ToolBarBackConfig(onBackClick = onBackClick),
+        )
         SimpleSpace(size = 20.dp)
         DivisionChart(
             nrFolders,
@@ -328,6 +326,7 @@ fun DivisionDetailsHeader(
             shieldImg,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
+        SimpleSpace(size = 20.dp)
     }
 }
 
@@ -381,34 +380,6 @@ private fun DivisionChart(
                 Text(text = "Items: $nrItems")
             }
         }
-    }
-}
-
-@Composable
-private fun DivisionToolBar(
-    divisionName: String,
-    onBackClick: () -> Unit
-) {
-    Row(modifier = Modifier.fillMaxWidth()) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            contentDescription = null,
-            modifier = Modifier
-                .clip(CircleShape)
-                .clickable { onBackClick() }
-        )
-
-        Text(
-            text = divisionName,
-            style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.weight(1f)
-        )
-
-        Icon(
-            imageVector = Icons.Default.MoreVert,
-            contentDescription = null
-        )
     }
 }
 
@@ -521,7 +492,7 @@ fun DivisionDetailsHeaderPreview() {
     }
 }
 
-//@Preview()
+@Preview()
 @Composable
 fun DivisionScreenPreview(
     viewModel: DivisionScreenViewModel = DivisionScreenViewModel(
@@ -529,7 +500,7 @@ fun DivisionScreenPreview(
         object : ISingleDivisionUseCase {
             override suspend fun execute(params: DivisionId) = Division(
                 id = 0,
-                name = "",
+                name = "div",
                 description = "",
                 iconId = 0,
                 nrBox = 0,

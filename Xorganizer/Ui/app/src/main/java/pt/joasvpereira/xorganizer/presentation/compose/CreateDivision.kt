@@ -42,9 +42,7 @@ import compose.icons.lineawesomeicons.HomeSolid
 import kotlinx.coroutines.launch
 import pt.joasvpereira.xorganizer.domain.model.DivisionCreationInfo
 import pt.joasvpereira.xorganizer.domain.usecase.division.ICreateDivisionsUseCase
-import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.presentation.theme.SystemUiOptions
 import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 @Composable
@@ -80,7 +78,7 @@ fun CreateDivisionBody(
     }
     var divisionNameText by remember { mutableStateOf(DivisionHolder?.title ?: "") }
     var descriptionText by remember { mutableStateOf(DivisionHolder?.description ?: "") }
-    DynamicTheme(selectedThemeOption, systemUiOptions = SystemUiOptions.OverrideSystemColor) {
+    DynamicTheme(selectedThemeOption) {
         Surface(color = MaterialTheme.colorScheme.primaryContainer) {
             Box(Modifier.fillMaxSize()) {
                 Icon(

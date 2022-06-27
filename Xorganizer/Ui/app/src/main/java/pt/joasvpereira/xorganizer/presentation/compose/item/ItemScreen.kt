@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +40,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolBarBackConfig
+import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolbarTitleCentered
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pt.joasvpereira.xorganizer.presentation.compose.common.shield.NameShield
@@ -98,6 +103,7 @@ fun ItemScreenContent(
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.primaryContainer) {
         Surface(
             modifier = Modifier
+                .windowInsetsPadding(WindowInsets.statusBars)
                 .fillMaxSize()
                 .clip(
                     RoundedCornerShape(
@@ -106,7 +112,10 @@ fun ItemScreenContent(
                 )
         ) {
             Column {
-                ToolBar(title = "" , onBackClick = onBackClick)
+                ToolbarTitleCentered(
+                    toolBarBackConfig = ToolBarBackConfig(onBackClick = onBackClick)
+                )
+                SimpleSpace(size = 4.dp)
                 if (data.item != null)
                     ListOfContent(data.item, data.mode)
                 if (data.loading) {

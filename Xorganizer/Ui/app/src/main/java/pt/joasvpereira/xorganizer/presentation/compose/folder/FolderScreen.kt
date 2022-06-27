@@ -26,6 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolBarBackConfig
+import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolbarTitleCentered
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.item.ItemHolder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.search.SearchHolder
 import pt.joasvpereira.xorganizer.presentation.compose.division.SingleItem
@@ -77,7 +79,11 @@ private fun FolderScreenContent(
 ) {
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.primaryContainer) {
         Column {
-            ToolBar(title = folderName, onBackClick = onBackClick)
+            ToolbarTitleCentered(
+                //modifier = Modifier.padding(bottom = 10.dp).padding(horizontal = 16.dp),
+                title = folderName,
+                toolBarBackConfig = ToolBarBackConfig(onBackClick = onBackClick)
+            )
             Body(items = items, onItemClick = onItemClick)
         }
     }

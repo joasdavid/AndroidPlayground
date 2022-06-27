@@ -11,18 +11,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -37,12 +42,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -56,7 +63,7 @@ import pt.joasvpereira.xorganizer.presentation.theme.getAllThemesDetails
 @Composable
 fun IconSelector(
     iconSelected: ImageVector,
-    onIconSelected: (ImageVector)-> Unit,
+    onIconSelected: (ImageVector) -> Unit,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f),
     iconTintColor: Color = MaterialTheme.colorScheme.onSecondary
 ) {
@@ -278,7 +285,7 @@ fun ThemeColorsIndicator(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0x989a82)
+//@Preview(showBackground = true, backgroundColor = 0x989a82)
 @Composable
 fun ThemeColorsIndicatorPreview() {
     ThemeColorsIndicator()
@@ -336,10 +343,10 @@ fun ThemeSelector(
             .widthIn(min = TextFieldDefaults.MinWidth)
             .fillMaxWidth(),
         selectionOpenState = expandable,
-        onSelectionOpenStateChanges = {expandable = !expandable},
+        onSelectionOpenStateChanges = { expandable = !expandable },
         options = list.toList(),
         selectedOption = list.firstOrNull { it.first == selection },
-        previewContent = { it,_ ->
+        previewContent = { it, _ ->
             it?.let {
                 Row {
                     ThemeColorsIndicator(size = 24.dp, themeOption = it.first)
@@ -356,7 +363,8 @@ fun ThemeSelector(
         Row(
             Modifier
                 .heightIn(min = 48.dp)
-                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically
+        ) {
             ThemeColorsIndicator(size = 24.dp, themeOption = it.first)
             SimpleSpace(size = 5.dp)
             Text(text = it.second)
@@ -364,20 +372,21 @@ fun ThemeSelector(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0x989a82)
+//@Preview(showBackground = true, backgroundColor = 0x989a82)
 @Composable
 fun ThemeSelectorPreview() {
     ThemeSelector {}
 }
 
-@Preview(showBackground = true, backgroundColor = 0x989a82)
+//@Preview(showBackground = true, backgroundColor = 0x989a82)
 @Composable
 fun ThemeSelectorExpandedContentPreview() {
     Column {
         Row(
             Modifier
                 .heightIn(min = 48.dp)
-                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically
+        ) {
             ThemeColorsIndicator(size = 24.dp)
             SimpleSpace(size = 5.dp)
             Text(text = "this is a theme")
@@ -385,7 +394,8 @@ fun ThemeSelectorExpandedContentPreview() {
         Row(
             Modifier
                 .heightIn(min = 48.dp)
-                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically
+        ) {
             ThemeColorsIndicator(size = 24.dp)
             SimpleSpace(size = 5.dp)
             Text(text = "this is a theme")
@@ -396,5 +406,94 @@ fun ThemeSelectorExpandedContentPreview() {
 @Composable
 fun SimpleSpace(size: Dp) {
     Spacer(modifier = Modifier.size(size = size))
+}
+
+data class ToolBarBackConfig(
+    val backIcon: ImageVector = Icons.Default.ArrowBack,
+    val onBackClick: () -> Unit
+)
+
+@Composable
+fun ToolbarTitleCentered(
+    title: String = "",
+    toolBarBackConfig: ToolBarBackConfig? = null,
+    horizontalPadding: Dp = 16.dp,
+    useInsetsPaddingForStatusBars: Boolean = true
+) {
+    Box(
+        modifier = Modifier
+            .then(
+                if (useInsetsPaddingForStatusBars) {
+                    Modifier.windowInsetsPadding(WindowInsets.statusBars)
+                } else {
+                    Modifier
+                }
+            )
+            .fillMaxWidth()
+            .height(48.dp)
+            .padding(horizontal = horizontalPadding)
+    )
+    {
+        toolBarBackConfig?.let {
+            Icon(
+                imageVector = it.backIcon,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(24.dp)
+                    .clip(CircleShape)
+                    .clickable { it.onBackClick() }
+                    .align(Alignment.CenterStart)
+            )
+        }
+
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.align(Alignment.Center)
+        )
+
+        // TODO: this will be implemented later
+        /*Icon(
+            imageVector = Icons.Default.MoreVert,
+            contentDescription = null
+        )*/
+    }
+}
+
+@Preview()
+@Composable
+fun ToolbarTitleCenterdPreview() {
+    Column {
+        ToolbarTitleCentered(title = "Test Toolbar", toolBarBackConfig = null)
+        SimpleSpace(size = 10.dp)
+        ToolbarTitleCentered(title = "Test Toolbar with back button", toolBarBackConfig = ToolBarBackConfig(
+            onBackClick = {
+
+            }
+        ))
+        SimpleSpace(size = 10.dp)
+        ToolbarTitleCentered(
+            title = "Test Toolbar",
+            toolBarBackConfig = null,
+            horizontalPadding = 20.dp,
+            useInsetsPaddingForStatusBars = false
+        )
+        SimpleSpace(size = 10.dp)
+        Column(
+            modifier = Modifier
+        ) {
+            ToolbarTitleCentered(title = "divisionName", toolBarBackConfig = ToolBarBackConfig(onBackClick = {}), horizontalPadding = 5.dp)
+            /*SimpleSpace(size = 20.dp)
+            DivisionChart(
+                nrFolders,
+                percentageFolders,
+                nrItems,
+                percentageItems,
+                shieldImg,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )*/
+        }
+    }
 }
 

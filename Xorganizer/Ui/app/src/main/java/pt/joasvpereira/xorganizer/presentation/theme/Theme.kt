@@ -25,18 +25,12 @@ fun getAllThemesDetails() = listOf(
     Pair(ThemeOption.THEME_BLUE,"Blue Theme"),
     Pair(ThemeOption.THEME_GREEN,"Green Theme")
 )
-
-sealed class SystemUiOptions {
-    object SetSystemColor : SystemUiOptions()
-    object OverrideSystemColor : SystemUiOptions()
-}
 //endregion
 
 //region Composables
 @Composable
 fun DynamicTheme(
     option: ThemeOption = ThemeOption.THEME_DEFAULT,
-    systemUiOptions: SystemUiOptions? = null,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     isDynamicColor: Boolean = true,
     content: @Composable() () -> Unit
@@ -52,8 +46,6 @@ fun DynamicTheme(
 
     ApplyTheme(
         parameters = themeToUse,
-        systemUiOptions = systemUiOptions,
-        isDarkTheme = isDarkTheme,
         content = content
     )
 }
@@ -61,22 +53,12 @@ fun DynamicTheme(
 @Composable
 private fun ApplyTheme(
     parameters: Theme,
-    systemUiOptions: SystemUiOptions?,
-    isDarkTheme: Boolean,
     content: @Composable () -> Unit
 ) {
-
-    when (systemUiOptions) {
-        SystemUiOptions.OverrideSystemColor -> ApplySystemColor(
-            color = parameters.color.primaryContainer,
-            isDarkTheme = isDarkTheme
-        )
-        SystemUiOptions.SetSystemColor ->
-            ApplySystemColor(
-                color = parameters.color.background,
-                isDarkTheme = isDarkTheme
-            )
-    }
+    ApplySystemColor(
+        color = Color.Transparent,
+        isDarkTheme = false
+    )
 
     MaterialTheme(
         colorScheme = parameters.color,

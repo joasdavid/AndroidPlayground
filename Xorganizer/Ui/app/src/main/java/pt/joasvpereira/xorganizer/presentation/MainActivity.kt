@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -53,7 +54,6 @@ import pt.joasvpereira.xorganizer.presentation.compose.item.ItemScreenViewModel
 import pt.joasvpereira.xorganizer.presentation.compose.item.Mode
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.presentation.theme.SystemUiOptions
 import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -61,6 +61,7 @@ import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             DynamicTheme {
                 /*var tagColumnState by remember { mutableStateOf(TagColumnState(isEditOpen = true,listOfTags = mutableListOf("test", "XPTO", "test3"))) }
@@ -112,7 +113,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold {
                     NavHost(navController = navController, startDestination = ScreenNavigation.MainScreen.route) {
                         composable(ScreenNavigation.MainScreen.route) {
-                            DynamicTheme(systemUiOptions = SystemUiOptions.SetSystemColor) {
+                            DynamicTheme {
                                 MainScreen(navController = navController, viewModel = getViewModel())
                             }
                         }
