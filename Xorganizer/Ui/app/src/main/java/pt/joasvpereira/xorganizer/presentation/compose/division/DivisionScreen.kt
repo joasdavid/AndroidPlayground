@@ -10,12 +10,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -248,12 +254,11 @@ fun DivisionContent(
                 onBoxClick = onBoxClick,
                 onItemClick = { onItemClick(it.id) })
         }
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize().navigationBarsPadding().padding(bottom = 5.dp)) {
             AnimatedVisibility(
                 visible = !uiState.showAddOptions,
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 10.dp),
+                    .align(Alignment.BottomCenter),
                 enter = slideInVertically(initialOffsetY = { it * 2 }),
                 exit = slideOutVertically(targetOffsetY = { it * 2 }),
             ) {
@@ -450,7 +455,7 @@ fun DivisionContentBody(
                 )
             }
             item(span = { GridItemSpan(2) }) {
-                SimpleSpace(size = 60.dp)
+                SimpleSpace(size = 65.dp + WindowInsets.systemBars.asPaddingValues().calculateBottomPadding())
             }
         }
     }
