@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -79,4 +80,12 @@ dependencies {
     // Jetpack Compose
     def koin_version= "3.2.0"
     implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
+    def roomVersion = "2.4.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$roomVersion")
+    // optional - Test helpers
+    testImplementation("androidx.room:room-testing:$roomVersion")
 }
