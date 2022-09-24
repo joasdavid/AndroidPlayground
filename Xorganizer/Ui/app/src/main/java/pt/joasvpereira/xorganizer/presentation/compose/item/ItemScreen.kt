@@ -5,15 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,9 +43,9 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolBarBackCo
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolbarTitleCentered
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import pt.joasvpereira.xorganizer.presentation.compose.common.shield.NameShield
+import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.shield.NameShield
 import pt.joasvpereira.xorganizer.presentation.compose.division.SingleItem
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
 
 enum class Mode {
     EDIT,

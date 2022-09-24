@@ -29,7 +29,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,17 +53,15 @@ import compose.icons.lineawesomeicons.HomeSolid
 import compose.icons.lineawesomeicons.PlusSolid
 import compose.icons.lineawesomeicons.TableSolid
 import compose.icons.lineawesomeicons.TabletAltSolid
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.usecase.EmptyParams
 import pt.joasvpereira.xorganizer.domain.usecase.division.IDivisionsUseCase
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 data class MainScreenUiState(
     val divisions: List<DivisionHolder> = emptyList()
@@ -215,7 +212,9 @@ fun SettingsMenu(
 
         DropdownMenu(expanded = dropOpen, onDismissRequest = { onDropChanges(false) }) {
             options.forEachIndexed { index, settingsMenuItem ->
-                DropdownMenuItem(text = { Text(settingsMenuItem.text) }, onClick = { onPositionSelected(index) })
+                DropdownMenuItem(
+                    text = { Text(settingsMenuItem.text) },
+                    onClick = { onPositionSelected(index) })
             }
         }
     }

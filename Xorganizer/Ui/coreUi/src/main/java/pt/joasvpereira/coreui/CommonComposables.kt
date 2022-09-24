@@ -53,15 +53,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import compose.icons.AllIcons
-import compose.icons.LineAwesomeIcons
+import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.getAllThemesDetails
 import pt.joasvpereira.xorganizer.presentation.compose.DropdownSelector
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
-import pt.joasvpereira.xorganizer.presentation.theme.getAllThemesDetails
 
 @Composable
 fun IconSelector(
+    iconOptions: List<ImageVector>,
     iconSelected: ImageVector,
     onIconSelected: (ImageVector) -> Unit,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f),
@@ -134,8 +133,8 @@ fun IconSelector(
                                     bottom = 16.dp
                                 )
                             ) {
-                                items(LineAwesomeIcons.AllIcons.size) { index ->
-                                    val currentItem = LineAwesomeIcons.AllIcons[index]
+                                items(iconOptions.size) { index ->
+                                    val currentItem = iconOptions[index]
                                     Icon(
                                         imageVector = currentItem,
                                         contentDescription = currentItem.name,
@@ -467,11 +466,14 @@ fun ToolbarTitleCenterdPreview() {
     Column {
         ToolbarTitleCentered(title = "Test Toolbar", toolBarBackConfig = null)
         SimpleSpace(size = 10.dp)
-        ToolbarTitleCentered(title = "Test Toolbar with back button", toolBarBackConfig = ToolBarBackConfig(
-            onBackClick = {
+        ToolbarTitleCentered(
+            title = "Test Toolbar with back button",
+            toolBarBackConfig = ToolBarBackConfig(
+                onBackClick = {
 
-            }
-        ))
+                }
+            )
+        )
         SimpleSpace(size = 10.dp)
         ToolbarTitleCentered(
             title = "Test Toolbar",
@@ -483,16 +485,11 @@ fun ToolbarTitleCenterdPreview() {
         Column(
             modifier = Modifier
         ) {
-            ToolbarTitleCentered(title = "divisionName", toolBarBackConfig = ToolBarBackConfig(onBackClick = {}), horizontalPadding = 5.dp)
-            /*SimpleSpace(size = 20.dp)
-            DivisionChart(
-                nrFolders,
-                percentageFolders,
-                nrItems,
-                percentageItems,
-                shieldImg,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )*/
+            ToolbarTitleCentered(
+                title = "divisionName",
+                toolBarBackConfig = ToolBarBackConfig(onBackClick = {}),
+                horizontalPadding = 16.dp
+            )
         }
     }
 }

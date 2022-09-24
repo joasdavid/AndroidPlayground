@@ -37,13 +37,14 @@ import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.IconSelector
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ThemeSelector
+import compose.icons.AllIcons
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.HomeSolid
 import kotlinx.coroutines.launch
+import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.xorganizer.domain.model.DivisionCreationInfo
 import pt.joasvpereira.xorganizer.domain.usecase.division.ICreateDivisionsUseCase
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 @Composable
 fun CreateDivisionScreen(navController: NavController, useCase: ICreateDivisionsUseCase) {
@@ -107,7 +108,8 @@ fun CreateDivisionBody(
                     }
                     IconSelector(
                         iconSelected = iconSelected,
-                        onIconSelected = { iconSelected = it }
+                        onIconSelected = { iconSelected = it },
+                        iconOptions = LineAwesomeIcons.AllIcons.take(35)
                     )
 
                     Spacer(modifier = Modifier.size(20.dp))

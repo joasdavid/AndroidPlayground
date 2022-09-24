@@ -5,19 +5,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,9 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -40,12 +29,11 @@ import androidx.navigation.navArgument
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
-import pt.joasvpereira.xorganizer.presentation.compose.common.add.TagColumn
-import pt.joasvpereira.xorganizer.presentation.compose.common.add.TagColumnState
+import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.xorganizer.presentation.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.presentation.compose.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.presentation.compose.MainScreen
-import pt.joasvpereira.xorganizer.presentation.compose.MainScreenViewModel
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreen
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreenViewModel
 import pt.joasvpereira.xorganizer.presentation.compose.folder.FolderScreen
@@ -53,8 +41,6 @@ import pt.joasvpereira.xorganizer.presentation.compose.item.ItemScreen
 import pt.joasvpereira.xorganizer.presentation.compose.item.ItemScreenViewModel
 import pt.joasvpereira.xorganizer.presentation.compose.item.Mode
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterial3Api
@@ -111,10 +97,16 @@ class MainActivity : ComponentActivity() {
                 )*/
                 val navController = rememberNavController()
                 Scaffold {
-                    NavHost(navController = navController, startDestination = ScreenNavigation.MainScreen.route) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = ScreenNavigation.MainScreen.route
+                    ) {
                         composable(ScreenNavigation.MainScreen.route) {
                             DynamicTheme {
-                                MainScreen(navController = navController, viewModel = getViewModel())
+                                MainScreen(
+                                    navController = navController,
+                                    viewModel = getViewModel()
+                                )
                             }
                         }
                         composable(
@@ -123,7 +115,10 @@ class MainActivity : ComponentActivity() {
                                 type = NavType.IntType
                             })
                         ) {
-                            val id = it.arguments?.getInt(ScreenNavigation.DivisionScreen.DIVISION_ID,-1) ?: -1
+                            val id = it.arguments?.getInt(
+                                ScreenNavigation.DivisionScreen.DIVISION_ID,
+                                -1
+                            ) ?: -1
                             val vm = getViewModel<DivisionScreenViewModel> { parametersOf(id) }
                             DivisionScreen(navController = navController, viewModel = vm)
                         }
@@ -132,17 +127,23 @@ class MainActivity : ComponentActivity() {
                             arguments = listOf(navArgument(ScreenNavigation.FolderScreen.FOLDER_ID) {
                                 type = NavType.IntType
                             })
-                        ) { FolderScreen(
-                            navController = navController,
-                            id = it.arguments?.getInt(ScreenNavigation.FolderScreen.FOLDER_ID, -1) ?: -1
-                        ) }
+                        ) {
+                            FolderScreen(
+                                navController = navController,
+                                id = it.arguments?.getInt(
+                                    ScreenNavigation.FolderScreen.FOLDER_ID,
+                                    -1
+                                ) ?: -1
+                            )
+                        }
                         composable(
                             ScreenNavigation.ItemScreen.route,
                             arguments = listOf(navArgument(ScreenNavigation.ItemScreen.ITEM_ID) {
                                 type = NavType.IntType
                             })
                         ) {
-                            val id = it.arguments?.getInt(ScreenNavigation.ItemScreen.ITEM_ID, -1) ?: -1
+                            val id =
+                                it.arguments?.getInt(ScreenNavigation.ItemScreen.ITEM_ID, -1) ?: -1
                             val vm = getViewModel<ItemScreenViewModel> {
                                 parametersOf(
                                     id,
@@ -154,10 +155,12 @@ class MainActivity : ComponentActivity() {
                                 navController = navController
                             )
                         }
-                        composable(ScreenNavigation.CreateDivisionScreen.route) { CreateDivisionScreen(
-                            navController = navController,
-                            useCase = get()
-                        ) }
+                        composable(ScreenNavigation.CreateDivisionScreen.route) {
+                            CreateDivisionScreen(
+                                navController = navController,
+                                useCase = get()
+                            )
+                        }
                         composable(ScreenNavigation.TestColorDynamicScreen.route) {
                             DynamicTheme { ColorSchemeScreen() }
                         }

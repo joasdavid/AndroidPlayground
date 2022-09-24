@@ -39,8 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import kotlinx.coroutines.launch
+import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.xorganizer.presentation.compose.common.container.Folder
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
 
 data class CreateFolderBottomSheetState(
     val isExpanded: Boolean = false,

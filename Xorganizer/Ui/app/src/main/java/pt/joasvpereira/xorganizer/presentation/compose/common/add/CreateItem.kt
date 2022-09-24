@@ -48,8 +48,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import kotlinx.coroutines.launch
-import pt.joasvpereira.xorganizer.presentation.compose.common.shield.NameShield
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
+import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.shield.NameShield
 
 data class CreateItemBottomSheetState(
     val isExpanded: Boolean = false,

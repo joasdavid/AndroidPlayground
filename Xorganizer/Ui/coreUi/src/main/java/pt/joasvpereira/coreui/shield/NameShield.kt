@@ -1,4 +1,4 @@
-package pt.joasvpereira.xorganizer.presentation.compose.common.shield
+package pt.joasvpereira.coreui.shield
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,12 +27,12 @@ interface TextHighlightStrategy {
     fun capture(from: String): String
 }
 
-class First2WordsHighlight(private val isUpperCase: Boolean = true) : TextHighlightStrategy {
+class First2WordsHighlight(private val isUpperCase: Boolean = true, val emptySymbol: Char = '?') : TextHighlightStrategy {
     override fun capture(from: String): String =
         from.trim().split(" ").run {
             val firstWord = this[0]
             when {
-                firstWord.isBlank() -> "?"
+                firstWord.isBlank() -> emptySymbol.toString()
                 size >= 2 -> {
                     val secondWord = this[1]
                     "${firstWord[0]}${secondWord[0]}"
@@ -93,9 +93,14 @@ fun NameShield(
 @Preview
 @Composable
 fun NameShieldPreview() {
-    Column(verticalArrangement = Arrangement.SpaceBetween) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         NameShield(text = "asd", modifier = Modifier.size(48.dp))
         NameShield(text = "   ", modifier = Modifier.size(48.dp))
+        NameShield(text = "   ", modifier = Modifier.size(48.dp), textStrategy = First2WordsHighlight(emptySymbol = ' '))
         NameShield(text = "qe w", modifier = Modifier.size(48.dp))
     }
 }

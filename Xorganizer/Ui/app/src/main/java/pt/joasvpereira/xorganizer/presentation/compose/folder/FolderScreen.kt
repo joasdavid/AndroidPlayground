@@ -28,11 +28,11 @@ import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolBarBackConfig
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolbarTitleCentered
+import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.item.ItemHolder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.search.SearchHolder
 import pt.joasvpereira.xorganizer.presentation.compose.division.SingleItem
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
 
 val fakeList = mutableListOf(
     SingleItem(

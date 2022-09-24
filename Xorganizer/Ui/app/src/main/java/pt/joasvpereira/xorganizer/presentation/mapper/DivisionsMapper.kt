@@ -3,9 +3,9 @@ package pt.joasvpereira.xorganizer.presentation.mapper
 import androidx.compose.ui.graphics.vector.ImageVector
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.QuestionCircle
+import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.xorganizer.domain.model.Division
 import pt.joasvpereira.xorganizer.presentation.compose.DivisionHolder
-import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 class DivisionsMapper: BaseMapper<DivisionHolder, Division> {
     override fun mapToPresentation(from: Division): DivisionHolder = with(from) {

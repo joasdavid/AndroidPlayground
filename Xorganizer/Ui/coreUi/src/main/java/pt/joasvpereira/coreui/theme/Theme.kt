@@ -1,4 +1,4 @@
-package pt.joasvpereira.xorganizer.presentation.theme
+package pt.joasvpereira.coreui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
@@ -7,6 +7,10 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import pt.joasvpereira.coreui.theme.AppTypography
+import pt.joasvpereira.coreui.theme.blueTheme
+import pt.joasvpereira.coreui.theme.defaultTheme
+import pt.joasvpereira.coreui.theme.greenTheme
 
 //region data objects
 data class Theme(

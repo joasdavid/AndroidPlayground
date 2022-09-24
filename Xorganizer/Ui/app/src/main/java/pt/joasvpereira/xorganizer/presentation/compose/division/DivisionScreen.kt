@@ -62,6 +62,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.xorganizer.domain.model.Box
 import pt.joasvpereira.xorganizer.domain.model.Division
 import pt.joasvpereira.xorganizer.domain.model.StoredItem
@@ -83,8 +85,6 @@ import pt.joasvpereira.xorganizer.presentation.mapper.BoxMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.ItemMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.mapToPresentationList
-import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
-import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
 
 data class DivisionScreenUiState(
     val division: DivisionHolder = DivisionHolder(

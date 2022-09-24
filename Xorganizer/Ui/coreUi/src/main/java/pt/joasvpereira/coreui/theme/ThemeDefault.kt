@@ -1,4 +1,4 @@
-package pt.joasvpereira.xorganizer.presentation.theme
+package pt.joasvpereira.coreui.theme
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -9,6 +9,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import pt.joasvpereira.coreui.Theme
 
 val default_light_primary = Color(0xFF8d4f00)
 val default_light_onPrimary = Color(0xFFffffff)
@@ -143,5 +144,5 @@ fun defaultTheme(isDarkTheme: Boolean,
         else -> LightDefaultColorPalette
     }
 
-    return Theme(color = colors)
+    return pt.joasvpereira.coreui.Theme(color = colors)
 }

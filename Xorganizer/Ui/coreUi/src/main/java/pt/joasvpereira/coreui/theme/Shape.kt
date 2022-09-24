@@ -1,4 +1,4 @@
-package pt.joasvpereira.xorganizer.presentation.theme
+package pt.joasvpereira.coreui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

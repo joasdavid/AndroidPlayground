@@ -25,7 +25,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import pt.joasvpereira.xorganizer.presentation.compose.OverFlowRow
-import pt.joasvpereira.xorganizer.presentation.compose.common.shield.NameShield
+import pt.joasvpereira.coreui.shield.NameShield
 import pt.joasvpereira.xorganizer.presentation.compose.division.SingleItem
 
 @OptIn(ExperimentalMaterial3Api::class)
