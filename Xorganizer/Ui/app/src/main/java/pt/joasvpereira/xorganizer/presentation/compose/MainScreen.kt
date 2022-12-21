@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,6 +61,11 @@ import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.usecase.EmptyParams
 import pt.joasvpereira.xorganizer.domain.usecase.division.IDivisionsUseCase
+import pt.joasvpereira.xorganizer.experimental.SlideDirection
+import pt.joasvpereira.xorganizer.experimental.UnderMenuScaffold
+import pt.joasvpereira.xorganizer.experimental.UnderMenuScaffoldState
+import pt.joasvpereira.xorganizer.experimental.rememberUnderMenuScaffold
+import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreenPreview
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 
@@ -91,35 +97,43 @@ class MainScreenViewModel(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(navController: NavController, viewModel: MainScreenViewModel) {
-    Surface {
-        val list = listOf(
-            SettingsMenuItem(
-                text = "Dynamic Theme",
-                distination = ScreenNavigation.TestColorDynamicScreen.route
-            ),
-            SettingsMenuItem(
-                text = "Blue Theme",
-                distination = ScreenNavigation.TestColorBlueScreen.route
-            ),
-            SettingsMenuItem(
-                text = "Green Theme",
-                distination = ScreenNavigation.TestColorGreenScreen.route
+    val underMenuScaffoldState by rememberUnderMenuScaffold()
+    UnderMenuScaffold(
+        menuContent = { DivisionScreenPreview() },
+        state = underMenuScaffoldState
+    ) {
+        Surface {
+            val list = listOf(
+                SettingsMenuItem(
+                    text = "Dynamic Theme",
+                    distination = ScreenNavigation.TestColorDynamicScreen.route
+                ),
+                SettingsMenuItem(
+                    text = "Blue Theme",
+                    distination = ScreenNavigation.TestColorBlueScreen.route
+                ),
+                SettingsMenuItem(
+                    text = "Green Theme",
+                    distination = ScreenNavigation.TestColorGreenScreen.route
+                )
             )
-        )
-        var settingsOpen by remember { mutableStateOf(false) }
-        MainScreenBody(
-            onAddNewItemClick = { navController.navigate("create_screen") },
-            onItemClick = { holder ->
-                navController.navigate(ScreenNavigation.DivisionScreen.createNavigationRoute(holder.id))
-            },
-            dropOpen = settingsOpen,
-            options = list,
-            onDropChanges = { settingsOpen = !settingsOpen },
-            onPositionSelected = {
-                navController.navigate(list[it].distination)
-            },
-            div = viewModel.uiState.divisions
-        )
+            var settingsOpen by remember { mutableStateOf(false) }
+            val view = LocalView.current
+            MainScreenBody(
+                onAddNewItemClick = { navController.navigate("create_screen") },
+                onItemClick = { holder ->
+                    underMenuScaffoldState.toggleOpenState(view)
+                    //navController.navigate(ScreenNavigation.DivisionScreen.createNavigationRoute(holder.id))
+                },
+                dropOpen = settingsOpen,
+                options = list,
+                onDropChanges = { settingsOpen = !settingsOpen },
+                onPositionSelected = {
+                    navController.navigate(list[it].distination)
+                },
+                div = viewModel.uiState.divisions
+            )
+        }
     }
 }
 

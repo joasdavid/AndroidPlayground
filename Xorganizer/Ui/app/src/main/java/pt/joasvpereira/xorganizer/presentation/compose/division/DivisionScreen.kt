@@ -336,7 +336,7 @@ fun DivisionDetailsHeader(
 }
 
 @Composable
-private fun DivisionChart(
+fun DivisionChart(
     nrFolders: Int,
     percentageFolders: Float,
     nrItems: Int,
