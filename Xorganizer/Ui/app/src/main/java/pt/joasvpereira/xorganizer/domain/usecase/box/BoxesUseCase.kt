@@ -9,8 +9,8 @@ import pt.joasvpereira.xorganizer.domain.usecase.Params
 
 data class SourceDivision(val id: Int): Params()
 
-interface IBoxesUseCase : BaseUseCaseSync<SourceDivision?, Flow<List<Box>>>
+interface IBoxesUseCase : BaseUseCaseSync<SourceDivision?, List<Box>>
 
 class BoxesUseCase(private val boxesDataSource: BoxDataSource) : IBoxesUseCase {
-    override suspend fun execute(params: SourceDivision?): Flow<List<Box>> = boxesDataSource.getBoxes(FromDivision(params!!.id))
+    override suspend fun execute(params: SourceDivision?): List<Box> = boxesDataSource.getBoxes(FromDivision(params!!.id))
 }

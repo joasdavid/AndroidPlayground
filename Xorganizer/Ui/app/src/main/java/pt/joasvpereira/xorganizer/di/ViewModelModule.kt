@@ -73,7 +73,7 @@ val repository = module {
         ).build()
         v
     }
-    single<DivisionDataSource> {
+    /*single<DivisionDataSource> {
         //repo
         val db: Db = get()
         object : DivisionDataSource {
@@ -118,7 +118,7 @@ val repository = module {
                 )
             }
         }
-    }
+    }*/
     single<BoxDataSource> { repo }
     single<StoredItemDataSource> { repo }
 }

@@ -8,10 +8,10 @@ import pt.joasvpereira.xorganizer.domain.repo.DivisionDataSource
 import pt.joasvpereira.xorganizer.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.xorganizer.domain.usecase.Params
 
-interface IDivisionsUseCase : BaseUseCaseSync<Params?, Flow<List<Division>>>
+interface IDivisionsUseCase : BaseUseCaseSync<Params?, List<Division>>
 
 class DivisionsUseCase(private val divisionDataSource: DivisionDataSource) : IDivisionsUseCase {
-    override suspend fun execute(params: Params?): Flow<List<Division>> = withContext(Dispatchers.IO) {
+    override suspend fun execute(params: Params?): List<Division> = withContext(Dispatchers.IO) {
         divisionDataSource.getDivisions()
     }
 }

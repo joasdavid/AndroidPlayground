@@ -6,11 +6,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -339,6 +343,23 @@ fun DropdownSelectorPreview() {
 
             },
             onSelectedOptionChanges = {}, dropdownIcon = null, selectedOption = null
+        )
+
+        SimpleSpace(size = 10.dp)
+        DropdownSelector<Any>(
+            selectionOpenState = false,
+            isDisabled = false,
+            onSelectionOpenStateChanges = { open = !open },
+            options = listOf(),
+            styleConfiguration = defaultBorderStyle().copy(unFocus = StyleParameters(1.dp, Color.Black, RoundedCornerShape(5.dp))),
+            previewContent = { _, _ ->
+                Icon(imageVector = Icons.Filled.Person, contentDescription = "", modifier = Modifier.size(24.dp))
+            },
+            expandableContent = {
+
+            },
+            onSelectedOptionChanges = {}, dropdownIcon = DropdownIcon(Icons.Filled.ArrowDropDown, "",20.dp), selectedOption = null,
+            modifier = Modifier.width(90.dp).height(40.dp)
         )
     }
 }

@@ -7,9 +7,9 @@ import pt.joasvpereira.xorganizer.domain.repo.StoredItemDataSource
 import pt.joasvpereira.xorganizer.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.xorganizer.domain.usecase.box.SourceDivision
 
-interface IItemsUseCase : BaseUseCaseSync<SourceDivision?, Flow<List<StoredItem>>>
+interface IItemsUseCase : BaseUseCaseSync<SourceDivision?, List<StoredItem>>
 
 class ItemsUseCase(private val storedItemDataSource: StoredItemDataSource) : IItemsUseCase {
-    override suspend fun execute(params: SourceDivision?): Flow<List<StoredItem>> =
+    override suspend fun execute(params: SourceDivision?): List<StoredItem> =
         storedItemDataSource.getItems(FromDivision(params!!.id))
 }

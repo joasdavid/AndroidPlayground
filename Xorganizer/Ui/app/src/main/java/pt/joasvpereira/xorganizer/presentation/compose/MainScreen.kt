@@ -80,13 +80,13 @@ class MainScreenViewModel(
 
     init {
         viewModelScope.launch {
-            divisionUseCase.execute(EmptyParams()).map { it ->
+            /*divisionUseCase.execute(EmptyParams()).map { it ->
                 it.map { mapper.mapToPresentation(it) }
             }.collect {
                 uiState = uiState.copy(
                     divisions = it
                 )
-            }
+            }*/
         }
     }
 }

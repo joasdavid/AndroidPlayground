@@ -130,23 +130,23 @@ class DivisionScreenViewModel(
 
 
                 launch {
-                    boxenUseCase.execute(param).map {
+                    /*boxenUseCase.execute(param).map {
                         BoxMapper().mapToPresentationList(it)
                     }.collect {
                         uiState = uiState.copy(
                             boxes = it
                         )
-                    }
+                    }*/
                 }
 
                 launch {
-                    itemsUseCase.execute(param).map {
+                   /* itemsUseCase.execute(param).map {
                         ItemMapper().mapToPresentationList(it)
                     }.collect {
                         uiState = uiState.copy(
                             items = it
                         )
-                    }
+                    }*/
                 }
             }
         }
@@ -496,7 +496,7 @@ fun DivisionDetailsHeaderPreview() {
         )
     }
 }
-
+/*
 @Preview()
 @Composable
 fun DivisionScreenPreview(
@@ -524,7 +524,7 @@ fun DivisionScreenPreview(
     DynamicTheme(ThemeOption.THEME_BLUE) {
         DivisionScreen(viewModel)
     }
-}
+}*/
 
 @Composable
 fun FilterDialog() {

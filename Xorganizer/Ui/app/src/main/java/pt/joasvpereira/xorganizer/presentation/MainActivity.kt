@@ -37,8 +37,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import org.koin.androidx.compose.get
+import org.koin.android.ext.android.get
 import org.koin.androidx.compose.getViewModel
+import org.koin.core.context.GlobalContext.get
 import org.koin.core.parameter.parametersOf
 import pt.joasvpereira.xorganizer.presentation.compose.common.add.TagColumn
 import pt.joasvpereira.xorganizer.presentation.compose.common.add.TagColumnState
@@ -55,6 +56,7 @@ import pt.joasvpereira.xorganizer.presentation.compose.item.Mode
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.presentation.theme.DynamicTheme
 import pt.joasvpereira.xorganizer.presentation.theme.ThemeOption
+import pt.joasvpereira.xorganizer.repository.local.Db
 
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterial3Api
@@ -62,6 +64,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        //get<Db>()
+      /*
         setContent {
             DynamicTheme {
                 /*var tagColumnState by remember { mutableStateOf(TagColumnState(isEditOpen = true,listOfTags = mutableListOf("test", "XPTO", "test3"))) }
@@ -171,6 +175,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    */
     }
 }
 
