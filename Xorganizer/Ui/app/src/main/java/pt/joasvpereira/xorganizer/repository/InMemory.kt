@@ -16,9 +16,7 @@ class InMemory: DivisionDataSource, BoxDataSource, StoredItemDataSource {
 
     private val divisionFlow  = MutableSharedFlow<List<Division>>(replay = 1)
 
-    override suspend fun getDivisions() = divisionFlow.apply {
-        emit(divs)
-    }
+    override suspend fun getDivisions() = divs
 
     override suspend fun singleDivisions(id: Int): Division = divs.find { it.id == id }!!
 
@@ -33,44 +31,37 @@ class InMemory: DivisionDataSource, BoxDataSource, StoredItemDataSource {
 
     private val boxFlow = MutableSharedFlow<List<Box>>(replay = 1)
 
-    override suspend fun getBoxes(from: FromDivision) = boxFlow.apply {
-        emit(boxMap[from.id]!!.toList())
-    }
+    override suspend fun getBoxes(from: FromDivision) = boxMap[from.id]!!.toList()
 
     override suspend fun singleBox(id: Int) = boxMap.values.flatten().find { it.id == id }!!
 
     private val itemFlow = MutableSharedFlow<List<StoredItem>>(replay = 1)
 
-    override suspend fun getItems(from: FromDivision) = itemFlow.apply {
-        emit(itemMap[from.id]!!.toList())
-    }
+    override suspend fun getItems(from: FromDivision) = itemMap[from.id]!!.toList()
 
-    override suspend fun getItems(from: FromBox) = itemFlow.apply {
-        val list = listOf(
-            StoredItem(
-                id = -1,
-                name = "Carregador",
-                description = "",
-                tags = listOf("tipe c"),
-                isUsed = false
-            ),
-            StoredItem(
-                id = -1,
-                name = "Carregador",
-                description = "",
-                tags = listOf("tipe c"),
-                isUsed = false
-            ),
-            StoredItem(
-                id = -1,
-                name = "cabo c to usb",
-                description = "",
-                tags = listOf("tipe c", "cabo", "usb"),
-                isUsed = false
-            ),
-        )
-        emit(list)
-    }
+    override suspend fun getItems(from: FromBox) = listOf(
+        StoredItem(
+            id = -1,
+            name = "Carregador",
+            description = "",
+            tags = listOf("tipe c"),
+            isUsed = false
+        ),
+        StoredItem(
+            id = -1,
+            name = "Carregador",
+            description = "",
+            tags = listOf("tipe c"),
+            isUsed = false
+        ),
+        StoredItem(
+            id = -1,
+            name = "cabo c to usb",
+            description = "",
+            tags = listOf("tipe c", "cabo", "usb"),
+            isUsed = false
+        ),
+    )
 
     override suspend fun singleItem(id: Int) = itemMap.values.flatten().find { it.id == id }!!
 
