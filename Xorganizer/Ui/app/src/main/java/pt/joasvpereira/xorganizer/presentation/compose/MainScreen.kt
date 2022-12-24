@@ -2,6 +2,7 @@ package pt.joasvpereira.xorganizer.presentation.compose
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -38,10 +40,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -148,28 +153,26 @@ private fun MainScreenBody(
     onPositionSelected: (Int) -> Unit = {}
 ) {
     Box {
-        SettingsMenu(
-            Modifier.align(Alignment.TopEnd),
-            dropOpen = dropOpen,
-            options = options,
-            onDropChanges = onDropChanges,
-            onPositionSelected = onPositionSelected
+        Image(
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = "",
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.fillMaxSize()
         )
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 20.dp)
         ) {
-            Column(
-                Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.size(50.dp))
-                Text(text = "Welcome", style = MaterialTheme.typography.titleLarge)
-                Text(text = "Joás V. Pereira", style = MaterialTheme.typography.titleSmall)
-            }
             Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "Devisions: ", style = MaterialTheme.typography.titleMedium)
+            MainScreenHeader(
+                dropOpen = dropOpen,
+                options = options,
+                onDropChanges = onDropChanges,
+                onPositionSelected = onPositionSelected
+            )
+            Spacer(modifier = Modifier.size(20.dp))
+            Text(text = "Devisions:", style = MaterialTheme.typography.titleLarge)
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(
@@ -200,6 +203,57 @@ private fun MainScreenBody(
     }
 }
 
+@Composable
+fun MainScreenHeader(
+    dropOpen: Boolean = false,
+    options: List<SettingsMenuItem> = listOf(),
+    onDropChanges: (Boolean) -> Unit = {},
+    onPositionSelected: (Int) -> Unit = {}
+) {
+    Box{
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "XOrganizer",
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.weight(1f)
+                )
+                SettingsMenu(
+                    Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(40.dp),
+                    dropOpen = dropOpen,
+                    options = options,
+                    onDropChanges = onDropChanges,
+                    onPositionSelected = onPositionSelected
+                )
+
+            }
+            Spacer(modifier = Modifier.height(28.5.dp))
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(text = "Welcome", style = MaterialTheme.typography.headlineSmall)
+                    Text(text = "Joas V. Pereira", style = MaterialTheme.typography.labelLarge)
+                }
+                Box(Modifier
+                    .align(Alignment.Bottom)
+                    .size(40.dp)
+                    .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.usericon),
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
+                        modifier =Modifier
+                            .align(Alignment.Center)
+                            .size(40.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
 data class SettingsMenuItem(
     val text: String,
     val distination: String
@@ -207,19 +261,23 @@ data class SettingsMenuItem(
 
 @Composable
 fun SettingsMenu(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     dropOpen: Boolean,
     options: List<SettingsMenuItem>,
     onDropChanges: (Boolean) -> Unit,
-    onPositionSelected: (Int) -> Unit
+    onPositionSelected: (Int) -> Unit,
+    iconAlignment: Alignment =  Alignment.Center,
+    iconSize: Dp = 24.dp
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = Modifier
+        .clip(CircleShape)
+        .clickable { onDropChanges(!dropOpen) }
+        .then(modifier)
+    ){
         Icon(
             modifier = Modifier
-                .clip(CircleShape)
-                .clickable { onDropChanges(!dropOpen) }
-                .padding(24.dp)
-                .size(24.dp),
+                .align(iconAlignment)
+                .size(iconSize),
             imageVector = Icons.Default.Settings,
             contentDescription = "Settings"
         )
@@ -493,3 +551,22 @@ fun MainScreenPreviewDark() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun MainScreenHeaderPreview() {
+    DynamicTheme {
+        Surface() {
+            MainScreenHeader()
+        }
+    }
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun MainScreenHeaderPreviewDark() {
+    DynamicTheme {
+        Surface {
+            MainScreenHeader()
+        }
+    }
+}

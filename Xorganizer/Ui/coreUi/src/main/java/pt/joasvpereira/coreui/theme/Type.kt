@@ -90,9 +90,9 @@ val AppTypography = androidx.compose.material3.Typography(
     ),
     headlineLarge = TextStyle(
         fontFamily = Roboto,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
-        lineHeight = 40.sp,
+        lineHeight = 37.sp,
         letterSpacing = 0.sp,
     ),
     headlineMedium = TextStyle(
@@ -104,16 +104,16 @@ val AppTypography = androidx.compose.material3.Typography(
     ),
     headlineSmall = TextStyle(
         fontFamily = Roboto,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
         lineHeight = 32.sp,
         letterSpacing = 0.sp,
     ),
     titleLarge = TextStyle(
         fontFamily = Roboto,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 22.sp,
-        lineHeight = 28.sp,
+        lineHeight = 32.sp,
         letterSpacing = 0.sp,
     ),
     titleMedium = TextStyle(
@@ -133,7 +133,7 @@ val AppTypography = androidx.compose.material3.Typography(
     labelLarge = TextStyle(
         fontFamily = Roboto,
         fontWeight = FontWeight.Medium,
-        fontSize = 14.sp,
+        fontSize = 18.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp,
     ),

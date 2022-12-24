@@ -44,7 +44,7 @@ fun DynamicTheme(
         ThemeOption.THEME_GREEN -> greenTheme(isDarkTheme)
         else -> defaultTheme(
             isDarkTheme = isDarkTheme,
-            isDynamicColor = isDynamicColor
+            isDynamicColor = false //isDynamicColor
         )
     }
 
