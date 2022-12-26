@@ -59,42 +59,49 @@ import compose.icons.lineawesomeicons.HomeSolid
 import compose.icons.lineawesomeicons.PlusSolid
 import compose.icons.lineawesomeicons.TableSolid
 import compose.icons.lineawesomeicons.TabletAltSolid
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.usecase.EmptyParams
 import pt.joasvpereira.xorganizer.domain.usecase.division.IDivisionsUseCase
-import pt.joasvpereira.xorganizer.experimental.SlideDirection
-import pt.joasvpereira.xorganizer.experimental.UnderMenuScaffold
-import pt.joasvpereira.xorganizer.experimental.UnderMenuScaffoldState
-import pt.joasvpereira.xorganizer.experimental.rememberUnderMenuScaffold
-import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreenPreview
+import pt.joasvpereira.xorganizer.domain.usecase.session.ISessionUseCase
+import pt.joasvpereira.xorganizer.domain.usecase.session.SessionIdParam
+import pt.joasvpereira.xorganizer.domain.usecase.session.SessionUseCase
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
+import pt.joasvpereira.xorganizer.repository.local.Db
 
 data class MainScreenUiState(
-    val divisions: List<DivisionHolder> = emptyList()
+    val divisions: List<DivisionHolder> = emptyList(),
+    val sessionName: String = ""
 )
 
 class MainScreenViewModel(
     private val divisionUseCase: IDivisionsUseCase,
-    private val mapper: DivisionsMapper
+    private val sessionUseCase: ISessionUseCase,
+    private val mapper: DivisionsMapper,
 ) : ViewModel() {
 
     var uiState by mutableStateOf(MainScreenUiState())
         private set
 
     init {
-        viewModelScope.launch {
-            /*divisionUseCase.execute(EmptyParams()).map { it ->
-                it.map { mapper.mapToPresentation(it) }
-            }.collect {
+        viewModelScope.launch(Dispatchers.IO) {
+            delay(1000)
+            val name = sessionUseCase.execute(SessionIdParam(1))?.name
+            withContext(Dispatchers.Main) {
                 uiState = uiState.copy(
-                    divisions = it
+                    divisions = divisionUseCase.execute(EmptyParams()).map {
+                        mapper.mapToPresentation(it)
+                    },
+                    sessionName = name ?: ""
                 )
-            }*/
+            }
         }
     }
 }
@@ -102,11 +109,6 @@ class MainScreenViewModel(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(navController: NavController, viewModel: MainScreenViewModel) {
-    val underMenuScaffoldState by rememberUnderMenuScaffold()
-    UnderMenuScaffold(
-        menuContent = { DivisionScreenPreview() },
-        state = underMenuScaffoldState
-    ) {
         Surface {
             val list = listOf(
                 SettingsMenuItem(
@@ -127,8 +129,7 @@ fun MainScreen(navController: NavController, viewModel: MainScreenViewModel) {
             MainScreenBody(
                 onAddNewItemClick = { navController.navigate("create_screen") },
                 onItemClick = { holder ->
-                    underMenuScaffoldState.toggleOpenState(view)
-                    //navController.navigate(ScreenNavigation.DivisionScreen.createNavigationRoute(holder.id))
+                    navController.navigate(ScreenNavigation.DivisionScreen.createNavigationRoute(holder.id))
                 },
                 dropOpen = settingsOpen,
                 options = list,
@@ -136,15 +137,16 @@ fun MainScreen(navController: NavController, viewModel: MainScreenViewModel) {
                 onPositionSelected = {
                     navController.navigate(list[it].distination)
                 },
-                div = viewModel.uiState.divisions
+                div = viewModel.uiState.divisions,
+                sessionName = viewModel.uiState.sessionName
             )
         }
-    }
 }
 
 @Composable
 private fun MainScreenBody(
     div: List<DivisionHolder>,
+    sessionName: String,
     onItemClick: (DivisionHolder) -> Unit = {},
     onAddNewItemClick: () -> Unit = {},
     dropOpen: Boolean = false,
@@ -166,6 +168,7 @@ private fun MainScreenBody(
         ) {
             Spacer(modifier = Modifier.size(20.dp))
             MainScreenHeader(
+                sessionName = sessionName,
                 dropOpen = dropOpen,
                 options = options,
                 onDropChanges = onDropChanges,
@@ -205,6 +208,7 @@ private fun MainScreenBody(
 
 @Composable
 fun MainScreenHeader(
+    sessionName: String,
     dropOpen: Boolean = false,
     options: List<SettingsMenuItem> = listOf(),
     onDropChanges: (Boolean) -> Unit = {},
@@ -233,7 +237,7 @@ fun MainScreenHeader(
             Row(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(text = "Welcome", style = MaterialTheme.typography.headlineSmall)
-                    Text(text = "Joas V. Pereira", style = MaterialTheme.typography.labelLarge)
+                    Text(text = sessionName, style = MaterialTheme.typography.labelLarge)
                 }
                 Box(Modifier
                     .align(Alignment.Bottom)
@@ -537,7 +541,7 @@ val previewList = mutableListOf(
 @Composable
 fun MainScreenPreview() {
     DynamicTheme {
-        MainScreenBody(div = previewList)
+        MainScreenBody(div = previewList,sessionName = "sad")
     }
 }
 
@@ -546,7 +550,7 @@ fun MainScreenPreview() {
 fun MainScreenPreviewDark() {
     DynamicTheme {
         Surface {
-            MainScreenBody(div = previewList)
+            MainScreenBody(div = previewList, sessionName = "sad")
         }
     }
 }
@@ -556,7 +560,7 @@ fun MainScreenPreviewDark() {
 fun MainScreenHeaderPreview() {
     DynamicTheme {
         Surface() {
-            MainScreenHeader()
+            MainScreenHeader("Test")
         }
     }
 }
@@ -566,7 +570,7 @@ fun MainScreenHeaderPreview() {
 fun MainScreenHeaderPreviewDark() {
     DynamicTheme {
         Surface {
-            MainScreenHeader()
+            MainScreenHeader("Joas")
         }
     }
 }

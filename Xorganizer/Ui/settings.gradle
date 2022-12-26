@@ -10,3 +10,4 @@ rootProject.name = "Xorganizer"
 include ':app'
 include ':core'
 include ':coreUi'
+include ':sessionfeature'

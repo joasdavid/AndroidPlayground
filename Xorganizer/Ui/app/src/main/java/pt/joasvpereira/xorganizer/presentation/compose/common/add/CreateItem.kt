@@ -140,7 +140,7 @@ private fun BoxScope.Sheet(content: @Composable () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun CreateItemSheetContent(
     name: String,

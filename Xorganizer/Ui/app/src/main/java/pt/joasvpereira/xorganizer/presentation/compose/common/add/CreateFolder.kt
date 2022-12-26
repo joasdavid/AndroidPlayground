@@ -123,6 +123,7 @@ private fun BoxScope.Sheet(content: @Composable () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CreateFolderSheetContent(
     name: String,

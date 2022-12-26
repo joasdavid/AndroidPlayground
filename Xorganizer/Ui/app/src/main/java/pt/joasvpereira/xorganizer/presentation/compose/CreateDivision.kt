@@ -1,5 +1,7 @@
 package pt.joasvpereira.xorganizer.presentation.compose
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +16,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -29,7 +32,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,6 +48,7 @@ import compose.icons.lineawesomeicons.HomeSolid
 import kotlinx.coroutines.launch
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.model.DivisionCreationInfo
 import pt.joasvpereira.xorganizer.domain.usecase.division.ICreateDivisionsUseCase
 
@@ -68,6 +74,7 @@ fun CreateDivisionScreen(navController: NavController, useCase: ICreateDivisions
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateDivisionBody(
     DivisionHolder: DivisionHolder? = null,
@@ -81,6 +88,15 @@ fun CreateDivisionBody(
     var descriptionText by remember { mutableStateOf(DivisionHolder?.description ?: "") }
     DynamicTheme(selectedThemeOption) {
         Surface(color = MaterialTheme.colorScheme.primaryContainer) {
+            Image(
+                painter = painterResource(id = R.drawable.background),
+                contentDescription = "",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.fillMaxSize()
+            )
+            Box(
+                modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f))
+            )
             Box(Modifier.fillMaxSize()) {
                 Icon(
                     modifier = Modifier

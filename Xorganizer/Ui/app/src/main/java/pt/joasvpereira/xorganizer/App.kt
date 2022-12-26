@@ -2,11 +2,16 @@ package pt.joasvpereira.xorganizer
 
 import android.app.Application
 import com.google.android.material.color.DynamicColors
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import pt.joasvpereira.xorganizer.di.repository
 import pt.joasvpereira.xorganizer.di.usecases
 import pt.joasvpereira.xorganizer.di.viewModelModule
+import pt.joasvpereira.xorganizer.repository.local.Db
+import pt.joasvpereira.xorganizer.repository.local.entities.Session
 
 class App : Application() {
     override fun onCreate() {

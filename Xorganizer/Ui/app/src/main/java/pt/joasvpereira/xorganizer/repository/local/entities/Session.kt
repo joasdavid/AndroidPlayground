@@ -11,9 +11,9 @@ import pt.joasvpereira.xorganizer.repository.local.entities.Session.Companion.TA
 data class Session(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID_SESSION)
-    val id: Int,
+    var id: Int? = null,
     @ColumnInfo(name = DISPLAY_NAME)
-    val displayName: String = "Session $id"
+    var displayName: String = "Session $id"
 ) {
 
     companion object {
