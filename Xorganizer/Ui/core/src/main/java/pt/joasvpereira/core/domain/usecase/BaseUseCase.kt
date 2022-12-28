@@ -1,4 +1,4 @@
-package pt.joasvpereira.xorganizer.domain.usecase
+package pt.joasvpereira.core.domain.usecase
 
 interface BaseUseCase<INPUT, OUTPUT> {
     fun execute(params: Params) : OUTPUT

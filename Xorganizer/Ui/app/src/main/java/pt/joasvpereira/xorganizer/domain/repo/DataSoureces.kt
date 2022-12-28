@@ -3,7 +3,7 @@ package pt.joasvpereira.xorganizer.domain.repo
 import pt.joasvpereira.xorganizer.domain.model.Box
 import pt.joasvpereira.xorganizer.domain.model.Division
 import pt.joasvpereira.xorganizer.domain.model.StoredItem
-import pt.joasvpereira.xorganizer.repository.local.entities.Session
+import pt.joasvpereira.core.repository.local.entities.Session
 
 interface SessionDataSource {
     suspend fun geSession(id : Int): Session?

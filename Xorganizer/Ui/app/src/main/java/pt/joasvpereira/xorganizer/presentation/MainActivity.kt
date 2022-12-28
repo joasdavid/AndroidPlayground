@@ -33,7 +33,6 @@ import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.xorganizer.presentation.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.presentation.compose.CreateDivisionScreen
-import pt.joasvpereira.xorganizer.presentation.compose.MainScreen
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreen
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreenViewModel
 import pt.joasvpereira.xorganizer.presentation.compose.folder.FolderScreen
@@ -97,16 +96,17 @@ class MainActivity : ComponentActivity() {
                 )*/
                 val navController = rememberNavController()
                 Scaffold {
+                    it.calculateBottomPadding()
                     NavHost(
                         navController = navController,
                         startDestination = ScreenNavigation.MainScreen.route
                     ) {
                         composable(ScreenNavigation.MainScreen.route) {
                             DynamicTheme {
-                                MainScreen(
+                                /*MainScreen(
                                     navController = navController,
                                     viewModel = getViewModel()
-                                )
+                                )*/
                             }
                         }
                         composable(
@@ -188,9 +188,11 @@ private fun MainContainer() {
                 0 -> DynamicTheme {
                     ColorSchemeScreen()
                 }
+
                 1 -> DynamicTheme(ThemeOption.THEME_BLUE) {
                     ColorSchemeScreen()
                 }
+
                 2 -> DynamicTheme(ThemeOption.THEME_GREEN) {
                     ColorSchemeScreen()
                 }

@@ -1,6 +1,6 @@
 package pt.joasvpereira.xorganizer.domain.model
 
-import pt.joasvpereira.xorganizer.domain.usecase.Params
+import pt.joasvpereira.core.domain.usecase.Params
 
 data class DivisionCreationInfo(
     val name: String,

@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -43,7 +42,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -61,20 +59,16 @@ import compose.icons.lineawesomeicons.TableSolid
 import compose.icons.lineawesomeicons.TabletAltSolid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import pt.joasvpereira.core.domain.usecase.EmptyParams
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
 import pt.joasvpereira.xorganizer.R
-import pt.joasvpereira.xorganizer.domain.usecase.EmptyParams
 import pt.joasvpereira.xorganizer.domain.usecase.division.IDivisionsUseCase
-import pt.joasvpereira.xorganizer.domain.usecase.session.ISessionUseCase
-import pt.joasvpereira.xorganizer.domain.usecase.session.SessionIdParam
-import pt.joasvpereira.xorganizer.domain.usecase.session.SessionUseCase
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
-import pt.joasvpereira.xorganizer.repository.local.Db
 
 data class MainScreenUiState(
     val divisions: List<DivisionHolder> = emptyList(),
@@ -93,7 +87,7 @@ class MainScreenViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             delay(1000)
-            val name = sessionUseCase.execute(SessionIdParam(1))?.name
+            val name = sessionUseCase.execute(EmptyParams()).name
             withContext(Dispatchers.Main) {
                 uiState = uiState.copy(
                     divisions = divisionUseCase.execute(EmptyParams()).map {

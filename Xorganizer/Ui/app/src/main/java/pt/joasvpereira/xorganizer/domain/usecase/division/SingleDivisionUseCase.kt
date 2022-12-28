@@ -2,8 +2,8 @@ package pt.joasvpereira.xorganizer.domain.usecase.division
 
 import pt.joasvpereira.xorganizer.domain.model.Division
 import pt.joasvpereira.xorganizer.domain.repo.DivisionDataSource
-import pt.joasvpereira.xorganizer.domain.usecase.BaseUseCaseSync
-import pt.joasvpereira.xorganizer.domain.usecase.Params
+import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
+import pt.joasvpereira.core.domain.usecase.Params
 
 data class DivisionId(val id: Int) : Params()
 

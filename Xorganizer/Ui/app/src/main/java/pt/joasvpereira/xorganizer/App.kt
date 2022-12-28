@@ -10,8 +10,8 @@ import org.koin.core.context.startKoin
 import pt.joasvpereira.xorganizer.di.repository
 import pt.joasvpereira.xorganizer.di.usecases
 import pt.joasvpereira.xorganizer.di.viewModelModule
-import pt.joasvpereira.xorganizer.repository.local.Db
-import pt.joasvpereira.xorganizer.repository.local.entities.Session
+import pt.joasvpereira.core.repository.local.Db
+import pt.joasvpereira.core.repository.local.entities.Session
 
 class App : Application() {
     override fun onCreate() {

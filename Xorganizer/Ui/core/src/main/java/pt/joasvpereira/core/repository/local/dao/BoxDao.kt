@@ -1,13 +1,13 @@
-package pt.joasvpereira.xorganizer.repository.local.dao
+package pt.joasvpereira.core.repository.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import pt.joasvpereira.xorganizer.repository.local.entities.Box
-import pt.joasvpereira.xorganizer.repository.local.entities.Box.Companion.ID
-import pt.joasvpereira.xorganizer.repository.local.entities.Box.Companion.PARENT_DIVISION_ID
-import pt.joasvpereira.xorganizer.repository.local.entities.Box.Companion.TABLE_NAME
+import pt.joasvpereira.core.repository.local.entities.Box
+import pt.joasvpereira.core.repository.local.entities.Box.Companion.ID
+import pt.joasvpereira.core.repository.local.entities.Box.Companion.PARENT_DIVISION_ID
+import pt.joasvpereira.core.repository.local.entities.Box.Companion.TABLE_NAME
 
 @Dao
 interface  BoxDao {

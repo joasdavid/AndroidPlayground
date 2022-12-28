@@ -1,13 +1,13 @@
-package pt.joasvpereira.xorganizer.repository.local.dao
+package pt.joasvpereira.core.repository.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
-import pt.joasvpereira.xorganizer.repository.local.entities.Session
-import pt.joasvpereira.xorganizer.repository.local.entities.Session.Companion.ID_SESSION
-import pt.joasvpereira.xorganizer.repository.local.entities.Session.Companion.TABLE_NAME
+import pt.joasvpereira.core.repository.local.entities.Session
+import pt.joasvpereira.core.repository.local.entities.Session.Companion.ID_SESSION
+import pt.joasvpereira.core.repository.local.entities.Session.Companion.TABLE_NAME
 
 @Dao
 interface  SessionDao {

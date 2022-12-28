@@ -1,9 +1,9 @@
-package pt.joasvpereira.xorganizer.repository.local.entities
+package pt.joasvpereira.core.repository.local.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import pt.joasvpereira.xorganizer.repository.local.entities.Session.Companion.TABLE_NAME
+import pt.joasvpereira.core.repository.local.entities.Session.Companion.TABLE_NAME
 
 @Entity(
     tableName = TABLE_NAME

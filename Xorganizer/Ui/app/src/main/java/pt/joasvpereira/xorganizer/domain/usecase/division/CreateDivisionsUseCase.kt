@@ -5,9 +5,7 @@ import kotlinx.coroutines.withContext
 import pt.joasvpereira.xorganizer.domain.model.Division
 import pt.joasvpereira.xorganizer.domain.model.DivisionCreationInfo
 import pt.joasvpereira.xorganizer.domain.repo.DivisionDataSource
-import pt.joasvpereira.xorganizer.domain.usecase.BaseUseCaseSync
-import pt.joasvpereira.xorganizer.domain.usecase.EmptyParams
-import pt.joasvpereira.xorganizer.domain.usecase.Params
+import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
 
 interface ICreateDivisionsUseCase: BaseUseCaseSync<DivisionCreationInfo, Unit>
 

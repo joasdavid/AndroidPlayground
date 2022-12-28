@@ -1,14 +1,14 @@
-package pt.joasvpereira.xorganizer.repository.local.dao
+package pt.joasvpereira.core.repository.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import pt.joasvpereira.xorganizer.repository.local.entities.Item
-import pt.joasvpereira.xorganizer.repository.local.entities.Item.Companion.ID
-import pt.joasvpereira.xorganizer.repository.local.entities.Item.Companion.PARENT_BOX_ID
-import pt.joasvpereira.xorganizer.repository.local.entities.Item.Companion.PARENT_DIVISION_ID
-import pt.joasvpereira.xorganizer.repository.local.entities.Item.Companion.TABLE_NAME
+import pt.joasvpereira.core.repository.local.entities.Item
+import pt.joasvpereira.core.repository.local.entities.Item.Companion.ID
+import pt.joasvpereira.core.repository.local.entities.Item.Companion.PARENT_BOX_ID
+import pt.joasvpereira.core.repository.local.entities.Item.Companion.PARENT_DIVISION_ID
+import pt.joasvpereira.core.repository.local.entities.Item.Companion.TABLE_NAME
 
 @Dao
 interface  ItemDao {
