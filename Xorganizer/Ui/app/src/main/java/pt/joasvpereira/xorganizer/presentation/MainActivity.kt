@@ -28,9 +28,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.sessionfeature.presentation.select.session.SelectSessionFeatureScreen
 import pt.joasvpereira.xorganizer.presentation.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.presentation.compose.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreen
@@ -48,129 +50,138 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            DynamicTheme {
-                /*var tagColumnState by remember { mutableStateOf(TagColumnState(isEditOpen = true,listOfTags = mutableListOf("test", "XPTO", "test3"))) }
-                val roundedCornerShape200 = RoundedCornerShape(200.dp)
-                TagColumn(
-                    tagItemContent = { s: String ->
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 2.dp)
-                                .border(
-                                    1.dp,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    shape = roundedCornerShape200
-                                )
-                                .clip(roundedCornerShape200)
-                                .padding(5.dp)
-                                .clickable { tagColumnState.listOfTags.add("Meh") }
-                        ) {
-                            Text(
-                                style = MaterialTheme.typography.labelSmall,
-                                text = s
-                            )
-                        }
-                    },
-                    addButton = {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 2.dp)
-                                .border(
-                                    1.dp,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    shape = roundedCornerShape200
-                                )
-                                .clip(roundedCornerShape200)
-                                .padding(5.dp)
-                                .clickable { tagColumnState.isEditOpen = !tagColumnState.isEditOpen }
-                        ) {
-                            Icon(imageVector = Icons.Default.Add, contentDescription = null)
-                        }
-                    },
-                    editorContent = {},
-                    tagColumnState = tagColumnState
-                )*/
-                val navController = rememberNavController()
-                Scaffold {
-                    it.calculateBottomPadding()
-                    NavHost(
-                        navController = navController,
-                        startDestination = ScreenNavigation.MainScreen.route
-                    ) {
-                        composable(ScreenNavigation.MainScreen.route) {
-                            DynamicTheme {
-                                /*MainScreen(
-                                    navController = navController,
-                                    viewModel = getViewModel()
-                                )*/
-                            }
-                        }
-                        composable(
-                            ScreenNavigation.DivisionScreen.route,
-                            arguments = listOf(navArgument(ScreenNavigation.DivisionScreen.DIVISION_ID) {
-                                type = NavType.IntType
-                            })
-                        ) {
-                            val id = it.arguments?.getInt(
-                                ScreenNavigation.DivisionScreen.DIVISION_ID,
-                                -1
-                            ) ?: -1
-                            val vm = getViewModel<DivisionScreenViewModel> { parametersOf(id) }
-                            DivisionScreen(navController = navController, viewModel = vm)
-                        }
-                        composable(
-                            ScreenNavigation.FolderScreen.route,
-                            arguments = listOf(navArgument(ScreenNavigation.FolderScreen.FOLDER_ID) {
-                                type = NavType.IntType
-                            })
-                        ) {
-                            FolderScreen(
-                                navController = navController,
-                                id = it.arguments?.getInt(
-                                    ScreenNavigation.FolderScreen.FOLDER_ID,
-                                    -1
-                                ) ?: -1
-                            )
-                        }
-                        composable(
-                            ScreenNavigation.ItemScreen.route,
-                            arguments = listOf(navArgument(ScreenNavigation.ItemScreen.ITEM_ID) {
-                                type = NavType.IntType
-                            })
-                        ) {
-                            val id =
-                                it.arguments?.getInt(ScreenNavigation.ItemScreen.ITEM_ID, -1) ?: -1
-                            val vm = getViewModel<ItemScreenViewModel> {
-                                parametersOf(
-                                    id,
-                                    Mode.READ
-                                )
-                            }
-                            ItemScreen(
-                                viewModel = vm,
-                                navController = navController
-                            )
-                        }
-                        composable(ScreenNavigation.CreateDivisionScreen.route) {
-                            CreateDivisionScreen(
-                                navController = navController,
-                                useCase = get()
-                            )
-                        }
-                        composable(ScreenNavigation.TestColorDynamicScreen.route) {
-                            DynamicTheme { ColorSchemeScreen() }
-                        }
-                        composable(ScreenNavigation.TestColorBlueScreen.route) {
-                            DynamicTheme(ThemeOption.THEME_BLUE) { ColorSchemeScreen() }
-                        }
-                        composable(ScreenNavigation.TestColorGreenScreen.route) {
-                            DynamicTheme(ThemeOption.THEME_GREEN) { ColorSchemeScreen() }
-                        }
+          DynamicTheme {
+              SelectSessionFeatureScreen(viewModel = getViewModel())
+          }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalMaterial3Api
+@Composable
+fun sada() {
+    DynamicTheme {
+        /*var tagColumnState by remember { mutableStateOf(TagColumnState(isEditOpen = true,listOfTags = mutableListOf("test", "XPTO", "test3"))) }
+        val roundedCornerShape200 = RoundedCornerShape(200.dp)
+        TagColumn(
+            tagItemContent = { s: String ->
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 2.dp)
+                        .border(
+                            1.dp,
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = roundedCornerShape200
+                        )
+                        .clip(roundedCornerShape200)
+                        .padding(5.dp)
+                        .clickable { tagColumnState.listOfTags.add("Meh") }
+                ) {
+                    Text(
+                        style = MaterialTheme.typography.labelSmall,
+                        text = s
+                    )
+                }
+            },
+            addButton = {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 2.dp)
+                        .border(
+                            1.dp,
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = roundedCornerShape200
+                        )
+                        .clip(roundedCornerShape200)
+                        .padding(5.dp)
+                        .clickable { tagColumnState.isEditOpen = !tagColumnState.isEditOpen }
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                }
+            },
+            editorContent = {},
+            tagColumnState = tagColumnState
+        )*/
+        val navController = rememberNavController()
+        Scaffold {
+            it.calculateBottomPadding()
+            NavHost(
+                navController = navController,
+                startDestination = ScreenNavigation.MainScreen.route
+            ) {
+                composable(ScreenNavigation.MainScreen.route) {
+                    DynamicTheme {
+                        /*MainScreen(
+                            navController = navController,
+                            viewModel = getViewModel()
+                        )*/
                     }
+                }
+                composable(
+                    ScreenNavigation.DivisionScreen.route,
+                    arguments = listOf(navArgument(ScreenNavigation.DivisionScreen.DIVISION_ID) {
+                        type = NavType.IntType
+                    })
+                ) {
+                    val id = it.arguments?.getInt(
+                        ScreenNavigation.DivisionScreen.DIVISION_ID,
+                        -1
+                    ) ?: -1
+                    val vm = getViewModel<DivisionScreenViewModel> { parametersOf(id) }
+                    DivisionScreen(navController = navController, viewModel = vm)
+                }
+                composable(
+                    ScreenNavigation.FolderScreen.route,
+                    arguments = listOf(navArgument(ScreenNavigation.FolderScreen.FOLDER_ID) {
+                        type = NavType.IntType
+                    })
+                ) {
+                    FolderScreen(
+                        navController = navController,
+                        id = it.arguments?.getInt(
+                            ScreenNavigation.FolderScreen.FOLDER_ID,
+                            -1
+                        ) ?: -1
+                    )
+                }
+                composable(
+                    ScreenNavigation.ItemScreen.route,
+                    arguments = listOf(navArgument(ScreenNavigation.ItemScreen.ITEM_ID) {
+                        type = NavType.IntType
+                    })
+                ) {
+                    val id =
+                        it.arguments?.getInt(ScreenNavigation.ItemScreen.ITEM_ID, -1) ?: -1
+                    val vm = getViewModel<ItemScreenViewModel> {
+                        parametersOf(
+                            id,
+                            Mode.READ
+                        )
+                    }
+                    ItemScreen(
+                        viewModel = vm,
+                        navController = navController
+                    )
+                }
+                composable(ScreenNavigation.CreateDivisionScreen.route) {
+                    CreateDivisionScreen(
+                        navController = navController,
+                        useCase = get()
+                    )
+                }
+                composable(ScreenNavigation.TestColorDynamicScreen.route) {
+                    DynamicTheme { ColorSchemeScreen() }
+                }
+                composable(ScreenNavigation.TestColorBlueScreen.route) {
+                    DynamicTheme(ThemeOption.THEME_BLUE) { ColorSchemeScreen() }
+                }
+                composable(ScreenNavigation.TestColorGreenScreen.route) {
+                    DynamicTheme(ThemeOption.THEME_GREEN) { ColorSchemeScreen() }
                 }
             }
         }

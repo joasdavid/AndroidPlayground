@@ -14,13 +14,13 @@ fun SelectSessionFeatureScreen(
 ) {
     val state = viewModel.state.value
     if (state.isLoading)
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "LOADING . . .")
-    }
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = "LOADING . . .")
+        }
     if (!state.isLoading)
-   SelectSessionScreen(
-       sessionItems = state.sessions,
-       onSessionSelected = {},
-       onCreateNewSession = {}
-   )
+        SelectSessionScreen(
+            sessionItems = state.sessions,
+            onSessionSelected = {},
+            onCreateNewSession = {}
+        )
 }

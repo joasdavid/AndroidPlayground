@@ -12,6 +12,7 @@ import pt.joasvpereira.xorganizer.di.usecases
 import pt.joasvpereira.xorganizer.di.viewModelModule
 import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.core.repository.local.entities.Session
+import pt.joasvpereira.xorganizer.di.sessionFeatureModule
 
 class App : Application() {
     override fun onCreate() {
@@ -24,7 +25,8 @@ class App : Application() {
                 listOf(
                     viewModelModule,
                     usecases,
-                    repository
+                    repository,
+                    sessionFeatureModule
                 )
             )
         }

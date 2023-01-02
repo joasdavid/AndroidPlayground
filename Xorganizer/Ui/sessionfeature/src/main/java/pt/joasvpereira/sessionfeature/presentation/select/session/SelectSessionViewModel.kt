@@ -9,12 +9,12 @@ import pt.joasvpereira.sessionfeature.domain.usecase.ISessionsUseCase
 
 class SelectSessionViewModel(sessionUseCase: ISessionsUseCase): ViewModel() {
 
-    val state = mutableStateOf(SelectSessionFeatureState())
+    val state = mutableStateOf(SelectSessionFeatureState(isLoading = true))
 
     init {
        viewModelScope.launch {
             val list = sessionUseCase.execute(EmptyParams())
-            state.value = state.value.copy(sessions = list)
+            state.value = state.value.copy(sessions = list, isLoading = false)
         }
     }
 
