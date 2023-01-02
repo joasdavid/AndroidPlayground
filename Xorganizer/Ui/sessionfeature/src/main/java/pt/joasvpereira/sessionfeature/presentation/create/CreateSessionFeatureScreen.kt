@@ -16,6 +16,7 @@ fun CreateSessionFeatureScreen(viewModel: CreateSessionFeatureScreenViewModel) {
     )
     CreateSessionScreen(
         onBackClick = {  },
+        isLoading = viewModel.state.isLoading,
         bitmap = viewModel.state.bitmap,
         onUploadClick = { launcher.launch("image/*") },
         onClearImageClick = { viewModel.removeImage() },

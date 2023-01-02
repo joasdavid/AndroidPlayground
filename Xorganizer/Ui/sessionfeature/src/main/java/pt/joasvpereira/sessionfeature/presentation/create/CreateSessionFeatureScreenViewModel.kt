@@ -7,6 +7,11 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CreateSessionFeatureScreenViewModel: ViewModel() {
 
@@ -37,5 +42,13 @@ class CreateSessionFeatureScreenViewModel: ViewModel() {
         _state.value = _state.value.copy(sessionName = name, isButtonEnabled = name.isNotEmpty())
     }
 
-    fun save() {}
+    fun save() {
+        _state.value = _state.value.copy(isLoading = true)
+        viewModelScope.launch(Dispatchers.Default) {
+            delay(15000)
+            withContext(Dispatchers.Main) {
+                _state.value = _state.value.copy(isLoading = false)
+            }
+        }
+    }
 }

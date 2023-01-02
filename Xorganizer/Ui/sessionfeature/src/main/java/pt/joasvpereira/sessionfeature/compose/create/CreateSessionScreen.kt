@@ -25,6 +25,7 @@ import pt.joasvpereira.coreui.text.field.AppTextField
 @Composable
 internal fun CreateSessionScreen(
     onBackClick : () -> Unit,
+    isLoading: Boolean,
     bitmap: Bitmap?,
     onUploadClick: () -> Unit,
     onClearImageClick: () -> Unit,
@@ -34,7 +35,8 @@ internal fun CreateSessionScreen(
     onButtonCreateClick : () -> Unit,
 ) {
     AppScaffold(
-        toolBarConfig = ToolBarConfig(title = "", onBackClick = onBackClick)
+        toolBarConfig = ToolBarConfig(title = "", onBackClick = onBackClick),
+        isLoading = isLoading
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -81,7 +83,8 @@ private fun CreateSessionScreenPreview() {
             bitmap = null,
             onUploadClick = {},
             onClearImageClick = {},
-            isButtonEnabled = true
+            isButtonEnabled = true,
+            isLoading = true
         )
     }
 }

@@ -3,6 +3,7 @@
 package pt.joasvpereira.coreui.scaffold
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -130,6 +132,7 @@ fun ToolbarTitleCenterdPreview() {
 @Composable
 fun AppScaffold(
     toolBarConfig: ToolBarConfig? = null,
+    isLoading: Boolean = false,
     content: @Composable () -> Unit
 ) {
     Scaffold() {
@@ -156,6 +159,10 @@ fun AppScaffold(
             content()
         }
     }
+    if (isLoading)
+    Box(modifier = Modifier.fillMaxSize().clickable {  }.background(MaterialTheme.colorScheme.background.copy(alpha = .75f))) {
+        CircularProgressIndicator(modifier = Modifier.size(50.dp).align(Alignment.Center))
+    }
 }
 
 @Preview
@@ -164,6 +171,7 @@ fun AppScaffoldPreview() {
     DynamicTheme {
         AppScaffold(
             toolBarConfig = ToolBarConfig(title = "sd"),
+            isLoading = true,
             content = { Text(text = "Test") }
         )
     }
