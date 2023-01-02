@@ -56,14 +56,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolBarBackConfig
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolbarTitleCentered
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.scaffold.ToolbarTitleCentered
 import pt.joasvpereira.xorganizer.domain.model.Box
 import pt.joasvpereira.xorganizer.domain.model.Division
 import pt.joasvpereira.xorganizer.domain.model.StoredItem
@@ -319,8 +319,7 @@ fun DivisionDetailsHeader(
         modifier = modifier
     ) {
         ToolbarTitleCentered(
-            title = divisionName,
-            toolBarBackConfig = ToolBarBackConfig(onBackClick = onBackClick),
+            toolBarConfig = ToolBarConfig(title = divisionName,onBackClick = onBackClick),
         )
         SimpleSpace(size = 20.dp)
         DivisionChart(

@@ -39,11 +39,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolBarBackConfig
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolbarTitleCentered
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.scaffold.ToolbarTitleCentered
 import pt.joasvpereira.coreui.shield.NameShield
 import pt.joasvpereira.xorganizer.presentation.compose.division.SingleItem
 
@@ -113,7 +113,7 @@ fun ItemScreenContent(
         ) {
             Column {
                 ToolbarTitleCentered(
-                    toolBarBackConfig = ToolBarBackConfig(onBackClick = onBackClick)
+                    toolBarConfig = ToolBarConfig(title = "", onBackClick = onBackClick)
                 )
                 SimpleSpace(size = 4.dp)
                 if (data.item != null)

@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolBarBackConfig
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ToolbarTitleCentered
+import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.scaffold.ToolbarTitleCentered
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionChart
 
 @Composable
@@ -97,8 +97,7 @@ fun CollapseHeaderScaffoldPreview() {
             Column(
             ) {
                 ToolbarTitleCentered(
-                    title = "divisionName",
-                    toolBarBackConfig = ToolBarBackConfig(onBackClick = {}),
+                    toolBarConfig = ToolBarConfig(title = "divisionName", onBackClick = {}),
                 )
                 SimpleSpace(size = 20.dp)
                 DivisionChart(

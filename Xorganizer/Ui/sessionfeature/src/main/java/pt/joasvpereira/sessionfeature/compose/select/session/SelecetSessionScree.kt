@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +43,7 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
 import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.sessionfeature.R
 import pt.joasvpereira.sessionfeature.domain.data.SessionItem
 
@@ -52,16 +54,12 @@ internal fun SelectSessionScreen(
     onCreateNewSession: () -> Unit
 ) {
     DynamicTheme {
-        Surface(Modifier.fillMaxSize()) {
-            Box {
-                val backgroundRes = R.drawable.background
-                ScreenBackground(backgroundRes)
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    SimpleSpace(100.dp)
-                    Text("Please Select your profile:", style = MaterialTheme.typography.titleLarge)
-                    SimpleSpace(60.dp)
-                    SessionsContent(sessionItems, onSessionSelected, onCreateNewSession)
-                }
+        AppScaffold {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                SimpleSpace(100.dp)
+                Text("Please Select your profile:", style = MaterialTheme.typography.titleLarge)
+                SimpleSpace(60.dp)
+                SessionsContent(sessionItems, onSessionSelected, onCreateNewSession)
             }
         }
     }
@@ -165,7 +163,9 @@ private fun ContentListLineItemSession(
                 Image(
                     painterResource(id = R.drawable.usericon),
                     contentDescription = "",
-                    Modifier.size(60.dp).padding(10.dp),
+                    Modifier
+                        .size(60.dp)
+                        .padding(10.dp),
                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer),
                     contentScale = ContentScale.FillBounds
                 )
@@ -263,6 +263,12 @@ private fun SelectSessionScreenPreview() {
             name = "Garagem"
         ),
     ), onSessionSelected = {}, onCreateNewSession = {})
+}
+
+@Preview
+@Composable
+private fun SelectSessionScreenEmptyPreview() {
+    SelectSessionScreen(sessionItems = listOf(), onSessionSelected = {}, onCreateNewSession = {})
 }
 
 @Composable
