@@ -5,7 +5,9 @@ import org.koin.dsl.module
 import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.sessionfeature.domain.usecase.CreateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ICreateSessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionsUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.SessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.SessionsUseCase
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreenViewModel
 import pt.joasvpereira.sessionfeature.presentation.select.session.SelectSessionViewModel
@@ -18,7 +20,11 @@ val sessionFeatureModule = module {
     }
 
     viewModel {
-        CreateSessionFeatureScreenViewModel(get())
+        CreateSessionFeatureScreenViewModel(get(), get())
+    }
+
+    single<ISessionUseCase> {
+        SessionUseCase(get())
     }
 
     single<ISessionsUseCase> {

@@ -65,6 +65,7 @@ import pt.joasvpereira.core.domain.usecase.EmptyParams
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.SessionIdParam
 import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.usecase.division.IDivisionsUseCase
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
@@ -87,7 +88,7 @@ class MainScreenViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             delay(1000)
-            val name = sessionUseCase.execute(EmptyParams()).name
+            val name = sessionUseCase.execute(SessionIdParam(1))?.name
             withContext(Dispatchers.Main) {
                 uiState = uiState.copy(
                     divisions = divisionUseCase.execute(EmptyParams()).map {

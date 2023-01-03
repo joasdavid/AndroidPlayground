@@ -33,6 +33,7 @@ internal fun CreateSessionScreen(
     onSessionNameChange: (String) -> Unit,
     isButtonEnabled: Boolean,
     onButtonCreateClick : () -> Unit,
+    isOnEditMode: Boolean = false
 ) {
     AppScaffold(
         toolBarConfig = ToolBarConfig(title = "", onBackClick = onBackClick),
@@ -65,7 +66,13 @@ internal fun CreateSessionScreen(
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 40.dp)
             ) {
-                Text(text = "CREATE NEW DIVISION")
+                Text(
+                    text = if (isOnEditMode) {
+                        "Edit profile"
+                    }  else {
+                        "Create new profile"
+                    }
+                )
             }
         }
     }

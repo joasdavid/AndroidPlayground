@@ -26,7 +26,9 @@ fun SelectSessionFeatureScreen(
     if (!state.isLoading)
         SelectSessionScreen(
             sessionItems = state.sessions,
-            onSessionSelected = {},
+            onSessionSelected = {
+                navController?.navigate("CreateSessionFeatureScreen?id=${it.id}")
+                                },
             onCreateNewSession = { navController?.navigate("CreateSessionFeatureScreen") }
         )
 }

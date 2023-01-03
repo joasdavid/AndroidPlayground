@@ -62,7 +62,6 @@ val viewModelModule = module {
 
 val usecases = module {
     factory<ISingleDivisionUseCase> { SingleDivisionUseCase(divisionDataSource = get()) }
-    factory<ISessionUseCase> { SessionUseCase() }
     factory<IDivisionsUseCase> { DivisionsUseCase(divisionDataSource = get()) }
     factory<ICreateDivisionsUseCase> { CreateDivisionsUseCase(divisionDataSource = get()) }
     factory<IBoxesUseCase> { BoxesUseCase(boxesDataSource = get()) }

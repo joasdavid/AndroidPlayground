@@ -9,8 +9,14 @@ data class CreateSessionFeatureScreenState(
     val sessionName: String = "",
     val isLoading: Boolean = false,
     val isButtonEnabled: Boolean = false,
-    val saveState: SaveState = SaveState.Idle
+    val saveState: SaveState = SaveState.Idle,
+    val mode: Mode = Mode.Create
 )
+
+sealed interface Mode {
+    object Create: Mode
+    object Edit: Mode
+}
 
 sealed class SaveState() {
     object Success: SaveState()

@@ -16,6 +16,11 @@ fun Bitmap.toBase64String(
     return Base64.encodeToString(byteArray, Base64.DEFAULT)
 }
 
+fun String.toBitmap() : Bitmap {
+    val decoded = Base64.decode(this, Base64.DEFAULT)
+    return BitmapFactory.decodeByteArray(decoded, 0 , decoded.size)
+}
+
 fun Bitmap.compressSize(maxSize: Int = 500000) : Bitmap {
     val decoded = Base64.decode(compressBitmap(this, maxSize), Base64.DEFAULT)
     return BitmapFactory.decodeByteArray(decoded, 0 , decoded.size)
