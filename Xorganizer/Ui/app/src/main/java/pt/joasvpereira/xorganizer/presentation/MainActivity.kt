@@ -38,6 +38,7 @@ import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureSc
 import pt.joasvpereira.sessionfeature.repository.LocalSessionDataSource
 import pt.joasvpereira.xorganizer.presentation.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.presentation.compose.CreateDivisionScreen
+import pt.joasvpereira.xorganizer.presentation.compose.MainScreen
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreen
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreenViewModel
 import pt.joasvpereira.xorganizer.presentation.compose.folder.FolderScreen
@@ -56,7 +57,16 @@ class MainActivity : ComponentActivity() {
           DynamicTheme {
               //SelectSessionFeatureScreen(viewModel = getViewModel())
               //CreateSessionFeatureScreen(viewModel = CreateSessionFeatureScreenViewModel(LocalSessionDataSource(get<Db>().sessionDao())))
-              SessionFeatureEntryPoint()
+              var hasSession by remember {
+                  mutableStateOf(false)
+              }
+              if (!hasSession) {
+                  SessionFeatureEntryPoint {
+                      hasSession = true
+                  }
+              } else {
+                  sada()
+              }
               /*AppScaffold {
                   RequestContentPermission()
               }*/
@@ -124,10 +134,10 @@ fun sada() {
             ) {
                 composable(ScreenNavigation.MainScreen.route) {
                     DynamicTheme {
-                        /*MainScreen(
+                        MainScreen(
                             navController = navController,
                             viewModel = getViewModel()
-                        )*/
+                        )
                     }
                 }
                 composable(

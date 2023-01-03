@@ -20,6 +20,6 @@ interface SessionDao {
     @Insert(onConflict = REPLACE)
     fun insertSession(session: Session)
 
-    @Delete
-    fun deleteSession(session: Session)
+    @Query("DELETE FROM $TABLE_NAME WHERE $ID_SESSION = :id")
+    fun deleteSession(id: Int)
 }

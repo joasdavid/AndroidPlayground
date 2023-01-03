@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
@@ -64,6 +66,8 @@ import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.domain.usecase.EmptyParams
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.scaffold.AppScaffold
+import pt.joasvpereira.sessionfeature.CurrentSession
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.SessionIdParam
 import pt.joasvpereira.xorganizer.R
@@ -78,7 +82,6 @@ data class MainScreenUiState(
 
 class MainScreenViewModel(
     private val divisionUseCase: IDivisionsUseCase,
-    private val sessionUseCase: ISessionUseCase,
     private val mapper: DivisionsMapper,
 ) : ViewModel() {
 
@@ -87,8 +90,7 @@ class MainScreenViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            delay(1000)
-            val name = sessionUseCase.execute(SessionIdParam(1))?.name
+            val name = CurrentSession.session?.name
             withContext(Dispatchers.Main) {
                 uiState = uiState.copy(
                     divisions = divisionUseCase.execute(EmptyParams()).map {
@@ -149,52 +151,47 @@ private fun MainScreenBody(
     onDropChanges: (Boolean) -> Unit = {},
     onPositionSelected: (Int) -> Unit = {}
 ) {
-    Box {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = "",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.fillMaxSize()
-        )
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(horizontal = 20.dp)
-        ) {
-            Spacer(modifier = Modifier.size(20.dp))
-            MainScreenHeader(
-                sessionName = sessionName,
-                dropOpen = dropOpen,
-                options = options,
-                onDropChanges = onDropChanges,
-                onPositionSelected = onPositionSelected
-            )
-            Spacer(modifier = Modifier.size(20.dp))
-            Text(text = "Devisions:", style = MaterialTheme.typography.titleLarge)
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(
-                    start = 0.dp,
-                    top = 16.dp,
-                    end = 0.dp,
-                    bottom = 16.dp
-                )
+    AppScaffold {
+        Box {
+            Column(
+                Modifier
+                    .fillMaxSize()
             ) {
-                items(div.size, key = { index -> div[index].id }) { index: Int ->
-                    DivisionListItem(
-                        title = div[index].title,
-                        description = div[index].description,
-                        vectorImg = div[index].vectorImg,
-                        boxCount = div[index].boxCount,
-                        childCount = div[index].childCount,
-                        option = div[index].option,
-                        onclick = {
-                            onItemClick(div[index])
-                        }
+                Spacer(modifier = Modifier.size(20.dp))
+                MainScreenHeader(
+                    sessionName = sessionName,
+                    dropOpen = dropOpen,
+                    options = options,
+                    onDropChanges = onDropChanges,
+                    onPositionSelected = onPositionSelected
+                )
+                Spacer(modifier = Modifier.size(20.dp))
+                Text(text = "Devisions:", style = MaterialTheme.typography.titleLarge)
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(
+                        start = 0.dp,
+                        top = 16.dp,
+                        end = 0.dp,
+                        bottom = 16.dp
                     )
-                }
-                item {
-                    AddActionItem(action = onAddNewItemClick)
+                ) {
+                    items(div.size, key = { index -> div[index].id }) { index: Int ->
+                        DivisionListItem(
+                            title = div[index].title,
+                            description = div[index].description,
+                            vectorImg = div[index].vectorImg,
+                            boxCount = div[index].boxCount,
+                            childCount = div[index].childCount,
+                            option = div[index].option,
+                            onclick = {
+                                onItemClick(div[index])
+                            }
+                        )
+                    }
+                    item {
+                        AddActionItem(action = onAddNewItemClick)
+                    }
                 }
             }
         }
@@ -234,19 +231,34 @@ fun MainScreenHeader(
                     Text(text = "Welcome", style = MaterialTheme.typography.headlineSmall)
                     Text(text = sessionName, style = MaterialTheme.typography.labelLarge)
                 }
-                Box(Modifier
-                    .align(Alignment.Bottom)
-                    .size(40.dp)
-                    .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape)
+                Box(
+                    Modifier
+                        .align(Alignment.Bottom)
+                        .size(40.dp)
+                        .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape)
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.usericon),
-                        contentDescription = "",
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
-                        modifier =Modifier
-                            .align(Alignment.Center)
-                            .size(40.dp)
-                    )
+                    CurrentSession.session?.image.let {
+                        if (it == null) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.usericon),
+                                contentDescription = "",
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .size(40.dp)
+                            )
+                        } else {
+                            Image(
+                                bitmap = it.asImageBitmap(),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                                    .border(1.dp, color = MaterialTheme.colorScheme.primaryContainer, shape = CircleShape)
+                            )
+                        }
+                    }
                 }
             }
         }

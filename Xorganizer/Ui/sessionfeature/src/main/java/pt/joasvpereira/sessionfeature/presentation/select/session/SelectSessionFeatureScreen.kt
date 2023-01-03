@@ -9,11 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import pt.joasvpereira.sessionfeature.compose.select.session.SelectSessionScreen
+import pt.joasvpereira.sessionfeature.domain.data.SessionItem
 
 @Composable
 fun SelectSessionFeatureScreen(
     viewModel: SelectSessionViewModel,
-    navController: NavController? = null
+    navController: NavController? = null,
+    onSessionSelected: (SessionItem) -> Unit,
 ) {
     LaunchedEffect(key1 = null) {
         viewModel.load()
@@ -26,9 +28,7 @@ fun SelectSessionFeatureScreen(
     if (!state.isLoading)
         SelectSessionScreen(
             sessionItems = state.sessions,
-            onSessionSelected = {
-                navController?.navigate("CreateSessionFeatureScreen?id=${it.id}")
-                                },
+            onSessionSelected = onSessionSelected,
             onCreateNewSession = { navController?.navigate("CreateSessionFeatureScreen") }
         )
 }

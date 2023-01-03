@@ -14,14 +14,17 @@ import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.domain.usecase.EmptyParams
 import pt.joasvpereira.sessionfeature.domain.data.SessionItem
 import pt.joasvpereira.sessionfeature.domain.usecase.CreateSessionParams
+import pt.joasvpereira.sessionfeature.domain.usecase.DeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ICreateSessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.IDeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.SessionIdParam
 
 
 open class CreateSessionFeatureScreenViewModel(
-    val sessionUseCase: ISessionUseCase,
-    val createSessionUseCase: ICreateSessionUseCase,
+    private val sessionUseCase: ISessionUseCase,
+    private val createSessionUseCase: ICreateSessionUseCase,
+    private val deleteSessionUseCase: IDeleteSessionUseCase
 ) : ViewModel() {
 
     private var _state = mutableStateOf(CreateSessionFeatureScreenState())
@@ -85,6 +88,14 @@ open class CreateSessionFeatureScreenViewModel(
             withContext(Dispatchers.Main) {
                 _state.value = _state.value.copy(isLoading = false, saveState = SaveState.Success)
             }
+        }
+    }
+
+    fun delete() {
+        _state.value = _state.value.copy(isLoading = true)
+        viewModelScope.launch(Dispatchers.Main) {
+            deleteSessionUseCase.execute(SessionIdParam(originId))
+            _state.value = _state.value.copy(isLoading = false, saveState = SaveState.Success)
         }
     }
 }

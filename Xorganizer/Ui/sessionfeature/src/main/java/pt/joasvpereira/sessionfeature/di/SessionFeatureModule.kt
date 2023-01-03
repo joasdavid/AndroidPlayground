@@ -4,7 +4,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.sessionfeature.domain.usecase.CreateSessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.DeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ICreateSessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.IDeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionsUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.SessionUseCase
@@ -20,7 +22,11 @@ val sessionFeatureModule = module {
     }
 
     viewModel {
-        CreateSessionFeatureScreenViewModel(get(), get())
+        CreateSessionFeatureScreenViewModel(
+            sessionUseCase = get(),
+            createSessionUseCase = get(),
+            deleteSessionUseCase = get()
+        )
     }
 
     single<ISessionUseCase> {
@@ -33,6 +39,10 @@ val sessionFeatureModule = module {
 
     single<ICreateSessionUseCase> {
         CreateSessionUseCase(get())
+    }
+
+    single<IDeleteSessionUseCase> {
+        DeleteSessionUseCase(get())
     }
 
     single<SessionDataSource> { LocalSessionDataSource(get<Db>().sessionDao()) }

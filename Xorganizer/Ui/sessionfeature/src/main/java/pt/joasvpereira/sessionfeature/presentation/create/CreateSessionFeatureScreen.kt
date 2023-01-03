@@ -41,6 +41,7 @@ fun CreateSessionFeatureScreen(
         onSessionNameChange = { viewModel.changeName(it) },
         isButtonEnabled = viewModel.state.isButtonEnabled,
         onButtonCreateClick = { viewModel.save() },
+        onButtonDeleteClick = { viewModel.delete() },
         isOnEditMode = viewModel.state.mode is Mode.Edit
     )
 }

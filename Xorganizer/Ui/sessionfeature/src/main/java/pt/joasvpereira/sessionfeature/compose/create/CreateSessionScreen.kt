@@ -33,6 +33,7 @@ internal fun CreateSessionScreen(
     onSessionNameChange: (String) -> Unit,
     isButtonEnabled: Boolean,
     onButtonCreateClick : () -> Unit,
+    onButtonDeleteClick : () -> Unit,
     isOnEditMode: Boolean = false
 ) {
     AppScaffold(
@@ -59,20 +60,34 @@ internal fun CreateSessionScreen(
                     placeholder = "Session Name",
                 )
             }
-            Button(
-                onClick = onButtonCreateClick,
-                enabled = isButtonEnabled,
+            Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 40.dp)
+                    .padding(bottom = 40.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = if (isOnEditMode) {
-                        "Edit profile"
-                    }  else {
-                        "Create new profile"
+                Button(
+                    onClick = onButtonCreateClick,
+                    enabled = isButtonEnabled,
+                ) {
+                    Text(
+                        text = if (isOnEditMode) {
+                            "Edit profile"
+                        }  else {
+                            "Create new profile"
+                        }
+                    )
+                }
+                if (isOnEditMode) {
+                    SimpleSpace(size = 10.dp)
+                    Button(
+                        onClick = onButtonDeleteClick,
+                    ) {
+                        Text(
+                            text = "Delete"
+                        )
                     }
-                )
+                }
             }
         }
     }
@@ -91,7 +106,9 @@ private fun CreateSessionScreenPreview() {
             onUploadClick = {},
             onClearImageClick = {},
             isButtonEnabled = true,
-            isLoading = true
+            isLoading = true,
+            onButtonDeleteClick = {},
+            isOnEditMode = true
         )
     }
 }

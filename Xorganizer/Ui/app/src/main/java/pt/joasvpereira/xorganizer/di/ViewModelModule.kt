@@ -31,13 +31,13 @@ import pt.joasvpereira.xorganizer.presentation.compose.item.Mode
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.core.repository.local.entities.Session
+import pt.joasvpereira.sessionfeature.CurrentSession
 
 val viewModelModule = module {
 
     viewModel {
         MainScreenViewModel(
             divisionUseCase = get(),
-            sessionUseCase = get(),
             mapper = DivisionsMapper()
         )
     }
@@ -88,7 +88,7 @@ val repository = module {
         val db: Db = get()
         object : DivisionDataSource {
             override suspend fun getDivisions(): List<Division> {
-                return db.userDao().getAll(fromSessionId = 1).map {
+                return db.userDao().getAll(fromSessionId = CurrentSession.session?.id ?: 0).map {
                     Division(
                         id = it.id!!,
                         name = it.name,
