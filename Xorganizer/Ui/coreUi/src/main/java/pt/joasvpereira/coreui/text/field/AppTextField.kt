@@ -58,7 +58,7 @@ fun AppTextField(
     val keyboardController = LocalSoftwareKeyboardController.current
     val keyboardActionsToUse : KeyboardActions = keyboardActions ?: buildKeyboardActions(focusManager, keyboardController)
     OutlinedTextField(
-        value = value,
+        value = value.replace("\n",""),
         onValueChange = onValueChange,
         modifier = modifier.onPreviewKeyEvent {
             if (it.key == Key.Tab && it.nativeKeyEvent.action == ACTION_DOWN){

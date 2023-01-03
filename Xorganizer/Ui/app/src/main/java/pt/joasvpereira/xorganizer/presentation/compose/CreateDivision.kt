@@ -48,6 +48,8 @@ import compose.icons.lineawesomeicons.HomeSolid
 import kotlinx.coroutines.launch
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.scaffold.AppScaffold
+import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.model.DivisionCreationInfo
 import pt.joasvpereira.xorganizer.domain.usecase.division.ICreateDivisionsUseCase
@@ -87,16 +89,7 @@ fun CreateDivisionBody(
     var divisionNameText by remember { mutableStateOf(DivisionHolder?.title ?: "") }
     var descriptionText by remember { mutableStateOf(DivisionHolder?.description ?: "") }
     DynamicTheme(selectedThemeOption) {
-        Surface(color = MaterialTheme.colorScheme.primaryContainer) {
-            Image(
-                painter = painterResource(id = R.drawable.background),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize()
-            )
-            Box(
-                modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f))
-            )
+        AppScaffold {
             Box(Modifier.fillMaxSize()) {
                 Icon(
                     modifier = Modifier
@@ -130,28 +123,22 @@ fun CreateDivisionBody(
 
                     Spacer(modifier = Modifier.size(20.dp))
 
-                    OutlinedTextField(
+                    AppTextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = divisionNameText,
                         onValueChange = { divisionNameText = it },
-                        label = { Text("Division name") },
+                        placeholder = "Division name",
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                        keyboardActions = KeyboardActions(onNext = {
-                            focusManager.moveFocus(FocusDirection.Down)
-                        })
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
                     )
                     Spacer(modifier = Modifier.size(20.dp))
-                    OutlinedTextField(
+                    AppTextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = descriptionText,
                         onValueChange = { descriptionText = it },
-                        label = { Text("description") },
+                        placeholder = "description",
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                        keyboardActions = KeyboardActions(onNext = {
-                            focusManager.clearFocus()
-                        })
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     )
                     Spacer(modifier = Modifier.size(20.dp))
                     ThemeSelector {

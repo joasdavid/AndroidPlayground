@@ -132,6 +132,7 @@ fun ToolbarTitleCenterdPreview() {
 @Composable
 fun AppScaffold(
     toolBarConfig: ToolBarConfig? = null,
+    isTinted: Boolean = true,
     isLoading: Boolean = false,
     content: @Composable () -> Unit
 ) {
@@ -143,6 +144,12 @@ fun AppScaffold(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize()
         )
+        if (isTinted) {
+            Box(
+                modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f))
+            )
+        }
+
         Column(Modifier.padding(
             top = it.calculateTopPadding(),
             start = it.calculateStartPadding(LayoutDirection.Ltr) + 20.dp,
@@ -171,7 +178,8 @@ fun AppScaffoldPreview() {
     DynamicTheme {
         AppScaffold(
             toolBarConfig = ToolBarConfig(title = "sd"),
-            isLoading = true,
+            isLoading = false,
+            isTinted = true,
             content = { Text(text = "Test") }
         )
     }
