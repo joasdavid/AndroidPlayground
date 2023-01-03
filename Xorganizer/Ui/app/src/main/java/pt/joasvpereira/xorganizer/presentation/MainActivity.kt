@@ -32,6 +32,7 @@ import org.koin.core.parameter.parametersOf
 import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.sessionfeature.presentation.SessionFeatureEntryPoint
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreen
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreenViewModel
 import pt.joasvpereira.sessionfeature.repository.LocalSessionDataSource
@@ -54,7 +55,8 @@ class MainActivity : ComponentActivity() {
         setContent {
           DynamicTheme {
               //SelectSessionFeatureScreen(viewModel = getViewModel())
-              CreateSessionFeatureScreen(viewModel = CreateSessionFeatureScreenViewModel(LocalSessionDataSource(get<Db>().sessionDao())))
+              //CreateSessionFeatureScreen(viewModel = CreateSessionFeatureScreenViewModel(LocalSessionDataSource(get<Db>().sessionDao())))
+              SessionFeatureEntryPoint()
               /*AppScaffold {
                   RequestContentPermission()
               }*/

@@ -35,7 +35,9 @@ import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.core.repository.local.entities.Session
 import pt.joasvpereira.sessionfeature.domain.data.SessionItem
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionsUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.SessionsUseCase
 import pt.joasvpereira.sessionfeature.presentation.select.session.SelectSessionViewModel
+import pt.joasvpereira.sessionfeature.repository.LocalSessionDataSource
 
 val sessionFeatureModule = module {
     viewModel {
@@ -43,17 +45,6 @@ val sessionFeatureModule = module {
     }
 
     single<ISessionsUseCase> {
-        object : ISessionsUseCase {
-            override suspend fun execute(params: EmptyParams): List<SessionItem> {
-                delay(1000)
-                return listOf(
-                    SessionItem(
-                        id = 2,
-                        name = "Nini Lala Home",
-                        image = null
-                    )
-                )
-            }
-        }
+        SessionsUseCase(LocalSessionDataSource(get<Db>().sessionDao()))
     }
 }

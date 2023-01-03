@@ -7,12 +7,13 @@ import kotlinx.coroutines.launch
 import pt.joasvpereira.core.domain.usecase.EmptyParams
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionsUseCase
 
-class SelectSessionViewModel(sessionUseCase: ISessionsUseCase): ViewModel() {
+class SelectSessionViewModel(private val sessionUseCase: ISessionsUseCase): ViewModel() {
 
     val state = mutableStateOf(SelectSessionFeatureState(isLoading = true))
 
-    init {
-       viewModelScope.launch {
+    fun load() {
+        state.value = state.value.copy(isLoading = true)
+        viewModelScope.launch {
             val list = sessionUseCase.execute(EmptyParams())
             state.value = state.value.copy(sessions = list, isLoading = false)
         }

@@ -4,18 +4,25 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import pt.joasvpereira.sessionfeature.compose.create.CreateSessionScreen
 
 @Composable
-fun CreateSessionFeatureScreen(viewModel: CreateSessionFeatureScreenViewModel) {
+fun CreateSessionFeatureScreen(
+    viewModel: CreateSessionFeatureScreenViewModel,
+    navController: NavController? = null
+) {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { viewModel.processContentResult(context, it) }
     )
+
+    if (viewModel.state.saveState is SaveState.Success) navController?.popBackStack()
+
     CreateSessionScreen(
-        onBackClick = {  },
+        onBackClick = { navController?.popBackStack()  },
         isLoading = viewModel.state.isLoading,
         bitmap = viewModel.state.bitmap,
         onUploadClick = { launcher.launch("image/*") },
