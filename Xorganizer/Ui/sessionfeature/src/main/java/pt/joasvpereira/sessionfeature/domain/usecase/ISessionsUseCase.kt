@@ -12,8 +12,9 @@ interface ISessionsUseCase : BaseUseCaseSync<EmptyParams, List<SessionItem>>
 class SessionsUseCase(private val sessionsDataSource: SessionDataSource) : ISessionsUseCase {
 
     override suspend fun execute(params: EmptyParams) = withContext(Dispatchers.IO) {
-        sessionsDataSource.geSessions().map {
-            SessionItem(id = it.id!!, name = it.displayName, image = null)
-        }
+        //sessionsDataSource.geSessions().map {
+        //    SessionItem(id = it.id!!, name = it.displayName, image = null)
+        //}
+        listOf(SessionItem(id = 55, name = "it.displayName", image = null))
     }
 }

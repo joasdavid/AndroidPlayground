@@ -29,10 +29,12 @@ import androidx.navigation.navArgument
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
+import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreen
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreenViewModel
+import pt.joasvpereira.sessionfeature.repository.LocalSessionDataSource
 import pt.joasvpereira.xorganizer.presentation.color_scheme.ColorSchemeScreen
 import pt.joasvpereira.xorganizer.presentation.compose.CreateDivisionScreen
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionScreen
@@ -52,7 +54,7 @@ class MainActivity : ComponentActivity() {
         setContent {
           DynamicTheme {
               //SelectSessionFeatureScreen(viewModel = getViewModel())
-              CreateSessionFeatureScreen(viewModel = CreateSessionFeatureScreenViewModel())
+              CreateSessionFeatureScreen(viewModel = CreateSessionFeatureScreenViewModel(LocalSessionDataSource(get<Db>().sessionDao())))
               /*AppScaffold {
                   RequestContentPermission()
               }*/

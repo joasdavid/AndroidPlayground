@@ -13,12 +13,15 @@ data class Session(
     @ColumnInfo(name = ID_SESSION)
     var id: Int? = null,
     @ColumnInfo(name = DISPLAY_NAME)
-    var displayName: String = "Session $id"
+    var displayName: String = "Session $id",
+    @ColumnInfo(name = IMAGE)
+    var image: String?
 ) {
 
     companion object {
         const val TABLE_NAME = "session"
         const val ID_SESSION: String = "idSession"
         const val DISPLAY_NAME: String = "display_name"
+        const val IMAGE: String = "image"
     }
 }

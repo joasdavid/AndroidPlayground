@@ -84,7 +84,7 @@ val repository = module {
         }).build()
         v.apply {
             MainScope().launch(Dispatchers.IO) {
-                sessionDao().insertSession(Session(id = 1, displayName = "Nini + Lala Home"))
+                sessionDao().insertSession(Session(id = 1, displayName = "Nini + Lala Home", image = null))
             }
         }
     }
