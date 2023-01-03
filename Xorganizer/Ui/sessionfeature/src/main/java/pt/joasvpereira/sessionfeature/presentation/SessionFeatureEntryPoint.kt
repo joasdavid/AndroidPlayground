@@ -20,8 +20,7 @@ fun SessionFeatureEntryPoint() {
             SelectSessionFeatureScreen(getViewModel(), navController = navController)
         }
         composable("CreateSessionFeatureScreen") {
-            val vm = CreateSessionFeatureScreenViewModel(LocalSessionDataSource(get<Db>().sessionDao()))
-            CreateSessionFeatureScreen(vm, navController = navController)
+            CreateSessionFeatureScreen(getViewModel(), navController = navController)
         }
     }
 }
