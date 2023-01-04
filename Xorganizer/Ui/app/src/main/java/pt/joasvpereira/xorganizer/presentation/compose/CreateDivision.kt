@@ -1,26 +1,27 @@
 package pt.joasvpereira.xorganizer.presentation.compose
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,8 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -50,9 +49,9 @@ import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.text.field.AppTextField
-import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.model.DivisionCreationInfo
 import pt.joasvpereira.xorganizer.domain.usecase.division.ICreateDivisionsUseCase
+import pt.joasvpereira.xorganizer.presentation.icons.DivisionIcons
 
 @Composable
 fun CreateDivisionScreen(navController: NavController, useCase: ICreateDivisionsUseCase) {
@@ -64,16 +63,96 @@ fun CreateDivisionScreen(navController: NavController, useCase: ICreateDivisions
         },
         onSave = {
             scope.launch {
-                useCase.execute(DivisionCreationInfo(
-                    it.title,
-                    it.description,
-                    it.option.ordinal
-                )).run {
+                useCase.execute(
+                    DivisionCreationInfo(
+                        it.title,
+                        it.description,
+                        it.option.ordinal
+                    )
+                ).run {
                     navController.popBackStack()
                 }
             }
         }
     )
+}
+
+data class DivisionIconSelectorState(
+    val currentIconPos: Int,
+    val previousIconPos: Int? = null,
+)
+@Composable
+fun DivisionIconSelector(
+    modifier: Modifier = Modifier,
+    defaultPos: Int = 0
+) {
+
+    var selectedPosition by remember {
+        mutableStateOf(DivisionIconSelectorState(currentIconPos = defaultPos))
+    }
+
+    val shape = CircleShape
+    Row(
+        Modifier
+            .border(
+                width = 2.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = shape
+            )
+            .padding(vertical = 10.dp)
+            .padding(horizontal = 13.dp)
+            .then(modifier),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Icon(
+            imageVector = Icons.Default.KeyboardArrowLeft,
+            contentDescription = "",
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .clickable { selectedPosition = DivisionIconSelectorState((selectedPosition.currentIconPos - 1), selectedPosition.currentIconPos)  }
+        )
+
+        Box(
+            Modifier
+                .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape)
+                .padding(15.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            val currentIconData = DivisionIcons.all[selectedPosition.currentIconPos]
+            Icon(
+                painter = painterResource(id = currentIconData.resId),
+                contentDescription = currentIconData.name,
+                modifier = Modifier
+                    .size(50.dp),
+                tint = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
+
+        Icon(
+            imageVector = Icons.Default.KeyboardArrowRight,
+            contentDescription = "",
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .clickable { selectedPosition = DivisionIconSelectorState((selectedPosition.currentIconPos + 1), selectedPosition.currentIconPos) }
+        )
+    }
+}
+
+
+
+//@Preview
+@Composable
+private fun DivisionIconSelectorPreview() {
+    DynamicTheme {
+        Box(Modifier.padding(5.dp)) {
+            DivisionIconSelector(Modifier.size(width = 200.dp, height = 95.dp))
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -121,6 +200,8 @@ fun CreateDivisionBody(
                         iconOptions = LineAwesomeIcons.AllIcons.take(35)
                     )
 
+                    Spacer(modifier = Modifier.size(20.dp))
+                    DivisionIconSelector(Modifier.fillMaxWidth())
                     Spacer(modifier = Modifier.size(20.dp))
 
                     AppTextField(
@@ -172,5 +253,17 @@ fun CreateDivisionBody(
 @Preview
 @Composable
 fun CreateDivisionScreenPreview() {
-    CreateDivisionBody()
+    CreateDivisionBody(
+        DivisionHolder = DivisionHolder(
+            id = 0,
+            title = "",
+            description = "",
+            vectorImg = Icons.Default.Close,
+            boxCount = 0,
+            childCount = 0,
+            option = ThemeOption.THEME_BLUE
+        ),
+        onClose = {},
+        onSave = {}
+    )
 }
