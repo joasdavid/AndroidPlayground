@@ -166,9 +166,10 @@ fun AppScaffold(
             content()
         }
     }
-    if (isLoading)
-    Box(modifier = Modifier.fillMaxSize().clickable {  }.background(MaterialTheme.colorScheme.background.copy(alpha = .75f))) {
-        CircularProgressIndicator(modifier = Modifier.size(50.dp).align(Alignment.Center))
+    if (isLoading) {
+        Box(modifier = Modifier.fillMaxSize().clickable {  }.background(MaterialTheme.colorScheme.background.copy(alpha = .75f))) {
+            CircularProgressIndicator(modifier = Modifier.size(50.dp).align(Alignment.Center))
+        }
     }
 }
 

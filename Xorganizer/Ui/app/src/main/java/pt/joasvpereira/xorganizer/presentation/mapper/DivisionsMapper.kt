@@ -13,7 +13,7 @@ class DivisionsMapper: BaseMapper<DivisionHolder, Division> {
             id = id,
             title = name,
             description = description,
-            vectorImg = mapImage(iconId),
+            imageName = "iconId",
             boxCount = nrBox,
             childCount = nrItem,
             option = mapTheme(themeId)
@@ -25,7 +25,7 @@ class DivisionsMapper: BaseMapper<DivisionHolder, Division> {
             id = id ?: -1,
             name = title,
             description = description,
-            iconId = reverseMapImage(vectorImg),
+            iconId = 0,
             nrBox = boxCount,
             nrItem = childCount,
             themeId = reverseMapTheme(option)
@@ -37,8 +37,6 @@ class DivisionsMapper: BaseMapper<DivisionHolder, Division> {
         2 -> ThemeOption.THEME_GREEN
         else -> ThemeOption.THEME_DEFAULT
     }
-
-    private fun mapImage(iconId: Int): ImageVector = LineAwesomeIcons.QuestionCircle
 
     private fun reverseMapTheme(option: ThemeOption): Int = when(option) {
         ThemeOption.THEME_BLUE -> 1

@@ -37,6 +37,7 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.scaffold.ToolbarTitleCentered
 import pt.joasvpereira.xorganizer.presentation.compose.division.DivisionChart
+import pt.joasvpereira.xorganizer.presentation.icons.DivisionIcons
 
 @Composable
 fun CollapseHeaderScaffold(
@@ -105,7 +106,7 @@ fun CollapseHeaderScaffoldPreview() {
                     1f,
                     5,
                     .5f,
-                    Icons.Default.Close,
+                    DivisionIcons.desk.resId,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
                 SimpleSpace(size = 20.dp)

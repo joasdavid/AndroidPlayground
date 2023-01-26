@@ -73,6 +73,8 @@ import pt.joasvpereira.sessionfeature.domain.usecase.SessionIdParam
 import pt.joasvpereira.xorganizer.R
 import pt.joasvpereira.xorganizer.domain.usecase.division.IDivisionsUseCase
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
+import pt.joasvpereira.xorganizer.presentation.icons.DivisionIcon
+import pt.joasvpereira.xorganizer.presentation.icons.DivisionIcons
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 
 data class MainScreenUiState(
@@ -123,7 +125,7 @@ fun MainScreen(navController: NavController, viewModel: MainScreenViewModel) {
             )
             var settingsOpen by remember { mutableStateOf(false) }
             val view = LocalView.current
-            MainScreenBody(
+            /*MainScreenBody(
                 onAddNewItemClick = { navController.navigate("create_screen") },
                 onItemClick = { holder ->
                     navController.navigate(ScreenNavigation.DivisionScreen.createNavigationRoute(holder.id))
@@ -136,7 +138,7 @@ fun MainScreen(navController: NavController, viewModel: MainScreenViewModel) {
                 },
                 div = viewModel.uiState.divisions,
                 sessionName = viewModel.uiState.sessionName
-            )
+            )*/
         }
 }
 
@@ -180,7 +182,7 @@ private fun MainScreenBody(
                         DivisionListItem(
                             title = div[index].title,
                             description = div[index].description,
-                            vectorImg = div[index].vectorImg,
+                            vectorImg = div[index].imageName,
                             boxCount = div[index].boxCount,
                             childCount = div[index].childCount,
                             option = div[index].option,
@@ -330,7 +332,7 @@ fun AddActionItem(action: () -> Unit) {
 fun DivisionListItem(
     title: String,
     description: String,
-    vectorImg: ImageVector,
+    vectorImg: String,
     boxCount: Int,
     childCount: Int,
     option: ThemeOption = ThemeOption.THEME_DEFAULT,
@@ -356,7 +358,7 @@ fun DivisionListItem(
                         .padding(horizontal = 8.dp, vertical = 16.dp)
                 ) {
                     Icon(
-                        imageVector = vectorImg,
+                        painterResource(id = DivisionIcons.getBy(vectorImg)!!.resId),
                         contentDescription = "",
                         modifier = Modifier.size(24.dp),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
@@ -447,79 +449,18 @@ data class DivisionHolder(
     val id: Int,
     val title: String,
     val description: String,
-    val vectorImg: ImageVector,
+    val imageName: String,
     val boxCount: Int,
     val childCount: Int,
     val option: ThemeOption = ThemeOption.THEME_DEFAULT
 )
-
-@Preview
-@Composable
-fun DivisionListItemPreview() {
-    Column {
-        DivisionListItem(
-            title = "Division 1",
-            description = "Description 1",
-            vectorImg = LineAwesomeIcons.HomeSolid,
-            boxCount = 2,
-            childCount = 3
-        )
-        DivisionListItem(
-            title = "Division 2",
-            description = "",
-            vectorImg = LineAwesomeIcons.TableSolid,
-            boxCount = 1,
-            childCount = 4,
-            option = ThemeOption.THEME_BLUE
-        )
-        DivisionListItem(
-            title = "Division 3",
-            description = "Long discription asdasldkslad;askd;lsak;dasdasdl",
-            vectorImg = LineAwesomeIcons.TableSolid,
-            boxCount = 100,
-            childCount = 40,
-            option = ThemeOption.THEME_GREEN
-        )
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun DivisionListItemPreviewDark() {
-    Column {
-        DivisionListItem(
-            title = "Division 1",
-            description = "Description 1",
-            vectorImg = LineAwesomeIcons.HomeSolid,
-            boxCount = 2,
-            childCount = 3
-        )
-        DivisionListItem(
-            title = "Division 2",
-            description = "",
-            vectorImg = LineAwesomeIcons.TableSolid,
-            boxCount = 1,
-            childCount = 4,
-            option = ThemeOption.THEME_BLUE
-        )
-        DivisionListItem(
-            title = "Division 3",
-            description = "Long discription asdasldkslad;askd;lsak;dasdasdl",
-            vectorImg = LineAwesomeIcons.TableSolid,
-            boxCount = 100,
-            childCount = 40,
-            option = ThemeOption.THEME_GREEN
-        )
-    }
-}
-
 
 val previewList = mutableListOf(
     DivisionHolder(
         id = 0,
         title = "Division 1",
         description = "Description 1",
-        vectorImg = LineAwesomeIcons.HomeSolid,
+        imageName = "livingRoom",
         boxCount = 2,
         childCount = 3
     ),
@@ -527,7 +468,7 @@ val previewList = mutableListOf(
         id = 1,
         title = "Division 2",
         description = "",
-        vectorImg = LineAwesomeIcons.TabletAltSolid,
+        imageName = "livingRoom",
         boxCount = 1,
         childCount = 4,
         option = ThemeOption.THEME_BLUE
@@ -536,7 +477,7 @@ val previewList = mutableListOf(
         id = 2,
         title = "Division 3",
         description = "Long discription asdasldkslad;askd;lsak;dasdasdl",
-        vectorImg = LineAwesomeIcons.BedSolid,
+        imageName = "livingRoom",
         boxCount = 100,
         childCount = 40,
         option = ThemeOption.THEME_GREEN

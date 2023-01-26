@@ -57,4 +57,5 @@ dependencies {
     implementation project(path: ':coreUi')
     implementation project(path: ':core')
     implementation project(path: ':sessionfeature')
+    implementation project(path: ':main')
 }

@@ -1,5 +1,6 @@
 package pt.joasvpereira.xorganizer.presentation.compose.division
 
+import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -49,7 +50,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -81,6 +84,8 @@ import pt.joasvpereira.xorganizer.presentation.compose.common.container.Folder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.item.ItemHolder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.search.SearchHolder
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
+import pt.joasvpereira.xorganizer.presentation.icons.DivisionIcon
+import pt.joasvpereira.xorganizer.presentation.icons.DivisionIcons
 import pt.joasvpereira.xorganizer.presentation.mapper.BoxMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.ItemMapper
@@ -91,7 +96,7 @@ data class DivisionScreenUiState(
         id = -1,
         title = "",
         description = "",
-        vectorImg = Icons.Default.Warning,
+        imageName = "",
         boxCount = 0,
         childCount = 0
     ),
@@ -240,7 +245,7 @@ fun DivisionContent(
         Column {
             DivisionDetailsHeader(
                 divisionName = uiState.division.title,
-                shieldImg = uiState.division.vectorImg,
+                shieldImg = DivisionIcons.getBy(uiState.division.imageName,DivisionIcons.livingRoom).resId,
                 nrFolders = uiState.boxes.size,
                 percentageFolders = percentageFolders,
                 nrItems = uiState.items.size,
@@ -254,7 +259,10 @@ fun DivisionContent(
                 onBoxClick = onBoxClick,
                 onItemClick = { onItemClick(it.id) })
         }
-        Box(modifier = Modifier.fillMaxSize().navigationBarsPadding().padding(bottom = 5.dp)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .navigationBarsPadding()
+            .padding(bottom = 5.dp)) {
             AnimatedVisibility(
                 visible = !uiState.showAddOptions,
                 modifier = Modifier
@@ -307,7 +315,7 @@ fun DivisionContent(
 @Composable
 fun DivisionDetailsHeader(
     divisionName: String,
-    shieldImg: ImageVector,
+    shieldImg: Int,
     nrFolders: Int,
     percentageFolders: Float,
     nrItems: Int,
@@ -340,7 +348,7 @@ fun DivisionChart(
     percentageFolders: Float,
     nrItems: Int,
     percentageItems: Float,
-    shieldImg: ImageVector,
+    shieldImg: Int,
     modifier: Modifier
 ) {
     Row(
@@ -357,7 +365,7 @@ fun DivisionChart(
                 delay = 1000
             )
             Icon(
-                imageVector = shieldImg,
+                painter = painterResource(id = shieldImg),
                 contentDescription = null,
                 modifier = Modifier.size(25.dp)
             )
@@ -485,7 +493,7 @@ fun DivisionDetailsHeaderPreview() {
     DynamicTheme(ThemeOption.THEME_BLUE) {
         DivisionDetailsHeader(
             divisionName = "Division Test",
-            shieldImg = Icons.Default.Home,
+            shieldImg = DivisionIcons.desk.resId,
             nrFolders = 3,
             percentageFolders = .75f,
             nrItems = 4,

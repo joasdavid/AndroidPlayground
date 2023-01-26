@@ -59,4 +59,14 @@ object DivisionIcons {
         bathtub,
         attic
     )
+
+    fun getBy(name:String) : DivisionIcon? =
+        all.find {
+            it.name.equals(name)
+        }
+
+    fun getBy(name:String, orDefault: DivisionIcon) : DivisionIcon =
+        all.find {
+            it.name.equals(name)
+        } ?: orDefault
 }

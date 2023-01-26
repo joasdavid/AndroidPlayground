@@ -1,5 +1,6 @@
 package pt.joasvpereira.xorganizer.di
 
+import android.graphics.Bitmap
 import androidx.room.Room
 import androidx.room.RoomDatabase.Callback
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -8,6 +9,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import pt.joasvpereira.xorganizer.domain.model.Division
 import pt.joasvpereira.xorganizer.domain.repo.DivisionDataSource
@@ -57,6 +59,18 @@ val viewModelModule = module {
 
     viewModel {
         CreateFolderViewModel()
+    }
+
+    factory<Int?>(named("SESSION_ID")) {
+        CurrentSession.session?.id
+    }
+
+    factory<String?>(named("SESSION_NAME")) {
+        CurrentSession.session?.name
+    }
+
+    factory<Bitmap?>(named("SESSION_IMAGE")) {
+        CurrentSession.session?.image
     }
 }
 

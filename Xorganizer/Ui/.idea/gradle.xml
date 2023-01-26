@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/coreUi" />
+            <option value="$PROJECT_DIR$/main" />
             <option value="$PROJECT_DIR$/sessionfeature" />
           </set>
         </option>

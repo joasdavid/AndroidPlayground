@@ -2,6 +2,7 @@ package pt.joasvpereira.xorganizer
 
 import android.app.Application
 import com.google.android.material.color.DynamicColors
+import com.joasvpereira.main.di.MainFeatureModule
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
@@ -26,7 +27,8 @@ class App : Application() {
                     viewModelModule,
                     usecases,
                     repository,
-                    sessionFeatureModule
+                    sessionFeatureModule,
+                    MainFeatureModule
                 )
             )
         }

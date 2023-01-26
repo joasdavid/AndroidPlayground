@@ -26,12 +26,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreen
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.sessionfeature.CurrentSession
 import pt.joasvpereira.sessionfeature.presentation.SessionFeatureEntryPoint
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreen
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreenViewModel
@@ -133,12 +135,13 @@ fun sada() {
                 startDestination = ScreenNavigation.MainScreen.route
             ) {
                 composable(ScreenNavigation.MainScreen.route) {
-                    DynamicTheme {
+                    /*DynamicTheme {
                         MainScreen(
                             navController = navController,
                             viewModel = getViewModel()
                         )
-                    }
+                    }*/
+                    DashboardFeatureScreen(getViewModel())
                 }
                 composable(
                     ScreenNavigation.DivisionScreen.route,

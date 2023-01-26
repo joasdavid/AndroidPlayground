@@ -4,9 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import pt.joasvpereira.core.repository.local.entities.Division
-import pt.joasvpereira.core.repository.local.entities.Division.Companion.TABLE_NAME
 import pt.joasvpereira.core.repository.local.entities.Division.Companion.ID
 import pt.joasvpereira.core.repository.local.entities.Division.Companion.SESSION_ID
+import pt.joasvpereira.core.repository.local.entities.Division.Companion.TABLE_NAME
 
 @Dao
 interface  DivisionDao {
@@ -18,4 +18,7 @@ interface  DivisionDao {
 
     @Insert
     fun insertDivision(division: Division)
+
+    @Query("DELETE FROM $TABLE_NAME WHERE $ID = :id")
+    fun deleteDivision(id: Int)
 }
