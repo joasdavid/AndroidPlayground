@@ -1,6 +1,8 @@
 package com.joasvpereira.main.di
 
 import android.graphics.Bitmap
+import com.joasvpereira.main.domain.usecase.division.DeleteDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
 import com.joasvpereira.main.domain.usecase.division.MyDivisionsUseCase
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreenViewModel
@@ -16,12 +18,17 @@ val MainFeatureModule = module {
         DashboardFeatureScreenViewModel(
             sessionName = get(named("SESSION_NAME")),
             sessionImage = kotlin.runCatching { get<Bitmap>(named("SESSION_IMAGE")) }.getOrNull(),
-            divisionsUseCase = get()
+            divisionsUseCase = get(),
+            deleteUseCase = get(),
         )
     }
 
     factory<IDivisionsUseCase> {
         MyDivisionsUseCase(get())
+    }
+
+    factory<IDeleteDivisionUseCase> {
+        DeleteDivisionUseCase(get())
     }
 
     single<DivisionDataSource> { LocalDivisionDataSource(get(named("SESSION_ID")), get<Db>().userDao()) }
