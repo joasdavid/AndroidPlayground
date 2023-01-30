@@ -81,7 +81,7 @@ private fun FolderScreenContent(
         Column {
             ToolbarTitleCentered(
                 //modifier = Modifier.padding(bottom = 10.dp).padding(horizontal = 16.dp),
-                toolBarConfig = ToolBarConfig(title = folderName,onBackClick = onBackClick)
+                toolBarConfig = ToolBarConfig(title = folderName,onLeftIconClick = onBackClick)
             )
             Body(items = items, onItemClick = onItemClick)
         }

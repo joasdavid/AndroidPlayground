@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -41,11 +42,14 @@ import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.R
+import pt.joasvpereira.coreui.preview.UiModePreview
 
 data class ToolBarConfig(
     val title: String,
-    val backIcon: ImageVector = Icons.Default.ArrowBack,
-    val onBackClick: (() -> Unit)? = null
+    val leftIcon: ImageVector = Icons.Default.ArrowBack,
+    val onLeftIconClick: (() -> Unit)? = null,
+    val rightIcon: ImageVector = Icons.Default.Close,
+    val onRightIconClick: (() -> Unit)? = null
 )
 
 @Composable
@@ -68,14 +72,14 @@ fun ToolbarTitleCentered(
             .padding(horizontal = horizontalPadding)
     )
     {
-        toolBarConfig.onBackClick?.let { backClick ->
+        toolBarConfig.onLeftIconClick?.let { click ->
             Icon(
-                imageVector = toolBarConfig.backIcon,
+                imageVector = toolBarConfig.leftIcon,
                 contentDescription = null,
                 modifier = Modifier
                     .size(24.dp)
                     .clip(CircleShape)
-                    .clickable { backClick() }
+                    .clickable { click() }
                     .align(Alignment.CenterStart)
             )
         }
@@ -87,11 +91,17 @@ fun ToolbarTitleCentered(
             modifier = Modifier.align(Alignment.Center)
         )
 
-        // TODO: this will be implemented later
-        /*Icon(
-            imageVector = Icons.Default.MoreVert,
-            contentDescription = null
-        )*/
+        toolBarConfig.onRightIconClick?.let { click ->
+            Icon(
+                imageVector = toolBarConfig.rightIcon,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(24.dp)
+                    .clip(CircleShape)
+                    .clickable { click() }
+                    .align(Alignment.CenterEnd)
+            )
+        }
     }
 }
 
@@ -104,7 +114,7 @@ fun ToolbarTitleCenterdPreview() {
         ToolbarTitleCentered(
             toolBarConfig = ToolBarConfig(
                 title = "Test Toolbar with back button",
-                onBackClick = {
+                onLeftIconClick = {
 
                 }
             )
@@ -120,7 +130,7 @@ fun ToolbarTitleCenterdPreview() {
             modifier = Modifier
         ) {
             ToolbarTitleCentered(
-                toolBarConfig = ToolBarConfig(title = "divisionName", onBackClick = {}),
+                toolBarConfig = ToolBarConfig(title = "divisionName", onLeftIconClick = {}),
                 horizontalPadding = 16.dp
             )
         }
@@ -173,7 +183,7 @@ fun AppScaffold(
     }
 }
 
-@Preview
+@UiModePreview
 @Composable
 fun AppScaffoldPreview() {
     DynamicTheme {

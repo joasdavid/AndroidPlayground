@@ -10,6 +10,7 @@ interface DivisionDataSource {
     suspend fun getDivisions(): List<Division>
     suspend fun getDivision(id : Int): Division?
     suspend fun createNewDivision(division: Division)
+    suspend fun updateDivision(division: Division)
     suspend fun deleteDivision(id: Int)
 }
 
@@ -24,6 +25,10 @@ class LocalDivisionDataSource(private val targetSessionId: Int, private val divi
 
     override suspend fun createNewDivision(division: Division) = withContext(Dispatchers.IO) {
         divisionDao.insertDivision(division)
+    }
+
+    override suspend fun updateDivision(division: Division) {
+        divisionDao.updateDivision(division)
     }
 
     override suspend fun deleteDivision(id: Int) = withContext(Dispatchers.IO) {

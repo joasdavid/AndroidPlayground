@@ -1,10 +1,18 @@
 package com.joasvpereira.main.di
 
 import android.graphics.Bitmap
+import android.graphics.ColorSpace.Named
+import com.joasvpereira.main.domain.usecase.division.CreateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.DeleteDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.DivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.ICreateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
+import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.MyDivisionsUseCase
+import com.joasvpereira.main.domain.usecase.division.UpdateDivisionUseCase
+import com.joasvpereira.main.presentation.create.CreateDivisionViewModel
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreenViewModel
 import com.joasvpereira.main.repository.DivisionDataSource
 import com.joasvpereira.main.repository.LocalDivisionDataSource
@@ -23,6 +31,30 @@ val MainFeatureModule = module {
         )
     }
 
+    viewModel {
+        CreateDivisionViewModel(
+            divisionUseCase = get(),
+            createDivisionUseCase = get(),
+            updateDivisionUseCase = get()
+        )
+    }
+
+    single<IDivisionUseCase> { DivisionUseCase(get()) }
+
+    factory<ICreateDivisionUseCase> {
+        CreateDivisionUseCase(
+            dataSource = get(),
+            sessionId = get(named("SESSION_ID"))
+        )
+    }
+
+    factory<IUpdateDivisionUseCase> {
+        UpdateDivisionUseCase(
+            dataSource = get(),
+            sessionId = get(named("SESSION_ID"))
+        )
+    }
+
     factory<IDivisionsUseCase> {
         MyDivisionsUseCase(get())
     }
@@ -31,5 +63,5 @@ val MainFeatureModule = module {
         DeleteDivisionUseCase(get())
     }
 
-    single<DivisionDataSource> { LocalDivisionDataSource(get(named("SESSION_ID")), get<Db>().userDao()) }
+    factory<DivisionDataSource> { LocalDivisionDataSource(get(named("SESSION_ID")), get<Db>().userDao()) }
 }

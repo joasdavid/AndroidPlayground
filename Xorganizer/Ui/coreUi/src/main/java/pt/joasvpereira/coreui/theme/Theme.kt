@@ -18,10 +18,20 @@ data class Theme(
     val typography: Typography = AppTypography
 )
 
-enum class ThemeOption {
-    THEME_DEFAULT,
-    THEME_BLUE,
-    THEME_GREEN;
+enum class ThemeOption(val id: Int) {
+    THEME_DEFAULT(0),
+    THEME_BLUE(1),
+    THEME_GREEN(2);
+
+    companion object {
+        fun getBy(id: Int): ThemeOption {
+            ThemeOption.values().forEach {
+                if (id == it.id)
+                    return it
+            }
+            return THEME_DEFAULT
+        }
+    }
 }
 
 fun getAllThemesDetails() = listOf(

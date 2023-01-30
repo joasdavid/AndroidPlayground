@@ -113,7 +113,7 @@ fun ItemScreenContent(
         ) {
             Column {
                 ToolbarTitleCentered(
-                    toolBarConfig = ToolBarConfig(title = "", onBackClick = onBackClick)
+                    toolBarConfig = ToolBarConfig(title = "", onLeftIconClick = onBackClick)
                 )
                 SimpleSpace(size = 4.dp)
                 if (data.item != null)

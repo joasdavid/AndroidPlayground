@@ -333,10 +333,11 @@ fun IconAndCounter(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThemeSelector(
+    selectedOption: ThemeOption = ThemeOption.THEME_DEFAULT,
     onThemeChosen: (ThemeOption) -> Unit
 ) {
     val list = getAllThemesDetails()
-    var selection by remember { mutableStateOf(list.firstOrNull()?.first) }
+    var selection= selectedOption// by remember { mutableStateOf(selectedOption) }
     var expandable by remember { mutableStateOf(false) }
     DropdownSelector(
         modifier = Modifier

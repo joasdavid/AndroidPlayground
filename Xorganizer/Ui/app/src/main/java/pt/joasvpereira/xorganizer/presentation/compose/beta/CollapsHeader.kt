@@ -1,6 +1,5 @@
 package pt.joasvpereira.xorganizer.presentation.compose.beta
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,8 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -98,7 +95,7 @@ fun CollapseHeaderScaffoldPreview() {
             Column(
             ) {
                 ToolbarTitleCentered(
-                    toolBarConfig = ToolBarConfig(title = "divisionName", onBackClick = {}),
+                    toolBarConfig = ToolBarConfig(title = "divisionName", onLeftIconClick = {}),
                 )
                 SimpleSpace(size = 20.dp)
                 DivisionChart(

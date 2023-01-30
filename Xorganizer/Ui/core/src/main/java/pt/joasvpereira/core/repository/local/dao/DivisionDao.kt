@@ -2,7 +2,9 @@ package pt.joasvpereira.core.repository.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import pt.joasvpereira.core.repository.local.entities.Division
 import pt.joasvpereira.core.repository.local.entities.Division.Companion.ID
 import pt.joasvpereira.core.repository.local.entities.Division.Companion.SESSION_ID
@@ -18,6 +20,9 @@ interface  DivisionDao {
 
     @Insert
     fun insertDivision(division: Division)
+
+    @Update(onConflict =  OnConflictStrategy.REPLACE)
+    fun updateDivision(division: Division)
 
     @Query("DELETE FROM $TABLE_NAME WHERE $ID = :id")
     fun deleteDivision(id: Int)

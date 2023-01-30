@@ -34,12 +34,13 @@ fun DashboardFeatureScreen(
         sessionName = viewModel.state.sessionName,
         sessionImage = viewModel.state.sessionImage,
         divisions = viewModel.state.divisions,
-        onDivisionClick = {},
-        onAddNewItemClick = {},
-        onEditClick = {},
+        onDivisionClick = { },
+        onAddNewItemClick = { navController?.navigate("CreateDivisionsFeatureScreen") },
+        onEditClick = { navController?.navigate("CreateDivisionsFeatureScreen?id=${it.id}") },
         onDeleteClick = {
-         viewModel.askToDelete(it)
+            viewModel.askToDelete(it)
         },
+        onSettingOptionClicked = { viewModel.refresh() },
     )
 }
 
@@ -69,7 +70,7 @@ private fun DeletePopup(viewModel: DashboardFeatureScreenViewModel) {
                         onValueChange = { viewModel.askToDelete(deleteEvent.division, it) },
                         placeholder = "",
                         keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Send),
-                        keyboardActions = KeyboardActions(onSend = {viewModel.deleteDivision()})
+                        keyboardActions = KeyboardActions(onSend = { viewModel.deleteDivision() })
                     )
                     SimpleSpace(size = 20.dp)
                 }

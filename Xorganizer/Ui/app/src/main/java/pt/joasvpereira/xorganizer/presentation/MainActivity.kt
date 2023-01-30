@@ -26,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.joasvpereira.main.presentation.MainFeatureEntryPoint
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreen
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -141,7 +142,8 @@ fun sada() {
                             viewModel = getViewModel()
                         )
                     }*/
-                    DashboardFeatureScreen(getViewModel())
+                    //DashboardFeatureScreen(getViewModel())
+                    MainFeatureEntryPoint()
                 }
                 composable(
                     ScreenNavigation.DivisionScreen.route,

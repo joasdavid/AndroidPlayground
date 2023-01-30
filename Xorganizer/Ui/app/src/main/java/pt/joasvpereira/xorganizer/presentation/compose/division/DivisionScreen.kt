@@ -1,6 +1,5 @@
 package pt.joasvpereira.xorganizer.presentation.compose.division
 
-import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -17,12 +16,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -33,8 +30,6 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -50,26 +45,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.scaffold.ToolbarTitleCentered
-import pt.joasvpereira.xorganizer.domain.model.Box
-import pt.joasvpereira.xorganizer.domain.model.Division
-import pt.joasvpereira.xorganizer.domain.model.StoredItem
 import pt.joasvpereira.xorganizer.domain.usecase.box.IBoxesUseCase
 import pt.joasvpereira.xorganizer.domain.usecase.box.SourceDivision
 import pt.joasvpereira.xorganizer.domain.usecase.division.DivisionId
@@ -84,12 +71,8 @@ import pt.joasvpereira.xorganizer.presentation.compose.common.container.Folder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.item.ItemHolder
 import pt.joasvpereira.xorganizer.presentation.compose.common.holder.search.SearchHolder
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.ScreenNavigation
-import pt.joasvpereira.xorganizer.presentation.icons.DivisionIcon
 import pt.joasvpereira.xorganizer.presentation.icons.DivisionIcons
-import pt.joasvpereira.xorganizer.presentation.mapper.BoxMapper
 import pt.joasvpereira.xorganizer.presentation.mapper.DivisionsMapper
-import pt.joasvpereira.xorganizer.presentation.mapper.ItemMapper
-import pt.joasvpereira.xorganizer.presentation.mapper.mapToPresentationList
 
 data class DivisionScreenUiState(
     val division: DivisionHolder = DivisionHolder(
@@ -327,7 +310,7 @@ fun DivisionDetailsHeader(
         modifier = modifier
     ) {
         ToolbarTitleCentered(
-            toolBarConfig = ToolBarConfig(title = divisionName,onBackClick = onBackClick),
+            toolBarConfig = ToolBarConfig(title = divisionName,onLeftIconClick = onBackClick),
         )
         SimpleSpace(size = 20.dp)
         DivisionChart(

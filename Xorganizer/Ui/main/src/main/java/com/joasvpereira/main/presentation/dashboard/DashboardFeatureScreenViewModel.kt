@@ -8,7 +8,6 @@ import com.joasvpereira.main.domain.data.DashboardDivision
 import com.joasvpereira.main.domain.usecase.division.DeleteDivisionParam
 import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
-import com.joasvpereira.main.presentation.icons.DivisionIcon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -30,7 +29,16 @@ class DashboardFeatureScreenViewModel(
         }
     }
 
+    fun refresh(){
+        viewModelScope.launch {
+            fetchDivisions()
+        }
+    }
+
     private suspend fun fetchDivisions() {
+        _state.value = state.copy(
+            isLoading = true,
+        )
         delay(3000)
         val list = divisionsUseCase.execute(EmptyParams())
         _state.value = state.copy(

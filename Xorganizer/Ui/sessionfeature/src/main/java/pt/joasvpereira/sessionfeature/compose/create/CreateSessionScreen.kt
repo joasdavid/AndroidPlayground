@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,7 +35,7 @@ internal fun CreateSessionScreen(
     isOnEditMode: Boolean = false
 ) {
     AppScaffold(
-        toolBarConfig = ToolBarConfig(title = "", onBackClick = onBackClick),
+        toolBarConfig = ToolBarConfig(title = "", onLeftIconClick = onBackClick),
         isLoading = isLoading
     ) {
         Box(modifier = Modifier.fillMaxSize()) {

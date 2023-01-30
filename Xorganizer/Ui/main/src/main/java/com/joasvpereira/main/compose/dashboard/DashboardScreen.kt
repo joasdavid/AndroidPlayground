@@ -1,13 +1,11 @@
 package com.joasvpereira.main.compose.dashboard
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.Bitmap
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.main.domain.data.DashboardDivision
@@ -25,13 +23,18 @@ internal fun DashboardScreen(
     onDivisionClick: (DashboardDivision) -> Unit,
     onEditClick: (DashboardDivision) -> Unit,
     onDeleteClick: (DashboardDivision) -> Unit,
-    onAddNewItemClick: () -> Unit
+    onAddNewItemClick: () -> Unit,
+    onSettingOptionClicked: (Int) -> Unit
 ) {
     AppScaffold(
         isTinted = false,
         isLoading = isLoading,
     ) {
-        DashboardHeader(sessionName = sessionName, sessionImage = sessionImage)
+        DashboardHeader(
+            sessionName = sessionName,
+            sessionImage = sessionImage,
+            onSettingOptionClicked = onSettingOptionClicked,
+        )
         Spacer(modifier = Modifier.size(20.dp))
         DashboardDivisionsSection(
             divisions = divisions,
@@ -57,6 +60,7 @@ private fun DashboardScreenPreview() {
             onAddNewItemClick = {},
             onEditClick = {},
             onDeleteClick = {},
+            onSettingOptionClicked = {},
         )
     }
 }

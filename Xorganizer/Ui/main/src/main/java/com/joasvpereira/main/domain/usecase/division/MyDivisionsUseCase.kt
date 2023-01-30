@@ -13,7 +13,7 @@ class MyDivisionsUseCase(private val dataSource: DivisionDataSource) : IDivision
                 id = it.id!!,
                 name = it.name,
                 description = it.description,
-                icon = DivisionIcons.bathtub,//DivisionIcons.getBy(it.iconId)!!,
+                icon = DivisionIcons.getBy(it.iconId)!!,
                 boxCount = 0,
                 itemCount = 0,
                 themeOption = ThemeOption.values()[it.themeId]
