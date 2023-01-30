@@ -11,13 +11,15 @@ import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreen
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun MainFeatureEntryPoint() {
+fun MainFeatureEntryPoint(
+    onSwitchProfile : () -> Unit
+) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "DashboardFeatureScreen") {
         composable(
             "DashboardFeatureScreen"
         ) {
-            DashboardFeatureScreen(viewModel = getViewModel(), navController = navController)
+            DashboardFeatureScreen(viewModel = getViewModel(), navController = navController, onSwitchProfile = onSwitchProfile)
         }
             composable("CreateDivisionsFeatureScreen?id={id}",
             arguments = listOf(navArgument("id") { defaultValue = -1 })

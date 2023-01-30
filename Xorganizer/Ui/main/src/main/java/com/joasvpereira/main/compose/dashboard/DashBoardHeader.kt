@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
@@ -83,6 +84,14 @@ internal fun DashboardHeader(
                         onClick = {
                             settingsOpen = false
                             onSettingOptionClicked(0)
+                        }
+                    )
+                    HeaderSettingsOptions(
+                        iconPainter = rememberVectorPainter(image = Icons.Default.ExitToApp),
+                        text = "Logout",
+                        onClick = {
+                            settingsOpen = false
+                            onSettingOptionClicked(1)
                         }
                     )
                 }
@@ -157,7 +166,7 @@ fun HeaderSettingsOptionsPreview() {
         Surface(modifier = Modifier.width(IntrinsicSize.Max)) {
             Column {
                 HeaderSettingsOptions(iconPainter = rememberVectorPainter(image = Icons.Default.Refresh), text = "Sync dashboard") {}
-                HeaderSettingsOptions(iconPainter = rememberVectorPainter(image = Icons.Default.Warning), text = "Text") {}
+                HeaderSettingsOptions(iconPainter = rememberVectorPainter(image = Icons.Default.ExitToApp), text = "Logout") {}
             }
         }
     }

@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                       hasSession = true
                   }
               } else {
-                  sada()
+                  sada(onSwitchProfile = {hasSession = false})
               }
               /*AppScaffold {
                   RequestContentPermission()
@@ -81,7 +81,9 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterial3Api
 @Composable
-fun sada() {
+fun sada(
+    onSwitchProfile : () -> Unit
+) {
     DynamicTheme {
         /*var tagColumnState by remember { mutableStateOf(TagColumnState(isEditOpen = true,listOfTags = mutableListOf("test", "XPTO", "test3"))) }
         val roundedCornerShape200 = RoundedCornerShape(200.dp)
@@ -143,7 +145,9 @@ fun sada() {
                         )
                     }*/
                     //DashboardFeatureScreen(getViewModel())
-                    MainFeatureEntryPoint()
+                    MainFeatureEntryPoint(onSwitchProfile = {
+                        onSwitchProfile()
+                    })
                 }
                 composable(
                     ScreenNavigation.DivisionScreen.route,

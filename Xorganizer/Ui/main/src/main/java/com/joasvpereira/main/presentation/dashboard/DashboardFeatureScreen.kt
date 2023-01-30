@@ -26,7 +26,8 @@ import pt.joasvpereira.coreui.text.field.AppTextField
 @Composable
 fun DashboardFeatureScreen(
     viewModel: DashboardFeatureScreenViewModel,
-    navController: NavController? = null
+    navController: NavController? = null,
+    onSwitchProfile: () -> Unit
 ) {
     DeletePopup(viewModel)
     DashboardScreen(
@@ -40,7 +41,12 @@ fun DashboardFeatureScreen(
         onDeleteClick = {
             viewModel.askToDelete(it)
         },
-        onSettingOptionClicked = { viewModel.refresh() },
+        onSettingOptionClicked = {
+            when (it) {
+                0 -> viewModel.refresh()
+                1 -> onSwitchProfile()
+            }
+        },
     )
 }
 
