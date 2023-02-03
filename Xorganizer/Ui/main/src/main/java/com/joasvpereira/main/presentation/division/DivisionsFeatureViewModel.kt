@@ -12,6 +12,8 @@ import com.joasvpereira.main.presentation.icons.DivisionIcons
 import com.joasvpereira.main.repository.BoxDataSource
 import com.joasvpereira.main.repository.ItemDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.repository.local.entities.Box
@@ -19,6 +21,7 @@ import pt.joasvpereira.core.repository.local.entities.Item
 import pt.joasvpereira.coreui.ThemeOption
 
 class DivisionsFeatureViewModel(
+    var divisionId: Int = -1,
     val divisionUseCase : IDivisionUseCase,
     val boxDataSource: BoxDataSource,
     val itemDataSource: ItemDataSource,
@@ -26,20 +29,16 @@ class DivisionsFeatureViewModel(
 
     private var _state = mutableStateOf(
         DivisionsFeatureScreenState(
-            division = DivisionThemed(id = 0, name = "", description = null, icon = DivisionIcons.home, themeOption = ThemeOption.THEME_BLUE),
-            isLoading = true
+            division = DivisionThemed(id = 0, name = "", description = null, icon = DivisionIcons.home, themeOption = ThemeOption.THEME_BLUE)
         )
     )
 
     val state: DivisionsFeatureScreenState
         get() = _state.value
 
-    private var divisionId: Int = -1
-
-    fun loadDivision(id: Int) {
-        divisionId = id
+    init {
         viewModelScope.launch {
-            divisionUseCase.execute(DivisionIdParam(id)).let { division ->
+            divisionUseCase.execute(DivisionIdParam(divisionId)).let { division ->
                 withContext(Dispatchers.Main) {
                     _state.value = state.copy(
                         division = division
@@ -47,14 +46,24 @@ class DivisionsFeatureViewModel(
                 }
             }
 
-            fetchList().let { list ->
-                withContext(Dispatchers.Main) {
-                    _state.value = state.copy(
-                        isLoading = false,
-                        listContent = list
-                    )
-                }
+            boxDataSource.getBoxes(divisionId).combine(itemDataSource.getDivisionItems(divisionId)) { boxList: List<Box>, itemList: List<Item> ->
+                val finalList = boxList.map {
+                    DivisionsContentListItem.Box(id = it.id!!, name = it.name)
+                }.plus(
+                    itemList.map {
+                        DivisionsContentListItem.Item(id = it.id!!, name = it.name)
+                    }
+                )
+
+                ItemsAndBoxes(list = finalList, nrBoxes = boxList.size, nrItems = itemList.size)
+            }.collectLatest {
+                _state.value = state.copy(
+                    listContent = it.list,
+                    nrOfItems = it.nrItems,
+                    nrOfBoxes = it.nrBoxes
+                )
             }
+
         }
     }
 
@@ -74,35 +83,9 @@ class DivisionsFeatureViewModel(
                 _state.value = state.copy(
                     createBox = state.createBox.copy(isVisible = false)
                 )
-            }.also {
-                fetchList().run {
-                    _state.value = state.copy(
-                        listContent = this
-                    )
-                }
             }
         }
     }
-
-    private suspend fun fetchList(): List<DivisionsContentListItem> = boxDataSource.getBoxes(divisionId).map { box ->
-        DivisionsContentListItem.Box(
-            id = box.id!!,
-            name = box.name
-        )
-    }.let {boxList ->
-        val itemsList = itemDataSource.getDivisionItems(divisionId).map {
-            DivisionsContentListItem.Item(
-                id = it.id!!,
-                name = it.name
-            )
-        }
-        ItemsAndBoxes(list = boxList.plus(itemsList), nrBoxes = boxList.size, nrItems = itemsList.size)
-    }.also {
-        _state.value = state.copy(
-            nrOfBoxes = it.nrBoxes,
-            nrOfItems = it.nrItems
-        )
-    }.list
 
     fun onBoxNameChanged(): (String) -> Unit = {
         val currBoxState = state.createBox
@@ -134,12 +117,6 @@ class DivisionsFeatureViewModel(
                 _state.value = state.copy(
                     createItem = state.createItem.copy(isVisible = false)
                 )
-            }.also {
-                fetchList().run {
-                    _state.value = state.copy(
-                        listContent = this
-                    )
-                }
             }
         }
     }

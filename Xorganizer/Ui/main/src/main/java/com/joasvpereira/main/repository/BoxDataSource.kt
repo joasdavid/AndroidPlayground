@@ -1,6 +1,7 @@
 package com.joasvpereira.main.repository
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.repository.local.dao.BoxDao
 import pt.joasvpereira.core.repository.local.dao.DivisionDao
@@ -9,7 +10,7 @@ import pt.joasvpereira.core.repository.local.entities.Box
 import pt.joasvpereira.core.repository.local.entities.Division
 
 interface BoxDataSource {
-    suspend fun getBoxes(divisionId: Int): List<Box>
+    suspend fun getBoxes(divisionId: Int): Flow<List<Box>>
     suspend fun getBox(id : Int): Box?
     suspend fun createNewBox(box: Box)
     suspend fun updateBox(box: Box)
@@ -18,7 +19,7 @@ interface BoxDataSource {
 
 class LocalBoxDataSource(private val boxDao: BoxDao) : BoxDataSource {
 
-    override suspend fun getBoxes(divisionId: Int): List<Box> = withContext(Dispatchers.IO) {
+    override suspend fun getBoxes(divisionId: Int) = withContext(Dispatchers.IO) {
         boxDao.getAll(divisionId)
     }
 

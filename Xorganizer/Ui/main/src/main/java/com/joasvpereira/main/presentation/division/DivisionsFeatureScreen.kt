@@ -41,14 +41,13 @@ import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 
 @Composable
 fun DivisionsFeatureScreen(
-    divisionId: Int,
     viewModel: DivisionsFeatureViewModel,
     navController: NavController?
 ) {
 
-    LaunchedEffect(key1 = null, block = {viewModel.loadDivision(divisionId)})
+    //LaunchedEffect(key1 = null, block = {viewModel.loadDivision(divisionId)})
 
-    if (divisionId < 0) {
+    if (viewModel.divisionId < 0) {
         AlertDialogWithSingleButton(
             onDismissRequest = { },
             buttonText = "Close",

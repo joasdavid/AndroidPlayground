@@ -11,6 +11,7 @@ import com.joasvpereira.main.presentation.create.CreateDivisionScreen
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreen
 import com.joasvpereira.main.presentation.division.DivisionsFeatureScreen
 import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainFeatureEntryPoint(
@@ -38,7 +39,7 @@ fun MainFeatureEntryPoint(
             }))
         ) {
             val id = it.arguments?.getInt("id") ?: -1
-            DivisionsFeatureScreen(divisionId = id, getViewModel(), navController = navController)
+            DivisionsFeatureScreen(getViewModel() { parametersOf(id) }, navController = navController)
         }
     }
 }

@@ -44,8 +44,9 @@ val MainFeatureModule = module {
         )
     }
 
-    viewModel {
+    viewModel { (divisionId: Int) ->
         DivisionsFeatureViewModel(
+            divisionId = divisionId,
             divisionUseCase = get(),
             boxDataSource = get(),
             itemDataSource = get()
