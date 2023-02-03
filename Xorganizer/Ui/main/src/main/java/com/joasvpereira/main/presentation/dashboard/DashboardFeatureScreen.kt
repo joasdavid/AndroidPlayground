@@ -35,7 +35,7 @@ fun DashboardFeatureScreen(
         sessionName = viewModel.state.sessionName,
         sessionImage = viewModel.state.sessionImage,
         divisions = viewModel.state.divisions,
-        onDivisionClick = { },
+        onDivisionClick = { navController?.navigate("DivisionFeatureScreen?id=${it.id}") },
         onAddNewItemClick = { navController?.navigate("CreateDivisionsFeatureScreen") },
         onEditClick = { navController?.navigate("CreateDivisionsFeatureScreen?id=${it.id}") },
         onDeleteClick = {

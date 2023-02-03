@@ -36,7 +36,7 @@ data class Item(
     @ColumnInfo(name = PARENT_DIVISION_ID)
     val parentDivisionId: Int,
     @ColumnInfo(name = PARENT_BOX_ID)
-    val parentBoxId: Int?,
+    val parentBoxId: Int? = null,
 ) {
 
     companion object {

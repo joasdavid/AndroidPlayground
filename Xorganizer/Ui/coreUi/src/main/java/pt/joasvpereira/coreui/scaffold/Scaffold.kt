@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -49,13 +50,13 @@ data class ToolBarConfig(
     val leftIcon: ImageVector = Icons.Default.ArrowBack,
     val onLeftIconClick: (() -> Unit)? = null,
     val rightIcon: ImageVector = Icons.Default.Close,
-    val onRightIconClick: (() -> Unit)? = null
+    val onRightIconClick: (() -> Unit)? = null,
+    val horizontalPadding: Dp = 0.dp
 )
 
 @Composable
 fun ToolbarTitleCentered(
     toolBarConfig: ToolBarConfig,
-    horizontalPadding: Dp = 16.dp,
     useInsetsPaddingForStatusBars: Boolean = true
 ) {
     Box(
@@ -69,7 +70,7 @@ fun ToolbarTitleCentered(
             )
             .fillMaxWidth()
             .height(48.dp)
-            .padding(horizontal = horizontalPadding)
+            .padding(horizontal = toolBarConfig.horizontalPadding)
     )
     {
         toolBarConfig.onLeftIconClick?.let { click ->
@@ -121,8 +122,7 @@ fun ToolbarTitleCenterdPreview() {
         )
         SimpleSpace(size = 10.dp)
         ToolbarTitleCentered(
-            toolBarConfig = ToolBarConfig(title = "Test Toolbar"),
-            horizontalPadding = 20.dp,
+            toolBarConfig = ToolBarConfig(title = "Test Toolbar",horizontalPadding = 20.dp,),
             useInsetsPaddingForStatusBars = false
         )
         SimpleSpace(size = 10.dp)
@@ -130,8 +130,9 @@ fun ToolbarTitleCenterdPreview() {
             modifier = Modifier
         ) {
             ToolbarTitleCentered(
-                toolBarConfig = ToolBarConfig(title = "divisionName", onLeftIconClick = {}),
-                horizontalPadding = 16.dp
+                toolBarConfig = ToolBarConfig(title = "divisionName", onLeftIconClick = {},
+                    horizontalPadding = 16.dp
+                )
             )
         }
     }
@@ -144,7 +145,8 @@ fun AppScaffold(
     toolBarConfig: ToolBarConfig? = null,
     isTinted: Boolean = true,
     isLoading: Boolean = false,
-    content: @Composable () -> Unit
+    paddingValues: PaddingValues = PaddingValues(horizontal = 20.dp),
+    content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold() {
         val backgroundRes = R.drawable.background
@@ -161,19 +163,17 @@ fun AppScaffold(
         }
 
         Column(Modifier.padding(
-            top = it.calculateTopPadding(),
-            start = it.calculateStartPadding(LayoutDirection.Ltr) + 20.dp,
-            end = it.calculateEndPadding(LayoutDirection.Ltr) + 20.dp,
-            bottom = it.calculateBottomPadding()
+            top = it.calculateTopPadding() + paddingValues.calculateTopPadding(),
+            start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+            end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
         )) {
             toolBarConfig?.apply {
                 ToolbarTitleCentered(
                     toolBarConfig = this,
-                    horizontalPadding = 0.dp,
                     useInsetsPaddingForStatusBars = false
                 )
             }
-            content()
+            content(it)
         }
     }
     if (isLoading) {

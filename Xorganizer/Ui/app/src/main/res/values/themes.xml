@@ -17,6 +17,7 @@
   <style name="Theme.Xorganizer.NoActionBar">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
+    <item name="android:navigationBarColor">#00000000</item>
   </style>
 
   <style name="Theme.Xorganizer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

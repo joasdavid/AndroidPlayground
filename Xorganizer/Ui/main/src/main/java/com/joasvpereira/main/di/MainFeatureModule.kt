@@ -14,8 +14,13 @@ import com.joasvpereira.main.domain.usecase.division.MyDivisionsUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateDivisionUseCase
 import com.joasvpereira.main.presentation.create.CreateDivisionViewModel
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreenViewModel
+import com.joasvpereira.main.presentation.division.DivisionsFeatureViewModel
+import com.joasvpereira.main.repository.BoxDataSource
 import com.joasvpereira.main.repository.DivisionDataSource
+import com.joasvpereira.main.repository.ItemDataSource
+import com.joasvpereira.main.repository.LocalBoxDataSource
 import com.joasvpereira.main.repository.LocalDivisionDataSource
+import com.joasvpereira.main.repository.LocalItemDataSource
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -36,6 +41,14 @@ val MainFeatureModule = module {
             divisionUseCase = get(),
             createDivisionUseCase = get(),
             updateDivisionUseCase = get()
+        )
+    }
+
+    viewModel {
+        DivisionsFeatureViewModel(
+            divisionUseCase = get(),
+            boxDataSource = get(),
+            itemDataSource = get()
         )
     }
 
@@ -64,4 +77,7 @@ val MainFeatureModule = module {
     }
 
     factory<DivisionDataSource> { LocalDivisionDataSource(get(named("SESSION_ID")), get<Db>().userDao()) }
+
+    single<BoxDataSource> { LocalBoxDataSource(get<Db>().boxDao()) }
+    single<ItemDataSource> { LocalItemDataSource(get<Db>().itemDao()) }
 }

@@ -2,17 +2,19 @@ package com.joasvpereira.main.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.joasvpereira.main.presentation.create.CreateDivisionScreen
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreen
+import com.joasvpereira.main.presentation.division.DivisionsFeatureScreen
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MainFeatureEntryPoint(
-    onSwitchProfile : () -> Unit
+    onSwitchProfile: () -> Unit
 ) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "DashboardFeatureScreen") {
@@ -21,11 +23,22 @@ fun MainFeatureEntryPoint(
         ) {
             DashboardFeatureScreen(viewModel = getViewModel(), navController = navController, onSwitchProfile = onSwitchProfile)
         }
-            composable("CreateDivisionsFeatureScreen?id={id}",
+        composable(
+            "CreateDivisionsFeatureScreen?id={id}",
             arguments = listOf(navArgument("id") { defaultValue = -1 })
         ) {
             val id = it.arguments?.getInt("id").takeIf { it != -1 }
             CreateDivisionScreen(divisionId = id, getViewModel(), navController = navController)
+        }
+
+        composable(
+            "DivisionFeatureScreen?id={id}",
+            arguments = listOf(navArgument("id", builder = {type = NavType.IntType
+                defaultValue = -1
+            }))
+        ) {
+            val id = it.arguments?.getInt("id") ?: -1
+            DivisionsFeatureScreen(divisionId = id, getViewModel(), navController = navController)
         }
     }
 }

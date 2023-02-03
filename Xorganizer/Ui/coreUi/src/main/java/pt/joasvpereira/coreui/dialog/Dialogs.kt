@@ -25,7 +25,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -308,11 +307,11 @@ fun AlertDialogWithSingleButton(
         surfaceColor = surfaceColor,
         indicatorIcon = indicatorIcon,
         indicatorColor = indicatorColor,
-        buttonColor = buttonColor,
         buttonAreaContent = {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(color = buttonColor)
                     .clickable { onButtonClick() }, contentAlignment = Alignment.Center
             ) {
                 Text(text = buttonText, fontWeight = FontWeight.Bold)
@@ -329,7 +328,6 @@ fun BasedStyledDialog(
     surfaceColor: Color = MaterialTheme.colorScheme.surface,
     indicatorIcon: Painter,
     indicatorColor: Color = MaterialTheme.colorScheme.primary,
-    buttonColor: Color = MaterialTheme.colorScheme.primary,
     buttonAreaContent: @Composable RowScope.() -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -421,7 +419,6 @@ fun DialogWithTwoButton(
         surfaceColor = surfaceColor,
         indicatorIcon = indicatorIcon,
         indicatorColor = indicatorColor,
-        buttonColor = buttonPositiveColor,
         buttonAreaContent = {
             val alphaPositive = if (isButtonPositiveEnabled) 1f else .25f
             val alphaNegative = if (isButtonNegativeEnabled) 1f else .25f
