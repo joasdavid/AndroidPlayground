@@ -96,17 +96,17 @@ fun DivisionChart(
                 Box(
                     modifier = Modifier
                         .size(15.dp)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape)
+                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
                 )
                 SimpleSpace(size = 5.dp)
-                Text(text = "Folders: $nrFolders")
+                Text(text = "Boxes: $nrFolders")
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
                         .size(15.dp)
-                        .background(MaterialTheme.colorScheme.tertiary, CircleShape)
+                        .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
                 )
                 SimpleSpace(size = 5.dp)
                 Text(text = "Items: $nrItems")
@@ -121,8 +121,8 @@ fun buildChartItems(
     percentageItems: Float,
 ): List<CircleChartItem> {
     return listOf(
-        CircleChartItem(percentageFolders, MaterialTheme.colorScheme.primary),
-        CircleChartItem(percentageItems, MaterialTheme.colorScheme.tertiary),
+        CircleChartItem(percentageFolders, MaterialTheme.colorScheme.primaryContainer),
+        CircleChartItem(percentageItems, MaterialTheme.colorScheme.tertiaryContainer),
     )
 }
 
