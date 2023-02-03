@@ -1,7 +1,7 @@
 package pt.joasvpereira.core.domain.usecase
 
-interface BaseUseCase<INPUT, OUTPUT> {
-    fun execute(params: Params) : OUTPUT
+interface BaseUseCase<INPUT: Params?, OUTPUT> {
+    fun execute(params: INPUT) : OUTPUT
 }
 
 interface BaseUseCaseSync<INPUT : Params?, OUTPUT> {

@@ -1,7 +1,7 @@
 package com.joasvpereira.main.domain.data
 
-data class ItemsAndBoxes(
-    val list: List<DivisionsContentListItem>,
+data class DivisionElements(
+    val list: List<DivisionElement>,
     val nrBoxes: Int,
     val nrItems: Int
 )

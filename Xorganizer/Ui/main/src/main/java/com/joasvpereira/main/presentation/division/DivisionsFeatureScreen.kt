@@ -5,15 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -27,12 +21,11 @@ import com.joasvpereira.main.compose.division.DivisionCreateButtonsState
 import com.joasvpereira.main.compose.division.DivisionHeader
 import com.joasvpereira.main.compose.division.rememberDivisionCreateButtonsState
 import com.joasvpereira.main.domain.data.DivisionThemed
-import com.joasvpereira.main.domain.data.DivisionsContentListItem
+import com.joasvpereira.main.domain.data.DivisionElement
 import com.joasvpereira.main.presentation.icons.DivisionIcons
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
-import pt.joasvpereira.coreui.dialog.BasedStyledDialog
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
@@ -106,7 +99,7 @@ fun DivisionsFeatureScreen(
 @Composable
 fun DivisionsScreen(
     divisionThemed: DivisionThemed,
-    divisionListContent: List<DivisionsContentListItem> = emptyList(),
+    divisionListContent: List<DivisionElement> = emptyList(),
     boxCount: Int = 0,
     itemCount: Int = 0,
     onBackClick: () -> Unit,

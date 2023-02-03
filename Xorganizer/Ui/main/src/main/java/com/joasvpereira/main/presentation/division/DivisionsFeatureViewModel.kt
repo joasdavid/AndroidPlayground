@@ -4,10 +4,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joasvpereira.main.domain.data.DivisionThemed
-import com.joasvpereira.main.domain.data.DivisionsContentListItem
-import com.joasvpereira.main.domain.data.ItemsAndBoxes
+import com.joasvpereira.main.domain.data.DivisionElement
+import com.joasvpereira.main.domain.data.DivisionElements
+import com.joasvpereira.main.domain.usecase.division.CreateBoxParam
+import com.joasvpereira.main.domain.usecase.division.CreateItemParam
 import com.joasvpereira.main.domain.usecase.division.DivisionIdParam
+import com.joasvpereira.main.domain.usecase.division.GetDivisionElementsUseCase
+import com.joasvpereira.main.domain.usecase.division.ICreateBoxUseCase
+import com.joasvpereira.main.domain.usecase.division.ICreateItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
 import com.joasvpereira.main.presentation.icons.DivisionIcons
 import com.joasvpereira.main.repository.BoxDataSource
 import com.joasvpereira.main.repository.ItemDataSource
@@ -22,9 +28,10 @@ import pt.joasvpereira.coreui.ThemeOption
 
 class DivisionsFeatureViewModel(
     var divisionId: Int = -1,
-    val divisionUseCase : IDivisionUseCase,
-    val boxDataSource: BoxDataSource,
-    val itemDataSource: ItemDataSource,
+    private val divisionUseCase : IDivisionUseCase,
+    private val getDivisionElementsUseCase: IGetDivisionElementsUseCase,
+    private val createBoxUseCase: ICreateBoxUseCase,
+    private val createItemUseCase: ICreateItemUseCase,
 ) : ViewModel() {
 
     private var _state = mutableStateOf(
@@ -46,17 +53,7 @@ class DivisionsFeatureViewModel(
                 }
             }
 
-            boxDataSource.getBoxes(divisionId).combine(itemDataSource.getDivisionItems(divisionId)) { boxList: List<Box>, itemList: List<Item> ->
-                val finalList = boxList.map {
-                    DivisionsContentListItem.Box(id = it.id!!, name = it.name)
-                }.plus(
-                    itemList.map {
-                        DivisionsContentListItem.Item(id = it.id!!, name = it.name)
-                    }
-                )
-
-                ItemsAndBoxes(list = finalList, nrBoxes = boxList.size, nrItems = itemList.size)
-            }.collectLatest {
+            getDivisionElementsUseCase.execute(DivisionIdParam(divisionId)).collectLatest {
                 _state.value = state.copy(
                     listContent = it.list,
                     nrOfItems = it.nrItems,
@@ -73,17 +70,17 @@ class DivisionsFeatureViewModel(
 
     fun saveNewBox(): () -> Unit = {
         viewModelScope.launch {
-            boxDataSource.createNewBox(
-                Box(
+            createBoxUseCase.execute(
+                CreateBoxParam(
                     name = state.createBox.name,
                     description = state.createBox.description,
-                    parentDivisionId = divisionId
+                    parentId = divisionId
                 )
-            ).also {
-                _state.value = state.copy(
-                    createBox = state.createBox.copy(isVisible = false)
-                )
-            }
+            )
+
+            _state.value = state.copy(
+                createBox = state.createBox.copy(isVisible = false)
+            )
         }
     }
 
@@ -107,17 +104,16 @@ class DivisionsFeatureViewModel(
 
     fun saveNewItem(): () -> Unit = {
         viewModelScope.launch {
-            itemDataSource.createNewItem(
-                Item(
+            createItemUseCase.execute(
+                CreateItemParam(
                     name = state.createItem.name,
                     description = state.createItem.description,
-                    parentDivisionId = divisionId
+                    parentId = divisionId
                 )
-            ).also {
-                _state.value = state.copy(
-                    createItem = state.createItem.copy(isVisible = false)
-                )
-            }
+            )
+            _state.value = state.copy(
+                createItem = state.createItem.copy(isVisible = false)
+            )
         }
     }
 

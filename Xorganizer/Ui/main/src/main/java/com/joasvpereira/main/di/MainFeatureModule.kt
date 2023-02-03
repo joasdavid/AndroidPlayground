@@ -2,13 +2,19 @@ package com.joasvpereira.main.di
 
 import android.graphics.Bitmap
 import android.graphics.ColorSpace.Named
+import com.joasvpereira.main.domain.usecase.division.CreateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.CreateDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.CreateItemUseCase
 import com.joasvpereira.main.domain.usecase.division.DeleteDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.DivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.GetDivisionElementsUseCase
+import com.joasvpereira.main.domain.usecase.division.ICreateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.ICreateItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
+import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.MyDivisionsUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateDivisionUseCase
@@ -48,8 +54,9 @@ val MainFeatureModule = module {
         DivisionsFeatureViewModel(
             divisionId = divisionId,
             divisionUseCase = get(),
-            boxDataSource = get(),
-            itemDataSource = get()
+            getDivisionElementsUseCase = get(),
+            createBoxUseCase = get(),
+            createItemUseCase = get(),
         )
     }
 
@@ -75,6 +82,25 @@ val MainFeatureModule = module {
 
     factory<IDeleteDivisionUseCase> {
         DeleteDivisionUseCase(get())
+    }
+
+    single<IGetDivisionElementsUseCase> {
+        GetDivisionElementsUseCase(
+            boxDataSource = get(),
+            itemDataSource = get()
+        )
+    }
+
+    single<ICreateBoxUseCase> {
+        CreateBoxUseCase(
+            boxDataSource = get()
+        )
+    }
+
+    single<ICreateItemUseCase> {
+        CreateItemUseCase(
+            itemDataSource = get()
+        )
     }
 
     factory<DivisionDataSource> { LocalDivisionDataSource(get(named("SESSION_ID")), get<Db>().userDao()) }

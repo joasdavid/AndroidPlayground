@@ -13,7 +13,7 @@ import pt.joasvpereira.core.repository.local.entities.Item.Companion.TABLE_NAME
 
 @Dao
 interface  ItemDao {
-    @Query("SELECT * FROM $TABLE_NAME WHERE $PARENT_DIVISION_ID = :fromDivision")
+    @Query("SELECT * FROM $TABLE_NAME WHERE $PARENT_DIVISION_ID = :fromDivision and $PARENT_BOX_ID is null")
     fun getAllFromDivision(fromDivision: Int): Flow<List<Item>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PARENT_BOX_ID = :fromBox")

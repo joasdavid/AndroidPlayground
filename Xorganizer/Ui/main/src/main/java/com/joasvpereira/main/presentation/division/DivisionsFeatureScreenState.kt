@@ -2,11 +2,11 @@ package com.joasvpereira.main.presentation.division
 
 import com.joasvpereira.main.compose.division.DivisionCreateButtonsState
 import com.joasvpereira.main.domain.data.DivisionThemed
-import com.joasvpereira.main.domain.data.DivisionsContentListItem
+import com.joasvpereira.main.domain.data.DivisionElement
 
 data class DivisionsFeatureScreenState(
     val division: DivisionThemed,
-    val listContent: List<DivisionsContentListItem> = emptyList(),
+    val listContent: List<DivisionElement> = emptyList(),
     val nrOfBoxes: Int = 0,
     val nrOfItems: Int = 0,
     val isLoading: Boolean = false,
