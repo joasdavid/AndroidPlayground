@@ -4,26 +4,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joasvpereira.main.domain.data.DivisionThemed
-import com.joasvpereira.main.domain.data.DivisionElement
-import com.joasvpereira.main.domain.data.DivisionElements
 import com.joasvpereira.main.domain.usecase.division.CreateBoxParam
 import com.joasvpereira.main.domain.usecase.division.CreateItemParam
 import com.joasvpereira.main.domain.usecase.division.DivisionIdParam
-import com.joasvpereira.main.domain.usecase.division.GetDivisionElementsUseCase
+import com.joasvpereira.main.domain.usecase.division.GetDivisionElementsParams
 import com.joasvpereira.main.domain.usecase.division.ICreateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import com.joasvpereira.main.repository.BoxDataSource
-import com.joasvpereira.main.repository.ItemDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pt.joasvpereira.core.repository.local.entities.Box
-import pt.joasvpereira.core.repository.local.entities.Item
 import pt.joasvpereira.coreui.ThemeOption
 
 class DivisionsFeatureViewModel(
@@ -53,7 +46,7 @@ class DivisionsFeatureViewModel(
                 }
             }
 
-            getDivisionElementsUseCase.execute(DivisionIdParam(divisionId)).collectLatest {
+            getDivisionElementsUseCase.execute(GetDivisionElementsParams(divisionId)).collectLatest {
                 _state.value = state.copy(
                     listContent = it.list,
                     nrOfItems = it.nrItems,
@@ -62,6 +55,12 @@ class DivisionsFeatureViewModel(
             }
 
         }
+    }
+
+    fun showFilter() {
+        _state.value = state.copy(
+            filter = state.filter.copy(isVisible = true)
+        )
     }
 
     fun dismissBoxPopup(): () -> Unit = {
@@ -137,5 +136,41 @@ class DivisionsFeatureViewModel(
             createItem = DivisionsFeatureScreenState.CreateItem(name = "", description = "", isVisible = true),
         )
         _state.value.createButtonsState.toggle()
+    }
+
+    fun hideFilter(): () -> Unit = {
+        _state.value = state.copy(
+            filter = state.filter.copy(isVisible = false)
+        )
+    }
+
+    fun changeFilterSelections(i: Int): (() -> Unit)  =  {
+        _state.value = state.copy(
+            filter = state.filter.copy(
+                selectedFilter = i
+            )
+        )
+        applyFilter()
+    }
+
+    private fun applyFilter() {
+        viewModelScope.launch {
+            getDivisionElementsUseCase.execute(
+                GetDivisionElementsParams(
+                    divisionId = divisionId,
+                    filter = when(state.filter.selectedFilter) {
+                        1 -> GetDivisionElementsParams.Filter.OnlyBoxes
+                        2 -> GetDivisionElementsParams.Filter.OnlyItems
+                        else -> GetDivisionElementsParams.Filter.All
+                    }
+                )
+            ).collectLatest {
+                _state.value = state.copy(
+                    listContent = it.list,
+                    nrOfBoxes = it.nrBoxes,
+                    nrOfItems = it.nrItems
+                )
+            }
+        }
     }
 }

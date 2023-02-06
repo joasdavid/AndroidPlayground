@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.domain.data.DivisionElement
@@ -25,7 +26,7 @@ import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 
 @Composable
-fun DivisionContent(listItem: List<DivisionElement>) {
+fun DivisionContent(listItem: List<DivisionElement>, listBottomPadding: Dp = 0.dp) {
     Surface(modifier = Modifier
         .fillMaxSize()
         .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
@@ -58,6 +59,10 @@ fun DivisionContent(listItem: List<DivisionElement>) {
                         }
                     }
                     SimpleSpace(size = 10.dp)
+                }
+
+                item {
+                    SimpleSpace(size = listBottomPadding)
                 }
             }
         }
