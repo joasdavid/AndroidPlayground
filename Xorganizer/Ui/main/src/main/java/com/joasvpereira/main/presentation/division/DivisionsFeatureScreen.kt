@@ -4,29 +4,25 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import com.joasvpereira.main.compose.division.CreateBoxPopup
-import com.joasvpereira.main.compose.division.CreateItemPopup
+import com.joasvpereira.main.compose.division.popup.CreateBoxPopup
+import com.joasvpereira.main.compose.division.popup.CreateItemPopup
 import com.joasvpereira.main.compose.division.DivisionContent
 import com.joasvpereira.main.compose.division.DivisionCreateButtons
 import com.joasvpereira.main.compose.division.DivisionCreateButtonsState
 import com.joasvpereira.main.compose.division.DivisionHeader
+import com.joasvpereira.main.compose.division.DivisionsContentAction
+import com.joasvpereira.main.compose.division.popup.FilterPopup
 import com.joasvpereira.main.compose.division.rememberDivisionCreateButtonsState
 import com.joasvpereira.main.domain.data.DivisionThemed
 import com.joasvpereira.main.domain.data.DivisionElement
@@ -34,7 +30,6 @@ import com.joasvpereira.main.presentation.icons.DivisionIcons
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
-import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
@@ -62,34 +57,15 @@ fun DivisionsFeatureScreen(
     }
 
     AnimatedVisibility(visible = viewModel.state.filter.isVisible) {
-        DynamicTheme(viewModel.state.division.themeOption) {
-            AlertDialogWithSingleButton(
-                onDismissRequest = viewModel.hideFilter(),
-                indicatorIcon = Icons.Default.List,
-                buttonText = "Close",
-                onButtonClick = viewModel.hideFilter()
-            ) {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(selected = viewModel.state.filter.selectedFilter == 0, onClick = viewModel.changeFilterSelections(0))
-                        SimpleSpace(size = 10.dp)
-                        Text(text = "Show all")
-                    }
-
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(selected = viewModel.state.filter.selectedFilter == 1, onClick = viewModel.changeFilterSelections(1))
-                        SimpleSpace(size = 10.dp)
-                        Text(text = "Show only boxes")
-                    }
-
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(selected = viewModel.state.filter.selectedFilter == 2, onClick = viewModel.changeFilterSelections(2))
-                        SimpleSpace(size = 10.dp)
-                        Text(text = "Show only items")
-                    }
-                }
+        FilterPopup(
+            themeOption = viewModel.state.division.themeOption,
+            onDismissRequest = viewModel.hideFilter(),
+            onButtonClick = viewModel.hideFilter(),
+            filterOptionsOption = viewModel.state.filter.selectedFilter,
+            onFilterOptionChange = {
+                viewModel.changeFilterSelections(it)
             }
-        }
+        )
     }
 
     AnimatedVisibility(visible = viewModel.state.createBox.isVisible) {
@@ -131,7 +107,10 @@ fun DivisionsFeatureScreen(
         shouldDisplayWithoutAnimation = false, // only for tests and previews
         divisionCreateButtonsState = viewModel.state.createButtonsState,
         onAddBoxClick = viewModel.showCreateBox(),
-        onAddItemClick = viewModel.showCreateItem()
+        onAddItemClick = viewModel.showCreateItem(),
+        onDeleteItem = { viewModel.deleteElement(it) },
+        onEditItem = { viewModel.showEdit(it) },
+        onOpenItem = {},
     )
 }
 
@@ -143,6 +122,9 @@ fun DivisionsScreen(
     itemCount: Int = 0,
     onBackClick: () -> Unit,
     onFilterClick: () -> Unit,
+    onDeleteItem: (DivisionElement) -> Unit,
+    onEditItem: (DivisionElement) -> Unit,
+    onOpenItem: (DivisionElement) -> Unit,
     isLoading: Boolean,
     shouldDisplayWithoutAnimation: Boolean = false,
     divisionCreateButtonsState: DivisionCreateButtonsState = rememberDivisionCreateButtonsState(),
@@ -170,7 +152,16 @@ fun DivisionsScreen(
                         modifier = Modifier.padding(PaddingValues()),
                         shouldDisplayWithoutAnimation = shouldDisplayWithoutAnimation
                     )
-                    DivisionContent(divisionListContent, listBottomPadding = it.calculateBottomPadding())
+                    DivisionContent(
+                        divisionListContent, listBottomPadding = it.calculateBottomPadding(),
+                        onClick = { element, action ->
+                            when(action) {
+                                DivisionsContentAction.Open -> onOpenItem(element)
+                                DivisionsContentAction.Edit -> onEditItem(element)
+                                DivisionsContentAction.Delete -> onDeleteItem(element)
+                            }
+                        },
+                    )
                 }
                 DivisionCreateButtons(
                     divisionCreateButtonsState = divisionCreateButtonsState,
@@ -215,6 +206,9 @@ private fun DivisionsScreenSinglePreview() {
         boxCount = 0,
         itemCount = 0,
         onFilterClick = {},
+        onDeleteItem = {},
+        onEditItem = {},
+        onOpenItem = {},
     )
 }
 
@@ -239,5 +233,8 @@ private fun DivisionsScreenPreview(@PreviewParameter(ThemesProvider::class) them
         boxCount = 0,
         itemCount = 0,
         onFilterClick = {},
+        onDeleteItem = {},
+        onEditItem = {},
+        onOpenItem = {},
     )
 }

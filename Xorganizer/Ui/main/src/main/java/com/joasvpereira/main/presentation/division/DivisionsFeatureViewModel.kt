@@ -3,13 +3,19 @@ package com.joasvpereira.main.presentation.division
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.joasvpereira.main.compose.division.popup.FilterOptions
+import com.joasvpereira.main.domain.data.DivisionElement
 import com.joasvpereira.main.domain.data.DivisionThemed
 import com.joasvpereira.main.domain.usecase.division.CreateBoxParam
 import com.joasvpereira.main.domain.usecase.division.CreateItemParam
+import com.joasvpereira.main.domain.usecase.division.DeleteBoxParam
+import com.joasvpereira.main.domain.usecase.division.DeleteItemParam
 import com.joasvpereira.main.domain.usecase.division.DivisionIdParam
 import com.joasvpereira.main.domain.usecase.division.GetDivisionElementsParams
 import com.joasvpereira.main.domain.usecase.division.ICreateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateItemUseCase
+import com.joasvpereira.main.domain.usecase.division.IDeleteBoxUseCase
+import com.joasvpereira.main.domain.usecase.division.IDeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
 import com.joasvpereira.main.presentation.icons.DivisionIcons
@@ -25,6 +31,8 @@ class DivisionsFeatureViewModel(
     private val getDivisionElementsUseCase: IGetDivisionElementsUseCase,
     private val createBoxUseCase: ICreateBoxUseCase,
     private val createItemUseCase: ICreateItemUseCase,
+    private val deleteBoxUseCase: IDeleteBoxUseCase,
+    private val deleteItemUseCase: IDeleteItemUseCase,
 ) : ViewModel() {
 
     private var _state = mutableStateOf(
@@ -126,9 +134,21 @@ class DivisionsFeatureViewModel(
 
     fun showCreateBox(): () -> Unit = {
         _state.value = state.copy(
-            createBox = DivisionsFeatureScreenState.CreateBox("", "", isVisible = true),
+            createBox = DivisionsFeatureScreenState.CreateBox(name = "", description = "", isVisible = true),
         )
         _state.value.createButtonsState.toggle()
+    }
+
+    fun showEdit(element: DivisionElement) {
+        when(element) {
+            is DivisionElement.Box -> _state.value = state.copy(
+                createBox = DivisionsFeatureScreenState.CreateBox(id = element.id, name = element.name, description = element.description, isVisible = true),
+            )
+
+            is DivisionElement.Item -> _state.value = state.copy(
+                createItem = DivisionsFeatureScreenState.CreateItem(id = element.id, name = element.name, description = element.description, isVisible = true),
+            )
+        }
     }
 
     fun showCreateItem(): () -> Unit = {
@@ -138,16 +158,25 @@ class DivisionsFeatureViewModel(
         _state.value.createButtonsState.toggle()
     }
 
+    fun deleteElement(divisionElement: DivisionElement) {
+        viewModelScope.launch {
+            when(divisionElement) {
+                is DivisionElement.Box -> deleteBoxUseCase.execute(DeleteBoxParam(divisionElement.id))
+                is DivisionElement.Item -> deleteItemUseCase.execute(DeleteItemParam(divisionElement.id))
+            }
+        }
+    }
+
     fun hideFilter(): () -> Unit = {
         _state.value = state.copy(
             filter = state.filter.copy(isVisible = false)
         )
     }
 
-    fun changeFilterSelections(i: Int): (() -> Unit)  =  {
+    fun changeFilterSelections(selectedOption: FilterOptions) {
         _state.value = state.copy(
             filter = state.filter.copy(
-                selectedFilter = i
+                selectedFilter = selectedOption
             )
         )
         applyFilter()
@@ -159,8 +188,8 @@ class DivisionsFeatureViewModel(
                 GetDivisionElementsParams(
                     divisionId = divisionId,
                     filter = when(state.filter.selectedFilter) {
-                        1 -> GetDivisionElementsParams.Filter.OnlyBoxes
-                        2 -> GetDivisionElementsParams.Filter.OnlyItems
+                        FilterOptions.OnlyBox -> GetDivisionElementsParams.Filter.OnlyBoxes
+                        FilterOptions.OnlyItem -> GetDivisionElementsParams.Filter.OnlyItems
                         else -> GetDivisionElementsParams.Filter.All
                     }
                 )

@@ -5,13 +5,17 @@ import android.graphics.ColorSpace.Named
 import com.joasvpereira.main.domain.usecase.division.CreateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.CreateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.CreateItemUseCase
+import com.joasvpereira.main.domain.usecase.division.DeleteBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.DeleteDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.DeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.DivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.GetDivisionElementsUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateItemUseCase
+import com.joasvpereira.main.domain.usecase.division.IDeleteBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.IDeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
@@ -57,10 +61,16 @@ val MainFeatureModule = module {
             getDivisionElementsUseCase = get(),
             createBoxUseCase = get(),
             createItemUseCase = get(),
+            deleteBoxUseCase = get(),
+            deleteItemUseCase = get()
         )
     }
 
     single<IDivisionUseCase> { DivisionUseCase(get()) }
+
+    single<IDeleteBoxUseCase> { DeleteBoxUseCase(get()) }
+
+    single<IDeleteItemUseCase> { DeleteItemUseCase(get()) }
 
     factory<ICreateDivisionUseCase> {
         CreateDivisionUseCase(

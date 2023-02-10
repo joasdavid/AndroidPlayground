@@ -314,7 +314,7 @@ fun AlertDialogWithSingleButton(
                     .background(color = buttonColor)
                     .clickable { onButtonClick() }, contentAlignment = Alignment.Center
             ) {
-                Text(text = buttonText, fontWeight = FontWeight.Bold)
+                Text(text = buttonText, fontWeight = FontWeight.Bold, color = contentColorFor(buttonColor))
             }
         },
         content = content,

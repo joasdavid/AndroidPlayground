@@ -22,18 +22,28 @@ class GetDivisionElementsUseCase(
         .combine(onlyItems(params.divisionId)) { boxList: List<Box>, itemList: List<Item> ->
             val list = when (params.filter) {
                 GetDivisionElementsParams.Filter.All -> boxList.map {
-                    DivisionElement.Box(id = it.id!!, name = it.name)
+                    it.mapToDivisionElement()
                 }.plus(
-                    itemList.map {
-                        DivisionElement.Item(id = it.id!!, name = it.name)
-                    }
+                    itemList.map { it.mapToDivisionElement() }
                 )
 
-                GetDivisionElementsParams.Filter.OnlyBoxes -> boxList.map { DivisionElement.Box(id = it.id!!, name = it.name) }
-                GetDivisionElementsParams.Filter.OnlyItems -> itemList.map { DivisionElement.Item(id = it.id!!, name = it.name) }
+                GetDivisionElementsParams.Filter.OnlyBoxes -> boxList.map { it.mapToDivisionElement() }
+                GetDivisionElementsParams.Filter.OnlyItems -> itemList.map { it.mapToDivisionElement() }
             }
 
             DivisionElements(list = list, nrBoxes = boxList.size, nrItems = itemList.size)
         }
+
+    private fun Box.mapToDivisionElement() = DivisionElement.Box(
+        id = id!!,
+        name = name,
+        description = description
+    )
+
+    private fun Item.mapToDivisionElement() = DivisionElement.Item(
+        id = id!!,
+        name = name,
+        description = description
+    )
 
 }

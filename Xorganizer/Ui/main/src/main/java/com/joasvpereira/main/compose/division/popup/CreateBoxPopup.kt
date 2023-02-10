@@ -1,4 +1,4 @@
-package com.joasvpereira.main.compose.division
+package com.joasvpereira.main.compose.division.popup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
@@ -18,30 +18,30 @@ import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.main.R
 
 @Composable
-fun CreateItemPopup(
+fun CreateBoxPopup(
     onDismissRequest : () -> Unit,
     onButtonPositiveClick : () -> Unit,
     onButtonNegativeClick : () -> Unit,
-    itemName : String,
-    onItemNameChange: (String) -> Unit,
+    boxName : String,
+    onBoxNameChange: (String) -> Unit,
     description : String,
     onDescriptionChange: (String) -> Unit,
 ) {
     DialogWithTwoButton(
         onDismissRequest = onDismissRequest,
-        indicatorIcon = painterResource(id = R.drawable.ic_item),
-        indicatorColor = MaterialTheme.colorScheme.primaryContainer,
+        indicatorIcon = painterResource(id = R.drawable.ic_box_3),
+        indicatorColor = MaterialTheme.colorScheme.tertiaryContainer,
         buttonPositiveText = "Save",
-        buttonPositiveColor = MaterialTheme.colorScheme.primary,
-        isButtonPositiveEnabled = itemName.isNotBlank(),
+        buttonPositiveColor = MaterialTheme.colorScheme.tertiary,
+        isButtonPositiveEnabled = boxName.isNotBlank(),
         onButtonPositiveClick = onButtonPositiveClick,
         buttonNegativeText = "Close",
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
         onButtonNegativeClick = onButtonNegativeClick) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Create item".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+            Text(text = "Create new box".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
             SimpleSpace(size = 20.dp)
-            AppTextField(value = itemName, onValueChange = onItemNameChange, placeholder = "Item name")
+            AppTextField(value = boxName, onValueChange = onBoxNameChange, placeholder = "Box name")
             SimpleSpace(size = 20.dp)
             AppTextField(value = description, onValueChange = onDescriptionChange, placeholder = "Description")
             SimpleSpace(size = 20.dp)
@@ -53,12 +53,12 @@ fun CreateItemPopup(
 @Composable
 private fun CreateItemPopupPreview() {
     DynamicTheme() {
-        CreateItemPopup(
+        CreateBoxPopup(
             onDismissRequest = {},
             onButtonPositiveClick = {},
             onButtonNegativeClick = {},
-            itemName = "",
-            onItemNameChange = {},
+            boxName = "t4",
+            onBoxNameChange = {},
             description = "",
             onDescriptionChange = {})
     }

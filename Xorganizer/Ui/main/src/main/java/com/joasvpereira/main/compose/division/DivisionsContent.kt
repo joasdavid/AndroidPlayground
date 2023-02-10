@@ -19,17 +19,30 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.main.compose.division.list.elements.BoxItem
+import com.joasvpereira.main.compose.division.list.elements.ObjectItem
 import com.joasvpereira.main.domain.data.DivisionElement
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 
+interface DivisionsContentAction {
+    object Open : DivisionsContentAction
+    object Edit : DivisionsContentAction
+    object Delete : DivisionsContentAction
+}
+
 @Composable
-fun DivisionContent(listItem: List<DivisionElement>, listBottomPadding: Dp = 0.dp) {
-    Surface(modifier = Modifier
-        .fillMaxSize()
-        .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
+fun DivisionContent(
+    listItem: List<DivisionElement>,
+    listBottomPadding: Dp = 0.dp,
+    onClick: (DivisionElement, DivisionsContentAction) -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
     ) {
         Box(modifier = Modifier.padding(horizontal = 20.dp)) {
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
@@ -48,20 +61,26 @@ fun DivisionContent(listItem: List<DivisionElement>, listBottomPadding: Dp = 0.d
 
                 items(listItem) {
                     if (it is DivisionElement.Item) {
-                        ObjectItem(name = it.name) {
-                            
-                        }
+                        ObjectItem(
+                            name = it.name,
+                            onClick = { onClick(it, DivisionsContentAction.Open) },
+                            onDeleteClick = { onClick(it, DivisionsContentAction.Delete) },
+                            onEditClick = { onClick(it, DivisionsContentAction.Edit) }
+                        )
                     }
 
                     if (it is DivisionElement.Box) {
-                        BoxItem(name = it.name) {
-
-                        }
+                        BoxItem(name = it.name,
+                            onClick = { onClick(it, DivisionsContentAction.Open) },
+                            onDeleteClick = { onClick(it, DivisionsContentAction.Delete) },
+                            onEditClick = { onClick(it, DivisionsContentAction.Edit) }
+                        )
                     }
                     SimpleSpace(size = 10.dp)
                 }
 
                 item {
+                    SimpleSpace(size = 70.dp)
                     SimpleSpace(size = listBottomPadding)
                 }
             }
@@ -83,7 +102,7 @@ private val previewData = mutableListOf<DivisionElement>().apply {
 @Composable
 private fun DivisionContentPreview() {
     DynamicTheme {
-        DivisionContent(previewData)
+        DivisionContent(previewData, onClick = { _, _ -> })
     }
 }
 
@@ -91,7 +110,7 @@ private fun DivisionContentPreview() {
 @Composable
 private fun DivisionContentPreview_empty() {
     DynamicTheme {
-        DivisionContent(listOf())
+        DivisionContent(listOf(), onClick = { _, _ -> })
     }
 }
 
@@ -101,6 +120,6 @@ private fun DivisionContentThemedPreview(
     @PreviewParameter(ThemesProvider::class) theme: ThemeOption,
 ) {
     DynamicTheme(theme) {
-        DivisionContent(previewData)
+        DivisionContent(previewData, onClick = { _, _ -> })
     }
 }
