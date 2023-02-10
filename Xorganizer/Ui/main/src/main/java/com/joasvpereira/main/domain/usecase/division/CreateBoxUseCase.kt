@@ -10,8 +10,8 @@ class CreateBoxUseCase(val boxDataSource: BoxDataSource): ICreateBoxUseCase {
         boxDataSource.createNewBox(
             Box(
                 id = null,
-                name = params.name,
-                description = params.description,
+                name = params.name.trim(),
+                description = params.description.trim(),
                 parentDivisionId = params.parentId
             )
         )

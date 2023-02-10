@@ -10,8 +10,8 @@ class CreateItemUseCase(private val itemDataSource: ItemDataSource): ICreateItem
         itemDataSource.createNewItem(
             Item(
                 id = null,
-                name = params.name,
-                description = params.description,
+                name = params.name.trim(),
+                description = params.description.trim(),
                 parentDivisionId = params.parentId,
                 parentBoxId = params.parentBoxId
             )

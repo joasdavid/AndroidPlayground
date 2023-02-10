@@ -19,9 +19,13 @@ import com.joasvpereira.main.domain.usecase.division.IDeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
+import com.joasvpereira.main.domain.usecase.division.IUpdateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.IUpdateItemUseCase
 import com.joasvpereira.main.domain.usecase.division.MyDivisionsUseCase
+import com.joasvpereira.main.domain.usecase.division.UpdateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.UpdateItemUseCase
 import com.joasvpereira.main.presentation.create.CreateDivisionViewModel
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreenViewModel
 import com.joasvpereira.main.presentation.division.DivisionsFeatureViewModel
@@ -62,7 +66,9 @@ val MainFeatureModule = module {
             createBoxUseCase = get(),
             createItemUseCase = get(),
             deleteBoxUseCase = get(),
-            deleteItemUseCase = get()
+            deleteItemUseCase = get(),
+            updateItemUseCase = get(),
+            updateBoxUseCase = get(),
         )
     }
 
@@ -71,6 +77,10 @@ val MainFeatureModule = module {
     single<IDeleteBoxUseCase> { DeleteBoxUseCase(get()) }
 
     single<IDeleteItemUseCase> { DeleteItemUseCase(get()) }
+
+    single<IUpdateItemUseCase> { UpdateItemUseCase(get()) }
+
+    single<IUpdateBoxUseCase> { UpdateBoxUseCase(get()) }
 
     factory<ICreateDivisionUseCase> {
         CreateDivisionUseCase(

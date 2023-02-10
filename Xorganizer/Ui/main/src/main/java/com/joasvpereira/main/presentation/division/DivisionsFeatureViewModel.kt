@@ -3,6 +3,7 @@ package com.joasvpereira.main.presentation.division
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.compose.division.popup.FilterOptions
 import com.joasvpereira.main.domain.data.DivisionElement
 import com.joasvpereira.main.domain.data.DivisionThemed
@@ -18,6 +19,15 @@ import com.joasvpereira.main.domain.usecase.division.IDeleteBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.IDeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
+import com.joasvpereira.main.domain.usecase.division.IUpdateBoxUseCase
+import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.IUpdateItemUseCase
+import com.joasvpereira.main.domain.usecase.division.UpdateBoxParam
+import com.joasvpereira.main.domain.usecase.division.UpdateBoxUseCase
+import com.joasvpereira.main.domain.usecase.division.UpdateDivisionParam
+import com.joasvpereira.main.domain.usecase.division.UpdateDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.UpdateItemParam
+import com.joasvpereira.main.domain.usecase.division.UpdateItemUseCase
 import com.joasvpereira.main.presentation.icons.DivisionIcons
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -27,12 +37,14 @@ import pt.joasvpereira.coreui.ThemeOption
 
 class DivisionsFeatureViewModel(
     var divisionId: Int = -1,
-    private val divisionUseCase : IDivisionUseCase,
+    private val divisionUseCase: IDivisionUseCase,
     private val getDivisionElementsUseCase: IGetDivisionElementsUseCase,
     private val createBoxUseCase: ICreateBoxUseCase,
     private val createItemUseCase: ICreateItemUseCase,
     private val deleteBoxUseCase: IDeleteBoxUseCase,
     private val deleteItemUseCase: IDeleteItemUseCase,
+    private val updateItemUseCase: IUpdateItemUseCase,
+    private val updateBoxUseCase: IUpdateBoxUseCase,
 ) : ViewModel() {
 
     private var _state = mutableStateOf(
@@ -77,13 +89,23 @@ class DivisionsFeatureViewModel(
 
     fun saveNewBox(): () -> Unit = {
         viewModelScope.launch {
-            createBoxUseCase.execute(
-                CreateBoxParam(
-                    name = state.createBox.name,
-                    description = state.createBox.description,
-                    parentId = divisionId
+            if (state.createBox.isEditMode){
+                updateBoxUseCase.execute(
+                    UpdateBoxParam(
+                        divisionElement!!.id,
+                        name = state.createBox.name,
+                        description = state.createBox.description
+                    )
                 )
-            )
+            }else {
+                createBoxUseCase.execute(
+                    CreateBoxParam(
+                        name = state.createBox.name,
+                        description = state.createBox.description,
+                        parentId = divisionId
+                    )
+                )
+            }
 
             _state.value = state.copy(
                 createBox = state.createBox.copy(isVisible = false)
@@ -111,13 +133,23 @@ class DivisionsFeatureViewModel(
 
     fun saveNewItem(): () -> Unit = {
         viewModelScope.launch {
-            createItemUseCase.execute(
-                CreateItemParam(
-                    name = state.createItem.name,
-                    description = state.createItem.description,
-                    parentId = divisionId
+            if (state.createItem.isEditMode) {
+                updateItemUseCase.execute(
+                    UpdateItemParam(
+                        id = divisionElement!!.id,
+                        name = state.createItem.name,
+                        description = state.createItem.description,
+                    )
                 )
-            )
+            } else {
+                createItemUseCase.execute(
+                    CreateItemParam(
+                        name = state.createItem.name,
+                        description = state.createItem.description,
+                        parentId = divisionId
+                    )
+                )
+            }
             _state.value = state.copy(
                 createItem = state.createItem.copy(isVisible = false)
             )
@@ -140,13 +172,14 @@ class DivisionsFeatureViewModel(
     }
 
     fun showEdit(element: DivisionElement) {
-        when(element) {
+        divisionElement = element
+        when (element) {
             is DivisionElement.Box -> _state.value = state.copy(
-                createBox = DivisionsFeatureScreenState.CreateBox(id = element.id, name = element.name, description = element.description, isVisible = true),
+                createBox = DivisionsFeatureScreenState.CreateBox(id = element.id, name = element.name, description = element.description, isVisible = true, isEditMode = true),
             )
 
             is DivisionElement.Item -> _state.value = state.copy(
-                createItem = DivisionsFeatureScreenState.CreateItem(id = element.id, name = element.name, description = element.description, isVisible = true),
+                createItem = DivisionsFeatureScreenState.CreateItem(id = element.id, name = element.name, description = element.description, isVisible = true, isEditMode = true),
             )
         }
     }
@@ -158,11 +191,47 @@ class DivisionsFeatureViewModel(
         _state.value.createButtonsState.toggle()
     }
 
-    fun deleteElement(divisionElement: DivisionElement) {
-        viewModelScope.launch {
-            when(divisionElement) {
-                is DivisionElement.Box -> deleteBoxUseCase.execute(DeleteBoxParam(divisionElement.id))
-                is DivisionElement.Item -> deleteItemUseCase.execute(DeleteItemParam(divisionElement.id))
+    private var divisionElement: DivisionElement? = null
+    fun showDeleteConfirmation(divisionElement: DivisionElement) {
+        this.divisionElement = divisionElement
+        val (name, isBox) = when (divisionElement) {
+            is DivisionElement.Box -> Pair(divisionElement.name, true)
+            is DivisionElement.Item -> Pair(divisionElement.name, false)
+        }
+        _state.value = state.copy(
+            deleteEvent = DivisionsFeatureScreenState.DeleteEvent(
+                isBox = isBox, confirmation = name, name = "", description = "", isVisible = true
+
+            )
+        )
+    }
+
+    fun hideDeleteConfirmation() {
+        _state.value = state.copy(
+            deleteEvent = state.deleteEvent.copy(isVisible = false)
+        )
+    }
+
+    fun deletePopupNameChange(name: String) {
+        state.deleteEvent.run {
+            _state.value = state.copy(
+                deleteEvent = this.copy(
+                    name = name
+                )
+            ).logThis("DivisionScreen")
+        }
+    }
+
+    fun deleteElement() {
+        divisionElement?.let { element ->
+            viewModelScope.launch {
+                when (element) {
+                    is DivisionElement.Box -> deleteBoxUseCase.execute(DeleteBoxParam(element.id))
+                    is DivisionElement.Item -> deleteItemUseCase.execute(DeleteItemParam(element.id))
+                }
+                _state.value = state.copy(
+                    deleteEvent = state.deleteEvent.copy(isVisible = false)
+                )
             }
         }
     }
@@ -187,7 +256,7 @@ class DivisionsFeatureViewModel(
             getDivisionElementsUseCase.execute(
                 GetDivisionElementsParams(
                     divisionId = divisionId,
-                    filter = when(state.filter.selectedFilter) {
+                    filter = when (state.filter.selectedFilter) {
                         FilterOptions.OnlyBox -> GetDivisionElementsParams.Filter.OnlyBoxes
                         FilterOptions.OnlyItem -> GetDivisionElementsParams.Filter.OnlyItems
                         else -> GetDivisionElementsParams.Filter.All

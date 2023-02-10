@@ -3,7 +3,9 @@ package pt.joasvpereira.core.repository.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import pt.joasvpereira.core.repository.local.entities.Box
 import pt.joasvpereira.core.repository.local.entities.Box.Companion.ID
@@ -20,6 +22,9 @@ interface  BoxDao {
 
     @Insert
     fun insertBox(box: Box)
+
+    @Update(onConflict = REPLACE)
+    fun updateBox(box: Box)
 
     @Delete
     fun deleteBox(box: Box)

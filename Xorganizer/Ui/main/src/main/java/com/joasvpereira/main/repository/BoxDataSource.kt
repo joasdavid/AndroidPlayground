@@ -32,7 +32,7 @@ class LocalBoxDataSource(private val boxDao: BoxDao) : BoxDataSource {
     }
 
     override suspend fun updateBox(box: Box) = withContext(Dispatchers.IO){
-        TODO("Not yet implemented")
+        boxDao.updateBox(box)
     }
 
     override suspend fun deleteBox(id: Int) = withContext(Dispatchers.IO){

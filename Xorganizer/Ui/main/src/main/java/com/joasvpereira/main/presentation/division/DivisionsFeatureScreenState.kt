@@ -14,8 +14,17 @@ data class DivisionsFeatureScreenState(
     val createButtonsState: DivisionCreateButtonsState = DivisionCreateButtonsState(),
     val createItem: CreateItem = CreateItem(name = "", description = "", isVisible = false),
     val createBox: CreateBox = CreateBox(name = "", description = "", isVisible = false),
+    val deleteEvent: DeleteEvent = DeleteEvent(),
     val filter: Filter = Filter(isVisible = false)
 ) {
+
+    data class DeleteEvent(
+        val isBox: Boolean = false,
+        val confirmation: String = "",
+        val name: String = "",
+        val description: String = "",
+        val isVisible: Boolean = false,
+    )
 
     data class Filter(
         val selectedFilter: FilterOptions = FilterOptions.All,
@@ -27,6 +36,7 @@ data class DivisionsFeatureScreenState(
         val name: String,
         val description: String,
         val isVisible: Boolean,
+        val isEditMode: Boolean = false
     )
 
     data class CreateBox(
@@ -34,5 +44,6 @@ data class DivisionsFeatureScreenState(
         val name: String,
         val description: String,
         val isVisible: Boolean,
+        val isEditMode: Boolean = false
     )
 }

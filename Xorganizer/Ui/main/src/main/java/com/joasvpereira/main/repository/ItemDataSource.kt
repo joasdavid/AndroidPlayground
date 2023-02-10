@@ -39,7 +39,7 @@ class LocalItemDataSource(private val itemDao: ItemDao) : ItemDataSource {
     }
 
     override suspend fun updateItem(item: Item) = withContext(Dispatchers.IO){
-        TODO("Not yet implemented")
+        itemDao.updateItem(item)
     }
 
     override suspend fun deleteItem(id: Int) = withContext(Dispatchers.IO){

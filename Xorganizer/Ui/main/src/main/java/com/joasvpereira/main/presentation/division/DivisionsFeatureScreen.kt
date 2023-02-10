@@ -5,16 +5,25 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.compose.division.popup.CreateBoxPopup
 import com.joasvpereira.main.compose.division.popup.CreateItemPopup
 import com.joasvpereira.main.compose.division.DivisionContent
@@ -30,10 +39,12 @@ import com.joasvpereira.main.presentation.icons.DivisionIcons
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
+import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.text.field.AppTextField
 
 
 @Composable
@@ -54,6 +65,35 @@ fun DivisionsFeatureScreen(
             }
         }
         return
+    }
+
+    AnimatedVisibility(visible = viewModel.state.deleteEvent.isVisible) {
+            DialogWithTwoButton(
+                onDismissRequest = { viewModel.hideDeleteConfirmation() },
+                indicatorIcon = Icons.Default.Delete,
+                indicatorColor = MaterialTheme.colorScheme.error,
+                buttonPositiveText = "DELETE",
+                buttonPositiveColor = MaterialTheme.colorScheme.error,
+                isButtonPositiveEnabled = viewModel.state.deleteEvent.confirmation.toUpperCase(Locale.current) == viewModel.state.deleteEvent.name,
+                onButtonPositiveClick = { viewModel.deleteElement() },
+                buttonNegativeText = "CANCEL",
+                buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
+                onButtonNegativeClick = { viewModel.hideDeleteConfirmation() }) {
+
+                val nameUppercase = viewModel.state.deleteEvent.confirmation.toUpperCase(Locale.current)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = "To delete division write it's name in all caps \n \"$nameUppercase", textAlign = TextAlign.Center)
+                    SimpleSpace(size = 20.dp)
+                    AppTextField(
+                        value = viewModel.state.deleteEvent.name,
+                        onValueChange = { viewModel.deletePopupNameChange(it) },
+                        placeholder = "",
+                        keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Send),
+                        keyboardActions = KeyboardActions(onSend = { viewModel.deleteElement() })
+                    )
+                    SimpleSpace(size = 20.dp)
+                }
+        }
     }
 
     AnimatedVisibility(visible = viewModel.state.filter.isVisible) {
@@ -108,7 +148,7 @@ fun DivisionsFeatureScreen(
         divisionCreateButtonsState = viewModel.state.createButtonsState,
         onAddBoxClick = viewModel.showCreateBox(),
         onAddItemClick = viewModel.showCreateItem(),
-        onDeleteItem = { viewModel.deleteElement(it) },
+        onDeleteItem = { viewModel.showDeleteConfirmation(it) },
         onEditItem = { viewModel.showEdit(it) },
         onOpenItem = {},
     )

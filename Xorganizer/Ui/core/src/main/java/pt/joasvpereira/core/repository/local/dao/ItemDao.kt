@@ -3,7 +3,9 @@ package pt.joasvpereira.core.repository.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import pt.joasvpereira.core.repository.local.entities.Item
 import pt.joasvpereira.core.repository.local.entities.Item.Companion.ID
@@ -24,6 +26,8 @@ interface  ItemDao {
 
     @Insert
     fun insertItem(item: Item)
+    @Update(onConflict = REPLACE)
+    fun updateItem(item: Item)
 
     @Delete
     fun deleteItem(item: Item)
