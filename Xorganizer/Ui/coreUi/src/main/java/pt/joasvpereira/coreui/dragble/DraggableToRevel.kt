@@ -1,25 +1,22 @@
 package pt.joasvpereira.coreui.dragble
 
+import androidx.compose.animation.core.AnimationState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateTo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -29,11 +26,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,8 +42,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.loggger.extentions.logThis
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import pt.joasvpereira.coreui.DynamicTheme
-import kotlin.math.min
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 class DraggableToRevelState(
@@ -60,15 +59,6 @@ class DraggableToRevelState(
         RIGHT
     }
 
-    /**
-     * @Composable
-    fun rememberDraggableState(onDelta: (Float) -> Unit): DraggableState {
-    val onDeltaState = rememberUpdatedState(onDelta)
-    return remember { DraggableState { onDeltaState.value.invoke(it) } }
-    }
-
-     */
-
     private fun <T : Number> valueBetween(
         currentValue: T,
         max: T,
@@ -79,25 +69,49 @@ class DraggableToRevelState(
         return max
     }
 
+    internal var isDragging: Boolean by mutableStateOf(false)
     private var offsetX = mutableStateOf(offsetXInit)
     private val onDelta: (Float) -> Unit = {
         val finalValue = offsetX.value + it
         offsetX.value = valueBetween(
-            finalValue,
-            if (direction == RevelDirection.RIGHT) 0f else maxGap,
-            if (direction == RevelDirection.RIGHT) 0 - maxGap else 0f
+            currentValue = finalValue,
+            max = if (direction == RevelDirection.RIGHT) 0f else maxGap,
+            min = if (direction == RevelDirection.RIGHT) 0 - maxGap else 0f
         )
-        //if (finalValue <= maxGap) finalValue else offsetX.value
     }
     private var onDeltaState = mutableStateOf(onDelta)
     var draggableState by mutableStateOf(DraggableState { onDeltaState.value.invoke(it) })
-
     fun provideIntOffset() = run { IntOffset(offsetX.value.roundToInt(), 0) }
 
     var maxGap by mutableStateOf(0f)
 
-    fun close() {
-        offsetX.value = 0f
+    suspend fun endPosition() {
+        if (abs(offsetX.value) > maxGap/3)
+            open()
+        else
+            close()
+    }
+
+    suspend fun toggle() {
+        if (offsetX.value == 0f) {
+            open()
+        } else {
+            close()
+        }
+    }
+
+    suspend fun close() {
+        val anim = AnimationState(offsetX.value)
+        anim.animateTo(0f) {
+            offsetX.value = this.value
+        }
+    }
+
+    suspend fun open() {
+        val anim = AnimationState(offsetX.value)
+        anim.animateTo(if (direction == RevelDirection.LEFT) maxGap else 0-maxGap) {
+            offsetX.value = this.value
+        }
     }
 }
 
@@ -158,11 +172,24 @@ fun DraggableToRevel(
                 }
             }
         }
+
         Box(modifier = Modifier
             .fillMaxWidth()
             //.offset { IntOffset(offsetX.roundToInt(), 0) }
             .offset { draggableToRevelState.provideIntOffset() }
-            .draggable(state = draggableToRevelState.draggableState, orientation = Orientation.Horizontal)
+            .draggable(
+                state = draggableToRevelState.draggableState,
+                orientation = Orientation.Horizontal,
+                onDragStarted = {
+                    draggableToRevelState.isDragging = true
+                    "START DRAGGING".logThis(tag = "MotionEvent")
+                },
+                onDragStopped = {
+                    draggableToRevelState.isDragging = false
+                    draggableToRevelState.endPosition()
+                    "STOP DRAGGING".logThis(tag = "MotionEvent")
+                }
+            )
             .onGloballyPositioned { coordinates ->
                 // Set column height using the LayoutCoordinates
                 columnHeightPx = coordinates.size.height.toFloat()
@@ -203,11 +230,16 @@ private fun DraggableToRevelPreview() {
                     }
                 }
             ) {
+                val scopo : CoroutineScope = rememberCoroutineScope()
                 Box(modifier = Modifier
                     .height(70.dp)
                     .fillMaxWidth()
                     .background(Color.Green)
-                    .clickable { draggableToRevelState.close() }
+                    .clickable {
+                        scopo.launch {
+                            draggableToRevelState.toggle()
+                        }
+                    }
                 ) {
                     Text(text = "qwertyuiop")
                 }
