@@ -79,7 +79,8 @@ val MainFeatureModule = module {
         ItemDetailScreenViewModel(
             itemId = itemId,
             getDetails = get(),
-            updateItemUseCase = get()
+            updateItemUseCase = get(),
+            deleteItemUseCase = get()
         )
     }
 

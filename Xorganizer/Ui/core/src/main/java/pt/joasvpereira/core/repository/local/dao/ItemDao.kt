@@ -23,7 +23,7 @@ interface  ItemDao {
     fun getAllFromBox(fromBox: Int): Flow<List<Item>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $ID = :id")
-    fun getItem(id: Int): Flow<Item>
+    fun getItem(id: Int): Flow<Item?>
 
     @Insert
     fun insertItem(item: Item)

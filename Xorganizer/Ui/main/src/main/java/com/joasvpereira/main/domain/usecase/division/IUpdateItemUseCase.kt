@@ -14,6 +14,7 @@ interface IUpdateItemUseCase : BaseUseCaseSync<UpdateItemParam, Unit>
 class UpdateItemUseCase(private val itemDataSource: ItemDataSource) : IUpdateItemUseCase {
     override suspend fun execute(params: UpdateItemParam): Unit = withContext(Dispatchers.IO) {
         itemDataSource.getItem(params.id).first().let {
+            if (it == null) return@let
             val updatedItem = it.copy(
                 name = params.name?.trim() ?: it.name,
                 description = params.description?.trim() ?: it.description

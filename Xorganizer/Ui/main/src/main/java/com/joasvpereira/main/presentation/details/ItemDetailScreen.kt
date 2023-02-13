@@ -11,12 +11,19 @@ fun ItemDetailScreen(
     viewModel: ItemDetailScreenViewModel,
     navController: NavController?
 ) {
+
+    viewModel.notFoundPopupState.onButtonPositiveClick = {
+        navController?.popBackStack()
+    }
+
     DynamicTheme(option = viewModel.state.itemDetail.parentDivision.themeOption ?: ThemeOption.THEME_DEFAULT) {
         ItemDetailView(
             details = viewModel.state.itemDetail,
             onBackClick = { navController?.popBackStack() },
             isLoading = viewModel.state.isLoading,
-            createPopupState = viewModel.updateDetailsState
+            createPopupState = viewModel.updateDetailsState,
+            deleteItemPopupState = viewModel.deleteItemState,
+            notFoundState = viewModel.notFoundPopupState
         )
     }
 }

@@ -16,15 +16,16 @@ data class GetItemDetailsParams(
     val id: Int
 ) : Params()
 
-interface IGetItemDetailsUseCase : BaseUseCaseSync<GetItemDetailsParams, Flow<ItemDetail>>
+interface IGetItemDetailsUseCase : BaseUseCaseSync<GetItemDetailsParams, Flow<ItemDetail?>>
 
 class GetItemDetailsUseCase(
     private val boxDataSource: BoxDataSource,
     private val itemDataSource: ItemDataSource,
     private val divisionDataSource: DivisionDataSource
 ) : IGetItemDetailsUseCase {
-    override suspend fun execute(params: GetItemDetailsParams): Flow<ItemDetail> =
+    override suspend fun execute(params: GetItemDetailsParams): Flow<ItemDetail?> =
         itemDataSource.getItem(params.id).map {
+            if (it == null) return@map null
             val division = divisionDataSource.getDivision(it.parentDivisionId)
             ItemDetail(
                 id = it.id!!,

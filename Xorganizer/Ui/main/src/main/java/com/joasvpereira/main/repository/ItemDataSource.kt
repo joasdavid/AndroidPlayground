@@ -16,7 +16,7 @@ import pt.joasvpereira.core.repository.local.entities.ItemCountAndParentId
 interface ItemDataSource {
     suspend fun getDivisionItems(divisionId: Int): Flow<List<Item>>
     suspend fun getBoxItems(boxId: Int): Flow<List<Item>>
-    suspend fun getItem(id : Int): Flow<Item>
+    suspend fun getItem(id : Int): Flow<Item?>
     suspend fun createNewItem(item: Item)
     suspend fun updateItem(item: Item)
     suspend fun deleteItem(id: Int)
@@ -33,7 +33,7 @@ class LocalItemDataSource(private val itemDao: ItemDao) : ItemDataSource {
         itemDao.getAllFromBox(boxId)
     }
 
-    override suspend fun getItem(id: Int): Flow<Item> = withContext(Dispatchers.IO){
+    override suspend fun getItem(id: Int): Flow<Item?> = withContext(Dispatchers.IO){
         itemDao.getItem(id)
     }
 
@@ -45,8 +45,10 @@ class LocalItemDataSource(private val itemDao: ItemDao) : ItemDataSource {
         itemDao.updateItem(item)
     }
 
-    override suspend fun deleteItem(id: Int) = withContext(Dispatchers.IO){
-        itemDao.deleteItem(itemDao.getItem(id).first())
+    override suspend fun deleteItem(id: Int) : Unit = withContext(Dispatchers.IO){
+        itemDao.getItem(id).first()?.run {
+            itemDao.deleteItem(this)
+        }
     }
 
     override suspend fun getItemCount(): Flow<List<ItemCountAndParentId>> = withContext(Dispatchers.IO) {
