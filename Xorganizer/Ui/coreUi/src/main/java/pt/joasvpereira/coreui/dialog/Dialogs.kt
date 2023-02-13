@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +20,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -332,10 +335,11 @@ fun BasedStyledDialog(
     content: @Composable () -> Unit,
 ) {
     BaseDialog(onDismissRequest = onDismissRequest, properties = properties) {
-        Box(modifier = Modifier.clip(shape = RoundedCornerShape(bottomStart = 50.dp, bottomEnd = 50.dp))) {
+        Box(modifier = Modifier
+            .clip(shape = RoundedCornerShape(bottomStart = 50.dp, bottomEnd = 50.dp))
+        ) {
             ConstraintLayout(
                 modifier = Modifier
-                    .fillMaxWidth()
             ) {
                 val (
                     contentBoxRef,
@@ -349,15 +353,18 @@ fun BasedStyledDialog(
                             top.linkTo(iconRef.bottom, margin = -25.dp)
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
-                            width = Dimension.fillToConstraints
+                            width = Dimension.wrapContent
                         },
                     color = surfaceColor
                 ) {
                     Box(
                         modifier = Modifier
+                            .widthIn(min = 150.dp)
+                            .width(IntrinsicSize.Min)
                             .padding(horizontal = 16.dp)
                             .padding(top = 40.dp)
-                            .padding(bottom = 15.dp)
+                            .padding(bottom = 15.dp),
+                        contentAlignment = Alignment.Center
                     ) {
                         content()
                     }
@@ -557,7 +564,7 @@ private fun AlertDialogPreview() {
         AlertDialogWithSingleButton(indicatorIcon = Icons.Default.Close, onDismissRequest = {}, buttonText = "Close", onButtonClick = {
             Toast.makeText(contxt, "click!!!", Toast.LENGTH_SHORT).show()
         }) {
-            Text(text = "This is a test\n\n\n\n\nsadsadawwewe")
+            Text(text = "Hello")
         }
     }
 }

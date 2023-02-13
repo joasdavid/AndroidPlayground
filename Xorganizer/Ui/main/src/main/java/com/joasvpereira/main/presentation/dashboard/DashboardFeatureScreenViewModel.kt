@@ -10,6 +10,7 @@ import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pt.joasvpereira.core.domain.usecase.EmptyParams
 
@@ -24,6 +25,12 @@ class DashboardFeatureScreenViewModel(
         get() = _state.value
 
     init {
+
+        _state.value = state.copy(
+            sessionName = sessionName ?: "",
+            sessionImage = sessionImage,
+        )
+
         viewModelScope.launch {
             fetchDivisions()
         }
@@ -39,14 +46,13 @@ class DashboardFeatureScreenViewModel(
         _state.value = state.copy(
             isLoading = true,
         )
-        delay(3000)
-        val list = divisionsUseCase.execute(EmptyParams())
-        _state.value = state.copy(
-            isLoading = false,
-            sessionName = sessionName ?: "",
-            sessionImage = sessionImage,
-            divisions = list
-        )
+
+        divisionsUseCase.execute(EmptyParams()).collectLatest {
+            _state.value = state.copy(
+                divisions = it,
+                isLoading = false,
+            )
+        }
     }
 
     fun askToDelete(division: DashboardDivision, confirmationName: String = "") {

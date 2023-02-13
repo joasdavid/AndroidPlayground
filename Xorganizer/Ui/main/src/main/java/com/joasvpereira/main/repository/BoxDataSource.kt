@@ -4,10 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.repository.local.dao.BoxDao
-import pt.joasvpereira.core.repository.local.dao.DivisionDao
-import pt.joasvpereira.core.repository.local.dao.SessionDao
 import pt.joasvpereira.core.repository.local.entities.Box
-import pt.joasvpereira.core.repository.local.entities.Division
+import pt.joasvpereira.core.repository.local.entities.BoxCountAndParentId
 
 interface BoxDataSource {
     suspend fun getBoxes(divisionId: Int): Flow<List<Box>>
@@ -15,6 +13,7 @@ interface BoxDataSource {
     suspend fun createNewBox(box: Box)
     suspend fun updateBox(box: Box)
     suspend fun deleteBox(id: Int)
+    suspend fun countBoxFrom(): Flow<List<BoxCountAndParentId>>
 }
 
 class LocalBoxDataSource(private val boxDao: BoxDao) : BoxDataSource {
@@ -37,5 +36,9 @@ class LocalBoxDataSource(private val boxDao: BoxDao) : BoxDataSource {
 
     override suspend fun deleteBox(id: Int) = withContext(Dispatchers.IO){
         boxDao.deleteBox(boxDao.getBox(id))
+    }
+
+    override suspend fun countBoxFrom(): Flow<List<BoxCountAndParentId>> = withContext(Dispatchers.IO) {
+        boxDao.getBoxCount()
     }
 }

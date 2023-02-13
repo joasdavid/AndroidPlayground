@@ -11,6 +11,7 @@ import pt.joasvpereira.core.repository.local.entities.Box
 import pt.joasvpereira.core.repository.local.entities.Box.Companion.ID
 import pt.joasvpereira.core.repository.local.entities.Box.Companion.PARENT_DIVISION_ID
 import pt.joasvpereira.core.repository.local.entities.Box.Companion.TABLE_NAME
+import pt.joasvpereira.core.repository.local.entities.BoxCountAndParentId
 
 @Dao
 interface  BoxDao {
@@ -28,4 +29,7 @@ interface  BoxDao {
 
     @Delete
     fun deleteBox(box: Box)
+
+    @Query("SELECT COUNT($PARENT_DIVISION_ID) AS ${BoxCountAndParentId.COUNT}, $PARENT_DIVISION_ID FROM $TABLE_NAME GROUP BY $PARENT_DIVISION_ID")
+    fun getBoxCount(): Flow<List<BoxCountAndParentId>>
 }

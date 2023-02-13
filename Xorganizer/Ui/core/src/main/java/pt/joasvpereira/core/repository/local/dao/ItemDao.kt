@@ -12,6 +12,7 @@ import pt.joasvpereira.core.repository.local.entities.Item.Companion.ID
 import pt.joasvpereira.core.repository.local.entities.Item.Companion.PARENT_BOX_ID
 import pt.joasvpereira.core.repository.local.entities.Item.Companion.PARENT_DIVISION_ID
 import pt.joasvpereira.core.repository.local.entities.Item.Companion.TABLE_NAME
+import pt.joasvpereira.core.repository.local.entities.ItemCountAndParentId
 
 @Dao
 interface  ItemDao {
@@ -31,4 +32,7 @@ interface  ItemDao {
 
     @Delete
     fun deleteItem(item: Item)
+
+    @Query("SELECT COUNT($PARENT_DIVISION_ID) AS ${ItemCountAndParentId.COUNT}, $PARENT_DIVISION_ID FROM $TABLE_NAME GROUP BY $PARENT_DIVISION_ID")
+    fun getItemCount(): Flow<List<ItemCountAndParentId>>
 }
