@@ -26,12 +26,13 @@ fun CreateItemPopup(
     onItemNameChange: (String) -> Unit,
     description : String,
     onDescriptionChange: (String) -> Unit,
+    isOnEditMode: Boolean
 ) {
     DialogWithTwoButton(
         onDismissRequest = onDismissRequest,
         indicatorIcon = painterResource(id = R.drawable.ic_item),
         indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-        buttonPositiveText = "Save",
+        buttonPositiveText = if (isOnEditMode) "Updade" else "Save",
         buttonPositiveColor = MaterialTheme.colorScheme.primary,
         isButtonPositiveEnabled = itemName.isNotBlank(),
         onButtonPositiveClick = onButtonPositiveClick,
@@ -39,7 +40,11 @@ fun CreateItemPopup(
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
         onButtonNegativeClick = onButtonNegativeClick) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Create item".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+            if (isOnEditMode) {
+                Text(text = "Update item".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+            } else {
+                Text(text = "Create a new item".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+            }
             SimpleSpace(size = 20.dp)
             AppTextField(value = itemName, onValueChange = onItemNameChange, placeholder = "Item name")
             SimpleSpace(size = 20.dp)
@@ -60,6 +65,8 @@ private fun CreateItemPopupPreview() {
             itemName = "",
             onItemNameChange = {},
             description = "",
-            onDescriptionChange = {})
+            onDescriptionChange = {},
+            isOnEditMode = false
+        )
     }
 }

@@ -26,12 +26,13 @@ fun CreateBoxPopup(
     onBoxNameChange: (String) -> Unit,
     description : String,
     onDescriptionChange: (String) -> Unit,
+    isOnEditMode : Boolean
 ) {
     DialogWithTwoButton(
         onDismissRequest = onDismissRequest,
         indicatorIcon = painterResource(id = R.drawable.ic_box_3),
         indicatorColor = MaterialTheme.colorScheme.tertiaryContainer,
-        buttonPositiveText = "Save",
+        buttonPositiveText = if (isOnEditMode) "Update" else "Save",
         buttonPositiveColor = MaterialTheme.colorScheme.tertiary,
         isButtonPositiveEnabled = boxName.isNotBlank(),
         onButtonPositiveClick = onButtonPositiveClick,
@@ -39,7 +40,11 @@ fun CreateBoxPopup(
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
         onButtonNegativeClick = onButtonNegativeClick) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Create new box".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+            if (isOnEditMode) {
+                Text(text = "Update box".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+            } else {
+                Text(text = "Create new box".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+            }
             SimpleSpace(size = 20.dp)
             AppTextField(value = boxName, onValueChange = onBoxNameChange, placeholder = "Box name")
             SimpleSpace(size = 20.dp)
@@ -60,6 +65,8 @@ private fun CreateItemPopupPreview() {
             boxName = "t4",
             onBoxNameChange = {},
             description = "",
-            onDescriptionChange = {})
+            onDescriptionChange = {},
+        true
+        )
     }
 }

@@ -117,7 +117,8 @@ fun DivisionsFeatureScreen(
                 boxName = viewModel.state.createBox.name,
                 onBoxNameChange = viewModel.onBoxNameChanged(),
                 description = viewModel.state.createBox.description,
-                onDescriptionChange = viewModel.onBoxDescriptionChanged()
+                onDescriptionChange = viewModel.onBoxDescriptionChanged(),
+                isOnEditMode = viewModel.state.createBox.isEditMode
             )
         }
     }
@@ -131,7 +132,8 @@ fun DivisionsFeatureScreen(
                 itemName = viewModel.state.createItem.name,
                 onItemNameChange = viewModel.onItemNameChanged(),
                 description = viewModel.state.createItem.description,
-                onDescriptionChange = viewModel.onItemDescriptionChanged()
+                onDescriptionChange = viewModel.onItemDescriptionChanged(),
+                        isOnEditMode = viewModel.state.createItem.isEditMode
             )
         }
     }
@@ -243,8 +245,8 @@ private fun DivisionsScreenSinglePreview() {
         divisionCreateButtonsState = rememberDivisionCreateButtonsState(isOpen = true),
         onAddBoxClick = {},
         onAddItemClick = {},
-        boxCount = 0,
-        itemCount = 0,
+        boxCount = 50,
+        itemCount = 50,
         onFilterClick = {},
         onDeleteItem = {},
         onEditItem = {},
@@ -270,8 +272,8 @@ private fun DivisionsScreenPreview(@PreviewParameter(ThemesProvider::class) them
         divisionCreateButtonsState = rememberDivisionCreateButtonsState(isOpen = true),
         onAddBoxClick = {},
         onAddItemClick = {},
-        boxCount = 0,
-        itemCount = 0,
+        boxCount = 50,
+        itemCount = 50,
         onFilterClick = {},
         onDeleteItem = {},
         onEditItem = {},
