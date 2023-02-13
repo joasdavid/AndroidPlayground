@@ -10,6 +10,7 @@ import com.joasvpereira.main.domain.usecase.division.DeleteDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.DeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.DivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.GetDivisionElementsUseCase
+import com.joasvpereira.main.domain.usecase.division.GetItemDetailsUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateItemUseCase
@@ -19,6 +20,7 @@ import com.joasvpereira.main.domain.usecase.division.IDeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
+import com.joasvpereira.main.domain.usecase.division.IGetItemDetailsUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateItemUseCase
@@ -28,6 +30,7 @@ import com.joasvpereira.main.domain.usecase.division.UpdateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateItemUseCase
 import com.joasvpereira.main.presentation.create.CreateDivisionViewModel
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreenViewModel
+import com.joasvpereira.main.presentation.details.ItemDetailScreenViewModel
 import com.joasvpereira.main.presentation.division.DivisionsFeatureViewModel
 import com.joasvpereira.main.repository.BoxDataSource
 import com.joasvpereira.main.repository.DivisionDataSource
@@ -72,6 +75,14 @@ val MainFeatureModule = module {
         )
     }
 
+    viewModel { (itemId: Int) ->
+        ItemDetailScreenViewModel(
+            itemId = itemId,
+            getDetails = get(),
+            updateItemUseCase = get()
+        )
+    }
+
     single<IDivisionUseCase> { DivisionUseCase(get()) }
 
     single<IDeleteBoxUseCase> { DeleteBoxUseCase(get()) }
@@ -81,6 +92,13 @@ val MainFeatureModule = module {
     single<IUpdateItemUseCase> { UpdateItemUseCase(get()) }
 
     single<IUpdateBoxUseCase> { UpdateBoxUseCase(get()) }
+
+    single<IGetItemDetailsUseCase> { GetItemDetailsUseCase(
+        boxDataSource = get(),
+        itemDataSource = get(),
+        divisionDataSource = get()
+    )
+    }
 
     factory<ICreateDivisionUseCase> {
         CreateDivisionUseCase(

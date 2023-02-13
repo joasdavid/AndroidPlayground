@@ -24,8 +24,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import com.joasvpereira.main.compose.division.popup.CreateBoxPopup
-import com.joasvpereira.main.compose.division.popup.CreateItemPopup
+import com.joasvpereira.main.compose.common.popup.CreateBoxPopup
+import com.joasvpereira.main.compose.common.popup.CreateItemPopup
 import com.joasvpereira.main.compose.division.DivisionContent
 import com.joasvpereira.main.compose.division.DivisionCreateButtons
 import com.joasvpereira.main.compose.division.DivisionCreateButtonsState
@@ -152,7 +152,7 @@ fun DivisionsFeatureScreen(
         onAddItemClick = viewModel.showCreateItem(),
         onDeleteItem = { viewModel.showDeleteConfirmation(it) },
         onEditItem = { viewModel.showEdit(it) },
-        onOpenItem = {},
+        onOpenItem = { navController?.navigate("ItemDetailScreen?id=${it.id}") },
     )
 }
 

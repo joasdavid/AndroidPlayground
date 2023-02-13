@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.joasvpereira.main.presentation.create.CreateDivisionScreen
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreen
+import com.joasvpereira.main.presentation.details.ItemDetailScreen
 import com.joasvpereira.main.presentation.division.DivisionsFeatureScreen
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -40,6 +41,16 @@ fun MainFeatureEntryPoint(
         ) {
             val id = it.arguments?.getInt("id") ?: -1
             DivisionsFeatureScreen(getViewModel() { parametersOf(id) }, navController = navController)
+        }
+
+        composable(
+            "ItemDetailScreen?id={id}",
+            arguments = listOf(navArgument("id", builder = {type = NavType.IntType
+                defaultValue = -1
+            }))
+        ) {
+            val id = it.arguments?.getInt("id") ?: -1
+            ItemDetailScreen(getViewModel() { parametersOf(id) }, navController = navController)
         }
     }
 }

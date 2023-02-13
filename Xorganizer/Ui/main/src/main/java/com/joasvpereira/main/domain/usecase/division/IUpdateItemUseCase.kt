@@ -2,6 +2,7 @@ package com.joasvpereira.main.domain.usecase.division
 
 import com.joasvpereira.main.repository.ItemDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.core.domain.usecase.Params
@@ -12,7 +13,7 @@ interface IUpdateItemUseCase : BaseUseCaseSync<UpdateItemParam, Unit>
 
 class UpdateItemUseCase(private val itemDataSource: ItemDataSource) : IUpdateItemUseCase {
     override suspend fun execute(params: UpdateItemParam): Unit = withContext(Dispatchers.IO) {
-        itemDataSource.getItem(params.id)?.let {
+        itemDataSource.getItem(params.id).first().let {
             val updatedItem = it.copy(
                 name = params.name?.trim() ?: it.name,
                 description = params.description?.trim() ?: it.description
