@@ -97,7 +97,11 @@ val MainFeatureModule = module {
     }
 
     factory<IDivisionsUseCase> {
-        MyDivisionsUseCase(get())
+        MyDivisionsUseCase(
+            dataSource = get(),
+            boxDataSource = get(),
+            itemDataSource = get()
+        )
     }
 
     factory<IDeleteDivisionUseCase> {

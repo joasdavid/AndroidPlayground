@@ -10,6 +10,7 @@ import pt.joasvpereira.core.repository.local.dao.SessionDao
 import pt.joasvpereira.core.repository.local.entities.Box
 import pt.joasvpereira.core.repository.local.entities.Division
 import pt.joasvpereira.core.repository.local.entities.Item
+import pt.joasvpereira.core.repository.local.entities.ItemCountAndParentId
 
 interface ItemDataSource {
     suspend fun getDivisionItems(divisionId: Int): Flow<List<Item>>
@@ -18,6 +19,7 @@ interface ItemDataSource {
     suspend fun createNewItem(item: Item)
     suspend fun updateItem(item: Item)
     suspend fun deleteItem(id: Int)
+    suspend fun getItemCount() : Flow<List<ItemCountAndParentId>>
 }
 
 class LocalItemDataSource(private val itemDao: ItemDao) : ItemDataSource {
@@ -44,5 +46,9 @@ class LocalItemDataSource(private val itemDao: ItemDao) : ItemDataSource {
 
     override suspend fun deleteItem(id: Int) = withContext(Dispatchers.IO){
         itemDao.deleteItem(itemDao.getItem(id))
+    }
+
+    override suspend fun getItemCount(): Flow<List<ItemCountAndParentId>> = withContext(Dispatchers.IO) {
+        itemDao.getItemCount()
     }
 }
