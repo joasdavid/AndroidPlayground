@@ -19,7 +19,7 @@ interface  BoxDao {
     fun getAll(fromDivision: Int): Flow<List<Box>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $ID = :id")
-    fun getBox(id: Int): Box
+    fun getBox(id: Int): Flow<Box?>
 
     @Insert
     fun insertBox(box: Box)

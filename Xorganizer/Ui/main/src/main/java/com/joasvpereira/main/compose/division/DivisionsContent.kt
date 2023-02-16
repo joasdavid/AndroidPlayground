@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.main.compose.common.container.element.ElementAction
+import com.joasvpereira.main.compose.common.container.element.ElementsContainer
 import com.joasvpereira.main.compose.division.list.elements.BoxItem
 import com.joasvpereira.main.compose.division.list.elements.ObjectItem
 import com.joasvpereira.main.domain.data.DivisionElement
@@ -27,65 +29,18 @@ import pt.joasvpereira.coreui.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 
-interface DivisionsContentAction {
-    object Open : DivisionsContentAction
-    object Edit : DivisionsContentAction
-    object Delete : DivisionsContentAction
-}
-
 @Composable
 fun DivisionContent(
     listItem: List<DivisionElement>,
     listBottomPadding: Dp = 0.dp,
-    onClick: (DivisionElement, DivisionsContentAction) -> Unit
+    onClick: (DivisionElement, ElementAction) -> Unit
 ) {
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
-    ) {
-        Box(modifier = Modifier.padding(horizontal = 20.dp)) {
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                item { SimpleSpace(size = 40.dp) }
-                if (listItem.isEmpty()) {
-                    item {
-                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            Text(
-                                text = "This division is empty at the moment. \n\nYou can add new Item's or Boxes to this division using the \"+\" button at the bottom of the screen.",
-                                modifier = Modifier.fillMaxWidth(.5f),
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-                }
-
-                items(listItem) {
-                    if (it is DivisionElement.Item) {
-                        ObjectItem(
-                            name = it.name,
-                            onClick = { onClick(it, DivisionsContentAction.Open) },
-                            onDeleteClick = { onClick(it, DivisionsContentAction.Delete) },
-                            onEditClick = { onClick(it, DivisionsContentAction.Edit) }
-                        )
-                    }
-
-                    if (it is DivisionElement.Box) {
-                        BoxItem(name = it.name,
-                            onClick = { onClick(it, DivisionsContentAction.Open) },
-                            onDeleteClick = { onClick(it, DivisionsContentAction.Delete) },
-                            onEditClick = { onClick(it, DivisionsContentAction.Edit) }
-                        )
-                    }
-                    SimpleSpace(size = 10.dp)
-                }
-
-                item {
-                    SimpleSpace(size = 70.dp)
-                    SimpleSpace(size = listBottomPadding)
-                }
-            }
-        }
-    }
+    ElementsContainer(
+        listItem = listItem,
+        onClick = onClick,
+        listBottomPadding = listBottomPadding,
+        emptyText = "It seems like there are no items or boxes in your account at the moment, but don't worry! You can add them anytime by selecting the 'Add' option and entering the necessary details.",
+    )
 }
 
 private val previewData = mutableListOf<DivisionElement>().apply {

@@ -24,13 +24,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.main.compose.common.container.element.ElementAction
 import com.joasvpereira.main.compose.common.popup.CreateBoxPopup
 import com.joasvpereira.main.compose.common.popup.CreateItemPopup
 import com.joasvpereira.main.compose.division.DivisionContent
 import com.joasvpereira.main.compose.division.DivisionCreateButtons
 import com.joasvpereira.main.compose.division.DivisionCreateButtonsState
 import com.joasvpereira.main.compose.division.DivisionHeader
-import com.joasvpereira.main.compose.division.DivisionsContentAction
 import com.joasvpereira.main.compose.division.popup.FilterPopup
 import com.joasvpereira.main.compose.division.rememberDivisionCreateButtonsState
 import com.joasvpereira.main.domain.data.DivisionThemed
@@ -152,7 +152,12 @@ fun DivisionsFeatureScreen(
         onAddItemClick = viewModel.showCreateItem(),
         onDeleteItem = { viewModel.showDeleteConfirmation(it) },
         onEditItem = { viewModel.showEdit(it) },
-        onOpenItem = { navController?.navigate("ItemDetailScreen?id=${it.id}") },
+        onOpenItem = {
+            when(it) {
+                is DivisionElement.Box -> navController?.navigate("BoxScreen?id=${it.id}")
+                is DivisionElement.Item -> navController?.navigate("ItemDetailScreen?id=${it.id}")
+            }
+        },
     )
 }
 
@@ -198,9 +203,9 @@ fun DivisionsScreen(
                         divisionListContent, listBottomPadding = it.calculateBottomPadding(),
                         onClick = { element, action ->
                             when(action) {
-                                DivisionsContentAction.Open -> onOpenItem(element)
-                                DivisionsContentAction.Edit -> onEditItem(element)
-                                DivisionsContentAction.Delete -> onDeleteItem(element)
+                                ElementAction.Open -> onOpenItem(element)
+                                ElementAction.Edit -> onEditItem(element)
+                                ElementAction.Delete -> onDeleteItem(element)
                             }
                         },
                     )

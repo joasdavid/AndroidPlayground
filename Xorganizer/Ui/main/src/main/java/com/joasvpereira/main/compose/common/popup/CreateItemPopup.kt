@@ -23,7 +23,7 @@ import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.main.R
 
 class CreateItemPopupStateHolder(
-    val isOnEditMode: Boolean,
+    isOnEditMode: Boolean,
     isVisible: Boolean = false,
     var onButtonPositiveClick: () -> Unit = {},
     var onButtonNegativeClick: () -> Unit = {},
@@ -31,6 +31,7 @@ class CreateItemPopupStateHolder(
     var name by mutableStateOf("")
     var description by mutableStateOf("")
     var isVisible by mutableStateOf(isVisible)
+    var isOnEditMode: Boolean by mutableStateOf(isOnEditMode)
 
     fun performPositiveClick() {
         "performPositiveClick".logThis(tag = "DetailsScreen")

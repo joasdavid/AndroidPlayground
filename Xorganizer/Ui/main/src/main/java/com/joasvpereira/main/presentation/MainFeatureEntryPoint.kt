@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.joasvpereira.main.presentation.box.BoxScreen
 import com.joasvpereira.main.presentation.create.CreateDivisionScreen
 import com.joasvpereira.main.presentation.dashboard.DashboardFeatureScreen
 import com.joasvpereira.main.presentation.details.ItemDetailScreen
@@ -51,6 +52,16 @@ fun MainFeatureEntryPoint(
         ) {
             val id = it.arguments?.getInt("id") ?: -1
             ItemDetailScreen(getViewModel() { parametersOf(id) }, navController = navController)
+        }
+
+        composable(
+            "BoxScreen?id={id}",
+            arguments = listOf(navArgument("id", builder = {type = NavType.IntType
+                defaultValue = -1
+            }))
+        ) {
+            val id = it.arguments?.getInt("id") ?: -1
+            BoxScreen(getViewModel() { parametersOf(id) }, navController = navController)
         }
     }
 }
