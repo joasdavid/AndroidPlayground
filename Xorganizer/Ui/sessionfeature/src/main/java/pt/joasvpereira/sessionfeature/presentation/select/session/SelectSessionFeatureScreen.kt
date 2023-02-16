@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import pt.joasvpereira.sessionfeature.compose.navigation.navigateToCreateProfile
 import pt.joasvpereira.sessionfeature.compose.select.session.SelectSessionScreen
 import pt.joasvpereira.sessionfeature.domain.data.SessionItem
 
@@ -29,6 +30,6 @@ fun SelectSessionFeatureScreen(
         SelectSessionScreen(
             sessionItems = state.sessions,
             onSessionSelected = onSessionSelected,
-            onCreateNewSession = { navController?.navigate("CreateSessionFeatureScreen") }
+            onCreateNewSession = { navController?.navigateToCreateProfile() }
         )
 }

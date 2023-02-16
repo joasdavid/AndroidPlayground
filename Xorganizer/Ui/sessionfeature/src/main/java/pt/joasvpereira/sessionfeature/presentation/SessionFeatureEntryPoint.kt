@@ -12,6 +12,9 @@ import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.sessionfeature.CurrentSession
+import pt.joasvpereira.sessionfeature.compose.navigation.START_DISTINCTION
+import pt.joasvpereira.sessionfeature.compose.navigation.composableCreateSession
+import pt.joasvpereira.sessionfeature.compose.navigation.composableSelectProfile
 import pt.joasvpereira.sessionfeature.domain.data.SessionItem
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreen
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreenViewModel
@@ -23,20 +26,8 @@ fun SessionFeatureEntryPoint(
     onFinished: () -> Unit,
 ) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "SelectSessionFeatureScreen") {
-        composable(
-            "SelectSessionFeatureScreen"
-        ) {
-            SelectSessionFeatureScreen(getViewModel(), navController = navController) {
-                CurrentSession._session = it
-                onFinished()
-            }
-        }
-        composable("CreateSessionFeatureScreen?id={id}",
-        arguments = listOf(navArgument("id") { defaultValue = -1 })
-        ) {
-            val id = it.arguments?.getInt("id")
-            CreateSessionFeatureScreen(id, getViewModel(), navController = navController)
-        }
+    NavHost(navController = navController, startDestination = START_DISTINCTION ) {
+        composableSelectProfile(navController, onProfileSelected = {onFinished()})
+        composableCreateSession(navController)
     }
 }
