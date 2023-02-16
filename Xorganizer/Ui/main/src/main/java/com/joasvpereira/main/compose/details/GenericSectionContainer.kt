@@ -10,6 +10,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -64,7 +66,8 @@ fun GenericSectionContainer(
         }
         SimpleSpace(size = 5.dp)
         Card(Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp)
         ) {
             content()
         }

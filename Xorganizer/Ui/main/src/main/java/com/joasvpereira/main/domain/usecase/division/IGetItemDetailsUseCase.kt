@@ -7,6 +7,7 @@ import com.joasvpereira.main.repository.BoxDataSource
 import com.joasvpereira.main.repository.DivisionDataSource
 import com.joasvpereira.main.repository.ItemDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.core.domain.usecase.Params
@@ -27,6 +28,7 @@ class GetItemDetailsUseCase(
         itemDataSource.getItem(params.id).map {
             if (it == null) return@map null
             val division = divisionDataSource.getDivision(it.parentDivisionId)
+            val box = it.parentBoxId?.let { id -> boxDataSource.getBox(id).first() }
             ItemDetail(
                 id = it.id!!,
                 name = it.name,
@@ -37,7 +39,12 @@ class GetItemDetailsUseCase(
                     divisionIcon = if (division != null) DivisionIcons.getBy(division.iconId) else null,
                     themeOption = if (division != null) ThemeOption.getBy(division.themeId) else null,
                 ),
-                parentBox = null
+                parentBox = box?.run {
+                    ItemDetail.ParentBox(
+                        id = id!!,
+                        name = name
+                    )
+                }
             )
         }
 

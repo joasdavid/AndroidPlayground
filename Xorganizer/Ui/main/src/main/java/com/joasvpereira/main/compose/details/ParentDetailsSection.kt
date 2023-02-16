@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,18 +32,19 @@ fun ParentDetailsSection(
 ) {
     division.divisionIcon?.let { divisionIcon ->
         GenericSectionContainer(headerText = "Location", modifier = modifier) {
-            Column(modifier = Modifier.padding(10.dp)) {
+            Column(modifier = Modifier.padding(10.dp).padding(vertical = 10.dp)) {
                 Row {
                     Icon(painter = painterResource(id = divisionIcon.resId), contentDescription = null, modifier = Modifier.size(24.dp))
                     SimpleSpace(size = 5.dp)
                     Text(text = division.name)
                 }
                 box?.let {
-                    SimpleSpace(size = 5.dp)
-                    Row {
+                    SimpleSpace(size = 15.dp)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        SimpleSpace(size = 24.dp)
                         Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = null)
                         SimpleSpace(size = 5.dp)
-                        BoxImage(modifier = Modifier.size(24.dp))
+                        BoxImage(modifier = Modifier.size(20.dp))
                         SimpleSpace(size = 5.dp)
                         Text(text = it.name)
                     }

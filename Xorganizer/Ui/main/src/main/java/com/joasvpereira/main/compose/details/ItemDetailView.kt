@@ -82,6 +82,12 @@ fun ItemDetailView(
                 SimpleSpace(size = 20.dp)
                 DetailActionSection(onDeleteClicked = { deleteItemPopupState.isVisible = true }, modifier = Modifier.height(intrinsicSize = IntrinsicSize.Min))
             }
+            item {
+                SimpleSpace(size = 10.dp)
+            }
+            item {
+                SimpleSpace(size = it.calculateBottomPadding())
+            }
         }
     }
 }
