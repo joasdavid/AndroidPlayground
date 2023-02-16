@@ -1,12 +1,15 @@
 package pt.joasvpereira.sessionfeature.compose.create
 
 import android.graphics.Bitmap
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -70,19 +73,20 @@ internal fun CreateSessionScreen(
                 ) {
                     Text(
                         text = if (isOnEditMode) {
-                            "Edit profile"
+                            "Save profile"
                         }  else {
                             "Create new profile"
                         }
                     )
                 }
                 if (isOnEditMode) {
-                    SimpleSpace(size = 10.dp)
+                    SimpleSpace(size = 20.dp)
                     Button(
                         onClick = onButtonDeleteClick,
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                     ) {
                         Text(
-                            text = "Delete"
+                            text = "Delete",
                         )
                     }
                 }
@@ -104,7 +108,7 @@ private fun CreateSessionScreenPreview() {
             onUploadClick = {},
             onClearImageClick = {},
             isButtonEnabled = true,
-            isLoading = true,
+            isLoading = false,
             onButtonDeleteClick = {},
             isOnEditMode = true
         )

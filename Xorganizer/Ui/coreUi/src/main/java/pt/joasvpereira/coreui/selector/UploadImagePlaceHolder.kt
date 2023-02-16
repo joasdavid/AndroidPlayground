@@ -123,7 +123,9 @@ fun UploadImagePlaceHolder(
                         onClearImageClick()
                     }
                     .align(Alignment.TopStart),
-                color = MaterialTheme.colorScheme.tertiaryContainer
+                color = MaterialTheme.colorScheme.tertiaryContainer,
+                tonalElevation = 100.dp,
+                shadowElevation = 100.dp
             ) {
                 Box {
                     Icon(
@@ -153,7 +155,9 @@ fun UploadImagePlaceHolder(
                     onUploadClick()
                 }
                 .align(Alignment.BottomEnd),
-            color = MaterialTheme.colorScheme.tertiaryContainer
+            color = MaterialTheme.colorScheme.tertiaryContainer,
+            tonalElevation = 100.dp,
+            shadowElevation = 100.dp
         ) {
             Box {
                 Icon(

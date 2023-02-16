@@ -38,7 +38,7 @@ class First2WordsHighlight(private val isUpperCase: Boolean = true, val emptySym
                     "${firstWord[0]}${secondWord[0]}"
                 }
                 firstWord.length >= 2 -> "${firstWord[0]}${firstWord[1]}"
-                else -> "${firstWord[0]}}"
+                else -> "${firstWord[0]}"
             }
         }.run {
             if (isUpperCase) {
@@ -101,6 +101,7 @@ fun NameShieldPreview() {
         NameShield(text = "asd", modifier = Modifier.size(48.dp))
         NameShield(text = "   ", modifier = Modifier.size(48.dp))
         NameShield(text = "   ", modifier = Modifier.size(48.dp), textStrategy = First2WordsHighlight(emptySymbol = ' '))
+        NameShield(text = "a", modifier = Modifier.size(48.dp),)
         NameShield(text = "qe w", modifier = Modifier.size(48.dp))
     }
 }
