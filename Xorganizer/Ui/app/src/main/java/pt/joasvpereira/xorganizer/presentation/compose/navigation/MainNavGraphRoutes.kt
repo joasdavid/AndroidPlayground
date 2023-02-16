@@ -5,8 +5,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.presentation.MainFeatureEntryPoint
 import pt.joasvpereira.core.navigation.navigateAndResetStack
+import pt.joasvpereira.sessionfeature.CurrentSession
 import pt.joasvpereira.sessionfeature.presentation.SessionFeatureEntryPoint
 
 sealed class MainNavGraphRoutes(val route: String) {
@@ -32,9 +34,11 @@ fun NavController.navigateToDivisionsFeature() {
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
+    CurrentSession.session.logThis(tag = "JVP") { "Current session = $it" }
+    val start = if(CurrentSession.session == null) MainNavGraphRoutes.ProfileFeature.route else MainNavGraphRoutes.MainFeature.route
     NavHost(
         navController = navController,
-        startDestination = MainNavGraphRoutes.ProfileFeature.route
+        startDestination = start.logThis(tag = "JVP")
     ) {
         composable(MainNavGraphRoutes.ProfileFeature.route) {
             SessionFeatureEntryPoint(

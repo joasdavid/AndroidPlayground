@@ -20,8 +20,13 @@ import pt.joasvpereira.xorganizer.domain.usecase.division.ISingleDivisionUseCase
 import pt.joasvpereira.xorganizer.domain.usecase.division.SingleDivisionUseCase
 import pt.joasvpereira.xorganizer.domain.usecase.item.IItemsUseCase
 import pt.joasvpereira.xorganizer.domain.usecase.item.ItemsUseCase
+import pt.joasvpereira.xorganizer.presentation.MainViewModel
 
 val viewModelModule = module {
+
+    viewModel {
+        MainViewModel(get())
+    }
 
     factory<Int?>(named("SESSION_ID")) {
         CurrentSession.session?.id

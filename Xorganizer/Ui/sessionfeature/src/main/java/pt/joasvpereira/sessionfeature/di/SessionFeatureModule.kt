@@ -7,8 +7,10 @@ import pt.joasvpereira.sessionfeature.domain.usecase.CreateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.DeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ICreateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.IDeleteSessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.ILoadSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionsUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.LoadSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.SessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.SessionsUseCase
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreenViewModel
@@ -43,6 +45,10 @@ val sessionFeatureModule = module {
 
     single<IDeleteSessionUseCase> {
         DeleteSessionUseCase(get())
+    }
+
+    single<ILoadSessionUseCase> {
+        LoadSessionUseCase(get())
     }
 
     single<SessionDataSource> { LocalSessionDataSource(get<Db>().sessionDao()) }
