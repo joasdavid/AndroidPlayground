@@ -1,12 +1,17 @@
 package pt.joasvpereira.sessionfeature.compose.select.session
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,9 +24,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -33,25 +40,25 @@ import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.sessionfeature.R
 import pt.joasvpereira.sessionfeature.domain.data.SessionItem
 
 @Composable
 internal fun SelectSessionScreen(
-    sessionItems: List<SessionItem>,
+    sessionItems: List<SessionItem>?,
+    isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
-    onCreateNewSession: () -> Unit
+    onProfileClicked: () -> Unit
 ) {
-    DynamicTheme {
-        AppScaffold {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                SimpleSpace(100.dp)
-                Text("Please Select your profile:", style = MaterialTheme.typography.titleLarge)
-                SimpleSpace(60.dp)
-                SessionsContent(sessionItems, onSessionSelected, onCreateNewSession)
-            }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        SimpleSpace(100.dp)
+        Text("Please Select your profile:", style = MaterialTheme.typography.titleLarge)
+        SimpleSpace(60.dp)
+        sessionItems?.let {
+            SessionsContent(it, onSessionSelected = onSessionSelected, onCreateNewSession = onProfileClicked, isEditMode = isEditMode)
         }
     }
 }
@@ -59,13 +66,14 @@ internal fun SelectSessionScreen(
 @Composable
 private fun SessionsContent(
     sessionItems: List<SessionItem>,
+    isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
     onCreateNewSession: () -> Unit
 ) {
     if (sessionItems.isEmpty()) {
         SessionsContentEmpty(onCreateNewSession)
     } else {
-        SessionsContentList(sessionItems, onSessionSelected, onCreateNewSession)
+        SessionsContentList(sessionItems, isEditMode, onSessionSelected, onCreateNewSession)
     }
 }
 
@@ -78,8 +86,9 @@ private sealed class SessionsContentItemTypes {
 @Composable
 private fun SessionsContentList(
     sessionItems: List<SessionItem>,
+    isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
-    onCreateNewSession: () -> Unit
+    onCreateNewSession: () -> Unit,
 ) {
     val workingList = ArrayList<SessionsContentItemTypes>()
         .apply {
@@ -104,7 +113,7 @@ private fun SessionsContentList(
             .fillMaxWidth()
     ) {
         items(workingList) {
-            ContentListLine(pair = it, onSessionSelected = onSessionSelected, onCreateNewSession = onCreateNewSession)
+            ContentListLine(pair = it, isEditMode, onSessionSelected = onSessionSelected, onCreateNewSession = onCreateNewSession)
         }
     }
 }
@@ -112,8 +121,9 @@ private fun SessionsContentList(
 @Composable
 private fun ContentListLine(
     pair: Pair<SessionsContentItemTypes, SessionsContentItemTypes?>,
+    isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
-    onCreateNewSession: () -> Unit
+    onCreateNewSession: () -> Unit,
 ) {
     Row(
         Modifier
@@ -123,10 +133,17 @@ private fun ContentListLine(
     ) {
         pair.toList().forEach {
             when (it) {
-                SessionsContentItemTypes.CreateType -> ContentListLineItemCreateSession(onCreateNewSession)
+                SessionsContentItemTypes.CreateType -> {
+                    if (!isEditMode) {
+                        ContentListLineItemCreateSession(onCreateNewSession)
+                    } else {
+                        SimpleSpace(size = 60.dp)
+                    }
+                }
 
                 is SessionsContentItemTypes.SessionType -> ContentListLineItemSession(
                     sessionItem = it.item,
+                    isEditMode = isEditMode,
                     onSessionSelected = onSessionSelected
                 )
 
@@ -139,10 +156,27 @@ private fun ContentListLine(
 @Composable
 private fun ContentListLineItemSession(
     sessionItem: SessionItem,
+    isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
 ) {
+
+    var modifier: Modifier = Modifier
+    if (isEditMode) {
+        val infiniteTransition = rememberInfiniteTransition()
+        val angle by infiniteTransition.animateFloat(
+            initialValue = -25F,
+            targetValue = 25F,
+            animationSpec = infiniteRepeatable(
+                animation = tween(1000, easing = LinearEasing),
+                repeatMode = RepeatMode.Reverse
+            )
+        )
+        modifier = modifier.rotate(angle)
+    }
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         ItemContainer(
+            modifier = modifier,
             onClick = {
                 onSessionSelected(sessionItem)
             }
@@ -257,21 +291,17 @@ private fun SelectSessionScreenPreview() {
             image = null,
             name = "Garagem"
         ),
-    ), onSessionSelected = {}, onCreateNewSession = {})
+    ), onSessionSelected = {}, onProfileClicked = {})
 }
 
 @Preview
 @Composable
 private fun SelectSessionScreenEmptyPreview() {
-    SelectSessionScreen(sessionItems = listOf(), onSessionSelected = {}, onCreateNewSession = {})
+    SelectSessionScreen(sessionItems = listOf(), onSessionSelected = {}, onProfileClicked = {})
 }
 
+@Preview
 @Composable
-private fun ScreenBackground(backgroundRes: Int) {
-    Image(
-        painter = painterResource(id = backgroundRes),
-        contentDescription = "",
-        contentScale = ContentScale.FillBounds,
-        modifier = Modifier.fillMaxSize()
-    )
+private fun SelectSessionScreenNoListPreview() {
+    SelectSessionScreen(sessionItems = null, onSessionSelected = {}, onProfileClicked = {})
 }
