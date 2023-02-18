@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.presentation.MainFeatureEntryPoint
 import pt.joasvpereira.core.navigation.navigateAndResetStack
-import pt.joasvpereira.sessionfeature.CurrentSession
+import pt.joasvpereira.core.repository.CurrentSession
 import pt.joasvpereira.sessionfeature.presentation.SessionFeatureEntryPoint
 
 sealed class MainNavGraphRoutes(val route: String) {

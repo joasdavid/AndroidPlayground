@@ -1,4 +1,4 @@
-package pt.joasvpereira.sessionfeature.domain.data
+package pt.joasvpereira.core.domain.data
 
 import android.graphics.Bitmap
 

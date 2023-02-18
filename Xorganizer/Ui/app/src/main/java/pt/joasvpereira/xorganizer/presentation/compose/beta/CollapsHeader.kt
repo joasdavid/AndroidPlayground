@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -79,7 +79,7 @@ fun BodyContainer(scrollState: ScrollState, headerMaxHeight: Dp, body: @Composab
                     .shadow(elevation = 4.dp, shape = shape)
                     .clip(shape = shape)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
+                    .background(MaterialTheme.colorScheme.background)
             ) {
                 Box(modifier = Modifier.padding(top = 20.dp), content = { body() })
             }

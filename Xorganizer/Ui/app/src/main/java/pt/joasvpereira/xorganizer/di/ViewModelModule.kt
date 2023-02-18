@@ -9,7 +9,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import pt.joasvpereira.core.repository.local.Db
-import pt.joasvpereira.sessionfeature.CurrentSession
+import pt.joasvpereira.core.repository.CurrentSession
 import pt.joasvpereira.xorganizer.domain.usecase.box.BoxesUseCase
 import pt.joasvpereira.xorganizer.domain.usecase.box.IBoxesUseCase
 import pt.joasvpereira.xorganizer.domain.usecase.division.CreateDivisionsUseCase

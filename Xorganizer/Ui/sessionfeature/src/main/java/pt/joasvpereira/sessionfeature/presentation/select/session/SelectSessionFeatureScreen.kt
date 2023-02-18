@@ -15,7 +15,7 @@ import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.sessionfeature.compose.navigation.navigateToCreateProfile
 import pt.joasvpereira.sessionfeature.compose.navigation.navigateToUpdateProfile
 import pt.joasvpereira.sessionfeature.compose.select.session.SelectSessionScreen
-import pt.joasvpereira.sessionfeature.domain.data.SessionItem
+import pt.joasvpereira.core.domain.data.SessionItem
 
 @Composable
 fun SelectSessionFeatureScreen(
@@ -47,14 +47,17 @@ fun SelectSessionFeatureScreen(
                     }
                 )
             }
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 20.dp)
-                    .padding(bottom = it.calculateBottomPadding())
-            ) {
-                Button(onClick = { viewModel.toggleEditMode() }) {
-                    Text(text = if (state.isEditMode) "Exit edit mode" else "Enter edit mode")
+
+            if(state.sessions?.isNotEmpty() == true) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 20.dp)
+                        .padding(bottom = it.calculateBottomPadding())
+                ) {
+                    Button(onClick = { viewModel.toggleEditMode() }) {
+                        Text(text = if (state.isEditMode) "Exit edit mode" else "Enter edit mode")
+                    }
                 }
             }
         }

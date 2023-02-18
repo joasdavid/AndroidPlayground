@@ -11,10 +11,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pt.joasvpereira.core.domain.usecase.EmptyParams
-import pt.joasvpereira.sessionfeature.domain.data.SessionItem
+import pt.joasvpereira.core.domain.data.SessionItem
 import pt.joasvpereira.sessionfeature.domain.usecase.CreateSessionParams
-import pt.joasvpereira.sessionfeature.domain.usecase.DeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ICreateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.IDeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase

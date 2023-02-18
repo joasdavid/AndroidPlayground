@@ -41,7 +41,7 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
 import pt.joasvpereira.sessionfeature.R
-import pt.joasvpereira.sessionfeature.domain.data.SessionItem
+import pt.joasvpereira.core.domain.data.SessionItem
 
 @Composable
 internal fun SelectSessionScreen(
@@ -183,7 +183,7 @@ private fun ContentListLineItemSession(
         ) {
             if (sessionItem.image != null) {
                 Image(
-                    bitmap = sessionItem.image.asImageBitmap(),
+                    bitmap = sessionItem.image!!.asImageBitmap(),
                     contentDescription = "",
                     Modifier.size(60.dp),
                     contentScale = ContentScale.FillBounds

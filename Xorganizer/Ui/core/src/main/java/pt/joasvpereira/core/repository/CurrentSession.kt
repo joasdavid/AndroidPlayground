@@ -1,8 +1,8 @@
 package pt.joasvpereira.core.repository
 
-import com.joasvpereira.loggger.Logger
+import pt.joasvpereira.core.domain.data.SessionItem
 import pt.joasvpereira.core.repository.local.entities.Session
 
-internal object CurrentSession {
-    var session : Session? = null
+object CurrentSession {
+    var session: SessionItem? = null
 }
