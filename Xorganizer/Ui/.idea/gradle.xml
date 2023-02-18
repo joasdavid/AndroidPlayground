@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/coreUi" />
             <option value="$PROJECT_DIR$/main" />
             <option value="$PROJECT_DIR$/sessionfeature" />
+            <option value="$PROJECT_DIR$/settings" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -146,16 +146,20 @@ fun AppScaffold(
     isTinted: Boolean = true,
     isLoading: Boolean = false,
     paddingValues: PaddingValues = PaddingValues(horizontal = 20.dp),
+    shouldUseBackgroundImage: Boolean = true,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold() {
-        val backgroundRes = R.drawable.background
-        Image(
-            painter = painterResource(id = backgroundRes),
-            contentDescription = "",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.fillMaxSize()
-        )
+        if (shouldUseBackgroundImage) {
+            val backgroundRes = R.drawable.background
+            Image(
+                painter = painterResource(id = backgroundRes),
+                contentDescription = "",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
         if (isTinted) {
             Box(
                 modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f))
