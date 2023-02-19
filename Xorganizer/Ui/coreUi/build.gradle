@@ -65,4 +65,11 @@ dependencies {
     api "br.com.devsrsouza.compose.icons.android:line-awesome:1.0.0"
 
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
+
+
+    def koin_version= "3.2.0"
+    api "io.insert-koin:koin-androidx-compose:$koin_version"
+
+
+    api project(path: ':settingsCore')
 }

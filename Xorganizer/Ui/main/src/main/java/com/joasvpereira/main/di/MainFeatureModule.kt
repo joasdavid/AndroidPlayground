@@ -51,8 +51,8 @@ import pt.joasvpereira.core.repository.local.Db
 val MainFeatureModule = module {
     viewModel {
         DashboardFeatureScreenViewModel(
-            sessionName = get(named("SESSION_NAME")),
-            sessionImage = kotlin.runCatching { get<Bitmap>(named("SESSION_IMAGE")) }.getOrNull(),
+            sessionName = null ,//get(named("SESSION_NAME")),
+            sessionImage = null ,//kotlin.runCatching { get<Bitmap>(named("SESSION_IMAGE")) }.getOrNull(),
             divisionsUseCase = get(),
             deleteUseCase = get(),
         )

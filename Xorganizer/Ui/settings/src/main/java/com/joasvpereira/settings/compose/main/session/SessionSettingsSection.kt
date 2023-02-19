@@ -42,8 +42,12 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.settings.compose.main.SettingsSection
+import com.joasvpereira.settings.compose.main.menu.entry.EntryClickable
+import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSwitch
+import pt.joasvpereira.core.domain.data.SessionItem
 import pt.joasvpereira.core.ext.toBase64String
 import pt.joasvpereira.core.ext.toBitmap
+import pt.joasvpereira.core.repository.CurrentSession
 import pt.joasvpereira.core.repository.local.entities.Session
 import pt.joasvpereira.coreui.DynamicTheme
 import pt.joasvpereira.coreui.R
@@ -52,82 +56,30 @@ import pt.joasvpereira.coreui.preview.UiModePreview
 @Composable
 internal fun SessionSettingsSection(
     modifier: Modifier = Modifier,
-    currentSession : Session
+    currentSession : SessionItem,
+    isKeepSession : Boolean,
+    onKeepSessionChange : (Boolean) -> Unit,
+    onEditProfile : () -> Unit,
 ) {
     SettingsSection(
         modifier = modifier,
         sectionName = "Session"
     ) {
-        var switch by remember { mutableStateOf(true) }
         SimpleSpace(size = 20.dp)
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            currentSession.image.let {
-                if (it == null) {
-                    Spacer(
-                        modifier = Modifier
-                            .background(
-                                MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
-                                shape = CircleShape
-                            )
-                            .size(40.dp)
-                    )
-                } else {
-                    Image(
-                        bitmap = it.toBitmap().asImageBitmap(),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .border(1.dp, color = MaterialTheme.colorScheme.primaryContainer, shape = CircleShape)
-                    )
-                }
-            }
-            SimpleSpace(size = 10.dp)
-            Text(text = currentSession.displayName)
-        }
+        SettingsSessionIndicator(currentSession = currentSession)
 
         SimpleSpace(size = 20.dp)
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min)
-                .heightIn(min = 50.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                               switch = !switch
-                    },
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "Should keep session")
-                    Switch(checked = switch, onCheckedChange = { switch = !switch})
-                }
-                Text(text = "When turn on will keep the session even after the app is killed, this mean that the app will login with the same profile that was selected whe the app was closed.", style = MaterialTheme.typography.labelSmall)
-            }
-        }
+        EntryWithSwitch(
+            text = "Should keep session",
+            description = "When turn on will keep the session even after the app is killed, this mean that the app will login with the same profile that was selected whe the app was closed.",
+            checked = isKeepSession,
+            onCheckedChange = onKeepSessionChange
+        )
 
         SimpleSpace(size = 20.dp)
 
-        Column {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min)
-                .heightIn(min = 50.dp)
-                .clickable {  },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Edit my profile")
-                Icon(imageVector = Icons.Default.ArrowRight, contentDescription = null)
-            }
-        }
+        EntryClickable(text = "Edit my profile", onClick = onEditProfile)
 
         SimpleSpace(size = 20.dp)
     }
@@ -145,8 +97,11 @@ private fun SessionSettingsSectionPreview() {
                     .padding(horizontal = 16.dp)
                     .padding(vertical = 20.dp)
                     .fillMaxWidth(),
-                currentSession = Session(id = 1, displayName = "Joás V. Pereira", image = drawable?.toBitmap()?.toBase64String())
-            )
+                currentSession = SessionItem(id = 1, name = "Joás V. Pereira", image = drawable?.toBitmap()),
+                isKeepSession = true,
+                onKeepSessionChange = {},
+                onEditProfile = {},
+                )
         }
     }
 }

@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.presentation.MainFeatureEntryPoint
+import com.joasvpereira.settings.presentation.main.SettingsMainMenuScreen
+import org.koin.androidx.compose.getViewModel
 import pt.joasvpereira.core.navigation.navigateAndResetStack
 import pt.joasvpereira.core.repository.CurrentSession
 import pt.joasvpereira.sessionfeature.presentation.SessionFeatureEntryPoint
@@ -47,9 +49,10 @@ fun MainNavigation() {
         }
 
         composable(MainNavGraphRoutes.MainFeature.route) {
-            MainFeatureEntryPoint(onSwitchProfile = {
+            /*MainFeatureEntryPoint(onSwitchProfile = {
                 navController.navigateToProfileFeature()
-            })
+            })*/
+            SettingsMainMenuScreen(viewModel = getViewModel(),)
         }
     }
 }

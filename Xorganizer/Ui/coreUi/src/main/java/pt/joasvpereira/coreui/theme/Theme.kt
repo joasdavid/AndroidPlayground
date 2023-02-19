@@ -7,6 +7,12 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.joasvpereira.loggger.extentions.logThis
+import kotlinx.coroutines.flow.first
+import org.koin.androidx.compose.get
+import pt.joasvpereira.core.settings.InternalThemePref
+import pt.joasvpereira.core.settings.domain.data.ThemePreference
+import pt.joasvpereira.core.settings.repository.ThemePreferencesDataSource
 import pt.joasvpereira.coreui.theme.AppTypography
 import pt.joasvpereira.coreui.theme.blueTheme
 import pt.joasvpereira.coreui.theme.defaultTheme
@@ -42,11 +48,27 @@ fun getAllThemesDetails() = listOf(
 //endregion
 
 //region Composables
+
+@Composable
+fun shouldDisplayDarkTheme() : Boolean =
+    when(InternalThemePref.mode) {
+        ThemePreference.ThemeMode.DEFAULT -> isSystemInDarkTheme()
+        ThemePreference.ThemeMode.LIGHT -> false
+        ThemePreference.ThemeMode.DARK -> true
+    }.logThis {
+        "shouldDisplayDarkTheme(InternalThemePref.mode = ${InternalThemePref.mode} || returning $it)"
+    }
+
+@Composable
+fun shouldDisplayAsMaterialYou() : Boolean = InternalThemePref.isMaterialYou.logThis {
+    "shouldDisplayAsMaterialYou(InternalThemePref.isMaterialYou = ${InternalThemePref.isMaterialYou} || returning $it)"
+}
+
 @Composable
 fun DynamicTheme(
     option: ThemeOption = ThemeOption.THEME_DEFAULT,
-    isDarkTheme: Boolean = isSystemInDarkTheme(),
-    isDynamicColor: Boolean = true,
+    isDarkTheme: Boolean = shouldDisplayDarkTheme(),
+    isDynamicColor: Boolean = shouldDisplayAsMaterialYou(),
     content: @Composable() () -> Unit
 ) {
     val themeToUse = when (option) {

@@ -1,5 +1,6 @@
 package pt.joasvpereira.xorganizer.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.window.SplashScreen
 import androidx.activity.ComponentActivity
@@ -27,6 +28,7 @@ import pt.joasvpereira.xorganizer.presentation.compose.navigation.MainNavigation
 class MainActivity : ComponentActivity() {
 
     val viewModel by viewModel<MainViewModel>()
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
