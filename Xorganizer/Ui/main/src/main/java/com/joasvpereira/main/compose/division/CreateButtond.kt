@@ -18,11 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Visibility
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.box.BoxImage
 import pt.joasvpereira.main.R
 

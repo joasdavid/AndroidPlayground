@@ -1,7 +1,6 @@
 package pt.joasvpereira.sessionfeature.compose.create
 
 import android.graphics.Bitmap
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.selector.UploadImagePlaceHolder

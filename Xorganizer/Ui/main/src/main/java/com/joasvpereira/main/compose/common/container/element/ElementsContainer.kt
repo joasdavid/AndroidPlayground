@@ -22,9 +22,8 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.compose.division.list.elements.BoxItem
 import com.joasvpereira.main.compose.division.list.elements.ObjectItem
 import com.joasvpereira.main.domain.data.DivisionElement
-import com.joasvpereira.main.domain.data.Element
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 

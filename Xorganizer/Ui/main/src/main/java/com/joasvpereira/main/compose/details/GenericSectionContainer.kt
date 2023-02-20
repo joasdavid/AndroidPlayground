@@ -11,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,13 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class HeaderClickableIcon(
     val iconPainter: Painter,

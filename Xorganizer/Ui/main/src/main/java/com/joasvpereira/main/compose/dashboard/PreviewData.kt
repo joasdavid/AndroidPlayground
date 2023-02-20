@@ -2,7 +2,7 @@ package com.joasvpereira.main.compose.dashboard
 
 import com.joasvpereira.main.domain.data.DashboardDivision
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 object PreviewData {
     internal val divisions = listOf(

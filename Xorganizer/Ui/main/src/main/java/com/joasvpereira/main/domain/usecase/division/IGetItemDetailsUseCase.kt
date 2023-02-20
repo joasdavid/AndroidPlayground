@@ -1,7 +1,6 @@
 package com.joasvpereira.main.domain.usecase.division
 
 import com.joasvpereira.main.domain.data.ItemDetail
-import com.joasvpereira.main.presentation.icons.DivisionIcon
 import com.joasvpereira.main.presentation.icons.DivisionIcons
 import com.joasvpereira.main.repository.BoxDataSource
 import com.joasvpereira.main.repository.DivisionDataSource
@@ -11,7 +10,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.core.domain.usecase.Params
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class GetItemDetailsParams(
     val id: Int

@@ -11,7 +11,7 @@ import pt.joasvpereira.core.domain.usecase.EmptyParams
 import pt.joasvpereira.core.repository.local.entities.BoxCountAndParentId
 import pt.joasvpereira.core.repository.local.entities.Division
 import pt.joasvpereira.core.repository.local.entities.ItemCountAndParentId
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 class MyDivisionsUseCase(
     private val dataSource: DivisionDataSource,
@@ -32,7 +32,7 @@ class MyDivisionsUseCase(
                         id = it.id!!,
                         name = it.name,
                         description = it.description,
-                        icon = DivisionIcons.getBy(it.iconId)!!,
+                        icon = DivisionIcons.getBy(it.iconId) ?: DivisionIcons.home,
                         boxCount = boxCountAndParentIds.find { singleCount -> singleCount.parentDivisionId == it.id!! }?.count ?: 0,
                         itemCount = itemCountAndParentIds.find { singleCount -> singleCount.parentDivisionId == it.id!! }?.count ?: 0,
                         themeOption = ThemeOption.values()[it.themeId]

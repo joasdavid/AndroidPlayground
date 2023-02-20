@@ -12,21 +12,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ThemeSelector
 import com.joasvpereira.main.compose.create.DivisionIconSelector
 import com.joasvpereira.main.compose.create.DivisionNameAndDescription
-import com.joasvpereira.main.domain.data.DivisionData
-import com.joasvpereira.main.domain.data.DivisionThemed
-import com.joasvpereira.main.presentation.icons.DivisionIcon
-import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
-import pt.joasvpereira.coreui.preview.ThemesProvider
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 

@@ -19,9 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ThemeColorsIndicator
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
-import pt.joasvpereira.coreui.getAllThemesDetails
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
+import pt.joasvpereira.coreui.theme.getAllThemesDetails
 import pt.joasvpereira.xorganizer.presentation.compose.DropdownSelector
 
 @OptIn(ExperimentalMaterial3Api::class)

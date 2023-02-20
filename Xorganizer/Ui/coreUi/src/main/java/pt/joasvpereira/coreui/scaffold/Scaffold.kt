@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.R
 import pt.joasvpereira.coreui.preview.UiModePreview
 

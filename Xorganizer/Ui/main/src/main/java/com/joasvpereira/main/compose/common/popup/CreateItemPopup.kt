@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.loggger.extentions.logThis
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.main.R

@@ -3,8 +3,8 @@ package com.joasvpereira.main.presentation.details
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.joasvpereira.main.compose.details.ItemDetailView
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 @Composable
 fun ItemDetailScreen(

@@ -2,11 +2,11 @@ package pt.joasvpereira.xorganizer.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.window.SplashScreen
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,13 +16,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joasvpereira.loggger.extentions.logThis
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pt.joasvpereira.core.domain.usecase.EmptyParams
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.core.settings.domain.data.ThemePreference
+import pt.joasvpereira.core.settings.repository.ThemePreferencesDataSource
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.LocalThemeConfig
 import pt.joasvpereira.sessionfeature.domain.usecase.ILoadSessionUseCase
-import pt.joasvpereira.sessionfeature.domain.usecase.ISessionsUseCase
-import pt.joasvpereira.sessionfeature.domain.usecase.LoadSessionUseCase
-import pt.joasvpereira.sessionfeature.domain.usecase.SessionsUseCase
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.MainNavigation
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
@@ -35,9 +36,15 @@ class MainActivity : ComponentActivity() {
         val splash = installSplashScreen()
         splash.setKeepOnScreenCondition { viewModel.isLoading }
         setContent {
-            DynamicTheme {
-                if (!viewModel.isLoading)
-                MainNavigation()
+            val theme = get<ThemePreferencesDataSource>().getUserFromPreferencesStore().collectAsState(initial = ThemePreference(isMaterialYouEnabled = false, mode =ThemePreference.ThemeMode.DEFAULT))
+            theme.value.logThis(tag = "themeTest") {
+                "Value provided to LocalThemeConfig is $it"
+            }
+            CompositionLocalProvider(LocalThemeConfig provides theme.value) {
+                DynamicTheme {
+                    if (!viewModel.isLoading)
+                        MainNavigation()
+                }
             }
         }
     }

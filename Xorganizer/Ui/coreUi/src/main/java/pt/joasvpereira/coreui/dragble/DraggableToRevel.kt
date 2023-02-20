@@ -1,7 +1,6 @@
 package pt.joasvpereira.coreui.dragble
 
 import androidx.compose.animation.core.AnimationState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateTo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,7 +44,7 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.loggger.extentions.logThis
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import kotlin.math.abs
 import kotlin.math.roundToInt
 

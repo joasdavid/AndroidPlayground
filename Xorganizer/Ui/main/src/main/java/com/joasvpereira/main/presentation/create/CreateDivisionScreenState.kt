@@ -1,9 +1,8 @@
 package com.joasvpereira.main.presentation.create
 
-import com.joasvpereira.main.compose.create.NameDescriptionData
 import com.joasvpereira.main.presentation.icons.DivisionIcon
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class CreateDivisionScreenState(
     val icon:DivisionIcon = DivisionIcons.all.first(),

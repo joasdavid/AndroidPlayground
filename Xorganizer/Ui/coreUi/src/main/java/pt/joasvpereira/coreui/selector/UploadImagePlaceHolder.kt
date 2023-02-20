@@ -42,7 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.R
 import pt.joasvpereira.coreui.shield.First2WordsHighlight
 import pt.joasvpereira.coreui.shield.NameShield

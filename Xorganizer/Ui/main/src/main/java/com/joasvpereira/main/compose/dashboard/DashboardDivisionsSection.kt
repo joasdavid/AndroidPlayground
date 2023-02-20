@@ -49,7 +49,7 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.domain.data.DashboardDivision
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.main.R
 
 @Composable

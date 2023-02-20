@@ -4,7 +4,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import pt.joasvpereira.coreui.Theme
 
 val green_light_primary = Color(0xFF346B23)
 val green_light_onPrimary = Color(0xFFFFFFFF)
@@ -130,7 +129,7 @@ private val DarkGreenColorPalette = darkColorScheme(
 
 @Composable
 fun greenTheme(darkTheme: Boolean,): Theme {
-    return pt.joasvpereira.coreui.Theme(
+    return Theme(
         color = if (darkTheme) {
             DarkGreenColorPalette
         } else {

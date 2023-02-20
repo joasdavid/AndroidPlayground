@@ -3,11 +3,8 @@ package com.joasvpereira.main.presentation.create
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.joasvpereira.main.domain.data.DivisionData
-import com.joasvpereira.main.domain.data.DivisionThemed
 import com.joasvpereira.main.domain.usecase.division.CreateDivisionParams
 import com.joasvpereira.main.domain.usecase.division.DivisionIdParam
-import com.joasvpereira.main.domain.usecase.division.DivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.ICreateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
@@ -17,8 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pt.joasvpereira.core.domain.usecase.EmptyParams
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 class CreateDivisionViewModel(
     private val divisionUseCase: IDivisionUseCase,

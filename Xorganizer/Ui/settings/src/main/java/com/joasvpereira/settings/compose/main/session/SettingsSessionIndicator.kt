@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import pt.joasvpereira.core.domain.data.SessionItem
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.R
 
 @Composable

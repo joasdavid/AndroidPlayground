@@ -31,8 +31,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import kotlinx.coroutines.launch
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.dragble.DraggableToRevel
 import pt.joasvpereira.coreui.dragble.DraggableToRevelState
 import pt.joasvpereira.coreui.dragble.rememberDraggableToRevelState

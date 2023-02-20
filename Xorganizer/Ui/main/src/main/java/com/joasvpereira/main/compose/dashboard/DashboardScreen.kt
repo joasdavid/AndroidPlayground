@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.main.domain.data.DashboardDivision
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.DynamicTheme
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 

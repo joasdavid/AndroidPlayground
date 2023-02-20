@@ -18,8 +18,8 @@ import com.joasvpereira.main.compose.common.popup.DeleteItemPopup
 import com.joasvpereira.main.compose.common.popup.DeleteItemPopupStateHolder
 import com.joasvpereira.main.domain.data.ItemDetail
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold

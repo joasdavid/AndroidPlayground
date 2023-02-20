@@ -11,10 +11,9 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.settings.compose.main.session.SessionSettingsSection
 import com.joasvpereira.settings.compose.main.theme.ThemeSettingsSection
 import pt.joasvpereira.core.domain.data.SessionItem
-import pt.joasvpereira.core.repository.local.entities.Session
 import pt.joasvpereira.core.settings.domain.data.ThemePreference
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold

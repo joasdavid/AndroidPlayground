@@ -36,8 +36,8 @@ import com.joasvpereira.main.compose.division.rememberDivisionCreateButtonsState
 import com.joasvpereira.main.domain.data.DivisionThemed
 import com.joasvpereira.main.domain.data.DivisionElement
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.preview.ThemesProvider

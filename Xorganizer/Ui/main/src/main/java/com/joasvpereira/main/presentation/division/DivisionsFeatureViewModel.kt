@@ -20,20 +20,15 @@ import com.joasvpereira.main.domain.usecase.division.IDeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateBoxUseCase
-import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateItemUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateBoxParam
-import com.joasvpereira.main.domain.usecase.division.UpdateBoxUseCase
-import com.joasvpereira.main.domain.usecase.division.UpdateDivisionParam
-import com.joasvpereira.main.domain.usecase.division.UpdateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateItemParam
-import com.joasvpereira.main.domain.usecase.division.UpdateItemUseCase
 import com.joasvpereira.main.presentation.icons.DivisionIcons
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 class DivisionsFeatureViewModel(
     var divisionId: Int = -1,

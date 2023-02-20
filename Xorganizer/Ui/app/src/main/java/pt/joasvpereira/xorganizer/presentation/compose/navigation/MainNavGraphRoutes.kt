@@ -18,8 +18,12 @@ sealed class MainNavGraphRoutes(val route: String) {
 
     object MainFeature: MainNavGraphRoutes(route = MAIN_ROUTE)
 
+    object SettingsFeature: MainNavGraphRoutes(route = SETTINGS_ROUTE)
+
     companion object {
         private const val PROFILE_ROUTE = "profile_feature_route"
+
+        private const val SETTINGS_ROUTE = "settings_feature_route"
 
         private const val MAIN_ROUTE = "main_feature_route"
     }
@@ -33,9 +37,14 @@ fun NavController.navigateToDivisionsFeature() {
     navigateAndResetStack(MainNavGraphRoutes.MainFeature.route)
 }
 
+fun NavController.navigateToSettingsFeature() {
+    navigate(MainNavGraphRoutes.SettingsFeature.route)
+}
+
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
+    //val sda = AnimatedN
     CurrentSession.session.logThis(tag = "JVP") { "Current session = $it" }
     val start = if(CurrentSession.session == null) MainNavGraphRoutes.ProfileFeature.route else MainNavGraphRoutes.MainFeature.route
     NavHost(
@@ -49,10 +58,17 @@ fun MainNavigation() {
         }
 
         composable(MainNavGraphRoutes.MainFeature.route) {
-            /*MainFeatureEntryPoint(onSwitchProfile = {
-                navController.navigateToProfileFeature()
-            })*/
-            SettingsMainMenuScreen(viewModel = getViewModel(),)
+            MainFeatureEntryPoint(onSwitchProfile = {
+                //navController.navigateToProfileFeature()
+                navController.navigateToSettingsFeature()
+            })
+        }
+
+        composable(MainNavGraphRoutes.SettingsFeature.route) {
+            SettingsMainMenuScreen(
+                viewModel = getViewModel(), navController = navController, onEditProfile = {},
+
+                )
         }
     }
 }

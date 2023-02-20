@@ -16,14 +16,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.Visibility
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.compose.common.container.element.ElementAction
 import com.joasvpereira.main.compose.common.container.element.ElementsContainer
-import com.joasvpereira.main.compose.division.DivisionContent
 import com.joasvpereira.main.domain.data.DivisionElement
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold

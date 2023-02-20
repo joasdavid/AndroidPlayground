@@ -1,19 +1,15 @@
 package com.joasvpereira.main.domain.usecase.division
 
-import com.joasvpereira.main.domain.data.ItemDetail
 import com.joasvpereira.main.domain.data.ParentBox
-import com.joasvpereira.main.presentation.icons.DivisionIcon
-import com.joasvpereira.main.presentation.icons.DivisionIcons
 import com.joasvpereira.main.repository.BoxDataSource
 import com.joasvpereira.main.repository.DivisionDataSource
-import com.joasvpereira.main.repository.ItemDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.core.domain.usecase.Params
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class GetBoxParams(
     val id: Int

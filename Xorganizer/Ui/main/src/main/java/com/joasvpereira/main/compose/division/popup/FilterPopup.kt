@@ -17,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
@@ -98,7 +98,7 @@ fun FilterPopup(
 @Preview(group = "Single")
 @Composable
 private fun FilterPopupPreview_single() {
-    FilterPopup(themeOption =ThemeOption.THEME_DEFAULT, onDismissRequest = {}, onButtonClick = {}, filterOptionsOption =FilterOptions.All, onFilterOptionChange = {})
+    FilterPopup(themeOption = ThemeOption.THEME_DEFAULT, onDismissRequest = {}, onButtonClick = {}, filterOptionsOption =FilterOptions.All, onFilterOptionChange = {})
 }
 
 @UiModePreview

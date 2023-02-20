@@ -1,7 +1,7 @@
 package com.joasvpereira.main.domain.data
 
 import com.joasvpereira.main.presentation.icons.DivisionIcon
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class ItemDetail(
     val id: Int,

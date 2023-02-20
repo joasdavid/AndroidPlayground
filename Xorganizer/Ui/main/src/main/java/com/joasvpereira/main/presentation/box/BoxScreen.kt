@@ -9,8 +9,8 @@ import com.joasvpereira.main.compose.common.container.element.ElementAction
 import com.joasvpereira.main.compose.common.popup.CreateItemPopup
 import com.joasvpereira.main.compose.common.popup.DeleteItemPopup
 import com.joasvpereira.main.domain.data.DivisionElement
-import pt.joasvpereira.coreui.DynamicTheme
-import pt.joasvpereira.coreui.ThemeOption
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 @Composable
 fun BoxScreen(
