@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.domain.data.DashboardDivision
 import com.joasvpereira.main.domain.usecase.division.DeleteDivisionParam
 import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
@@ -13,10 +14,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pt.joasvpereira.core.domain.usecase.EmptyParams
+import pt.joasvpereira.core.repository.CurrentSession
 
 class DashboardFeatureScreenViewModel(
-    private val sessionName: String?,
-    private val sessionImage: Bitmap?,
     private val divisionsUseCase: IDivisionsUseCase,
     private val deleteUseCase: IDeleteDivisionUseCase,
     ): ViewModel() {
@@ -25,12 +25,17 @@ class DashboardFeatureScreenViewModel(
         get() = _state.value
 
     init {
+        viewModelScope.launch {
+            CurrentSession.sessionFlow.collect {
+            _state.value = state.copy(
+                sessionName = it?.name ?: "",
+                sessionImage = it?.image,
+            )
+            }
+        }
+    }
 
-        _state.value = state.copy(
-            sessionName = sessionName ?: "",
-            sessionImage = sessionImage,
-        )
-
+    init {
         viewModelScope.launch {
             fetchDivisions()
         }

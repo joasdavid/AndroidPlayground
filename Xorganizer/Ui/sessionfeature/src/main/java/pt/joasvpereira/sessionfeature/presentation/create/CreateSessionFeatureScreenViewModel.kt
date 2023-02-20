@@ -74,7 +74,7 @@ open class CreateSessionFeatureScreenViewModel(
     fun save() {
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.Default) {
-            createSessionUseCase.execute(
+            createSessionUseCase.execute( // TODO: change this to really update a profile instead of crating a new one and replace it
                 CreateSessionParams(
                     SessionItem(
                         id = originId,

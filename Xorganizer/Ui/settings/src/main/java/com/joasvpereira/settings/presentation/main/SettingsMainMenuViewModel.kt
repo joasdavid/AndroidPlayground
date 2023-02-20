@@ -19,17 +19,20 @@ class SettingsMainMenuViewModel(
     private val themePreferencesDataSource: ThemePreferencesDataSource
 ) : ViewModel() {
     private var _state by mutableStateOf(SettingsMainMenuScreenState.empty())
-    val state : SettingsMainMenuScreenState
+    val state: SettingsMainMenuScreenState
         get() = _state
 
     init {
-        // TODO: refactor this after converting session Dao to use flows
-        CurrentSession.session?.run {
-            _state = state.copy(
-                sessionItem = SessionItem(
-                    id = id, name = name, image = image
-                )
-            )
+        viewModelScope.launch {
+            CurrentSession.sessionFlow.collectLatest {
+                it?.run {
+                    _state = state.copy(
+                        sessionItem = SessionItem(
+                            id = id, name = name, image = image
+                        )
+                    )
+                }
+            }
         }
     }
 

@@ -16,7 +16,7 @@ class LoadSessionUseCase(private val sessionsUseCase: ISessionsUseCase) : ILoadS
         sessionsUseCase.execute(params).run {
             "Load session found $size sessions".logThis(tag = "JVP")
             if (size == 1) {
-                CurrentSession.session = this.first().logThis(tag = "JVP") {
+                CurrentSession.sessionFlow.value = this.first().logThis(tag = "JVP") {
                     "load session = $it"
                 }
                 return@withContext true

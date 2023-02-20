@@ -11,6 +11,8 @@ import com.joasvpereira.settings.presentation.main.SettingsMainMenuScreen
 import org.koin.androidx.compose.getViewModel
 import pt.joasvpereira.core.navigation.navigateAndResetStack
 import pt.joasvpereira.core.repository.CurrentSession
+import pt.joasvpereira.sessionfeature.compose.navigation.composableCreateSession
+import pt.joasvpereira.sessionfeature.compose.navigation.navigateToUpdateProfile
 import pt.joasvpereira.sessionfeature.presentation.SessionFeatureEntryPoint
 
 sealed class MainNavGraphRoutes(val route: String) {
@@ -44,7 +46,6 @@ fun NavController.navigateToSettingsFeature() {
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
-    //val sda = AnimatedN
     CurrentSession.session.logThis(tag = "JVP") { "Current session = $it" }
     val start = if(CurrentSession.session == null) MainNavGraphRoutes.ProfileFeature.route else MainNavGraphRoutes.MainFeature.route
     NavHost(
@@ -64,9 +65,13 @@ fun MainNavigation() {
             })
         }
 
+        composableCreateSession(navController)
+
         composable(MainNavGraphRoutes.SettingsFeature.route) {
             SettingsMainMenuScreen(
-                viewModel = getViewModel(), navController = navController, onEditProfile = {},
+                viewModel = getViewModel(), navController = navController, onEditProfile = {
+                    CurrentSession.session?.run { navController.navigateToUpdateProfile(id) }
+                },
                 onLogout = {navController.navigateToProfileFeature()}
                 )
         }

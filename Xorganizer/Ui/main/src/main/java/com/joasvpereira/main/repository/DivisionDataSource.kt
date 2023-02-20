@@ -1,5 +1,6 @@
 package com.joasvpereira.main.repository
 
+import com.joasvpereira.loggger.extentions.logThis
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -17,6 +18,7 @@ interface DivisionDataSource {
 
 class LocalDivisionDataSource(private val targetSessionId: Int, private val divisionDao: DivisionDao) : DivisionDataSource {
     override suspend fun getDivisions(): Flow<List<Division>> = withContext(Dispatchers.IO) {
+        "Fetch divisions for session id = $targetSessionId".logThis()
         divisionDao.getAll(targetSessionId)
     }
 
