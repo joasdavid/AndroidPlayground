@@ -44,6 +44,6 @@ android {
 
 dependencies {
     implementation project(path: ':coreUi')
-    implementation project(path: ':sessionfeature')
+    implementation project(path: ':sessionCore')
     implementation project(path: ':core')
 }

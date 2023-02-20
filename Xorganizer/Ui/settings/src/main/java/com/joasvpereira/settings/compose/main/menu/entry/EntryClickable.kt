@@ -16,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
@@ -24,6 +26,7 @@ import pt.joasvpereira.coreui.preview.UiModePreview
 fun EntryClickable(
     modifier: Modifier = Modifier,
     text: String,
+    icon: Painter = rememberVectorPainter(image = Icons.Default.ArrowRight),
     onClick: () -> Unit
 ) {
     Row(
@@ -43,7 +46,7 @@ fun EntryClickable(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = text)
-                Icon(imageVector = Icons.Default.ArrowRight, contentDescription = null)
+                Icon(painter = icon, contentDescription = null)
             }
         }
     }

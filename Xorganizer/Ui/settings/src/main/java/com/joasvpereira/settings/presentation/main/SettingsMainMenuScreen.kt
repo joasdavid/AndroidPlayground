@@ -9,6 +9,7 @@ fun SettingsMainMenuScreen(
     viewModel: SettingsMainMenuViewModel,
     navController: NavController? = null,
     onEditProfile: () -> Unit = {},
+    onLogout: () -> Unit
 ) {
 
     SettingsMainView(
@@ -20,6 +21,7 @@ fun SettingsMainMenuScreen(
         isMaterialYouEnabled = viewModel.state.isMaterialYouEnabled,
         onMaterialYouSwitchChange = { viewModel.toggleMaterialYou(it) },
         themeModeSelectedOption = viewModel.state.themeModeSelectedOption,
-        onThemeModeChange = { viewModel.updateThemeMode(it) }
+        onThemeModeChange = { viewModel.updateThemeMode(it) },
+        onLogout = onLogout
     )
 }

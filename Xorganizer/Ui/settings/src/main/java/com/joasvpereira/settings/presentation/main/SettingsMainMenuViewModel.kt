@@ -9,12 +9,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import pt.joasvpereira.core.domain.data.SessionItem
+import pt.joasvpereira.core.repository.CurrentSession
 import pt.joasvpereira.core.settings.domain.data.ThemePreference
 import pt.joasvpereira.core.settings.repository.ThemePreferencesDataSource
+import pt.joasvpereira.sessionfeature.repository.SessionDataSource
 
 class SettingsMainMenuViewModel(
-    private val sessionName: String?,
-    private val sessionImage: Bitmap?,
     private val themePreferencesDataSource: ThemePreferencesDataSource
 ) : ViewModel() {
     private var _state by mutableStateOf(SettingsMainMenuScreenState.empty())
@@ -22,8 +23,14 @@ class SettingsMainMenuViewModel(
         get() = _state
 
     init {
-        if (sessionName != null) _state = state.copy(sessionItem = state.sessionItem.copy(name = sessionName))
-        if (sessionImage != null) _state = state.copy(sessionItem = state.sessionItem.copy(image = sessionImage))
+        // TODO: refactor this after converting session Dao to use flows
+        CurrentSession.session?.run {
+            _state = state.copy(
+                sessionItem = SessionItem(
+                    id = id, name = name, image = image
+                )
+            )
+        }
     }
 
     init {

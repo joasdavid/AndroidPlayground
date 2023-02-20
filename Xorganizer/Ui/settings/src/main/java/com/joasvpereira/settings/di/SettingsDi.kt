@@ -9,8 +9,6 @@ import pt.joasvpereira.core.repository.CurrentSession
 val settingsModule = module {
     viewModel {
         SettingsMainMenuViewModel(
-            sessionName = CurrentSession.session?.name,
-            sessionImage = CurrentSession.session?.image,
             themePreferencesDataSource = get()
         )
     }

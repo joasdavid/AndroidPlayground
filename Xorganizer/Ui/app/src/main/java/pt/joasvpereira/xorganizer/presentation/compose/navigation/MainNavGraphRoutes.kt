@@ -67,7 +67,7 @@ fun MainNavigation() {
         composable(MainNavGraphRoutes.SettingsFeature.route) {
             SettingsMainMenuScreen(
                 viewModel = getViewModel(), navController = navController, onEditProfile = {},
-
+                onLogout = {navController.navigateToProfileFeature()}
                 )
         }
     }

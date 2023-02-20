@@ -3,9 +3,12 @@ package com.joasvpereira.settings.compose.main.session
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
@@ -25,6 +28,7 @@ internal fun SessionSettingsSection(
     isKeepSession : Boolean,
     onKeepSessionChange : (Boolean) -> Unit,
     onEditProfile : () -> Unit,
+    onLogout : () -> Unit,
 ) {
     SettingsSection(
         modifier = modifier,
@@ -47,6 +51,10 @@ internal fun SessionSettingsSection(
         EntryClickable(text = "Edit my profile", onClick = onEditProfile)
 
         SimpleSpace(size = 20.dp)
+
+        EntryClickable(text = "Logout", onClick = onLogout, icon = rememberVectorPainter(image = Icons.Default.Logout))
+
+        SimpleSpace(size = 20.dp)
     }
 }
 
@@ -66,6 +74,7 @@ private fun SessionSettingsSectionPreview() {
                 isKeepSession = true,
                 onKeepSessionChange = {},
                 onEditProfile = {},
+                onLogout = {},
                 )
         }
     }

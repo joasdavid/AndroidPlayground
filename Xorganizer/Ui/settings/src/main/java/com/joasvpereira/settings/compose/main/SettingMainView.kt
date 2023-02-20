@@ -2,6 +2,7 @@ package com.joasvpereira.settings.compose.main
 
 import android.os.Build
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +33,7 @@ fun SettingsMainView(
     isKeepSession: Boolean,
     onKeepSessionChange: (Boolean) -> Unit,
     onEditProfile: () -> Unit,
+    onLogout: () -> Unit,
     hasMaterialYou: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
     isMaterialYouEnabled: Boolean,
     onMaterialYouSwitchChange: (Boolean) -> Unit,
@@ -45,33 +47,42 @@ fun SettingsMainView(
         ),
         shouldUseBackgroundImage = false
     ) {
-        Column {
-            SimpleSpace(size = 20.dp)
-            SessionSettingsSection(
-                modifier = Modifier,
-                currentSession = currentSessionItem,
-                isKeepSession = isKeepSession,
-                onKeepSessionChange = onKeepSessionChange,
-                onEditProfile = onEditProfile,
-            )
-            SimpleSpace(size = 20.dp)
-            ThemeSettingsSection(
-                modifier = Modifier,
-                hasMaterialYou = hasMaterialYou,
-                isMaterialYouEnabled = isMaterialYouEnabled,
-                onMaterialYouSwitchChange = onMaterialYouSwitchChange,
-                themeModeSelectedOption = themeModeSelectedOption.getId(),
-                onThemeModeChange = {
-                    // TODO: this need to be refactor
-                    onThemeModeChange(
-                        when (it) {
-                            1 -> ThemePreference.ThemeMode.LIGHT
-                            2 -> ThemePreference.ThemeMode.DARK
-                            else -> ThemePreference.ThemeMode.DEFAULT
-                        }
-                    )
-                }
-            )
+        LazyColumn() {
+            item { SimpleSpace(size = 20.dp) }
+
+            item {
+                SessionSettingsSection(
+                    modifier = Modifier,
+                    currentSession = currentSessionItem,
+                    isKeepSession = isKeepSession,
+                    onKeepSessionChange = onKeepSessionChange,
+                    onEditProfile = onEditProfile,
+                    onLogout = onLogout
+                )
+            }
+
+            item { SimpleSpace(size = 20.dp) }
+
+            item {
+                ThemeSettingsSection(
+                    modifier = Modifier,
+                    hasMaterialYou = hasMaterialYou,
+                    isMaterialYouEnabled = isMaterialYouEnabled,
+                    onMaterialYouSwitchChange = onMaterialYouSwitchChange,
+                    themeModeSelectedOption = themeModeSelectedOption.getId(),
+                    onThemeModeChange = {
+                        // TODO: this need to be refactor
+                        onThemeModeChange(
+                            when (it) {
+
+                                1 -> ThemePreference.ThemeMode.LIGHT
+                                2 -> ThemePreference.ThemeMode.DARK
+                                else -> ThemePreference.ThemeMode.DEFAULT
+                            }
+                        )
+                    }
+                )
+            }
         }
     }
 }
@@ -91,6 +102,7 @@ fun SettingsMainViewPreview() {
             onMaterialYouSwitchChange = {},
             themeModeSelectedOption = ThemePreference.ThemeMode.LIGHT,
             onThemeModeChange = {},
+            onLogout = {}
         )
     }
 }
@@ -110,6 +122,7 @@ fun SettingsMainViewPreview(@PreviewParameter(ThemesProvider::class) theme: Them
             onMaterialYouSwitchChange = {},
             themeModeSelectedOption = ThemePreference.ThemeMode.LIGHT,
             onThemeModeChange = {},
+            onLogout = {}
         )
     }
 }

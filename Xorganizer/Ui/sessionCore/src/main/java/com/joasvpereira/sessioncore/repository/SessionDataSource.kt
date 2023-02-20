@@ -6,8 +6,8 @@ import pt.joasvpereira.core.repository.local.dao.SessionDao
 import pt.joasvpereira.core.repository.local.entities.Session
 
 interface SessionDataSource {
-    suspend fun geSessions(): List<Session>
-    suspend fun geSession(id : Int): Session?
+    suspend fun geSessions(): List<Session> // TODO: refactor this to be a flow
+    suspend fun geSession(id : Int): Session? // TODO: refactor this to be a flow
     suspend fun createNewSession(session: Session)
     suspend fun deleteSession(id: Int)
 }
