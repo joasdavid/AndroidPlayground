@@ -4,12 +4,13 @@ import com.joasvpereira.settings.presentation.main.SettingsMainMenuViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import pt.joasvpereira.core.repository.CurrentSession
 
 val settingsModule = module {
     viewModel {
         SettingsMainMenuViewModel(
-            sessionName = get(named("SESSION_NAME")),
-            sessionImage = get(named("SESSION_IMAGE")),
+            sessionName = CurrentSession.session?.name,
+            sessionImage = CurrentSession.session?.image,
             themePreferencesDataSource = get()
         )
     }

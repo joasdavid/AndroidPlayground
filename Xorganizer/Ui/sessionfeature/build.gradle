@@ -54,5 +54,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     implementation project(path: ':coreUi')
-    implementation project(path: ':core')
+    implementation project(path: ':sessionCore')
 }

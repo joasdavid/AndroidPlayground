@@ -4,6 +4,7 @@ import android.app.Application
 import com.google.android.material.color.DynamicColors
 import com.joasvpereira.loggger.Logger
 import com.joasvpereira.main.di.MainFeatureModule
+import com.joasvpereira.sessioncore.di.sessionCoreModule
 import com.joasvpereira.settings.di.settingsModule
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,7 +32,8 @@ class App : Application() {
                     sessionFeatureModule,
                     MainFeatureModule,
                     coreDependencies,
-                    settingsModule
+                    settingsModule,
+                    sessionCoreModule,
                 )
             )
         }

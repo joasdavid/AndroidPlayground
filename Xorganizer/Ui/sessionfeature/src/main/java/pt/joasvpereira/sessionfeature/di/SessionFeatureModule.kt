@@ -50,6 +50,4 @@ val sessionFeatureModule = module {
     single<ILoadSessionUseCase> {
         LoadSessionUseCase(get())
     }
-
-    single<SessionDataSource> { LocalSessionDataSource(get<Db>().sessionDao()) }
 }
