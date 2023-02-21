@@ -1,4 +1,4 @@
-package pt.joasvpereira.sessionfeature.domain.usecase
+package com.joasvpereira.sessioncore.domail.usecases
 
 import com.joasvpereira.loggger.extentions.logThis
 import kotlinx.coroutines.Dispatchers

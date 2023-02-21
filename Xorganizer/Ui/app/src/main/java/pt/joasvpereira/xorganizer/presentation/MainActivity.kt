@@ -15,6 +15,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joasvpereira.loggger.extentions.logThis
+import com.joasvpereira.sessioncore.domail.usecases.ILoadSessionUseCase
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,8 +24,8 @@ import pt.joasvpereira.core.settings.domain.data.ThemePreference
 import pt.joasvpereira.core.settings.repository.ThemePreferencesDataSource
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.LocalThemeConfig
-import pt.joasvpereira.sessionfeature.domain.usecase.ILoadSessionUseCase
 import pt.joasvpereira.xorganizer.presentation.compose.navigation.MainNavigation
+
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
 

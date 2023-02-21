@@ -3,10 +3,10 @@ package pt.joasvpereira.sessionfeature.presentation.select.session
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.joasvpereira.sessioncore.domail.usecases.ISessionsUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pt.joasvpereira.core.domain.usecase.EmptyParams
-import pt.joasvpereira.sessionfeature.domain.usecase.ISessionsUseCase
 
 class SelectSessionViewModel(private val sessionUseCase: ISessionsUseCase): ViewModel() {
 
