@@ -1,4 +1,4 @@
-package pt.joasvpereira.xorganizer.di
+package pt.joasvpereira.sessionfeature.di
 
 import com.joasvpereira.sessioncore.domail.usecases.ISessionsUseCase
 import com.joasvpereira.sessioncore.domail.usecases.SessionsUseCase
@@ -9,7 +9,9 @@ import pt.joasvpereira.sessionfeature.domain.usecase.DeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ICreateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.IDeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.IUpdateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.SessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.UpdateSessionUseCase
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreenViewModel
 import pt.joasvpereira.sessionfeature.presentation.select.session.SelectSessionViewModel
 
@@ -22,6 +24,7 @@ val sessionFeatureModule = module {
         CreateSessionFeatureScreenViewModel(
             sessionUseCase = get(),
             createSessionUseCase = get(),
+            updateSessionUseCase = get(),
             deleteSessionUseCase = get()
         )
     }
@@ -36,6 +39,10 @@ val sessionFeatureModule = module {
 
     single<ICreateSessionUseCase> {
         CreateSessionUseCase(get())
+    }
+
+    single<IUpdateSessionUseCase> {
+        UpdateSessionUseCase(get())
     }
 
     single<IDeleteSessionUseCase> {

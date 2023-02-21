@@ -9,6 +9,7 @@ interface SessionDataSource {
     suspend fun geSessions(): List<Session> // TODO: refactor this to be a flow
     suspend fun geSession(id : Int): Session? // TODO: refactor this to be a flow
     suspend fun createNewSession(session: Session)
+    suspend fun updateNewSession(session: Session)
     suspend fun deleteSession(id: Int)
 }
 
@@ -23,6 +24,10 @@ class LocalSessionDataSource(private val sessionDao: SessionDao) : SessionDataSo
 
     override suspend fun createNewSession(session: Session) = withContext(Dispatchers.IO) {
         sessionDao.insertSession(session)
+    }
+
+    override suspend fun updateNewSession(session: Session) = withContext(Dispatchers.IO) {
+        sessionDao.updateSession(session)
     }
 
     override suspend fun deleteSession(id: Int) = withContext(Dispatchers.IO) {

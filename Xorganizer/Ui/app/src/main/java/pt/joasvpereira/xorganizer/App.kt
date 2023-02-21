@@ -6,14 +6,11 @@ import com.joasvpereira.loggger.Logger
 import com.joasvpereira.main.di.MainFeatureModule
 import com.joasvpereira.sessioncore.di.sessionCoreModule
 import com.joasvpereira.settings.di.settingsModule
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import pt.joasvpereira.core.settings.di.coreDependencies
+import pt.joasvpereira.sessionfeature.di.sessionFeatureModule
 import pt.joasvpereira.xorganizer.di.repository
-import pt.joasvpereira.xorganizer.di.sessionFeatureModule
 import pt.joasvpereira.xorganizer.di.usecases
 import pt.joasvpereira.xorganizer.di.viewModelModule
 

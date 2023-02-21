@@ -16,12 +16,15 @@ import pt.joasvpereira.sessionfeature.domain.usecase.CreateSessionParams
 import pt.joasvpereira.sessionfeature.domain.usecase.ICreateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.IDeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
+import pt.joasvpereira.sessionfeature.domain.usecase.IUpdateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.SessionIdParam
+import pt.joasvpereira.sessionfeature.domain.usecase.UpdateSessionParams
 
 
 open class CreateSessionFeatureScreenViewModel(
     private val sessionUseCase: ISessionUseCase,
     private val createSessionUseCase: ICreateSessionUseCase,
+    private val updateSessionUseCase: IUpdateSessionUseCase,
     private val deleteSessionUseCase: IDeleteSessionUseCase
 ) : ViewModel() {
 
@@ -74,15 +77,27 @@ open class CreateSessionFeatureScreenViewModel(
     fun save() {
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.Default) {
-            createSessionUseCase.execute( // TODO: change this to really update a profile instead of crating a new one and replace it
-                CreateSessionParams(
-                    SessionItem(
-                        id = originId,
-                        name = state.sessionName,
-                        image = state.bitmap
+            if (state.mode == Mode.Create) {
+                createSessionUseCase.execute(
+                    CreateSessionParams(
+                        SessionItem(
+                            id = originId,
+                            name = state.sessionName,
+                            image = state.bitmap
+                        )
                     )
                 )
-            )
+            } else {
+                updateSessionUseCase.execute(
+                    UpdateSessionParams(
+                        sessionItem = SessionItem(
+                            id = originId,
+                            name = state.sessionName,
+                            image = state.bitmap
+                        )
+                    )
+                )
+            }
             withContext(Dispatchers.Main) {
                 _state.value = _state.value.copy(isLoading = false, saveState = SaveState.Success)
             }
