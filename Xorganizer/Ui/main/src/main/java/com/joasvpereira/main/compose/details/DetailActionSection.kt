@@ -1,7 +1,5 @@
 package com.joasvpereira.main.compose.details
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,25 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import pt.joasvpereira.coreui.theme.DynamicTheme
-
-@Composable
-fun String.toastIt(duration : Int = Toast.LENGTH_SHORT) : String {
-    val context = LocalContext.current
-    return this.also {
-        Toast.makeText(context, it, duration).show()
-    }
-}
-
-fun String.toastIt(context : Context,duration : Int = Toast.LENGTH_SHORT) : String {
-    return this.also {
-        Toast.makeText(context, it, duration).show()
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
