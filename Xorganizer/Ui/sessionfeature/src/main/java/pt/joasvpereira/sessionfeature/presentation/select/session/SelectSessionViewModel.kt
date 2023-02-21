@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joasvpereira.sessioncore.domail.usecases.ISessionsUseCase
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pt.joasvpereira.core.domain.usecase.EmptyParams
 
@@ -12,13 +12,16 @@ class SelectSessionViewModel(private val sessionUseCase: ISessionsUseCase): View
 
     val state = mutableStateOf(SelectSessionFeatureState(isLoading = true))
 
-    fun load() {
-        state.value = state.value.copy(isLoading = true)
+    init {
         viewModelScope.launch {
-            val list = sessionUseCase.execute(EmptyParams())
-            delay(1000)
-            state.value = state.value.copy(sessions = list, isLoading = false)
+            sessionUseCase.execute(EmptyParams()).collectLatest { list ->
+                state.value = state.value.copy(sessions = list, isLoading = false)
+            }
         }
+    }
+
+    fun load() {
+
     }
 
     fun toggleEditMode() {

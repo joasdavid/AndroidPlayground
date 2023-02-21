@@ -1,20 +1,21 @@
 package pt.joasvpereira.sessionfeature.repository
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.repository.local.dao.SessionDao
 import pt.joasvpereira.core.repository.local.entities.Session
 
 interface SessionDataSource {
-    suspend fun geSessions(): List<Session> // TODO: refactor this to be a flow
-    suspend fun geSession(id : Int): Session? // TODO: refactor this to be a flow
+    suspend fun geSessions(): Flow<List<Session>>
+    suspend fun geSession(id: Int): Session? // TODO: refactor this to be a flow
     suspend fun createNewSession(session: Session)
     suspend fun updateNewSession(session: Session)
     suspend fun deleteSession(id: Int)
 }
 
 class LocalSessionDataSource(private val sessionDao: SessionDao) : SessionDataSource {
-    override suspend fun geSessions(): List<Session> = withContext(Dispatchers.IO) {
+    override suspend fun geSessions(): Flow<List<Session>> = withContext(Dispatchers.IO) {
         sessionDao.getAll()
     }
 

@@ -19,24 +19,22 @@ class LoadSessionUseCase(
 
     override suspend fun execute(params: EmptyParams): Boolean = withContext(Dispatchers.IO) {
         val defaultID = sessionPreferencesDataSource.getDefaultSessionId().first()
-        sessionsUseCase.execute(params).run {
-
-            if (defaultID > 0) {
-                first { it.id == defaultID }.let {
-                    CurrentSession.sessionFlow.value = it
-                    return@withContext true
-                }
-            }
-
-            "Load session found $size sessions".logThis(tag = "JVP")
-            if (size == 1) {
-                CurrentSession.sessionFlow.value = this.first().logThis(tag = "JVP") {
-                    "load session = $it"
-                }
+        val sessions = sessionsUseCase.execute(params).first()
+        if (defaultID > 0) {
+            sessions.first { it.id == defaultID }.let {
+                CurrentSession.sessionFlow.value = it
                 return@withContext true
             }
-
-            return@withContext false
         }
+
+        "Load session found ${sessions.size} sessions".logThis(tag = "JVP")
+        if (sessions.size == 1) {
+            CurrentSession.sessionFlow.value = sessions.first().logThis(tag = "JVP") {
+                "load session = $sessions"
+            }
+            return@withContext true
+        }
+
+        return@withContext true
     }
 }

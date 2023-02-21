@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 import pt.joasvpereira.core.repository.local.entities.Session
 import pt.joasvpereira.core.repository.local.entities.Session.Companion.ID_SESSION
 import pt.joasvpereira.core.repository.local.entities.Session.Companion.TABLE_NAME
@@ -12,7 +13,7 @@ import pt.joasvpereira.core.repository.local.entities.Session.Companion.TABLE_NA
 @Dao
 interface SessionDao {
     @Query("SELECT * FROM $TABLE_NAME")
-    fun getAll(): List<Session>
+    fun getAll(): Flow<List<Session>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $ID_SESSION = :id")
     fun getSession(id: Int): Session?
