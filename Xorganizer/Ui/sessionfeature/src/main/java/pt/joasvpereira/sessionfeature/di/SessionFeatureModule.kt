@@ -1,8 +1,6 @@
 package pt.joasvpereira.xorganizer.di
 
-import com.joasvpereira.sessioncore.domail.usecases.ILoadSessionUseCase
 import com.joasvpereira.sessioncore.domail.usecases.ISessionsUseCase
-import com.joasvpereira.sessioncore.domail.usecases.LoadSessionUseCase
 import com.joasvpereira.sessioncore.domail.usecases.SessionsUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -42,9 +40,5 @@ val sessionFeatureModule = module {
 
     single<IDeleteSessionUseCase> {
         DeleteSessionUseCase(get())
-    }
-
-    single<ILoadSessionUseCase> {
-        LoadSessionUseCase(get())
     }
 }
