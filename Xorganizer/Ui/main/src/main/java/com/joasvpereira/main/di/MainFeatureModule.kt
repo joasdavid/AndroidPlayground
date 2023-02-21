@@ -1,7 +1,5 @@
 package com.joasvpereira.main.di
 
-import android.graphics.Bitmap
-import android.graphics.ColorSpace.Named
 import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.domain.usecase.division.CreateBoxUseCase
 import com.joasvpereira.main.domain.usecase.division.CreateDivisionUseCase
@@ -47,7 +45,6 @@ import com.joasvpereira.main.repository.LocalItemDataSource
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import pt.joasvpereira.core.repository.CurrentSession
 import pt.joasvpereira.core.repository.local.Db
 
 val MainFeatureModule = module {
@@ -55,6 +52,7 @@ val MainFeatureModule = module {
         DashboardFeatureScreenViewModel(
             divisionsUseCase = get(),
             deleteUseCase = get(),
+            getSessionUseCase = get()
         )
     }
 

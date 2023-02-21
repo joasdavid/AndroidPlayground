@@ -1,5 +1,6 @@
 package pt.joasvpereira.sessionfeature.domain.usecase
 
+import com.joasvpereira.sessioncore.domail.usecases.SessionIdParam
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync

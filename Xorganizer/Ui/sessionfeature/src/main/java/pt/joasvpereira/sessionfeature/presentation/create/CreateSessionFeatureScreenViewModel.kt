@@ -8,16 +8,17 @@ import android.provider.MediaStore
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.joasvpereira.sessioncore.domail.usecases.ISessionUseCase
+import com.joasvpereira.sessioncore.domail.usecases.SessionIdParam
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.domain.data.SessionItem
 import pt.joasvpereira.sessionfeature.domain.usecase.CreateSessionParams
 import pt.joasvpereira.sessionfeature.domain.usecase.ICreateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.IDeleteSessionUseCase
-import pt.joasvpereira.sessionfeature.domain.usecase.ISessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.IUpdateSessionUseCase
-import pt.joasvpereira.sessionfeature.domain.usecase.SessionIdParam
 import pt.joasvpereira.sessionfeature.domain.usecase.UpdateSessionParams
 
 
@@ -38,8 +39,8 @@ open class CreateSessionFeatureScreenViewModel(
         if (sessionItemId <= 0) return
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.Main) {
-            val sessionItem = sessionUseCase.execute(SessionIdParam(sessionItemId))
-            sessionItem?.let {
+            val sessionItem = sessionUseCase.execute(SessionIdParam(sessionItemId)).first()
+            sessionItem.let {
                 originId = it.id
                 _state.value = _state.value.copy(
                     bitmap = it.image,

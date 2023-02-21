@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.joasvpereira.loggger.extentions.logThis
 import org.koin.androidx.compose.getViewModel
-import pt.joasvpereira.core.repository.CurrentSession
 import pt.joasvpereira.core.domain.data.SessionItem
+import pt.joasvpereira.core.repository.CurrentSession
 import pt.joasvpereira.sessionfeature.presentation.create.CreateSessionFeatureScreen
 import pt.joasvpereira.sessionfeature.presentation.select.session.SelectSessionFeatureScreen
 
@@ -26,8 +26,8 @@ fun NavGraphBuilder.composableSelectProfile(
         SELECT_PROFILE_ROUTE
     ) {
         SelectSessionFeatureScreen(getViewModel(), navController = navController) {
-            CurrentSession.sessionFlow.value = it
-            "Update current session = ${CurrentSession.session}".logThis()
+            CurrentSession.sessionIdFlow.value = it.id
+            "Update current session = ${CurrentSession.sessionId}".logThis()
             onProfileSelected(it)
         }
     }

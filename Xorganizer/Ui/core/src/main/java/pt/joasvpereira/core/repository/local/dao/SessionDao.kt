@@ -16,7 +16,7 @@ interface SessionDao {
     fun getAll(): Flow<List<Session>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $ID_SESSION = :id")
-    fun getSession(id: Int): Session?
+    fun getSession(id: Int): Flow<Session>
 
     @Insert(onConflict = REPLACE)
     fun insertSession(session: Session)

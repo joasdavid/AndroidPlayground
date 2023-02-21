@@ -1,15 +1,13 @@
 package pt.joasvpereira.xorganizer.di
 
-import android.graphics.Bitmap
 import androidx.room.Room
 import androidx.room.RoomDatabase.Callback
-import androidx.sqlite.db.SupportSQLiteDatabase
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.core.repository.CurrentSession
+import pt.joasvpereira.core.repository.local.Db
 import pt.joasvpereira.xorganizer.domain.usecase.box.BoxesUseCase
 import pt.joasvpereira.xorganizer.domain.usecase.box.IBoxesUseCase
 import pt.joasvpereira.xorganizer.domain.usecase.division.CreateDivisionsUseCase
@@ -29,15 +27,7 @@ val viewModelModule = module {
     }
 
     factory<Int?>(named("SESSION_ID")) {
-        CurrentSession.session?.id
-    }
-
-    factory<String?>(named("SESSION_NAME")) {
-        CurrentSession.session?.name
-    }
-
-    factory<Bitmap?>(named("SESSION_IMAGE")) {
-        CurrentSession.session?.image
+        CurrentSession.sessionId
     }
 }
 
@@ -57,10 +47,6 @@ val repository = module {
             Db::class.java,
             "database-name"
         ).addCallback(object : Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-
-            }
         }).build()
        v
     }

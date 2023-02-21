@@ -46,8 +46,8 @@ fun NavController.navigateToSettingsFeature() {
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
-    CurrentSession.session.logThis(tag = "JVP") { "Current session = $it" }
-    val start = if(CurrentSession.session == null) MainNavGraphRoutes.ProfileFeature.route else MainNavGraphRoutes.MainFeature.route
+    CurrentSession.sessionId.logThis(tag = "JVP") { "Current session = $it" }
+    val start = if (CurrentSession.sessionId == null) MainNavGraphRoutes.ProfileFeature.route else MainNavGraphRoutes.MainFeature.route
     NavHost(
         navController = navController,
         startDestination = start.logThis(tag = "JVP")
@@ -70,7 +70,7 @@ fun MainNavigation() {
         composable(MainNavGraphRoutes.SettingsFeature.route) {
             SettingsMainMenuScreen(
                 viewModel = getViewModel(), navController = navController, onEditProfile = {
-                    CurrentSession.session?.run { navController.navigateToUpdateProfile(id) }
+                    CurrentSession.sessionId?.run { navController.navigateToUpdateProfile(id) }
                 },
                 onLogout = {navController.navigateToProfileFeature()}
                 )

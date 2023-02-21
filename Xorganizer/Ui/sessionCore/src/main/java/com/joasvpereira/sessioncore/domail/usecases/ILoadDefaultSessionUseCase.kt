@@ -22,16 +22,16 @@ class LoadSessionUseCase(
         val sessions = sessionsUseCase.execute(params).first()
         if (defaultID > 0) {
             sessions.first { it.id == defaultID }.let {
-                CurrentSession.sessionFlow.value = it
+                CurrentSession.sessionIdFlow.value = it.id
                 return@withContext true
             }
         }
 
         "Load session found ${sessions.size} sessions".logThis(tag = "JVP")
         if (sessions.size == 1) {
-            CurrentSession.sessionFlow.value = sessions.first().logThis(tag = "JVP") {
+            CurrentSession.sessionIdFlow.value = sessions.first().logThis(tag = "JVP") {
                 "load session = $sessions"
-            }
+            }.id
             return@withContext true
         }
 
