@@ -10,9 +10,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.main.domain.data.DashboardDivision
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 internal fun DashboardScreen(
@@ -24,7 +24,7 @@ internal fun DashboardScreen(
     onEditClick: (DashboardDivision) -> Unit,
     onDeleteClick: (DashboardDivision) -> Unit,
     onAddNewItemClick: () -> Unit,
-    onSettingOptionClicked: (Int) -> Unit
+    onSettingClicked: () -> Unit
 ) {
     AppScaffold(
         isTinted = false,
@@ -33,7 +33,7 @@ internal fun DashboardScreen(
         DashboardHeader(
             sessionName = sessionName,
             sessionImage = sessionImage,
-            onSettingOptionClicked = onSettingOptionClicked,
+            onSettingClicked = onSettingClicked,
         )
         Spacer(modifier = Modifier.size(20.dp))
         DashboardDivisionsSection(
@@ -60,7 +60,7 @@ private fun DashboardScreenPreview() {
             onAddNewItemClick = {},
             onEditClick = {},
             onDeleteClick = {},
-            onSettingOptionClicked = {},
+            onSettingClicked = {},
         )
     }
 }

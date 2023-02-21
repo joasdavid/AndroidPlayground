@@ -6,9 +6,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +25,7 @@ import pt.joasvpereira.coreui.text.field.AppTextField
 fun DashboardFeatureScreen(
     viewModel: DashboardFeatureScreenViewModel,
     navController: NavController? = null,
-    onSwitchProfile: () -> Unit
+    onSettingsClicked: () -> Unit
 ) {
     DeletePopup(viewModel)
     DashboardScreen(
@@ -41,12 +39,7 @@ fun DashboardFeatureScreen(
         onDeleteClick = {
             viewModel.askToDelete(it)
         },
-        onSettingOptionClicked = {
-            when (it) {
-                0 -> viewModel.refresh()
-                1 -> onSwitchProfile()
-            }
-        },
+        onSettingClicked = onSettingsClicked,
     )
 }
 
@@ -61,7 +54,7 @@ private fun DeletePopup(viewModel: DashboardFeatureScreenViewModel) {
                 indicatorColor = MaterialTheme.colorScheme.error,
                 buttonPositiveText = "DELETE",
                 buttonPositiveColor = MaterialTheme.colorScheme.error,
-                isButtonPositiveEnabled = deleteEvent.isNameMatchingConfirmation ?: false,
+                isButtonPositiveEnabled = deleteEvent.isNameMatchingConfirmation,
                 onButtonPositiveClick = { viewModel.deleteDivision() },
                 buttonNegativeText = "CANCEL",
                 buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,

@@ -59,7 +59,7 @@ fun MainNavigation() {
         }
 
         composable(MainNavGraphRoutes.MainFeature.route) {
-            MainFeatureEntryPoint(onSwitchProfile = {
+            MainFeatureEntryPoint(onSettingsClicked = {
                 //navController.navigateToProfileFeature()
                 navController.navigateToSettingsFeature()
             })

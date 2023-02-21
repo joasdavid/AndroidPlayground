@@ -1,7 +1,6 @@
 package com.joasvpereira.main.presentation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,14 +16,14 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainFeatureEntryPoint(
-    onSwitchProfile: () -> Unit
+    onSettingsClicked: () -> Unit
 ) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "DashboardFeatureScreen") {
         composable(
             "DashboardFeatureScreen"
         ) {
-            DashboardFeatureScreen(viewModel = getViewModel(), navController = navController, onSwitchProfile = onSwitchProfile)
+            DashboardFeatureScreen(viewModel = getViewModel(), navController = navController, onSettingsClicked = onSettingsClicked)
         }
         composable(
             "CreateDivisionsFeatureScreen?id={id}",
@@ -41,7 +40,7 @@ fun MainFeatureEntryPoint(
             }))
         ) {
             val id = it.arguments?.getInt("id") ?: -1
-            DivisionsFeatureScreen(getViewModel() { parametersOf(id) }, navController = navController)
+            DivisionsFeatureScreen(getViewModel { parametersOf(id) }, navController = navController)
         }
 
         composable(
@@ -51,7 +50,7 @@ fun MainFeatureEntryPoint(
             }))
         ) {
             val id = it.arguments?.getInt("id") ?: -1
-            ItemDetailScreen(getViewModel() { parametersOf(id) }, navController = navController)
+            ItemDetailScreen(getViewModel { parametersOf(id) }, navController = navController)
         }
 
         composable(
@@ -61,7 +60,7 @@ fun MainFeatureEntryPoint(
             }))
         ) {
             val id = it.arguments?.getInt("id") ?: -1
-            BoxScreen(getViewModel() { parametersOf(id) }, navController = navController)
+            BoxScreen(getViewModel { parametersOf(id) }, navController = navController)
         }
     }
 }
