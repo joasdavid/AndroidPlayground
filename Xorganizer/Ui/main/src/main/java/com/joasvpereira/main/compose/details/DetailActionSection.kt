@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -68,22 +67,6 @@ fun DetailActionSection(
                     Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                 }
             }
-            val context = LocalContext.current
-            Card(
-                onClick = { "To be implemented . . . ".toastIt(context) },
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
-                shape = RoundedCornerShape(topEnd = 5.dp, bottomEnd = 5.dp),
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .heightIn(min = 48.dp)
-            ) {
-                Row(modifier = Modifier.fillMaxSize(),horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "Share")
-                    SimpleSpace(size = 5.dp)
-                    Icon(imageVector = Icons.Default.Share, contentDescription = null)
-                }
-            }
         }
     }
 }
@@ -91,10 +74,10 @@ fun DetailActionSection(
 @Preview
 @Composable
 private fun DetailActionSectionPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         Column {
             SimpleSpace(size = 20.dp)
-            DetailActionSection(onDeleteClicked = {  })
+            DetailActionSection(onDeleteClicked = { })
         }
     }
 }
