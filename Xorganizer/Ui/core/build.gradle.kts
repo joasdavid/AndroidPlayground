@@ -4,12 +4,13 @@ plugins {
     id("kotlin-kapt")
 }
 
+@Suppress("UnstableApiUsage")
 android {
-    compileSdkVersion(ConfigData.compileSdkVersion)
+    compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion(ConfigData.minSdkVersion)
-        targetSdkVersion(ConfigData.targetSdkVersion)
+        minSdk = ConfigData.minSdkVersion
+        targetSdk = ConfigData.targetSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
