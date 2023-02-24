@@ -4,15 +4,15 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
-        maven { url 'https://jitpack.io' }
+        maven(url = "https://jitpack.io")
     }
 }
 rootProject.name = "Xorganizer"
-include ':app'
-include ':core'
-include ':coreUi'
-include ':sessionfeature'
-include ':main'
-include ':settings'
-include ':settingsCore'
-include ':sessionCore'
+include(":app")
+include(":core")
+include(":coreUi")
+include(":sessionfeature")
+include(":main")
+include(":settings")
+include(":settingsCore")
+include(":sessionCore")
