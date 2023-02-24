@@ -3,9 +3,10 @@ plugins {
     kotlin("android")
 }
 
+
 @Suppress("UnstableApiUsage")
 android {
-    namespace = "com.joasvpereira.sessioncore"
+    namespace = "pt.joasvpereira.sessionfeature"
     compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
@@ -30,14 +31,28 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.compose
+    }
+
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions {
             jvmTarget = "1.8"
         }
     }
-
 }
 
 dependencies {
-    api(project(":core"))
+    implementation(project(":coreUi"))
+    implementation(project(":sessionCore"))
 }
