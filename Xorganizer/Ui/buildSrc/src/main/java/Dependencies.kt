@@ -38,6 +38,65 @@ object Deps {
     val roomKtx by lazy { "androidx.room:room-ktx:${Versions.room}" }
     val roomTesting by lazy { "androidx.room:room-testing:${Versions.room}" }
 
+    // https://github.com/material-components/material-components-android/releases
+    val androidMaterial by lazy { "com.google.android.material:material:${Versions.androidMaterial}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/lifecycle
+    val androidxLifecycle by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidMaterial}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/activity
+    val androidxActivity by lazy { "androidx.activity:activity-compose:${Versions.androidxActivity}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/compose
+    val composeUi by lazy { "androidx.compose.ui:ui:${Versions.compose}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/compose
+    val composePreview by lazy { "androidx.compose.ui:ui-tooling-preview:${Versions.compose}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/compose
+    val composeUiTest by lazy { "androidx.compose.ui:ui-test-junit4:${Versions.compose}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/compose
+    val composeUiTooling by lazy { "androidx.compose.ui:ui-tooling:${Versions.compose}" }
+
+    // https://mvnrepository.com/artifact/androidx.compose.material/material-icons-extended?repo=google
+    val materialIcons by lazy { "androidx.compose.material:material-icons-extended:${Versions.matirialIcon}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/compose-material3
+    val material3 by lazy { "androidx.compose.material3:material3:${Versions.matirial3}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/constraintlayout
+    val composeConstaintlayout by lazy { "androidx.constraintlayout:constraintlayout-compose:${Versions.composeConstaintlayout}" }
+
+    // https://github.com/DevSrSouza/compose-icons/releases
+    val fontAwesome by lazy { "br.com.devsrsouza.compose.icons.android:font-awesome:${Versions.fontAwesome}" }
+    val lineAwesome by lazy { "br.com.devsrsouza.compose.icons.android:line-awesome:${Versions.lineAwesome}" }
+
+    // https://developer.android.com/jetpack/androidx/releases/constraintlayout
+    val systemUiController by lazy { "com.google.accompanist:accompanist-systemuicontroller:${Versions.systemUiController}" }
+
+    val commonUiTestDependencies by lazy {
+        listOf(
+            composeUiTest
+        )
+    }
+
+    val commonUiDependencies by lazy {
+        listOf(
+            androidMaterial,
+            androidxLifecycle,
+            androidxActivity,
+            composeUi,
+            materialIcons,
+            material3,
+            composeConstaintlayout,
+            fontAwesome,
+            lineAwesome,
+            systemUiController,
+            koinCompose,
+        )
+    }
+
     val commonDependencies by lazy {
         listOf(
             androidXCore,

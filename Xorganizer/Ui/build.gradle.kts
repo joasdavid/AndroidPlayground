@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     extra.apply {
-        set("compose_version", "1.3.2")
+        set("compose_version", "1.3.2") // TODO: delete this after refactor all build.gradle files to build.gradle.kts
     }
     repositories {
         google()
