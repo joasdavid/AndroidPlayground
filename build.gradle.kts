@@ -18,7 +18,7 @@ buildscript {
     }
 }
 
-apply(from = "../Ui/buildSrc/git-hooks.gradle")
+apply(from = "buildSrc/git-hooks.gradle")
 
 subprojects {
     apply(from = "../plugins/Ktlint.gradle")

@@ -6,7 +6,7 @@ static def isLinuxOrMacOs() {
 
 task copyGitHooks(type: Copy) {
     description 'Copies the git hooks from /git-hooks to the .git folder.'
-    from("${rootDir}/ui/git-hooks/") {
+    from("${rootDir}/git-hooks/") {
         include '**/*.sh'
         rename '(.*).sh', '$1'
     }
@@ -19,7 +19,7 @@ task installGitHooks(type: Exec) {
     group 'git hooks'
     workingDir rootDir
     commandLine 'chmod'
-    args '-R', '+x', '.git/hooks/'
+    args '-R', '+x', "${rootDir}/.git/hooks/"
     dependsOn copyGitHooks
     onlyIf { isLinuxOrMacOs() }
     doLast {
