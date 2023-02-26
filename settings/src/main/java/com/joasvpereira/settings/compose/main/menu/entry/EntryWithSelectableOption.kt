@@ -48,7 +48,7 @@ fun EntryWithSelectableOption(
     selectedOption: Int = 0,
     onOptionChanged: (Int) -> Unit,
 ) {
-    if (selectedOption < 0 && selectedOption >= listOfOptions.size) return
+    if (selectedOption < 0 || selectedOption >= listOfOptions.size) return
 
     var isOptionsOpen by remember {
         mutableStateOf(false)

@@ -52,7 +52,6 @@ android {
 }
 
 dependencies {
-    debugApi(Deps.composePreview)
     implementation(project(":coreUi"))
     implementation(project(":sessionCore"))
     implementation(project(":core"))
