@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.joasvpereira.loggger.extentions.logThis
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 class ItemNotFoundPopupStateHolder(
     isVisible: Boolean = false,
@@ -44,7 +44,7 @@ class ItemNotFoundPopupStateHolder(
 fun ItemNotFoundPopup(
     state: ItemNotFoundPopupStateHolder = remember {
         ItemNotFoundPopupStateHolder()
-    }
+    },
 ) {
     AlertDialogWithSingleButton(
         onDismissRequest = { state.isVisible = false },
@@ -59,21 +59,21 @@ fun ItemNotFoundPopup(
                 modifier = Modifier
                     .width(IntrinsicSize.Max)
                     .padding(vertical = 20.dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = AnnotatedString(
                         text = "Ops,\n",
                         spanStyle = SpanStyle(
                             fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                            fontWeight = FontWeight.Bold,
+                        ),
                     ).plus(
                         AnnotatedString(
-                            text = " no Item was found . . . .\n\nIs possible that the item was deleted."
-                        )
+                            text = " no Item was found . . . .\n\nIs possible that the item was deleted.",
+                        ),
                     ),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
         },
@@ -83,7 +83,7 @@ fun ItemNotFoundPopup(
 @Preview
 @Composable
 private fun ItemNotFoundPopupPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         ItemNotFoundPopup()
     }
 }

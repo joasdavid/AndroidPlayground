@@ -42,7 +42,7 @@ class DashboardFeatureScreenViewModel(
         }
     }
 
-    fun refresh(){
+    fun refresh() {
         viewModelScope.launch {
             fetchDivisions()
         }
@@ -66,13 +66,13 @@ class DashboardFeatureScreenViewModel(
             deleteEvent = DeleteEvent(
                 division = division,
                 confirmationText = confirmationName,
-            )
+            ),
         )
     }
 
     fun cancelDelete() {
         _state.value = _state.value.copy(
-            deleteEvent = null
+            deleteEvent = null,
         )
     }
 

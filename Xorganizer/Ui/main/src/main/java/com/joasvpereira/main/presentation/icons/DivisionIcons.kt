@@ -2,10 +2,9 @@ package com.joasvpereira.main.presentation.icons
 
 import pt.joasvpereira.main.R
 
-
 data class DivisionIcon(
     val name: String,
-    val resId: Int
+    val resId: Int,
 )
 
 object DivisionIcons {
@@ -58,20 +57,20 @@ object DivisionIcons {
         couch,
         cactus,
         bathtub,
-        attic
+        attic,
     )
 
-    fun getBy(name:String) : DivisionIcon? =
+    fun getBy(name: String): DivisionIcon? =
         all.find {
             it.name.equals(name)
         }
 
-    fun getBy(resId: Int) : DivisionIcon? =
+    fun getBy(resId: Int): DivisionIcon? =
         all.find {
             it.resId == resId
         }
 
-    fun getBy(name:String, orDefault: DivisionIcon) : DivisionIcon =
+    fun getBy(name: String, orDefault: DivisionIcon): DivisionIcon =
         all.find {
             it.name.equals(name)
         } ?: orDefault

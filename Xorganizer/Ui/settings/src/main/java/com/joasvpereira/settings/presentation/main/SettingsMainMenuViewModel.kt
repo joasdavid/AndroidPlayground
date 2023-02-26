@@ -40,8 +40,10 @@ class SettingsMainMenuViewModel(
                 sessionUseCase.execute(SessionIdParam(this)).collect {
                     _state = state.copy(
                         sessionItem = SessionItem(
-                            id = it.id, name = it.name, image = it.image
-                        )
+                            id = it.id,
+                            name = it.name,
+                            image = it.image,
+                        ),
                     )
                 }
             }
@@ -53,7 +55,7 @@ class SettingsMainMenuViewModel(
             themePreferencesDataSource.getUserFromPreferencesStore().collectLatest {
                 _state = state.copy(
                     isMaterialYouEnabled = it.isMaterialYouEnabled,
-                    themeModeSelectedOption = it.mode
+                    themeModeSelectedOption = it.mode,
                 )
             }
         }
@@ -77,5 +79,4 @@ class SettingsMainMenuViewModel(
             themePreferencesDataSource.updateThemeMode(mode)
         }
     }
-
 }

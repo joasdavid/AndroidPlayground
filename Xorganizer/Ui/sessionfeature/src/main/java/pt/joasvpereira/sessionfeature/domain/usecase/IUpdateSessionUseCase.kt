@@ -23,6 +23,6 @@ class UpdateSessionUseCase(private val sessionsDataSource: SessionDataSource) : 
     private fun mapSession(obj: SessionItem) = Session(
         id = if (obj.id == -1) null else obj.id,
         displayName = obj.name,
-        image = obj.image?.compressSize()?.toBase64String()
+        image = obj.image?.compressSize()?.toBase64String(),
     )
 }

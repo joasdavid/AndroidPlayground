@@ -9,7 +9,7 @@ val settingsModule = module {
         SettingsMainMenuViewModel(
             themePreferencesDataSource = get(),
             sessionPreferencesDataSource = get(),
-            sessionUseCase = get()
+            sessionUseCase = get(),
         )
     }
 }

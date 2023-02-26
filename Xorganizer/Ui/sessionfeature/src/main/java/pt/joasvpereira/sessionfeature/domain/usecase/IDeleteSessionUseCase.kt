@@ -9,7 +9,7 @@ import pt.joasvpereira.sessionfeature.repository.SessionDataSource
 interface IDeleteSessionUseCase : BaseUseCaseSync<SessionIdParam, Unit>
 
 class DeleteSessionUseCase(
-    private val sessionsDataSource: SessionDataSource
+    private val sessionsDataSource: SessionDataSource,
 ) : IDeleteSessionUseCase {
 
     override suspend fun execute(params: SessionIdParam) {

@@ -12,17 +12,17 @@ import pt.joasvpereira.core.domain.usecase.Params
 import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class GetBoxParams(
-    val id: Int
+    val id: Int,
 ) : Params()
 
 interface IGetBoxUseCase : BaseUseCaseSync<GetBoxParams, Flow<ParentBox?>>
 
 class GetBoxUseCase(
     private val boxDataSource: BoxDataSource,
-    private val divisionDataSource: DivisionDataSource
+    private val divisionDataSource: DivisionDataSource,
 ) : IGetBoxUseCase {
     override suspend fun execute(params: GetBoxParams): Flow<ParentBox?> = withContext(Dispatchers.IO) {
-        boxDataSource.getBox(params.id).map {box ->
+        boxDataSource.getBox(params.id).map { box ->
             if (box == null) return@map null
             ParentBox(
                 id = box.id!!,
@@ -30,7 +30,7 @@ class GetBoxUseCase(
                 description = box.description,
                 parentDivision = divisionDataSource.getDivision(box.parentDivisionId)?.run {
                     ParentBox.ParentDivision(id = id!!, themeOption = ThemeOption.getBy(themeId))
-                }
+                },
             )
         }
     }

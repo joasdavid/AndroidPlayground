@@ -2,7 +2,6 @@ package com.joasvpereira.main.domain.usecase.division
 
 import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.domain.data.DivisionElement
-import com.joasvpereira.main.domain.data.DivisionElements
 import com.joasvpereira.main.repository.ItemDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +17,7 @@ data class GetBoxElementsParams(
 interface IGetBoxElementsUseCase : BaseUseCaseSync<GetBoxElementsParams, Flow<List<DivisionElement.Item>>>
 
 class GetBoxElementsUseCase(
-    private val itemDataSource: ItemDataSource
+    private val itemDataSource: ItemDataSource,
 ) : IGetBoxElementsUseCase {
     override suspend fun execute(params: GetBoxElementsParams): Flow<List<DivisionElement.Item>> = withContext(Dispatchers.IO) {
         itemDataSource.getBoxItems(params.boxId).map {
@@ -32,5 +31,4 @@ class GetBoxElementsUseCase(
             }
         }
     }
-
 }

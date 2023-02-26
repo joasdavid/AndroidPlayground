@@ -25,7 +25,7 @@ val sessionFeatureModule = module {
             sessionUseCase = get(),
             createSessionUseCase = get(),
             updateSessionUseCase = get(),
-            deleteSessionUseCase = get()
+            deleteSessionUseCase = get(),
         )
     }
 

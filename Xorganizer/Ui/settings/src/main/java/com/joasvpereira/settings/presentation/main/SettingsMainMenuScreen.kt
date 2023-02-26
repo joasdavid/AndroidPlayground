@@ -9,9 +9,8 @@ fun SettingsMainMenuScreen(
     viewModel: SettingsMainMenuViewModel,
     navController: NavController? = null,
     onEditProfile: () -> Unit = {},
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
 ) {
-
     SettingsMainView(
         onBackClick = { navController?.popBackStack() },
         currentSessionItem = viewModel.state.sessionItem,
@@ -22,6 +21,6 @@ fun SettingsMainMenuScreen(
         onMaterialYouSwitchChange = { viewModel.toggleMaterialYou(it) },
         themeModeSelectedOption = viewModel.state.themeModeSelectedOption,
         onThemeModeChange = { viewModel.updateThemeMode(it) },
-        onLogout = onLogout
+        onLogout = onLogout,
     )
 }

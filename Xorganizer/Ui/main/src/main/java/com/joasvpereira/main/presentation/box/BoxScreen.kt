@@ -15,7 +15,7 @@ import pt.joasvpereira.coreui.theme.ThemeOption
 @Composable
 fun BoxScreen(
     viewModel: BoxScreenViewModel,
-    navController: NavController?
+    navController: NavController?,
 ) {
     val theme = viewModel.state.box.parentDivision?.themeOption ?: ThemeOption.THEME_DEFAULT
     DynamicTheme(theme) {
@@ -35,19 +35,19 @@ fun BoxScreen(
             onClick = { item, action ->
                 item.logThis(tag = "JVP")
                 action.logThis(tag = "JVP")
-                      when(action) {
-                          ElementAction.Delete -> {
-                              viewModel.deleteItem(item as DivisionElement.Item)
-                          }
+                when (action) {
+                    ElementAction.Delete -> {
+                        viewModel.deleteItem(item as DivisionElement.Item)
+                    }
 
-                          ElementAction.Edit -> {
-                              viewModel.editItem(item as DivisionElement.Item)
-                          }
+                    ElementAction.Edit -> {
+                        viewModel.editItem(item as DivisionElement.Item)
+                    }
 
-                          ElementAction.Open -> {
-                              navController?.navigate("ItemDetailScreen?id=${item.id}")
-                          }
-                      }
+                    ElementAction.Open -> {
+                        navController?.navigate("ItemDetailScreen?id=${item.id}")
+                    }
+                }
             },
             onAddButtonClick = {
                 viewModel.createOrUpdatePopupState.apply {
@@ -56,7 +56,7 @@ fun BoxScreen(
                     description = ""
                     isVisible = true
                 }
-            }
+            },
         )
     }
 }

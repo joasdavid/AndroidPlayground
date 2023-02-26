@@ -33,11 +33,9 @@ import com.joasvpereira.main.compose.division.DivisionCreateButtonsState
 import com.joasvpereira.main.compose.division.DivisionHeader
 import com.joasvpereira.main.compose.division.popup.FilterPopup
 import com.joasvpereira.main.compose.division.rememberDivisionCreateButtonsState
-import com.joasvpereira.main.domain.data.DivisionThemed
 import com.joasvpereira.main.domain.data.DivisionElement
+import com.joasvpereira.main.domain.data.DivisionThemed
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.preview.ThemesProvider
@@ -45,12 +43,13 @@ import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.text.field.AppTextField
-
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 @Composable
 fun DivisionsFeatureScreen(
     viewModel: DivisionsFeatureViewModel,
-    navController: NavController?
+    navController: NavController?,
 ) {
     if (viewModel.divisionId < 0) {
         AlertDialogWithSingleButton(
@@ -58,7 +57,7 @@ fun DivisionsFeatureScreen(
             buttonText = "Close",
             indicatorColor = MaterialTheme.colorScheme.error,
             onButtonClick = { navController?.popBackStack() },
-            buttonColor = MaterialTheme.colorScheme.error
+            buttonColor = MaterialTheme.colorScheme.error,
         ) {
             Box(modifier = Modifier.padding(vertical = 10.dp)) {
                 Text(text = "No division found . . . .")
@@ -68,31 +67,31 @@ fun DivisionsFeatureScreen(
     }
 
     AnimatedVisibility(visible = viewModel.state.deleteEvent.isVisible) {
-            DialogWithTwoButton(
-                onDismissRequest = { viewModel.hideDeleteConfirmation() },
-                indicatorIcon = Icons.Default.Delete,
-                indicatorColor = MaterialTheme.colorScheme.error,
-                buttonPositiveText = "DELETE",
-                buttonPositiveColor = MaterialTheme.colorScheme.error,
-                isButtonPositiveEnabled = viewModel.state.deleteEvent.confirmation.toUpperCase(Locale.current) == viewModel.state.deleteEvent.name,
-                onButtonPositiveClick = { viewModel.deleteElement() },
-                buttonNegativeText = "CANCEL",
-                buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
-                onButtonNegativeClick = { viewModel.hideDeleteConfirmation() }) {
-
-                val nameUppercase = viewModel.state.deleteEvent.confirmation.toUpperCase(Locale.current)
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "To delete division write it's name in all caps \n \"$nameUppercase", textAlign = TextAlign.Center)
-                    SimpleSpace(size = 20.dp)
-                    AppTextField(
-                        value = viewModel.state.deleteEvent.name,
-                        onValueChange = { viewModel.deletePopupNameChange(it) },
-                        placeholder = "",
-                        keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Send),
-                        keyboardActions = KeyboardActions(onSend = { viewModel.deleteElement() })
-                    )
-                    SimpleSpace(size = 20.dp)
-                }
+        DialogWithTwoButton(
+            onDismissRequest = { viewModel.hideDeleteConfirmation() },
+            indicatorIcon = Icons.Default.Delete,
+            indicatorColor = MaterialTheme.colorScheme.error,
+            buttonPositiveText = "DELETE",
+            buttonPositiveColor = MaterialTheme.colorScheme.error,
+            isButtonPositiveEnabled = viewModel.state.deleteEvent.confirmation.toUpperCase(Locale.current) == viewModel.state.deleteEvent.name,
+            onButtonPositiveClick = { viewModel.deleteElement() },
+            buttonNegativeText = "CANCEL",
+            buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
+            onButtonNegativeClick = { viewModel.hideDeleteConfirmation() },
+        ) {
+            val nameUppercase = viewModel.state.deleteEvent.confirmation.toUpperCase(Locale.current)
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "To delete division write it's name in all caps \n \"$nameUppercase", textAlign = TextAlign.Center)
+                SimpleSpace(size = 20.dp)
+                AppTextField(
+                    value = viewModel.state.deleteEvent.name,
+                    onValueChange = { viewModel.deletePopupNameChange(it) },
+                    placeholder = "",
+                    keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Send),
+                    keyboardActions = KeyboardActions(onSend = { viewModel.deleteElement() }),
+                )
+                SimpleSpace(size = 20.dp)
+            }
         }
     }
 
@@ -104,7 +103,7 @@ fun DivisionsFeatureScreen(
             filterOptionsOption = viewModel.state.filter.selectedFilter,
             onFilterOptionChange = {
                 viewModel.changeFilterSelections(it)
-            }
+            },
         )
     }
 
@@ -118,7 +117,7 @@ fun DivisionsFeatureScreen(
                 onBoxNameChange = viewModel.onBoxNameChanged(),
                 description = viewModel.state.createBox.description,
                 onDescriptionChange = viewModel.onBoxDescriptionChanged(),
-                isOnEditMode = viewModel.state.createBox.isEditMode
+                isOnEditMode = viewModel.state.createBox.isEditMode,
             )
         }
     }
@@ -133,7 +132,7 @@ fun DivisionsFeatureScreen(
                 onItemNameChange = viewModel.onItemNameChanged(),
                 description = viewModel.state.createItem.description,
                 onDescriptionChange = viewModel.onItemDescriptionChanged(),
-                        isOnEditMode = viewModel.state.createItem.isEditMode
+                isOnEditMode = viewModel.state.createItem.isEditMode,
             )
         }
     }
@@ -153,7 +152,7 @@ fun DivisionsFeatureScreen(
         onDeleteItem = { viewModel.showDeleteConfirmation(it) },
         onEditItem = { viewModel.showEdit(it) },
         onOpenItem = {
-            when(it) {
+            when (it) {
                 is DivisionElement.Box -> navController?.navigate("BoxScreen?id=${it.id}")
                 is DivisionElement.Item -> navController?.navigate("ItemDetailScreen?id=${it.id}")
             }
@@ -176,7 +175,7 @@ fun DivisionsScreen(
     shouldDisplayWithoutAnimation: Boolean = false,
     divisionCreateButtonsState: DivisionCreateButtonsState = rememberDivisionCreateButtonsState(),
     onAddBoxClick: () -> Unit,
-    onAddItemClick: () -> Unit
+    onAddItemClick: () -> Unit,
 ) {
     DynamicTheme(divisionThemed.themeOption) {
         AppScaffold(
@@ -185,10 +184,10 @@ fun DivisionsScreen(
                 title = divisionThemed.name,
                 rightIcon = Icons.Default.List,
                 onRightIconClick = onFilterClick,
-                horizontalPadding = 20.dp
+                horizontalPadding = 20.dp,
             ),
             paddingValues = PaddingValues(0.dp),
-            isLoading = isLoading
+            isLoading = isLoading,
         ) {
             Box {
                 Column {
@@ -197,12 +196,13 @@ fun DivisionsScreen(
                         nrFolders = boxCount,
                         nrItems = itemCount,
                         modifier = Modifier.padding(PaddingValues()),
-                        shouldDisplayWithoutAnimation = shouldDisplayWithoutAnimation
+                        shouldDisplayWithoutAnimation = shouldDisplayWithoutAnimation,
                     )
                     DivisionContent(
-                        divisionListContent, listBottomPadding = it.calculateBottomPadding(),
+                        divisionListContent,
+                        listBottomPadding = it.calculateBottomPadding(),
                         onClick = { element, action ->
-                            when(action) {
+                            when (action) {
                                 ElementAction.Open -> onOpenItem(element)
                                 ElementAction.Edit -> onEditItem(element)
                                 ElementAction.Delete -> onDeleteItem(element)
@@ -214,7 +214,7 @@ fun DivisionsScreen(
                     divisionCreateButtonsState = divisionCreateButtonsState,
                     onAddItemClick = onAddItemClick,
                     onAddBoxClick = onAddBoxClick,
-                    bottomEdgePadding = it.calculateBottomPadding()
+                    bottomEdgePadding = it.calculateBottomPadding(),
                 )
             }
         }
@@ -240,12 +240,12 @@ private fun DivisionsScreenSinglePreview() {
             name = "Living Room",
             description = null,
             icon = DivisionIcons.livingRoom,
-            themeOption = ThemeOption.THEME_DEFAULT
+            themeOption = ThemeOption.THEME_DEFAULT,
         ),
         onBackClick = {},
         isLoading = false,
         divisionListContent = previewData,
-        //divisionListContent = emptyList(),
+        // divisionListContent = emptyList(),
         shouldDisplayWithoutAnimation = true,
         divisionCreateButtonsState = rememberDivisionCreateButtonsState(isOpen = true),
         onAddBoxClick = {},
@@ -268,7 +268,7 @@ private fun DivisionsScreenPreview(@PreviewParameter(ThemesProvider::class) them
             name = "Living Room",
             description = null,
             icon = DivisionIcons.livingRoom,
-            themeOption = theme
+            themeOption = theme,
         ),
         onBackClick = {},
         isLoading = false,

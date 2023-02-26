@@ -17,19 +17,21 @@ import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.domain.data.ItemDetail
 import com.joasvpereira.main.presentation.icons.DivisionIcons
+import pt.joasvpereira.coreui.box.BoxImage
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
-import pt.joasvpereira.coreui.box.BoxImage
 
 @Composable
 fun ParentDetailsSection(
     division: ItemDetail.ParentDivision,
     box: ItemDetail.ParentBox?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     division.divisionIcon?.let { divisionIcon ->
         GenericSectionContainer(headerText = "Location", modifier = modifier) {
-            Column(modifier = Modifier.padding(10.dp).padding(vertical = 10.dp)) {
+            Column(modifier = Modifier
+                .padding(10.dp)
+                .padding(vertical = 10.dp)) {
                 Row {
                     Icon(painter = painterResource(id = divisionIcon.resId), contentDescription = null, modifier = Modifier.size(24.dp))
                     SimpleSpace(size = 5.dp)
@@ -54,15 +56,15 @@ fun ParentDetailsSection(
 @Preview
 @Composable
 private fun ParentDetailsSectionPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         ParentDetailsSection(
             division = ItemDetail.ParentDivision(
                 id = 0,
                 name = "Living Room",
                 themeOption = ThemeOption.THEME_DEFAULT,
-                divisionIcon = DivisionIcons.livingRoom
+                divisionIcon = DivisionIcons.livingRoom,
             ),
-            box = ItemDetail.ParentBox(id = 0, name = "My Box")
+            box = ItemDetail.ParentBox(id = 0, name = "My Box"),
         )
     }
 }
@@ -70,15 +72,15 @@ private fun ParentDetailsSectionPreview() {
 @Preview
 @Composable
 private fun ParentDetailsSectionPreview_noBox() {
-    DynamicTheme() {
+    DynamicTheme {
         ParentDetailsSection(
             division = ItemDetail.ParentDivision(
                 id = 0,
                 name = "Living Room",
                 themeOption = ThemeOption.THEME_DEFAULT,
-                divisionIcon = DivisionIcons.livingRoom
+                divisionIcon = DivisionIcons.livingRoom,
             ),
-            box = null
+            box = null,
         )
     }
 }

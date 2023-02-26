@@ -17,11 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 sealed interface FilterOptions {
     object All : FilterOptions
@@ -39,14 +39,14 @@ fun FilterPopup(
     onDismissRequest: () -> Unit,
     onButtonClick: () -> Unit,
     filterOptionsOption: FilterOptions,
-    onFilterOptionChange: (FilterOptions) -> Unit
+    onFilterOptionChange: (FilterOptions) -> Unit,
 ) {
     DynamicTheme(themeOption) {
         AlertDialogWithSingleButton(
             onDismissRequest = onDismissRequest,
             indicatorIcon = Icons.Default.List,
             buttonText = "Close",
-            onButtonClick = onButtonClick
+            onButtonClick = onButtonClick,
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
@@ -56,7 +56,7 @@ fun FilterPopup(
                             onFilterOptionChange(FilterOptions.All)
                         },
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
                 ) {
                     RadioButton(selected = filterOptionsOption.isAllOption(), onClick = null)
                     SimpleSpace(size = 10.dp)
@@ -69,7 +69,7 @@ fun FilterPopup(
                         .clickable {
                             onFilterOptionChange(FilterOptions.OnlyBox)
                         },
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     RadioButton(selected = filterOptionsOption.isOnlyBoxOption(), onClick = null)
                     SimpleSpace(size = 10.dp)
@@ -82,7 +82,7 @@ fun FilterPopup(
                         .clickable {
                             onFilterOptionChange(FilterOptions.OnlyItem)
                         },
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     RadioButton(selected = filterOptionsOption.isOnlyItemOption(), onClick = null)
                     SimpleSpace(size = 10.dp)
@@ -98,11 +98,11 @@ fun FilterPopup(
 @Preview(group = "Single")
 @Composable
 private fun FilterPopupPreview_single() {
-    FilterPopup(themeOption = ThemeOption.THEME_DEFAULT, onDismissRequest = {}, onButtonClick = {}, filterOptionsOption =FilterOptions.All, onFilterOptionChange = {})
+    FilterPopup(themeOption = ThemeOption.THEME_DEFAULT, onDismissRequest = {}, onButtonClick = {}, filterOptionsOption = FilterOptions.All, onFilterOptionChange = {})
 }
 
 @UiModePreview
 @Composable
 private fun FilterPopupPreview(@PreviewParameter(ThemesProvider::class) theme: ThemeOption) {
-    FilterPopup(themeOption =theme, onDismissRequest = {}, onButtonClick = {}, filterOptionsOption =FilterOptions.All, onFilterOptionChange = {})
+    FilterPopup(themeOption = theme, onDismissRequest = {}, onButtonClick = {}, filterOptionsOption = FilterOptions.All, onFilterOptionChange = {})
 }

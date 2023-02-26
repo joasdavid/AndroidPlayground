@@ -21,9 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.loggger.extentions.logThis
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 class DeleteItemPopupStateHolder(
     confirmationName: String = "",
@@ -56,7 +56,7 @@ class DeleteItemPopupStateHolder(
 fun DeleteItemPopup(
     deleteItemPopupStateHolder: DeleteItemPopupStateHolder = remember {
         DeleteItemPopupStateHolder()
-    }
+    },
 ) {
     DialogWithTwoButton(
         onDismissRequest = { deleteItemPopupStateHolder.isVisible = false },
@@ -68,8 +68,8 @@ fun DeleteItemPopup(
         onButtonPositiveClick = { deleteItemPopupStateHolder.performPositiveClick() },
         buttonNegativeText = "CANCEL",
         buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
-        onButtonNegativeClick = { deleteItemPopupStateHolder.performNegativeClick() }) {
-
+        onButtonNegativeClick = { deleteItemPopupStateHolder.performNegativeClick() },
+    ) {
         val nameUppercase = deleteItemPopupStateHolder.confirmationName.toUpperCase(Locale.current)
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "To delete division write it's name in all caps \n \"$nameUppercase", textAlign = TextAlign.Center)
@@ -79,7 +79,7 @@ fun DeleteItemPopup(
                 onValueChange = { deleteItemPopupStateHolder.name = it },
                 placeholder = "",
                 keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Send),
-                keyboardActions = KeyboardActions(onSend = { deleteItemPopupStateHolder.performPositiveClick() })
+                keyboardActions = KeyboardActions(onSend = { deleteItemPopupStateHolder.performPositiveClick() }),
             )
             SimpleSpace(size = 20.dp)
         }
@@ -89,7 +89,7 @@ fun DeleteItemPopup(
 @Preview
 @Composable
 private fun DeleteItemPopupPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         DeleteItemPopup()
     }
 }

@@ -15,7 +15,7 @@ data class SettingsMainMenuScreenState(
                 sessionItem = SessionItem(id = 0, name = "", image = null),
                 isKeepSession = false,
                 isMaterialYouEnabled = false,
-                themeModeSelectedOption = ThemePreference.ThemeMode.DEFAULT
+                themeModeSelectedOption = ThemePreference.ThemeMode.DEFAULT,
             )
         }
     }

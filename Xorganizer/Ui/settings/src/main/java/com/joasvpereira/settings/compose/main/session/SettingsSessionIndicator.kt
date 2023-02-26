@@ -23,17 +23,17 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import pt.joasvpereira.core.domain.data.SessionItem
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.R
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 fun SettingsSessionIndicator(
     modifier: Modifier = Modifier,
-    currentSession : SessionItem
+    currentSession: SessionItem,
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         currentSession.image.let {
             if (it == null) {
@@ -41,9 +41,9 @@ fun SettingsSessionIndicator(
                     modifier = Modifier
                         .background(
                             MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
-                            shape = CircleShape
+                            shape = CircleShape,
                         )
-                        .size(40.dp)
+                        .size(40.dp),
                 )
             } else {
                 Image(
@@ -65,13 +65,12 @@ fun SettingsSessionIndicator(
 @Preview
 @Composable
 private fun SettingsSessionIndicatorPreview() {
-
     val context = LocalContext.current
     val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_upload)
-    DynamicTheme() {
+    DynamicTheme {
         Surface {
             SettingsSessionIndicator(
-                currentSession = SessionItem(id = 1, name = "Joás V. Pereira", image = drawable?.toBitmap())
+                currentSession = SessionItem(id = 1, name = "Joás V. Pereira", image = drawable?.toBitmap()),
             )
         }
     }

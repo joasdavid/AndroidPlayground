@@ -18,17 +18,17 @@ import com.joasvpereira.main.compose.common.popup.DeleteItemPopup
 import com.joasvpereira.main.compose.common.popup.DeleteItemPopupStateHolder
 import com.joasvpereira.main.domain.data.ItemDetail
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 @Composable
 fun ItemDetailView(
     details: ItemDetail,
-    isLoading : Boolean = false,
+    isLoading: Boolean = false,
     createPopupState: CreateItemPopupStateHolder = remember {
         CreateItemPopupStateHolder(isOnEditMode = true, isVisible = false)
     },
@@ -38,29 +38,28 @@ fun ItemDetailView(
     notFoundState: ItemNotFoundPopupStateHolder = remember {
         ItemNotFoundPopupStateHolder()
     },
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
 ) {
-
     AnimatedVisibility(visible = notFoundState.isVisible) {
         ItemNotFoundPopup(notFoundState)
     }
 
     AnimatedVisibility(visible = createPopupState.isVisible) {
         CreateItemPopup(
-            createPopupState
+            createPopupState,
         )
     }
 
     AnimatedVisibility(visible = deleteItemPopupState.isVisible) {
         DeleteItemPopup(
-            deleteItemPopupState
+            deleteItemPopupState,
         )
     }
 
     AppScaffold(
         toolBarConfig = ToolBarConfig(title = details.name, onLeftIconClick = onBackClick),
         isTinted = true,
-        isLoading = isLoading
+        isLoading = isLoading,
     ) {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             item {
@@ -71,7 +70,7 @@ fun ItemDetailView(
                     id = details.id,
                     name = details.name,
                     description = details.description,
-                    onEditClick = { createPopupState.isVisible = true }
+                    onEditClick = { createPopupState.isVisible = true },
                 )
             }
             item {
@@ -95,18 +94,18 @@ fun ItemDetailView(
 @Preview(group = "Single")
 @Composable
 private fun ItemDetailViewPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         ItemDetailView(
             details = ItemDetail(
                 id = 1,
                 name = "Item XPTO",
                 description = "",
                 parentDivision = ItemDetail.ParentDivision(id = 1, name = "Hall", themeOption = ThemeOption.THEME_DEFAULT, divisionIcon = DivisionIcons.hanger),
-                parentBox = ItemDetail.ParentBox(id = 1, name = "Shoe box")
+                parentBox = ItemDetail.ParentBox(id = 1, name = "Shoe box"),
             ),
             onBackClick = {},
             isLoading = false,
-            //deleteItemPopupState = DeleteItemPopupStateHolder(isVisible = true, confirmationName = "Joas").apply { name = "JOAS" }
+            // deleteItemPopupState = DeleteItemPopupStateHolder(isVisible = true, confirmationName = "Joas").apply { name = "JOAS" }
         )
     }
 }
@@ -114,14 +113,18 @@ private fun ItemDetailViewPreview() {
 @Preview(group = "SingleEmpty")
 @Composable
 private fun ItemDetailViewPreview_empty() {
-    DynamicTheme() {
-        ItemDetailView(details = ItemDetail(
-            id = 0,
-            name = "",
-            description = "",
-            parentDivision = ItemDetail.ParentDivision(id = 0, name = "", themeOption = null, divisionIcon = null),
-            parentBox = null
-        ), onBackClick = {}, isLoading = true)
+    DynamicTheme {
+        ItemDetailView(
+            details = ItemDetail(
+                id = 0,
+                name = "",
+                description = "",
+                parentDivision = ItemDetail.ParentDivision(id = 0, name = "", themeOption = null, divisionIcon = null),
+                parentBox = null,
+            ),
+            onBackClick = {},
+            isLoading = true,
+        )
     }
 }
 
@@ -129,12 +132,15 @@ private fun ItemDetailViewPreview_empty() {
 @Composable
 private fun ItemDetailViewPreview(@PreviewParameter(ThemesProvider::class) theme: ThemeOption) {
     DynamicTheme(theme) {
-        ItemDetailView(details = ItemDetail(
-            id = 1,
-            name = "",
-            description = "",
-            parentDivision = ItemDetail.ParentDivision(id = 1, name = "Hall", themeOption = theme, divisionIcon = DivisionIcons.lampDesk),
-            parentBox = ItemDetail.ParentBox(id = 1, name = "Shoe box")
-        ), onBackClick = {})
+        ItemDetailView(
+            details = ItemDetail(
+                id = 1,
+                name = "",
+                description = "",
+                parentDivision = ItemDetail.ParentDivision(id = 1, name = "Hall", themeOption = theme, divisionIcon = DivisionIcons.lampDesk),
+                parentBox = ItemDetail.ParentBox(id = 1, name = "Shoe box"),
+            ),
+            onBackClick = {},
+        )
     }
 }

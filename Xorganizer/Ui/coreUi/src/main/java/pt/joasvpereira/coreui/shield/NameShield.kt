@@ -67,24 +67,26 @@ fun NameShield(
                 .fillMaxSize()
                 .background(
                     color = backgroundColor,
-                    shape = shape
+                    shape = shape,
                 )
                 .then(
                     if (borderSize > 0.dp) {
                         Modifier.border(
                             color = borderColor,
                             width = borderSize,
-                            shape = shape
+                            shape = shape,
                         )
-                    } else Modifier
+                    } else {
+                        Modifier
+                    },
                 )
                 .padding(innerPadding + borderSize),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = textStrategy.capture(text),
                 color = textColor,
-                style = textStyle
+                style = textStyle,
             )
         }
     }
@@ -96,12 +98,12 @@ fun NameShieldPreview() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         NameShield(text = "asd", modifier = Modifier.size(48.dp))
         NameShield(text = "   ", modifier = Modifier.size(48.dp))
         NameShield(text = "   ", modifier = Modifier.size(48.dp), textStrategy = First2WordsHighlight(emptySymbol = ' '))
-        NameShield(text = "a", modifier = Modifier.size(48.dp),)
+        NameShield(text = "a", modifier = Modifier.size(48.dp))
         NameShield(text = "qe w", modifier = Modifier.size(48.dp))
     }
 }

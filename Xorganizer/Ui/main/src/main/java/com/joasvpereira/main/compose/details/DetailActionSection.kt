@@ -29,12 +29,14 @@ import pt.joasvpereira.coreui.theme.DynamicTheme
 @Composable
 fun DetailActionSection(
     onDeleteClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     GenericSectionContainer(headerText = "Actions", modifier = modifier) {
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+        ) {
             Card(
                 onClick = { onDeleteClicked() },
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
@@ -42,9 +44,9 @@ fun DetailActionSection(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .heightIn(min = 48.dp)
+                    .heightIn(min = 48.dp),
             ) {
-                Row(modifier = Modifier.fillMaxSize(),horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
                     Text(text = "Delete")
                     SimpleSpace(size = 5.dp)
                     Icon(imageVector = Icons.Default.Delete, contentDescription = null)

@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 internal fun SettingsSection(
@@ -29,7 +29,7 @@ internal fun SettingsSection(
     Column(modifier = modifier) {
         Text(
             text = sectionName,
-            style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp, fontWeight = FontWeight.Bold)
+            style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp, fontWeight = FontWeight.Bold),
         )
         SimpleSpace(size = 10.dp)
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -42,8 +42,9 @@ internal fun SettingsSection(
                 .height(1.5.dp)
                 .background(
                     MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(100)
-                ))
+                    shape = RoundedCornerShape(100),
+                ),
+        )
     }
 }
 
@@ -57,7 +58,7 @@ private fun SettingsSectionPreview() {
                     .padding(horizontal = 16.dp)
                     .padding(vertical = 20.dp)
                     .fillMaxWidth(),
-                sectionName = "Session"
+                sectionName = "Session",
             ) {
                 SimpleSpace(size = 50.dp)
             }

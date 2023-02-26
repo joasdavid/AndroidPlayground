@@ -40,7 +40,7 @@ class CreateDivisionViewModel(
                         description = description ?: "",
                         theme = themeOption,
                         isLoading = false,
-                        mode = Mode.EDIT
+                        mode = Mode.EDIT,
                     )
                 }
             }
@@ -74,7 +74,7 @@ class CreateDivisionViewModel(
                         description = description,
                         icon = icon,
                         themeId = theme.id,
-                    )
+                    ),
                 )
             }
             _state.value = _state.value.copy(isLoading = false, navigation = CreateDivisionScreenNavigation.SaveDone)
@@ -93,7 +93,7 @@ class CreateDivisionViewModel(
                         description = description,
                         icon = icon,
                         themeId = theme.id,
-                    )
+                    ),
                 )
             }
             _state.value = _state.value.copy(isLoading = false, navigation = CreateDivisionScreenNavigation.SaveDone)

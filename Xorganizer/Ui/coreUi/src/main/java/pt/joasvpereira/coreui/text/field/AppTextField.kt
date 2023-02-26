@@ -52,17 +52,17 @@ fun AppTextField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        textColor = MaterialTheme.colorScheme.primary
-    )
+        textColor = MaterialTheme.colorScheme.primary,
+    ),
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    val keyboardActionsToUse : KeyboardActions = keyboardActions ?: buildKeyboardActions(focusManager, keyboardController)
+    val keyboardActionsToUse: KeyboardActions = keyboardActions ?: buildKeyboardActions(focusManager, keyboardController)
     OutlinedTextField(
-        value = value.replace("\n",""),
+        value = value.replace("\n", ""),
         onValueChange = onValueChange,
         modifier = modifier.onPreviewKeyEvent {
-            if (it.key == Key.Tab && it.nativeKeyEvent.action == ACTION_DOWN){
+            if (it.key == Key.Tab && it.nativeKeyEvent.action == ACTION_DOWN) {
                 focusManager.moveFocus(FocusDirection.Down)
                 true
             } else {
@@ -101,7 +101,7 @@ fun buildKeyboardActions(focusManager: FocusManager, keyboardController: Softwar
         keyboardController?.hide()
     },
     onNext = {
-             focusManager.moveFocus(FocusDirection.Next)
+        focusManager.moveFocus(FocusDirection.Next)
     },
     onPrevious = {
         focusManager.moveFocus(FocusDirection.Previous)
@@ -113,7 +113,7 @@ fun buildKeyboardActions(focusManager: FocusManager, keyboardController: Softwar
     onSend = {
         focusManager.clearFocus(true)
         keyboardController?.hide()
-    }
+    },
 )
 
 @Preview

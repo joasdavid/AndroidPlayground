@@ -22,10 +22,10 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.compose.division.list.elements.BoxItem
 import com.joasvpereira.main.compose.division.list.elements.ObjectItem
 import com.joasvpereira.main.domain.data.DivisionElement
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 sealed interface ElementAction {
     object Open : ElementAction
@@ -38,12 +38,12 @@ fun ElementsContainer(
     listItem: List<DivisionElement>,
     listBottomPadding: Dp = 0.dp,
     emptyText: String = "",
-    onClick: (DivisionElement, ElementAction) -> Unit
+    onClick: (DivisionElement, ElementAction) -> Unit,
 ) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
+            .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp)),
     ) {
         Box(modifier = Modifier.padding(horizontal = 20.dp)) {
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
@@ -54,7 +54,7 @@ fun ElementsContainer(
                             Text(
                                 text = emptyText,
                                 modifier = Modifier.fillMaxWidth(.5f),
-                                textAlign = TextAlign.Center
+                                textAlign = TextAlign.Center,
                             )
                         }
                     }
@@ -66,15 +66,16 @@ fun ElementsContainer(
                             name = it.name,
                             onClick = { onClick(it, ElementAction.Open) },
                             onDeleteClick = { onClick(it, ElementAction.Delete) },
-                            onEditClick = { onClick(it, ElementAction.Edit) }
+                            onEditClick = { onClick(it, ElementAction.Edit) },
                         )
                     }
 
                     if (it is DivisionElement.Box) {
-                        BoxItem(name = it.name,
+                        BoxItem(
+                            name = it.name,
                             onClick = { onClick(it, ElementAction.Open) },
                             onDeleteClick = { onClick(it, ElementAction.Delete) },
-                            onEditClick = { onClick(it, ElementAction.Edit) }
+                            onEditClick = { onClick(it, ElementAction.Edit) },
                         )
                     }
                     SimpleSpace(size = 10.dp)

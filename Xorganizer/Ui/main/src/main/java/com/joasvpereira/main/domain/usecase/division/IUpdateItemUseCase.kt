@@ -17,7 +17,7 @@ class UpdateItemUseCase(private val itemDataSource: ItemDataSource) : IUpdateIte
             if (it == null) return@let
             val updatedItem = it.copy(
                 name = params.name?.trim() ?: it.name,
-                description = params.description?.trim() ?: it.description
+                description = params.description?.trim() ?: it.description,
             )
             itemDataSource.updateItem(updatedItem)
         }

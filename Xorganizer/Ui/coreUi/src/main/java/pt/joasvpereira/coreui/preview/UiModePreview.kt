@@ -9,6 +9,6 @@ import pt.joasvpereira.coreui.theme.ThemeOption
 @Preview(name = "Light Mode", group = "Light", uiMode = Configuration.UI_MODE_NIGHT_NO)
 annotation class UiModePreview
 
-class ThemesProvider: PreviewParameterProvider<ThemeOption> {
+class ThemesProvider : PreviewParameterProvider<ThemeOption> {
     override val values = ThemeOption.values().asSequence()
 }

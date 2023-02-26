@@ -41,9 +41,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.R
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 data class ToolBarConfig(
     val title: String,
@@ -51,13 +51,13 @@ data class ToolBarConfig(
     val onLeftIconClick: (() -> Unit)? = null,
     val rightIcon: ImageVector = Icons.Default.Close,
     val onRightIconClick: (() -> Unit)? = null,
-    val horizontalPadding: Dp = 0.dp
+    val horizontalPadding: Dp = 0.dp,
 )
 
 @Composable
 fun ToolbarTitleCentered(
     toolBarConfig: ToolBarConfig,
-    useInsetsPaddingForStatusBars: Boolean = true
+    useInsetsPaddingForStatusBars: Boolean = true,
 ) {
     Box(
         modifier = Modifier
@@ -66,13 +66,12 @@ fun ToolbarTitleCentered(
                     Modifier.windowInsetsPadding(WindowInsets.statusBars)
                 } else {
                     Modifier
-                }
+                },
             )
             .fillMaxWidth()
             .height(48.dp)
-            .padding(horizontal = toolBarConfig.horizontalPadding)
-    )
-    {
+            .padding(horizontal = toolBarConfig.horizontalPadding),
+    ) {
         toolBarConfig.onLeftIconClick?.let { click ->
             Icon(
                 imageVector = toolBarConfig.leftIcon,
@@ -81,7 +80,7 @@ fun ToolbarTitleCentered(
                     .size(24.dp)
                     .clip(CircleShape)
                     .clickable { click() }
-                    .align(Alignment.CenterStart)
+                    .align(Alignment.CenterStart),
             )
         }
 
@@ -89,7 +88,7 @@ fun ToolbarTitleCentered(
             text = toolBarConfig.title,
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
 
         toolBarConfig.onRightIconClick?.let { click ->
@@ -100,7 +99,7 @@ fun ToolbarTitleCentered(
                     .size(24.dp)
                     .clip(CircleShape)
                     .clickable { click() }
-                    .align(Alignment.CenterEnd)
+                    .align(Alignment.CenterEnd),
             )
         }
     }
@@ -116,28 +115,28 @@ fun ToolbarTitleCenterdPreview() {
             toolBarConfig = ToolBarConfig(
                 title = "Test Toolbar with back button",
                 onLeftIconClick = {
-
-                }
-            )
+                },
+            ),
         )
         SimpleSpace(size = 10.dp)
         ToolbarTitleCentered(
-            toolBarConfig = ToolBarConfig(title = "Test Toolbar",horizontalPadding = 20.dp,),
-            useInsetsPaddingForStatusBars = false
+            toolBarConfig = ToolBarConfig(title = "Test Toolbar", horizontalPadding = 20.dp),
+            useInsetsPaddingForStatusBars = false,
         )
         SimpleSpace(size = 10.dp)
         Column(
-            modifier = Modifier
+            modifier = Modifier,
         ) {
             ToolbarTitleCentered(
-                toolBarConfig = ToolBarConfig(title = "divisionName", onLeftIconClick = {},
-                    horizontalPadding = 16.dp
-                )
+                toolBarConfig = ToolBarConfig(
+                    title = "divisionName",
+                    onLeftIconClick = {},
+                    horizontalPadding = 16.dp,
+                ),
             )
         }
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -147,42 +146,51 @@ fun AppScaffold(
     isLoading: Boolean = false,
     paddingValues: PaddingValues = PaddingValues(horizontal = 20.dp),
     shouldUseBackgroundImage: Boolean = true,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
-    Scaffold() {
+    Scaffold {
         if (shouldUseBackgroundImage) {
             val backgroundRes = R.drawable.background
             Image(
                 painter = painterResource(id = backgroundRes),
                 contentDescription = "",
                 contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             )
         }
 
         if (isTinted) {
             Box(
-                modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f))
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f)),
             )
         }
 
-        Column(Modifier.padding(
-            top = it.calculateTopPadding() + paddingValues.calculateTopPadding(),
-            start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-            end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
-        )) {
+        Column(
+            Modifier.padding(
+                top = it.calculateTopPadding() + paddingValues.calculateTopPadding(),
+                start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
+            ),
+        ) {
             toolBarConfig?.apply {
                 ToolbarTitleCentered(
                     toolBarConfig = this,
-                    useInsetsPaddingForStatusBars = false
+                    useInsetsPaddingForStatusBars = false,
                 )
             }
             content(it)
         }
     }
     if (isLoading) {
-        Box(modifier = Modifier.fillMaxSize().clickable {  }.background(MaterialTheme.colorScheme.background.copy(alpha = .75f))) {
-            CircularProgressIndicator(modifier = Modifier.size(50.dp).align(Alignment.Center))
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .clickable { }
+            .background(MaterialTheme.colorScheme.background.copy(alpha = .75f))) {
+            CircularProgressIndicator(modifier = Modifier
+                .size(50.dp)
+                .align(Alignment.Center))
         }
     }
 }
@@ -195,7 +203,7 @@ fun AppScaffoldPreview() {
             toolBarConfig = ToolBarConfig(title = "sd"),
             isLoading = false,
             isTinted = true,
-            content = { Text(text = "Test") }
+            content = { Text(text = "Test") },
         )
     }
 }

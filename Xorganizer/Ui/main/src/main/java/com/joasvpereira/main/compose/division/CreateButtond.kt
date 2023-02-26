@@ -21,15 +21,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Visibility
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.box.BoxImage
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.main.R
 
-
 class DivisionCreateButtonsState(
-    isOpen: Boolean = false
+    isOpen: Boolean = false,
 ) {
-    private var isOpenState= mutableStateOf(isOpen)
+    private var isOpenState = mutableStateOf(isOpen)
     var isOpen
         get() = isOpenState.value
         private set(value) {
@@ -43,7 +42,7 @@ class DivisionCreateButtonsState(
             isButtonsVisibleState.value = value
         }
 
-    fun toggle(){
+    fun toggle() {
         isOpen = !isOpen
         if (isOpen) {
             isButtonsVisible = true
@@ -66,16 +65,18 @@ fun rememberDivisionCreateButtonsState(isOpen: Boolean = false) = remember {
 
 @Composable
 fun DivisionCreateButtons(
-    divisionCreateButtonsState : DivisionCreateButtonsState = rememberDivisionCreateButtonsState(),
+    divisionCreateButtonsState: DivisionCreateButtonsState = rememberDivisionCreateButtonsState(),
     onAddBoxClick: () -> Unit,
     onAddItemClick: () -> Unit,
-    bottomEdgePadding: Dp = 0.dp
+    bottomEdgePadding: Dp = 0.dp,
 ) {
     val margin by animateDpAsState(
         targetValue = divisionCreateButtonsState.provideBaseMargin().invoke(),
-        finishedListener = { divisionCreateButtonsState.animationEnd() }
+        finishedListener = { divisionCreateButtonsState.animationEnd() },
     )
-    ConstraintLayout(modifier = Modifier.fillMaxSize().padding(bottom = bottomEdgePadding)) {
+    ConstraintLayout(modifier = Modifier
+        .fillMaxSize()
+        .padding(bottom = bottomEdgePadding)) {
         val (baseButton, itemButton, boxButton) = createRefs()
         FloatingActionButton(
             onClick = onAddItemClick,
@@ -86,7 +87,7 @@ fun DivisionCreateButtons(
                     end.linkTo(parent.end)
                     visibility = if (divisionCreateButtonsState.isButtonsVisible) Visibility.Visible else Visibility.Gone
                 },
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
         ) {
             Icon(painter = painterResource(id = R.drawable.ic_item), contentDescription = null)
         }
@@ -100,7 +101,7 @@ fun DivisionCreateButtons(
                     end.linkTo(parent.end)
                     visibility = if (divisionCreateButtonsState.isButtonsVisible) Visibility.Visible else Visibility.Gone
                 },
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
         ) {
             BoxImage(modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.onTertiaryContainer)
         }
@@ -113,7 +114,7 @@ fun DivisionCreateButtons(
                     bottom.linkTo(parent.bottom)
                     end.linkTo(parent.end)
                 },
-            containerColor = MaterialTheme.colorScheme.primary
+            containerColor = MaterialTheme.colorScheme.primary,
         ) {
             val vecIcon = if (divisionCreateButtonsState.isOpen) Icons.Default.Close else Icons.Default.Add
             Icon(imageVector = vecIcon, contentDescription = null)
@@ -124,7 +125,7 @@ fun DivisionCreateButtons(
 @Preview
 @Composable
 private fun DivisionCreateButtonsPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         DivisionCreateButtons(
             rememberDivisionCreateButtonsState(false),
             onAddBoxClick = {},

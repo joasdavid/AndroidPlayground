@@ -1,6 +1,5 @@
 package com.joasvpereira.dev.mokeupui.compose.screen.organizer.main
 
-
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -57,7 +56,7 @@ fun IconSelector(
     iconSelected: ImageVector,
     onIconSelected: (ImageVector) -> Unit,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = .7f),
-    iconTintColor: Color = MaterialTheme.colorScheme.onSecondary
+    iconTintColor: Color = MaterialTheme.colorScheme.onSecondary,
 ) {
     var expanded by remember { mutableStateOf(false) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -66,18 +65,18 @@ fun IconSelector(
                 .size(100.dp)
                 .background(
                     color = backgroundColor,
-                    shape = CircleShape
+                    shape = CircleShape,
                 )
                 .clickable {
                     expanded = true
                 },
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = iconSelected,
                 contentDescription = "",
                 tint = iconTintColor,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(48.dp),
             )
             // region DropdownMenu
             /*DropdownMenu(
@@ -115,7 +114,7 @@ fun IconSelector(
                         Box(
                             Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(fraction = .8f)
+                                .fillMaxHeight(fraction = .8f),
                         ) {
                             LazyVerticalGrid(
                                 columns = GridCells.Fixed(3),
@@ -123,8 +122,8 @@ fun IconSelector(
                                     start = 0.dp,
                                     top = 16.dp,
                                     end = 0.dp,
-                                    bottom = 16.dp
-                                )
+                                    bottom = 16.dp,
+                                ),
                             ) {
                                 items(iconOptions.size) { index ->
                                     val currentItem = iconOptions[index]
@@ -137,7 +136,7 @@ fun IconSelector(
                                             .clickable {
                                                 onIconSelected(currentItem)
                                                 expanded = false
-                                            }
+                                            },
                                     )
                                 }
                             }
@@ -146,16 +145,16 @@ fun IconSelector(
                     confirmButton = {
                         Row(
                             modifier = Modifier.padding(all = 8.dp),
-                            horizontalArrangement = Arrangement.Center
+                            horizontalArrangement = Arrangement.Center,
                         ) {
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
-                                onClick = { expanded = false }
+                                onClick = { expanded = false },
                             ) {
                                 Text("Dismiss")
                             }
                         }
-                    }
+                    },
                 )
             }
         }
@@ -190,12 +189,11 @@ fun IconSelector(
     }
 }
 
-
 @Composable
 fun ThemeColorsIndicator(
     themeOption: ThemeOption = ThemeOption.THEME_DEFAULT,
     size: Dp = 48.dp,
-    borderStroke: BorderStroke = BorderStroke(width = 1.5.dp, color = Color.White)
+    borderStroke: BorderStroke = BorderStroke(width = 1.5.dp, color = Color.White),
 ) {
     DynamicTheme(themeOption) {
         Box {
@@ -204,8 +202,8 @@ fun ThemeColorsIndicator(
                     .size(size)
                     .border(
                         border = borderStroke,
-                        shape = CircleShape
-                    )
+                        shape = CircleShape,
+                    ),
             ) {
                 Box(
                     modifier = Modifier
@@ -214,8 +212,8 @@ fun ThemeColorsIndicator(
                         .weight(1f)
                         .background(
                             color = MaterialTheme.colorScheme.secondaryContainer,
-                            shape = semiCircleRightShape
-                        )
+                            shape = semiCircleRightShape,
+                        ),
                 )
                 Box(
                     modifier = Modifier
@@ -224,8 +222,8 @@ fun ThemeColorsIndicator(
                         .weight(1f)
                         .background(
                             color = MaterialTheme.colorScheme.tertiaryContainer,
-                            shape = semiCircleLeftShape
-                        )
+                            shape = semiCircleLeftShape,
+                        ),
                 )
             }
             Box(
@@ -233,16 +231,16 @@ fun ThemeColorsIndicator(
                     .width(borderStroke.width)
                     .height(size)
                     .background(borderStroke.brush)
-                    .align(Alignment.Center)
+                    .align(Alignment.Center),
             )
             Row(
                 modifier = Modifier
                     .size(size)
                     .border(
                         border = borderStroke,
-                        shape = CircleShape
+                        shape = CircleShape,
                     )
-                    .rotate(90f)
+                    .rotate(90f),
             ) {
                 Box(
                     modifier = Modifier
@@ -251,8 +249,8 @@ fun ThemeColorsIndicator(
                         .weight(1f)
                         .background(
                             color = Color.Transparent,
-                            shape = semiCircleRightShape
-                        )
+                            shape = semiCircleRightShape,
+                        ),
                 )
                 Box(
                     modifier = Modifier
@@ -261,8 +259,8 @@ fun ThemeColorsIndicator(
                         .weight(1f)
                         .background(
                             color = MaterialTheme.colorScheme.primaryContainer,
-                            shape = semiCircleLeftShape
-                        )
+                            shape = semiCircleLeftShape,
+                        ),
                 )
             }
             Box(
@@ -270,14 +268,13 @@ fun ThemeColorsIndicator(
                     .width(size)
                     .height(1.dp)
                     .background(borderStroke.brush)
-                    .align(Alignment.Center)
+                    .align(Alignment.Center),
             )
-
         }
     }
 }
 
-//@Preview(showBackground = true, backgroundColor = 0x989a82)
+// @Preview(showBackground = true, backgroundColor = 0x989a82)
 @Composable
 fun ThemeColorsIndicatorPreview() {
     ThemeColorsIndicator()
@@ -288,7 +285,7 @@ val semiCircleRightShape = GenericShape { size, _ ->
         rect = Rect(center = Offset(x = size.width, y = size.height / 2), size.width),
         startAngleDegrees = 90f,
         sweepAngleDegrees = 180f,
-        false
+        false,
     )
 }
 
@@ -297,7 +294,7 @@ val semiCircleLeftShape = GenericShape { size, _ ->
         rect = Rect(center = Offset(x = 0f, y = size.height / 2), size.width),
         startAngleDegrees = -90f,
         sweepAngleDegrees = 180f,
-        false
+        false,
     )
 }
 
@@ -307,16 +304,16 @@ data class IconData(val painter: Painter, val contentDescription: String = "")
 fun IconAndCounter(
     color: Color = LocalContentColor.current,
     iconData: IconData,
-    count: Int = 0
+    count: Int = 0,
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
             painter = iconData.painter,
             contentDescription = iconData.contentDescription,
             tint = color,
-            modifier = Modifier.size(16.dp)
+            modifier = Modifier.size(16.dp),
         )
         Text(text = "$count", color = color)
     }
@@ -326,10 +323,10 @@ fun IconAndCounter(
 @Composable
 fun ThemeSelector(
     selectedOption: ThemeOption = ThemeOption.THEME_DEFAULT,
-    onThemeChosen: (ThemeOption) -> Unit
+    onThemeChosen: (ThemeOption) -> Unit,
 ) {
     val list = getAllThemesDetails()
-    var selection= selectedOption// by remember { mutableStateOf(selectedOption) }
+    var selection = selectedOption // by remember { mutableStateOf(selectedOption) }
     var expandable by remember { mutableStateOf(false) }
     DropdownSelector(
         modifier = Modifier
@@ -352,12 +349,13 @@ fun ThemeSelector(
         onSelectedOptionChanges = {
             selection = it.first
             onThemeChosen(it.first)
-        }
+        },
     ) {
         Row(
             Modifier
                 .heightIn(min = 48.dp)
-                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically
+                .padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             ThemeColorsIndicator(size = 24.dp, themeOption = it.first)
             SimpleSpace(size = 5.dp)
@@ -366,20 +364,21 @@ fun ThemeSelector(
     }
 }
 
-//@Preview(showBackground = true, backgroundColor = 0x989a82)
+// @Preview(showBackground = true, backgroundColor = 0x989a82)
 @Composable
 fun ThemeSelectorPreview() {
     ThemeSelector {}
 }
 
-//@Preview(showBackground = true, backgroundColor = 0x989a82)
+// @Preview(showBackground = true, backgroundColor = 0x989a82)
 @Composable
 fun ThemeSelectorExpandedContentPreview() {
     Column {
         Row(
             Modifier
                 .heightIn(min = 48.dp)
-                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically
+                .padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             ThemeColorsIndicator(size = 24.dp)
             SimpleSpace(size = 5.dp)
@@ -388,7 +387,8 @@ fun ThemeSelectorExpandedContentPreview() {
         Row(
             Modifier
                 .heightIn(min = 48.dp)
-                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically
+                .padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             ThemeColorsIndicator(size = 24.dp)
             SimpleSpace(size = 5.dp)

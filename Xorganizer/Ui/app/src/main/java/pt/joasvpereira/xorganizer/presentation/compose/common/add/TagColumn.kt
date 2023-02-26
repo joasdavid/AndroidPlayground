@@ -34,7 +34,7 @@ fun TagColumn(
     tagItemContent: @Composable ColumnScope.(String) -> Unit,
     addButton: @Composable ColumnScope.() -> Unit,
     editorContent: @Composable ColumnScope.() -> Unit,
-    tagColumnState: TagColumnState
+    tagColumnState: TagColumnState,
 ) {
     Column(modifier = modifier, verticalArrangement = verticalArrangement, horizontalAlignment = horizontalAlignment) {
         if (tagColumnState.isEditOpen) {
@@ -51,7 +51,7 @@ fun TagColumn(
 @Preview()
 @Composable
 fun TagColumnPreview() {
-    var tagColumnState by remember { mutableStateOf(TagColumnState(isEditOpen = true,listOfTags = mutableListOf("test", "XPTO", "test3"))) }
+    var tagColumnState by remember { mutableStateOf(TagColumnState(isEditOpen = true, listOfTags = mutableListOf("test", "XPTO", "test3"))) }
     val roundedCornerShape200 = RoundedCornerShape(200.dp)
     TagColumn(
         tagItemContent = { s: String ->
@@ -63,14 +63,14 @@ fun TagColumnPreview() {
                     .border(
                         1.dp,
                         color = MaterialTheme.colorScheme.primary,
-                        shape = roundedCornerShape200
+                        shape = roundedCornerShape200,
                     )
                     .clip(roundedCornerShape200)
-                    .padding(5.dp)
+                    .padding(5.dp),
             ) {
                 Text(
                     style = MaterialTheme.typography.labelSmall,
-                    text = s
+                    text = s,
                 )
             }
         },
@@ -83,14 +83,14 @@ fun TagColumnPreview() {
                     .border(
                         1.dp,
                         color = MaterialTheme.colorScheme.primary,
-                        shape = RoundedCornerShape(200.dp)
+                        shape = RoundedCornerShape(200.dp),
                     )
-                    .padding(5.dp)
+                    .padding(5.dp),
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }
         },
         editorContent = {},
-        tagColumnState = tagColumnState
+        tagColumnState = tagColumnState,
     )
 }

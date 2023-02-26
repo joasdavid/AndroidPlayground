@@ -15,7 +15,7 @@ import pt.joasvpereira.core.repository.local.entities.Item.Companion.TABLE_NAME
 import pt.joasvpereira.core.repository.local.entities.ItemCountAndParentId
 
 @Dao
-interface  ItemDao {
+interface ItemDao {
     @Query("SELECT * FROM $TABLE_NAME WHERE $PARENT_DIVISION_ID = :fromDivision and $PARENT_BOX_ID is null")
     fun getAllFromDivision(fromDivision: Int): Flow<List<Item>>
 
@@ -27,6 +27,7 @@ interface  ItemDao {
 
     @Insert
     fun insertItem(item: Item)
+
     @Update(onConflict = REPLACE)
     fun updateItem(item: Item)
 

@@ -31,7 +31,7 @@ class App : Application() {
                     coreDependencies,
                     settingsModule,
                     sessionCoreModule,
-                )
+                ),
             )
         }
 

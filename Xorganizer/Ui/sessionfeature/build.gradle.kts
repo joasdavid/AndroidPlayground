@@ -3,7 +3,6 @@ plugins {
     kotlin("android")
 }
 
-
 @Suppress("UnstableApiUsage")
 android {
     namespace = "pt.joasvpereira.sessionfeature"
@@ -21,7 +20,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }

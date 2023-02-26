@@ -3,7 +3,6 @@ package pt.joasvpereira.core.repository.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.util.TableInfo.ForeignKey
 import pt.joasvpereira.core.repository.local.entities.Division.Companion.SESSION_ID
 import pt.joasvpereira.core.repository.local.entities.Division.Companion.TABLE_NAME
 
@@ -14,9 +13,9 @@ import pt.joasvpereira.core.repository.local.entities.Division.Companion.TABLE_N
             entity = Session::class,
             parentColumns = arrayOf(Session.ID_SESSION),
             childColumns = arrayOf(SESSION_ID),
-            onDelete = androidx.room.ForeignKey.CASCADE
-        )
-    ]
+            onDelete = androidx.room.ForeignKey.CASCADE,
+        ),
+    ],
 )
 data class Division(
     @PrimaryKey(autoGenerate = true)

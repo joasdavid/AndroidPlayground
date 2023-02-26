@@ -17,9 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.loggger.extentions.logThis
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.main.R
 
 class CreateItemPopupStateHolder(
@@ -50,7 +50,7 @@ class CreateItemPopupStateHolder(
 fun CreateItemPopup(
     stateHolder: CreateItemPopupStateHolder = remember {
         CreateItemPopupStateHolder(false)
-    }
+    },
 ) {
     DialogWithTwoButton(
         onDismissRequest = { stateHolder.isVisible = false },
@@ -62,7 +62,8 @@ fun CreateItemPopup(
         onButtonPositiveClick = { stateHolder.performPositiveClick() },
         buttonNegativeText = "Close",
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
-        onButtonNegativeClick = { stateHolder.performNegativeClick() }) {
+        onButtonNegativeClick = { stateHolder.performNegativeClick() },
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (stateHolder.isOnEditMode) {
                 Text(text = "Update item".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
@@ -72,7 +73,7 @@ fun CreateItemPopup(
             SimpleSpace(size = 20.dp)
             AppTextField(value = stateHolder.name, onValueChange = { stateHolder.name = it }, placeholder = "Item name")
             SimpleSpace(size = 20.dp)
-            AppTextField(value = stateHolder.description, onValueChange = {stateHolder.description = it }, placeholder = "Description")
+            AppTextField(value = stateHolder.description, onValueChange = { stateHolder.description = it }, placeholder = "Description")
             SimpleSpace(size = 20.dp)
         }
     }
@@ -81,14 +82,14 @@ fun CreateItemPopup(
 @Deprecated("Use the CreateItemPopup with state instead.")
 @Composable
 fun CreateItemPopup(
-    onDismissRequest : () -> Unit,
-    onButtonPositiveClick : () -> Unit,
-    onButtonNegativeClick : () -> Unit,
-    itemName : String,
+    onDismissRequest: () -> Unit,
+    onButtonPositiveClick: () -> Unit,
+    onButtonNegativeClick: () -> Unit,
+    itemName: String,
     onItemNameChange: (String) -> Unit,
-    description : String,
+    description: String,
     onDescriptionChange: (String) -> Unit,
-    isOnEditMode: Boolean
+    isOnEditMode: Boolean,
 ) {
     DialogWithTwoButton(
         onDismissRequest = onDismissRequest,
@@ -100,7 +101,8 @@ fun CreateItemPopup(
         onButtonPositiveClick = onButtonPositiveClick,
         buttonNegativeText = "Close",
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
-        onButtonNegativeClick = onButtonNegativeClick) {
+        onButtonNegativeClick = onButtonNegativeClick,
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (isOnEditMode) {
                 Text(text = "Update item".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
@@ -119,7 +121,7 @@ fun CreateItemPopup(
 @Preview
 @Composable
 private fun CreateItemPopupPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         CreateItemPopup(
             onDismissRequest = {},
             onButtonPositiveClick = {},
@@ -128,7 +130,7 @@ private fun CreateItemPopupPreview() {
             onItemNameChange = {},
             description = "",
             onDescriptionChange = {},
-            isOnEditMode = false
+            isOnEditMode = false,
         )
     }
 }

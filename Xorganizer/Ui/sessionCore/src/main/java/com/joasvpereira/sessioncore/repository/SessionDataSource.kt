@@ -34,5 +34,4 @@ class LocalSessionDataSource(private val sessionDao: SessionDao) : SessionDataSo
     override suspend fun deleteSession(id: Int) = withContext(Dispatchers.IO) {
         sessionDao.deleteSession(id)
     }
-
 }

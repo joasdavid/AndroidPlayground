@@ -12,13 +12,13 @@ import pt.joasvpereira.sessionfeature.compose.create.CreateSessionScreen
 fun CreateSessionFeatureScreen(
     id: Int?,
     viewModel: CreateSessionFeatureScreenViewModel,
-    navController: NavController? = null
+    navController: NavController? = null,
 ) {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
-        onResult = { viewModel.processContentResult(context, it) }
+        onResult = { viewModel.processContentResult(context, it) },
     )
 
     LaunchedEffect(key1 = viewModel.state.saveState.toString()) {
@@ -32,7 +32,7 @@ fun CreateSessionFeatureScreen(
     }
 
     CreateSessionScreen(
-        onBackClick = { navController?.popBackStack()  },
+        onBackClick = { navController?.popBackStack() },
         isLoading = viewModel.state.isLoading,
         bitmap = viewModel.state.bitmap,
         onUploadClick = { launcher.launch("image/*") },
@@ -42,6 +42,6 @@ fun CreateSessionFeatureScreen(
         isButtonEnabled = viewModel.state.isButtonEnabled,
         onButtonCreateClick = { viewModel.save() },
         onButtonDeleteClick = { viewModel.delete() },
-        isOnEditMode = viewModel.state.mode is Mode.Edit
+        isOnEditMode = viewModel.state.mode is Mode.Edit,
     )
 }

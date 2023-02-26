@@ -16,5 +16,5 @@ abstract class Db : RoomDatabase() {
     abstract fun userDao(): DivisionDao
     abstract fun sessionDao(): SessionDao
     abstract fun boxDao(): BoxDao
-    abstract fun itemDao() : ItemDao
+    abstract fun itemDao(): ItemDao
 }

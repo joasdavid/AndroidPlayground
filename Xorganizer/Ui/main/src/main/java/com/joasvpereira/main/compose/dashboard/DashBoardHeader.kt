@@ -37,29 +37,28 @@ import pt.joasvpereira.main.R
 internal fun DashboardHeader(
     sessionName: String,
     sessionImage: Bitmap?,
-    onSettingClicked: () -> Unit
+    onSettingClicked: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "XOrganizer",
                 style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
-                    .clickable { onSettingClicked() }
+                    .clickable { onSettingClicked() },
             ) {
                 Icon(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(24.dp),
                     imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings"
+                    contentDescription = "Settings",
                 )
             }
-
         }
 
         Spacer(modifier = Modifier.height(28.5.dp))
@@ -72,7 +71,7 @@ internal fun DashboardHeader(
                 Modifier
                     .align(Alignment.Bottom)
                     .size(40.dp)
-                    .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
             ) {
                 sessionImage.let {
                     if (it == null) {
@@ -82,7 +81,7 @@ internal fun DashboardHeader(
                             tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
                             modifier = Modifier
                                 .align(Alignment.Center)
-                                .size(40.dp)
+                                .size(40.dp),
                         )
                     } else {
                         Image(
@@ -92,7 +91,7 @@ internal fun DashboardHeader(
                                 .align(Alignment.Center)
                                 .size(40.dp)
                                 .clip(CircleShape)
-                                .border(1.dp, color = MaterialTheme.colorScheme.primaryContainer, shape = CircleShape)
+                                .border(1.dp, color = MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
                         )
                     }
                 }

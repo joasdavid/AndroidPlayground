@@ -13,16 +13,15 @@ import pt.joasvpereira.core.settings.domain.data.ThemePreference
 import pt.joasvpereira.core.settings.repository.ThemePreferencesDataSource
 
 private val Context.themePreferencesDataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "themePref"
+    name = "themePref",
 )
-
 
 private val SHOULD_USE_MATERIAL_YOU = booleanPreferencesKey("theme_use_material_you")
 private val THEME_MODE = stringPreferencesKey("theme_mode")
 
 internal class LocalThemePreferences(private val context: Context) : ThemePreferencesDataSource {
 
-    override suspend fun updatePreference(pref : ThemePreference) {
+    override suspend fun updatePreference(pref: ThemePreference) {
         context.themePreferencesDataStore.edit { preference ->
             preference[SHOULD_USE_MATERIAL_YOU] = pref.isMaterialYouEnabled
             preference[THEME_MODE] = pref.mode.name
@@ -46,7 +45,7 @@ internal class LocalThemePreferences(private val context: Context) : ThemePrefer
             ThemePreference(
                 isMaterialYouEnabled = preferences[SHOULD_USE_MATERIAL_YOU] ?: true,
                 mode = preferences[THEME_MODE]?.run { ThemePreference.ThemeMode.valueOf(this) }
-                    ?: ThemePreference.ThemeMode.DEFAULT
+                    ?: ThemePreference.ThemeMode.DEFAULT,
             )
         }
 }

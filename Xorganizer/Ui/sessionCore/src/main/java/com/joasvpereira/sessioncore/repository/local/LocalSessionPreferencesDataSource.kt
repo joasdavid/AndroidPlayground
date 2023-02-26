@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 private val Context.sessionPreferencesDataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "sessionPref"
+    name = "sessionPref",
 )
 
 private val DEFAULT_SESSION_ID = intPreferencesKey("default_session_id")

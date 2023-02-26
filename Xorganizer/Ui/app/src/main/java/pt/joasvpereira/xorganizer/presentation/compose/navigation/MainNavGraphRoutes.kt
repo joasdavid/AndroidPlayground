@@ -16,11 +16,11 @@ import pt.joasvpereira.sessionfeature.compose.navigation.navigateToUpdateProfile
 import pt.joasvpereira.sessionfeature.presentation.SessionFeatureEntryPoint
 
 sealed class MainNavGraphRoutes(val route: String) {
-    object ProfileFeature: MainNavGraphRoutes(route = PROFILE_ROUTE)
+    object ProfileFeature : MainNavGraphRoutes(route = PROFILE_ROUTE)
 
-    object MainFeature: MainNavGraphRoutes(route = MAIN_ROUTE)
+    object MainFeature : MainNavGraphRoutes(route = MAIN_ROUTE)
 
-    object SettingsFeature: MainNavGraphRoutes(route = SETTINGS_ROUTE)
+    object SettingsFeature : MainNavGraphRoutes(route = SETTINGS_ROUTE)
 
     companion object {
         private const val PROFILE_ROUTE = "profile_feature_route"
@@ -50,17 +50,17 @@ fun MainNavigation() {
     val start = if (CurrentSession.sessionId == null) MainNavGraphRoutes.ProfileFeature.route else MainNavGraphRoutes.MainFeature.route
     NavHost(
         navController = navController,
-        startDestination = start.logThis(tag = "JVP")
+        startDestination = start.logThis(tag = "JVP"),
     ) {
         composable(MainNavGraphRoutes.ProfileFeature.route) {
             SessionFeatureEntryPoint(
-                onFinished = { navController.navigateToDivisionsFeature() }
+                onFinished = { navController.navigateToDivisionsFeature() },
             )
         }
 
         composable(MainNavGraphRoutes.MainFeature.route) {
             MainFeatureEntryPoint(onSettingsClicked = {
-                //navController.navigateToProfileFeature()
+                // navController.navigateToProfileFeature()
                 navController.navigateToSettingsFeature()
             })
         }
@@ -69,11 +69,13 @@ fun MainNavigation() {
 
         composable(MainNavGraphRoutes.SettingsFeature.route) {
             SettingsMainMenuScreen(
-                viewModel = getViewModel(), navController = navController, onEditProfile = {
+                viewModel = getViewModel(),
+                navController = navController,
+                onEditProfile = {
                     CurrentSession.sessionId?.run { navController.navigateToUpdateProfile(id) }
                 },
-                onLogout = {navController.navigateToProfileFeature()}
-                )
+                onLogout = { navController.navigateToProfileFeature() },
+            )
         }
     }
 }

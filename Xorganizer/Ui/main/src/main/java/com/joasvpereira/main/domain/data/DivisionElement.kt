@@ -1,6 +1,5 @@
 package com.joasvpereira.main.domain.data
 
-
 interface Element {
     val id: Int
     val name: String

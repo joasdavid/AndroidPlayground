@@ -10,6 +10,6 @@ data class ParentBox(
 ) {
     data class ParentDivision(
         val id: Int,
-        val themeOption: ThemeOption?
+        val themeOption: ThemeOption?,
     )
 }

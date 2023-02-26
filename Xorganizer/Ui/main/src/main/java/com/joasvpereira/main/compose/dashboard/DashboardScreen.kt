@@ -24,7 +24,7 @@ internal fun DashboardScreen(
     onEditClick: (DashboardDivision) -> Unit,
     onDeleteClick: (DashboardDivision) -> Unit,
     onAddNewItemClick: () -> Unit,
-    onSettingClicked: () -> Unit
+    onSettingClicked: () -> Unit,
 ) {
     AppScaffold(
         isTinted = false,
@@ -42,7 +42,7 @@ internal fun DashboardScreen(
             onAddNewItemClick = onAddNewItemClick,
             onEditClick = onEditClick,
             onDeleteClick = onDeleteClick,
-            )
+        )
     }
 }
 

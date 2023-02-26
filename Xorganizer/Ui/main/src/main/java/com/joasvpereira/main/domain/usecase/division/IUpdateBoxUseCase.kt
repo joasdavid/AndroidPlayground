@@ -16,7 +16,7 @@ class UpdateBoxUseCase(private val boxDataSource: BoxDataSource) : IUpdateBoxUse
         boxDataSource.getBox(params.id).first()?.let {
             val updatedBox = it.copy(
                 name = params.name?.trim() ?: it.name,
-                description = params.description?.trim() ?: it.description
+                description = params.description?.trim() ?: it.description,
             )
             boxDataSource.updateBox(updatedBox)
         }

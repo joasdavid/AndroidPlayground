@@ -12,9 +12,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.text.field.AppTextField
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 fun ColumnScope.DivisionNameAndDescription(
@@ -29,7 +29,7 @@ fun ColumnScope.DivisionNameAndDescription(
         onValueChange = onNameChange,
         placeholder = "Division name",
         singleLine = true,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
     )
     Spacer(modifier = Modifier.size(20.dp))
     AppTextField(
@@ -51,7 +51,7 @@ private fun DivisionNameAndDescriptionPreview(@PreviewParameter(DivisionNameAndD
                 name = data.name,
                 onNameChange = {},
                 description = data.description,
-                onDescriptionChange = {}
+                onDescriptionChange = {},
             )
         }
     }
@@ -59,7 +59,7 @@ private fun DivisionNameAndDescriptionPreview(@PreviewParameter(DivisionNameAndD
 
 data class NameDescriptionData(val name: String, val description: String)
 
-class DivisionNameAndDescriptionPreviewProvider: PreviewParameterProvider<NameDescriptionData> {
+class DivisionNameAndDescriptionPreviewProvider : PreviewParameterProvider<NameDescriptionData> {
     override val values = sequenceOf(
         NameDescriptionData(name = "", description = ""),
         NameDescriptionData(name = "Test name", description = ""),
@@ -67,9 +67,5 @@ class DivisionNameAndDescriptionPreviewProvider: PreviewParameterProvider<NameDe
         NameDescriptionData(name = "Test name", description = "Test description"),
     )
 }
-object PreviewData{
 
-
-
-
-}
+object PreviewData

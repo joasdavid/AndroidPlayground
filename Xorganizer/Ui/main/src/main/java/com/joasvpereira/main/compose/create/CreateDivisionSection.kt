@@ -14,12 +14,12 @@ import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ThemeSelector
 import com.joasvpereira.main.presentation.icons.DivisionIcon
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 @Composable
 fun CreateDivisionSection(
@@ -31,26 +31,27 @@ fun CreateDivisionSection(
     onDescriptionChange: (String) -> Unit,
     onThemeChange: (ThemeOption) -> Unit,
     onSave: () -> Unit,
-    onCloseClick: () -> Unit
+    onCloseClick: () -> Unit,
 ) {
     AppScaffold(
         isLoading = isLoading,
         toolBarConfig = ToolBarConfig(
             title = "",
-            onRightIconClick = { onCloseClick() }
-        )
+            onRightIconClick = { onCloseClick() },
+        ),
     ) {
-        Column(modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SimpleSpace(size = 100.dp)
-            DivisionIconSelector(modifier =Modifier.fillMaxWidth(.75f), defaultPos = 0, onIconSelected = onIconChange)
+            DivisionIconSelector(modifier = Modifier.fillMaxWidth(.75f), defaultPos = 0, onIconSelected = onIconChange)
             Spacer(modifier = Modifier.size(20.dp))
             DivisionNameAndDescription(
                 name = name,
                 onNameChange = onNameChange,
                 description = description,
-                onDescriptionChange = onDescriptionChange
+                onDescriptionChange = onDescriptionChange,
             )
             Spacer(modifier = Modifier.size(20.dp))
             ThemeSelector {
@@ -59,7 +60,7 @@ fun CreateDivisionSection(
             SimpleSpace(size = 45.dp)
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { onSave() }
+                onClick = { onSave() },
             ) {
                 Text(text = "Save")
             }

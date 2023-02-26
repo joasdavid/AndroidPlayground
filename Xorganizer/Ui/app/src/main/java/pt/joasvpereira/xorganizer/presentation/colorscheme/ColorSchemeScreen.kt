@@ -1,4 +1,4 @@
-package pt.joasvpereira.xorganizer.presentation.color_scheme
+package pt.joasvpereira.xorganizer.presentation.colorscheme
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -26,96 +26,95 @@ data class ColorSchemeItem(
     val name: String,
     val color: Color,
     val onColorName: String? = null,
-    val onColor: Color? = null
+    val onColor: Color? = null,
 )
 
 @ExperimentalMaterial3Api
 @ExperimentalFoundationApi
 @Composable
 fun ColorSchemeScreen() {
-
     val colorList = listOf(
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.primary,
             name = "primary",
             onColor = MaterialTheme.colorScheme.onPrimary,
-            onColorName = "onPrimary"
+            onColorName = "onPrimary",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.inversePrimary,
-            name = "inversePrimary"
+            name = "inversePrimary",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.primaryContainer,
             name = "primaryContainer",
             onColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            onColorName = "onPrimaryContainer"
+            onColorName = "onPrimaryContainer",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.secondary,
             name = "secondary",
             onColor = MaterialTheme.colorScheme.onSecondary,
-            onColorName = "onSecondary"
+            onColorName = "onSecondary",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.secondaryContainer,
             name = "secondaryContainer",
             onColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            onColorName = "onSecondaryContainer"
+            onColorName = "onSecondaryContainer",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.tertiary,
             name = "tertiary",
             onColor = MaterialTheme.colorScheme.onTertiary,
-            onColorName = "onTertiary"
+            onColorName = "onTertiary",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.tertiaryContainer,
             name = "tertiaryContainer",
             onColor = MaterialTheme.colorScheme.onTertiaryContainer,
-            onColorName = "onTertiaryContainer"
+            onColorName = "onTertiaryContainer",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.surface,
             name = "surface",
             onColor = MaterialTheme.colorScheme.onSurface,
-            onColorName = "onSurface"
+            onColorName = "onSurface",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.inverseSurface,
-            name = "inverseSurface"
+            name = "inverseSurface",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.surfaceTint,
-            name = "surfaceTint"
+            name = "surfaceTint",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.surfaceVariant,
             name = "surfaceVariant",
             onColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            onColorName = "onSurfaceVariant"
+            onColorName = "onSurfaceVariant",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.background,
             name = "background",
             onColor = MaterialTheme.colorScheme.onBackground,
-            onColorName = "onBackground"
+            onColorName = "onBackground",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.error,
             name = "error",
             onColor = MaterialTheme.colorScheme.onError,
-            onColorName = "onError"
+            onColorName = "onError",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.errorContainer,
             name = "errorContainer",
             onColor = MaterialTheme.colorScheme.onErrorContainer,
-            onColorName = "onErrorContainer"
+            onColorName = "onErrorContainer",
         ),
         ColorSchemeItem(
             color = MaterialTheme.colorScheme.outline,
-            name = "outline"
+            name = "outline",
         ),
     )
 
@@ -125,7 +124,7 @@ fun ColorSchemeScreen() {
                 modifier = Modifier
                     .size(78.dp)
                     .fillMaxWidth()
-                    .background(colorList[index].color)
+                    .background(colorList[index].color),
             ) {
                 Text(text = colorList[index].name)
                 colorList[index].onColorName?.let {
@@ -136,116 +135,142 @@ fun ColorSchemeScreen() {
         item {
             OutlinedTextField(
                 value = "",
-                onValueChange = {  },
-                label = { Text("OutlinedTextField") }, maxLines = 2
+                onValueChange = { },
+                label = { Text("OutlinedTextField") },
+                maxLines = 2,
             )
         }
         item {
             TextField(
                 value = "",
-                onValueChange = {  },
-                label = { Text("OutlinedTextField") }, maxLines = 2
+                onValueChange = { },
+                label = { Text("OutlinedTextField") },
+                maxLines = 2,
             )
         }
         item {
-            Box(modifier = Modifier
-                .size(78.dp)
-                .fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .size(78.dp)
+                    .fillMaxWidth(),
+            ) {
                 Column {
                     Text(text = "Box")
                     OutlinedTextField(
                         value = "",
-                        onValueChange = {  },
-                        label = { Text("OutlinedTextField") }, maxLines = 2
+                        onValueChange = { },
+                        label = { Text("OutlinedTextField") },
+                        maxLines = 2,
                     )
                 }
             }
         }
 
         item {
-            Surface(modifier = Modifier
-                .size(78.dp)
-                .fillMaxWidth()) {
+            Surface(
+                modifier = Modifier
+                    .size(78.dp)
+                    .fillMaxWidth(),
+            ) {
                 Column {
                     Text(text = "Surface")
                     OutlinedTextField(
                         value = "",
-                        onValueChange = {  },
-                        label = { Text("OutlinedTextField") }, maxLines = 2
+                        onValueChange = { },
+                        label = { Text("OutlinedTextField") },
+                        maxLines = 2,
                     )
                 }
             }
         }
 
         item {
-            Card(modifier = Modifier
-                .size(78.dp)
-                .fillMaxWidth()) {
+            Card(
+                modifier = Modifier
+                    .size(78.dp)
+                    .fillMaxWidth(),
+            ) {
                 Column {
                     Text(text = "Card")
                     OutlinedTextField(
                         value = "",
-                        onValueChange = {  },
-                        label = { Text("OutlinedTextField") }, maxLines = 2
+                        onValueChange = { },
+                        label = { Text("OutlinedTextField") },
+                        maxLines = 2,
                     )
                 }
             }
         }
         item {
-            Box(modifier = Modifier
-                .size(78.dp)
-                .fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .size(78.dp)
+                    .fillMaxWidth(),
+            ) {
                 Column {
                     Text(text = "Box")
                     TextField(
                         value = "",
-                        onValueChange = {  },
-                        label = { Text("OutlinedTextField") }, maxLines = 2
+                        onValueChange = { },
+                        label = { Text("OutlinedTextField") },
+                        maxLines = 2,
                     )
                 }
             }
         }
 
         item {
-            Surface(modifier = Modifier
-                .size(78.dp)
-                .fillMaxWidth()) {
+            Surface(
+                modifier = Modifier
+                    .size(78.dp)
+                    .fillMaxWidth(),
+            ) {
                 Column {
                     Text(text = "Surface")
                     TextField(
                         value = "",
-                        onValueChange = {  },
-                        label = { Text("OutlinedTextField") }, maxLines = 2
+                        onValueChange = { },
+                        label = { Text("OutlinedTextField") },
+                        maxLines = 2,
                     )
                 }
             }
         }
 
         item {
-            Card(modifier = Modifier
-                .size(78.dp)
-                .fillMaxWidth()) {
+            Card(
+                modifier = Modifier
+                    .size(78.dp)
+                    .fillMaxWidth(),
+            ) {
                 Column {
                     Text(text = "Card")
                     TextField(
                         value = "",
-                        onValueChange = {  },
-                        label = { Text("OutlinedTextField") }, maxLines = 2
+                        onValueChange = { },
+                        label = { Text("OutlinedTextField") },
+                        maxLines = 2,
                     )
                 }
             }
         }
         item {
-            Button(modifier = Modifier
-                .size(78.dp)
-                .fillMaxWidth(), onClick = {}) {
+            Button(
+                modifier = Modifier
+                    .size(78.dp)
+                    .fillMaxWidth(),
+                onClick = {},
+            ) {
                 Text(text = "Button")
             }
         }
         item {
-            FloatingActionButton(modifier = Modifier
-                .size(78.dp)
-                .fillMaxWidth(), onClick = {}) {
+            FloatingActionButton(
+                modifier = Modifier
+                    .size(78.dp)
+                    .fillMaxWidth(),
+                onClick = {},
+            ) {
                 Text(text = "FloatingActionButton")
             }
         }

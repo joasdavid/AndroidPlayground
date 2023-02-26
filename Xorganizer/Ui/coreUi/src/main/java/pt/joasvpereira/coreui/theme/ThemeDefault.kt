@@ -128,17 +128,20 @@ private val DarkDefaultColorPalette = darkColorScheme(
 
 @SuppressLint("NewApi")
 @Composable
-fun defaultTheme(isDarkTheme: Boolean,
-                 isDynamicColor: Boolean,
+fun defaultTheme(
+    isDarkTheme: Boolean,
+    isDynamicColor: Boolean,
 ): Theme {
     val dynamicColor = isDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val colors = when {
         dynamicColor && isDarkTheme -> {
             dynamicDarkColorScheme(LocalContext.current)
         }
+
         dynamicColor && !isDarkTheme -> {
             dynamicLightColorScheme(LocalContext.current)
         }
+
         isDarkTheme -> DarkDefaultColorPalette
         else -> LightDefaultColorPalette
     }

@@ -12,7 +12,7 @@ import pt.joasvpereira.core.repository.local.entities.Division.Companion.SESSION
 import pt.joasvpereira.core.repository.local.entities.Division.Companion.TABLE_NAME
 
 @Dao
-interface  DivisionDao {
+interface DivisionDao {
     @Query("SELECT * FROM $TABLE_NAME WHERE $SESSION_ID = :fromSessionId")
     fun getAll(fromSessionId: Int): Flow<List<Division>>
 
@@ -22,7 +22,7 @@ interface  DivisionDao {
     @Insert
     fun insertDivision(division: Division)
 
-    @Update(onConflict =  OnConflictStrategy.REPLACE)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateDivision(division: Division)
 
     @Query("DELETE FROM $TABLE_NAME WHERE $ID = :id")

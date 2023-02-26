@@ -30,6 +30,7 @@ import pt.joasvpereira.xorganizer.presentation.compose.navigation.MainNavigation
 class MainActivity : ComponentActivity() {
 
     val viewModel by viewModel<MainViewModel>()
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,25 +38,28 @@ class MainActivity : ComponentActivity() {
         val splash = installSplashScreen()
         splash.setKeepOnScreenCondition { viewModel.isLoading }
         setContent {
-            val theme = get<ThemePreferencesDataSource>().getUserFromPreferencesStore().collectAsState(initial = ThemePreference(isMaterialYouEnabled = false, mode =ThemePreference.ThemeMode.DEFAULT))
+            val theme =
+                get<ThemePreferencesDataSource>().getUserFromPreferencesStore().collectAsState(initial = ThemePreference(isMaterialYouEnabled = false, mode = ThemePreference.ThemeMode.DEFAULT))
             theme.value.logThis(tag = "themeTest") {
                 "Value provided to LocalThemeConfig is $it"
             }
             CompositionLocalProvider(LocalThemeConfig provides theme.value) {
                 DynamicTheme {
-                    if (!viewModel.isLoading)
+                    if (!viewModel.isLoading) {
                         MainNavigation()
+                    }
                 }
             }
         }
     }
 }
 
-class MainViewModel(sessionsUseCase: ILoadSessionUseCase): ViewModel() {
+class MainViewModel(sessionsUseCase: ILoadSessionUseCase) : ViewModel() {
 
     private var _isLoading by mutableStateOf(true)
     val isLoading
-    get() = _isLoading
+        get() = _isLoading
+
     init {
         viewModelScope.launch {
             sessionsUseCase.execute(EmptyParams()).logThis(tag = "JVP") { "Load result = $it" }

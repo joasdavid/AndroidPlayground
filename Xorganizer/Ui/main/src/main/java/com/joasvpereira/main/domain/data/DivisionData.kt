@@ -6,5 +6,5 @@ abstract class DivisionData(
     val id: Int,
     val name: String,
     val description: String?,
-    val icon: DivisionIcon
+    val icon: DivisionIcon,
 )

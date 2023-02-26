@@ -9,7 +9,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.math.max
 
-
 @Composable
 fun OverFlowRow(
     modifier: Modifier = Modifier,
@@ -20,11 +19,10 @@ fun OverFlowRow(
             style = MaterialTheme.typography.labelSmall,
         )
     },
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-
     SubcomposeLayout(
-        modifier = modifier
+        modifier = modifier,
     ) { constraints ->
 
         val placeables = subcompose("01", content).map { it.measure(constraints) }
@@ -60,8 +58,9 @@ fun OverFlowRow(
                 xPosition += placeable.width + (spaceBetween.toPx().toInt())
                 counter++
             }
-            if (countOfItemsNotShown > 0)
+            if (countOfItemsNotShown > 0) {
                 pp.placeRelative(xPosition, 0)
+            }
         }
     }
 }

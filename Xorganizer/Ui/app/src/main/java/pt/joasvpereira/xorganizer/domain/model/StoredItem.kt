@@ -5,5 +5,5 @@ data class StoredItem(
     val name: String,
     val description: String,
     val tags: List<String>,
-    val isUsed: Boolean
+    val isUsed: Boolean,
 )

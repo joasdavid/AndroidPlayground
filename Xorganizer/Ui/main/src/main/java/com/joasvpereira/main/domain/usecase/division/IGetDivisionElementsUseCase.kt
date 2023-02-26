@@ -7,12 +7,12 @@ import pt.joasvpereira.core.domain.usecase.Params
 
 data class GetDivisionElementsParams(
     val divisionId: Int,
-    val filter: Filter = Filter.All
-): Params() {
+    val filter: Filter = Filter.All,
+) : Params() {
     sealed interface Filter {
-        object All: Filter
-        object OnlyItems: Filter
-        object OnlyBoxes: Filter
+        object All : Filter
+        object OnlyItems : Filter
+        object OnlyBoxes : Filter
     }
 }
 

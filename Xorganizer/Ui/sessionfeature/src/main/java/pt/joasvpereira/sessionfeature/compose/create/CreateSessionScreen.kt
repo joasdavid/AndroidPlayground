@@ -16,15 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.selector.UploadImagePlaceHolder
 import pt.joasvpereira.coreui.text.field.AppTextField
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 internal fun CreateSessionScreen(
-    onBackClick : () -> Unit,
+    onBackClick: () -> Unit,
     isLoading: Boolean,
     bitmap: Bitmap?,
     onUploadClick: () -> Unit,
@@ -32,26 +32,26 @@ internal fun CreateSessionScreen(
     sessionName: String,
     onSessionNameChange: (String) -> Unit,
     isButtonEnabled: Boolean,
-    onButtonCreateClick : () -> Unit,
-    onButtonDeleteClick : () -> Unit,
-    isOnEditMode: Boolean = false
+    onButtonCreateClick: () -> Unit,
+    onButtonDeleteClick: () -> Unit,
+    isOnEditMode: Boolean = false,
 ) {
     AppScaffold(
         toolBarConfig = ToolBarConfig(title = "", onLeftIconClick = onBackClick),
-        isLoading = isLoading
+        isLoading = isLoading,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 Modifier
                     .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 SimpleSpace(size = 60.dp)
                 UploadImagePlaceHolder(
                     emptyText = sessionName,
                     bitmap = bitmap,
                     onUploadClick = onUploadClick,
-                    onClearImageClick = onClearImageClick
+                    onClearImageClick = onClearImageClick,
                 )
                 SimpleSpace(size = 45.dp)
                 AppTextField(
@@ -64,7 +64,7 @@ internal fun CreateSessionScreen(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 40.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Button(
                     onClick = onButtonCreateClick,
@@ -73,16 +73,16 @@ internal fun CreateSessionScreen(
                     Text(
                         text = if (isOnEditMode) {
                             "Save profile"
-                        }  else {
+                        } else {
                             "Create new profile"
-                        }
+                        },
                     )
                 }
                 if (isOnEditMode) {
                     SimpleSpace(size = 20.dp)
                     Button(
                         onClick = onButtonDeleteClick,
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
                     ) {
                         Text(
                             text = "Delete",
@@ -109,7 +109,7 @@ private fun CreateSessionScreenPreview() {
             isButtonEnabled = true,
             isLoading = false,
             onButtonDeleteClick = {},
-            isOnEditMode = true
+            isOnEditMode = true,
         )
     }
 }

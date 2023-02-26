@@ -58,7 +58,7 @@ internal fun DashboardDivisionsSection(
     onDivisionClick: (DashboardDivision) -> Unit,
     onEditClick: (DashboardDivision) -> Unit,
     onDeleteClick: (DashboardDivision) -> Unit,
-    onAddNewItemClick: () -> Unit
+    onAddNewItemClick: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = "Devisions:", style = MaterialTheme.typography.titleLarge)
@@ -68,8 +68,8 @@ internal fun DashboardDivisionsSection(
                 start = 0.dp,
                 top = 16.dp,
                 end = 0.dp,
-                bottom = 16.dp
-            )
+                bottom = 16.dp,
+            ),
         ) {
             items(divisions.size, key = { index -> divisions[index].id }) { index: Int ->
                 DivisionItem(
@@ -86,25 +86,25 @@ internal fun DashboardDivisionsSection(
     }
 }
 
-
 @Composable
 private fun AddActionItem(
-    modifier: Modifier = Modifier, action: () -> Unit
+    modifier: Modifier = Modifier,
+    action: () -> Unit,
 ) {
     ItemContainer(
         modifier = modifier,
         clickAction = { action() },
-        color = Color.LightGray
+        color = Color.LightGray,
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 modifier = Modifier.size(90.dp),
                 imageVector = LineAwesomeIcons.PlusSolid,
                 contentDescription = "",
-                tint = Color.White
+                tint = Color.White,
             )
         }
     }
@@ -122,7 +122,7 @@ private fun DivisionItem(
         ItemContainer(
             modifier = modifier,
             clickAction = onItemClicked,
-            color = MaterialTheme.colorScheme.primaryContainer
+            color = MaterialTheme.colorScheme.primaryContainer,
         ) {
             var isExtraMenuOpen by remember {
                 mutableStateOf(false)
@@ -140,19 +140,19 @@ private fun DivisionItem(
                 Column(
                     Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 8.dp, vertical = 16.dp)
+                        .padding(horizontal = 8.dp, vertical = 16.dp),
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier = Modifier
                                 .background(MaterialTheme.colorScheme.onPrimaryContainer, shape = CircleShape)
-                                .padding(7.dp)
+                                .padding(7.dp),
                         ) {
                             Icon(
                                 painterResource(id = division.icon.resId),
                                 contentDescription = "Icon of ${division.icon.name}",
                                 modifier = Modifier.size(35.dp),
-                                tint = MaterialTheme.colorScheme.primaryContainer
+                                tint = MaterialTheme.colorScheme.primaryContainer,
                             )
                         }
 
@@ -164,7 +164,7 @@ private fun DivisionItem(
                             fontWeight = FontWeight.Bold,
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 2,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
                         )
                     }
 
@@ -175,19 +175,19 @@ private fun DivisionItem(
                             text = this,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
                     }
 
                     Spacer(modifier = Modifier.size(8.dp))
 
                     Row(
-                        modifier = Modifier
+                        modifier = Modifier,
                     ) {
                         IconAndCounter(
                             iconData = IconData(painterResource(R.drawable.ic_box), ""),
                             count = division.boxCount,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
 
                         Spacer(modifier = Modifier.size(8.dp))
@@ -195,12 +195,11 @@ private fun DivisionItem(
                         IconAndCounter(
                             iconData = IconData(
                                 painterResource(R.drawable.ic_baseline_build_24),
-                                ""
+                                "",
                             ),
                             count = division.itemCount,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
-
                     }
                 }
             }
@@ -210,7 +209,7 @@ private fun DivisionItem(
 
 private enum class DivisionExtraOptionType {
     EDIT,
-    DELETE
+    DELETE,
 }
 
 @Composable
@@ -218,14 +217,15 @@ private fun BoxScope.DivisionExtraOptions(
     isExtraMenuOpen: Boolean,
     division: DashboardDivision,
     onOpenStateChange: (Boolean) -> Unit,
-    onOptionClick: (DivisionExtraOptionType) -> Unit
+    onOptionClick: (DivisionExtraOptionType) -> Unit,
 ) {
     Box(
         modifier = Modifier.Companion
             .align(Alignment.TopEnd)
             .padding(top = 16.dp, end = 12.dp)
             .clip(CircleShape)
-            .clickable { onOpenStateChange(!isExtraMenuOpen) }) {
+            .clickable { onOpenStateChange(!isExtraMenuOpen) },
+    ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_small_options),
             contentDescription = "Options for division ${division.name}",
@@ -234,12 +234,12 @@ private fun BoxScope.DivisionExtraOptions(
             SingleExtraOption(
                 iconPainter = rememberVectorPainter(Icons.Default.Create),
                 text = "edit",
-                onClick = { onOptionClick(DivisionExtraOptionType.EDIT) }
+                onClick = { onOptionClick(DivisionExtraOptionType.EDIT) },
             )
             SingleExtraOption(
                 iconPainter = rememberVectorPainter(Icons.Default.Delete),
                 text = "delete",
-                onClick = { onOptionClick(DivisionExtraOptionType.DELETE) }
+                onClick = { onOptionClick(DivisionExtraOptionType.DELETE) },
             )
         }
     }
@@ -249,14 +249,14 @@ private fun BoxScope.DivisionExtraOptions(
 fun SingleExtraOption(
     iconPainter: Painter,
     text: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
             .height(48.dp)
             .fillMaxWidth()
             .clickable { onClick() },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         SimpleSpace(size = 2.dp)
         Icon(painter = iconPainter, contentDescription = null)
@@ -274,12 +274,12 @@ private fun SingleExtraOptionPreview() {
             SingleExtraOption(
                 iconPainter = rememberVectorPainter(Icons.Default.Delete),
                 text = "delete",
-                onClick = {}
+                onClick = {},
             )
             SingleExtraOption(
                 iconPainter = rememberVectorPainter(Icons.Default.Create),
                 text = "edit",
-                onClick = {}
+                onClick = {},
             )
         }
     }
@@ -290,7 +290,7 @@ private fun ItemContainer(
     modifier: Modifier = Modifier,
     clickAction: () -> Unit,
     color: Color = MaterialTheme.colorScheme.surface,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Surface(
         modifier
@@ -301,7 +301,7 @@ private fun ItemContainer(
                 clickAction()
             }
             .then(modifier),
-        color = color
+        color = color,
     ) {
         content()
     }
@@ -317,8 +317,8 @@ private fun StyleShape(modifier: Modifier) {
                 .size(40.dp)
                 .background(
                     color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = .4f),
-                    shape = CircleShape
-                )
+                    shape = CircleShape,
+                ),
         )
 
         Box(
@@ -328,8 +328,8 @@ private fun StyleShape(modifier: Modifier) {
                 .size(60.dp)
                 .background(
                     color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = .4f),
-                    shape = CircleShape
-                )
+                    shape = CircleShape,
+                ),
         )
 
         Box(
@@ -338,8 +338,8 @@ private fun StyleShape(modifier: Modifier) {
                 .size(90.dp)
                 .background(
                     color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = .7f),
-                    shape = RoundedCornerShape(topStart = 200.dp)
-                )
+                    shape = RoundedCornerShape(topStart = 200.dp),
+                ),
         )
     }
 }

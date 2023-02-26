@@ -46,14 +46,14 @@ enum class DropdownSelectorStates {
     ON_FOCUS,
     OUT_FOCUS,
     ERROR,
-    DISABLE
+    DISABLE,
 }
 
 private fun Modifier.border(parameters: StyleParameters) =
     this.border(
         width = parameters.width,
         color = parameters.color,
-        shape = parameters.shape
+        shape = parameters.shape,
     )
 
 @Composable
@@ -61,22 +61,22 @@ fun defaultBorderStyle(): StyleConfiguration = StyleConfiguration(
     unFocus = StyleParameters(
         width = 1.dp,
         color = MaterialTheme.colorScheme.outline,
-        shape = MaterialTheme.shapes.extraSmall
+        shape = MaterialTheme.shapes.extraSmall,
     ),
     focus = StyleParameters(
         width = 2.dp,
         color = MaterialTheme.colorScheme.primary,
-        shape = MaterialTheme.shapes.extraSmall
+        shape = MaterialTheme.shapes.extraSmall,
     ),
     error = StyleParameters(
         width = 2.dp,
         color = MaterialTheme.colorScheme.error,
-        shape = MaterialTheme.shapes.extraSmall
+        shape = MaterialTheme.shapes.extraSmall,
     ),
     disable = StyleParameters(
         width = 1.dp,
         color = MaterialTheme.colorScheme.outline,
-        shape = MaterialTheme.shapes.extraSmall
+        shape = MaterialTheme.shapes.extraSmall,
     ),
 )
 
@@ -88,14 +88,16 @@ data class StyleConfiguration(
 )
 
 data class StyleParameters(
-    val width: Dp, val color: Color, val shape: Shape
+    val width: Dp,
+    val color: Color,
+    val shape: Shape,
 )
 
 data class DropdownIcon(
     val vecImg: ImageVector,
     val contentDescription: String,
     val space: Dp,
-    val tint: Color? = null
+    val tint: Color? = null,
 )
 
 @Composable
@@ -106,7 +108,7 @@ fun <T> DropdownSelector(
     dropdownIcon: DropdownIcon? = DropdownIcon(
         vecImg = Icons.Filled.ArrowDropDown,
         contentDescription = "Arrow Down",
-        space = 5.dp
+        space = 5.dp,
     ),
     styleConfiguration: StyleConfiguration = defaultBorderStyle(),
     isError: Boolean = false,
@@ -115,12 +117,12 @@ fun <T> DropdownSelector(
     previewContent: @Composable (T?, DropdownSelectorStates) -> Unit,
     selectedOption: T? = options.firstOrNull(),
     onSelectedOptionChanges: (T) -> Unit,
-    expandableContent: @Composable (T) -> Unit
+    expandableContent: @Composable (T) -> Unit,
 ) {
     val borderParameters = when {
         isError -> styleConfiguration.error
         isDisabled -> styleConfiguration.disable.copy(
-            color = styleConfiguration.disable.color.copy(alpha = ContentAlpha.disabled)
+            color = styleConfiguration.disable.color.copy(alpha = ContentAlpha.disabled),
         )
         selectionOpenState -> styleConfiguration.focus
         else -> styleConfiguration.unFocus
@@ -144,7 +146,7 @@ fun <T> DropdownSelector(
         styleConfiguration,
         options,
         expandableContent,
-        onSelectedOptionChanges
+        onSelectedOptionChanges,
     )
 }
 
@@ -161,28 +163,29 @@ private fun <T> DropdownContainer(
     styleConfiguration: StyleConfiguration,
     options: List<T>,
     expandableContent: @Composable (T) -> Unit,
-    onSelectedOptionChanges: (T) -> Unit
+    onSelectedOptionChanges: (T) -> Unit,
 ) {
     var parentSize by remember { mutableStateOf(Size.Zero) }
     Row(
         Modifier
             .border(borderParameters)
             .clickable {
-                if (currentState != DropdownSelectorStates.DISABLE)
+                if (currentState != DropdownSelectorStates.DISABLE) {
                     onSelectionOpenStateChanges(!selectionOpenState)
+                }
             }
             .then(modifier)
             .onGloballyPositioned {
                 parentSize = it.size.toSize()
             },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         DropdownContent<T>(
             previewContent,
             selectedOption,
             currentState,
             dropdownIcon,
-            styleConfiguration
+            styleConfiguration,
         )
         ExpandableMenu(
             parentSize,
@@ -190,7 +193,7 @@ private fun <T> DropdownContainer(
             onSelectionOpenStateChanges,
             options,
             expandableContent,
-            onSelectedOptionChanges
+            onSelectedOptionChanges,
         )
     }
 }
@@ -201,17 +204,19 @@ private fun <T> DropdownContent(
     selectedOption: T?,
     currentState: DropdownSelectorStates,
     dropdownIcon: DropdownIcon?,
-    styleConfiguration: StyleConfiguration
+    styleConfiguration: StyleConfiguration,
 ) {
     Row(Modifier.padding(8.dp)) {
         Box(Modifier.weight(1f)) {
             previewContent(selectedOption, currentState)
         }
-        if (dropdownIcon != null) DropdownIconPlacer(
-            dropdownIcon = dropdownIcon,
-            styleConfiguration = styleConfiguration,
-            state = currentState
-        )
+        if (dropdownIcon != null) {
+            DropdownIconPlacer(
+                dropdownIcon = dropdownIcon,
+                styleConfiguration = styleConfiguration,
+                state = currentState,
+            )
+        }
     }
 }
 
@@ -219,7 +224,7 @@ private fun <T> DropdownContent(
 fun DropdownIconPlacer(
     dropdownIcon: DropdownIcon,
     styleConfiguration: StyleConfiguration,
-    state: DropdownSelectorStates
+    state: DropdownSelectorStates,
 ) {
     val tint = when (state) {
         DropdownSelectorStates.ERROR -> styleConfiguration.error.color
@@ -245,16 +250,18 @@ private fun <T> ExpandableMenu(
     onSelectionOpenStateChanges: (Boolean) -> Unit,
     options: List<T>,
     expandableContent: @Composable (T) -> Unit,
-    onSelectedOptionChanges: (T) -> Unit
+    onSelectedOptionChanges: (T) -> Unit,
 ) {
     DropdownMenu(
-        modifier = Modifier.width(with(LocalDensity.current) {
-            parentSize.width.toDp()
-        }),
+        modifier = Modifier.width(
+            with(LocalDensity.current) {
+                parentSize.width.toDp()
+            },
+        ),
         expanded = selectionOpenState,
         onDismissRequest = {
             onSelectionOpenStateChanges(false)
-        }
+        },
     ) {
         options.forEach {
             DropdownMenuItem(text = { expandableContent(it) }, onClick = {
@@ -286,10 +293,9 @@ fun DropdownSelectorPreview() {
                 }
             },
             expandableContent = {
-
             },
             onSelectedOptionChanges = {},
-            isError = true
+            isError = true,
         )
         SimpleSpace(size = 10.dp)
         DropdownSelector<Any>(
@@ -304,9 +310,8 @@ fun DropdownSelectorPreview() {
                 Text(text = "this is a theme")
             },
             expandableContent = {
-
             },
-            onSelectedOptionChanges = {}
+            onSelectedOptionChanges = {},
         )
         SimpleSpace(size = 10.dp)
         DropdownSelector<Any>(
@@ -317,13 +322,13 @@ fun DropdownSelectorPreview() {
             isDisabled = true,
             options = listOf(),
             previewContent = { _, state ->
-                if (state != DropdownSelectorStates.DISABLE)
+                if (state != DropdownSelectorStates.DISABLE) {
                     Text(text = "this is a theme")
+                }
             },
             expandableContent = {
-
             },
-            onSelectedOptionChanges = {}
+            onSelectedOptionChanges = {},
         )
         SimpleSpace(size = 10.dp)
         DropdownSelector<Any>(
@@ -336,13 +341,12 @@ fun DropdownSelectorPreview() {
             previewContent = { _, _ ->
                 Text(
                     text = "this is a theme",
-                    color = Color.Unspecified.copy(alpha = ContentAlpha.disabled)
+                    color = Color.Unspecified.copy(alpha = ContentAlpha.disabled),
                 )
             },
             expandableContent = {
-
             },
-            onSelectedOptionChanges = {}, dropdownIcon = null, selectedOption = null
+            onSelectedOptionChanges = {}, dropdownIcon = null, selectedOption = null,
         )
 
         SimpleSpace(size = 10.dp)
@@ -356,10 +360,11 @@ fun DropdownSelectorPreview() {
                 Icon(imageVector = Icons.Filled.Person, contentDescription = "", modifier = Modifier.size(24.dp))
             },
             expandableContent = {
-
             },
-            onSelectedOptionChanges = {}, dropdownIcon = DropdownIcon(Icons.Filled.ArrowDropDown, "",20.dp), selectedOption = null,
-            modifier = Modifier.width(90.dp).height(40.dp)
+            onSelectedOptionChanges = {}, dropdownIcon = DropdownIcon(Icons.Filled.ArrowDropDown, "", 20.dp), selectedOption = null,
+            modifier = Modifier
+                .width(90.dp)
+                .height(40.dp),
         )
     }
 }

@@ -13,7 +13,7 @@ class DivisionUseCase(private val dataSource: DivisionDataSource) : IDivisionUse
                 name = name,
                 description = description,
                 icon = runCatching { DivisionIcons.getBy(iconId)!! }.getOrDefault(DivisionIcons.home),
-                themeOption = ThemeOption.getBy(themeId)
+                themeOption = ThemeOption.getBy(themeId),
             )
         }
     }

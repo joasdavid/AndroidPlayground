@@ -11,28 +11,28 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.settings.compose.main.SettingsSection
 import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSelectableOption
 import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSwitch
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 internal fun ThemeSettingsSection(
     modifier: Modifier = Modifier,
-    hasMaterialYou : Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
-    isMaterialYouEnabled : Boolean,
-    onMaterialYouSwitchChange : (Boolean) -> Unit,
-    themeModeSelectedOption : Int,
-    onThemeModeChange : (Int) -> Unit
+    hasMaterialYou: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
+    isMaterialYouEnabled: Boolean,
+    onMaterialYouSwitchChange: (Boolean) -> Unit,
+    themeModeSelectedOption: Int,
+    onThemeModeChange: (Int) -> Unit,
 ) {
     SettingsSection(
         modifier = modifier,
-        sectionName = "Theme"
+        sectionName = "Theme",
     ) {
         if (hasMaterialYou) {
             EntryWithSwitch(
                 text = "Use Material you",
                 description = "When turn on will use the system colors as your default theme instead of the app default theme.",
                 checked = isMaterialYouEnabled,
-                onCheckedChange = { onMaterialYouSwitchChange(it) }
+                onCheckedChange = { onMaterialYouSwitchChange(it) },
             )
 
             SimpleSpace(size = 20.dp)
@@ -48,7 +48,7 @@ internal fun ThemeSettingsSection(
                   - Dark, will force the app to be on Dark mode;
             """.trimIndent(),
             selectedOption = themeModeSelectedOption,
-            onOptionChanged = onThemeModeChange
+            onOptionChanged = onThemeModeChange,
         )
 
         SimpleSpace(size = 20.dp)
@@ -70,7 +70,7 @@ private fun ThemeSettingsSectionPreview() {
                 onMaterialYouSwitchChange = {},
                 themeModeSelectedOption = 2,
                 onThemeModeChange = {},
-                )
+            )
         }
     }
 }

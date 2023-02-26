@@ -39,11 +39,11 @@ fun DivisionHeader(
     nrFolders: Int,
     nrItems: Int,
     modifier: Modifier,
-    shouldDisplayWithoutAnimation: Boolean = false
+    shouldDisplayWithoutAnimation: Boolean = false,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         SimpleSpace(size = 20.dp)
         val total = nrItems.toFloat() + nrFolders.toFloat()
@@ -68,11 +68,11 @@ fun DivisionChart(
     percentageItems: Float,
     shieldImg: Int,
     modifier: Modifier,
-    shouldDisplayWithoutAnimation: Boolean = false
+    shouldDisplayWithoutAnimation: Boolean = false,
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(contentAlignment = Alignment.Center) {
             CircleChart(
@@ -87,7 +87,7 @@ fun DivisionChart(
             Icon(
                 painter = painterResource(id = shieldImg),
                 contentDescription = null,
-                modifier = Modifier.size(25.dp)
+                modifier = Modifier.size(25.dp),
             )
         }
         SimpleSpace(size = 20.dp)
@@ -96,7 +96,7 @@ fun DivisionChart(
                 Box(
                     modifier = Modifier
                         .size(15.dp)
-                        .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
+                        .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape),
                 )
                 SimpleSpace(size = 5.dp)
                 Text(text = "Boxes: $nrFolders")
@@ -106,7 +106,7 @@ fun DivisionChart(
                 Box(
                     modifier = Modifier
                         .size(15.dp)
-                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
+                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                 )
                 SimpleSpace(size = 5.dp)
                 Text(text = "Items: $nrItems")
@@ -128,7 +128,7 @@ fun buildChartItems(
 
 data class CircleChartItem(
     val percentage: Float,
-    val color: Color
+    val color: Color,
 )
 
 @Composable
@@ -139,12 +139,12 @@ fun CircleChart(
     strokeSize: Dp = 20.dp,
     innerPadding: Dp = 16.dp,
     delay: Int = 0,
-    shouldDisplayWithoutAnimation : Boolean = false
+    shouldDisplayWithoutAnimation: Boolean = false,
 ) {
     var animationPlayed by remember { mutableStateOf(shouldDisplayWithoutAnimation) }
     val progressValue: Float by animateFloatAsState(
         targetValue = if (animationPlayed) 360f else 0f,
-        animationSpec = tween(durationMillis = 3000, delayMillis = delay)
+        animationSpec = tween(durationMillis = 3000, delayMillis = delay),
     )
 
     LaunchedEffect(key1 = true) {
@@ -154,14 +154,14 @@ fun CircleChart(
     Canvas(
         modifier = Modifier
             .padding(innerPadding)
-            .size(radius * 2)
+            .size(radius * 2),
     ) {
         drawArc(
             color = backgroundColor,
             startAngle = -90f,
             sweepAngle = 360f,
             useCenter = false,
-            style = Stroke(width = strokeSize.toPx())
+            style = Stroke(width = strokeSize.toPx()),
         )
 
         items.sortedByDescending { it.percentage }.forEach {
@@ -172,7 +172,7 @@ fun CircleChart(
                 useCenter = false,
                 style = Stroke(
                     width = strokeSize.toPx(),
-                )
+                ),
             )
         }
     }
@@ -180,20 +180,20 @@ fun CircleChart(
 
 @Preview
 @Composable
-private fun CircleChartPreview(){
-DynamicTheme() {
-    Box(modifier = Modifier.size(60.dp), contentAlignment = Alignment.Center) {
-        CircleChart(
-            items = buildChartItems(1f, .25f),
-            backgroundColor = MaterialTheme.colorScheme.outline.copy(alpha = .5f),
-            radius = 25.dp,
-            strokeSize = 10.dp,
-            innerPadding = 0.dp,
-            delay = 0,
-            shouldDisplayWithoutAnimation = true
-        )
+private fun CircleChartPreview() {
+    DynamicTheme {
+        Box(modifier = Modifier.size(60.dp), contentAlignment = Alignment.Center) {
+            CircleChart(
+                items = buildChartItems(1f, .25f),
+                backgroundColor = MaterialTheme.colorScheme.outline.copy(alpha = .5f),
+                radius = 25.dp,
+                strokeSize = 10.dp,
+                innerPadding = 0.dp,
+                delay = 0,
+                shouldDisplayWithoutAnimation = true,
+            )
+        }
     }
-}
 }
 
 @Preview
@@ -207,7 +207,7 @@ fun DivisionChartPreview() {
             percentageItems = .25f,
             shieldImg = DivisionIcons.cactus.resId,
             modifier = Modifier,
-            shouldDisplayWithoutAnimation = true
+            shouldDisplayWithoutAnimation = true,
         )
     }
 }
@@ -221,7 +221,7 @@ private fun DivisionHeaderPreview() {
             nrFolders = 9,
             nrItems = 49,
             modifier = Modifier,
-            shouldDisplayWithoutAnimation = true
+            shouldDisplayWithoutAnimation = true,
         )
     }
 }

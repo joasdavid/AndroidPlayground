@@ -30,21 +30,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import kotlin.reflect.KProperty
 
 inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit): Modifier = composed {
-    clickable(indication = null,
-        interactionSource = remember { MutableInteractionSource() }) {
+    clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() },
+    ) {
         onClick()
     }
 }
 
 class UnderMenuScaffoldState(
     private val direction: SlideDirection = SlideDirection.RIGHT,
-    isOpenInit: Boolean = false
+    isOpenInit: Boolean = false,
 ) {
     private var isOpenState: MutableState<Boolean> = mutableStateOf(isOpenInit)
 
@@ -94,19 +95,20 @@ class UnderMenuScaffoldState(
 fun rememberUnderMenuScaffold(direction: SlideDirection = SlideDirection.RIGHT): UnderMenuScaffoldState =
     remember {
         UnderMenuScaffoldState(
-            direction = direction
+            direction = direction,
         )
     }
 
 enum class SlideDirection {
     LEFT,
-    RIGHT
+    RIGHT,
 }
 
 fun View.screenShotMe(): Bitmap {
     val bitmap = Bitmap.createBitmap(
         this.width,
-        this.height, Bitmap.Config.ARGB_8888
+        this.height,
+        Bitmap.Config.ARGB_8888,
     )
     val canvas = Canvas(bitmap)
     this.draw(canvas)
@@ -118,7 +120,7 @@ fun UnderMenuScaffold(
     state: UnderMenuScaffoldState = rememberUnderMenuScaffold(),
     animationDurationMillis: Int = 1500,
     menuContent: @Composable () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         menuDisplay(menuContent)
@@ -130,7 +132,7 @@ fun UnderMenuScaffold(
 private fun menuDisplay(menuContent: @Composable () -> Unit) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         menuContent()
     }
@@ -141,31 +143,32 @@ private fun mainDisplay(
     state: UnderMenuScaffoldState,
     animationDurationMillis: Int,
     maxWidth: Int,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val scaAnime by animateFloatAsState(
         targetValue = state.provideScale(),
-        animationSpec = TweenSpec(animationDurationMillis)
+        animationSpec = TweenSpec(animationDurationMillis),
     )
     val roundedCorner = if (scaAnime == 1f) 0.dp else 30.dp
     val xOffAnime by animateIntAsState(
         targetValue = state.provideOffset(maxWidth).toInt(),
-        animationSpec = TweenSpec(animationDurationMillis)
+        animationSpec = TweenSpec(animationDurationMillis),
     )
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .offset {
-            IntOffset(xOffAnime, 0)
-        }
-        .scale(
-            scaAnime,
-        )
-        .clip(RoundedCornerShape(roundedCorner))
-        .noRippleClickable {
-            if (state.isOpen) {
-                state.closeMenu()
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .offset {
+                IntOffset(xOffAnime, 0)
             }
-        }
+            .scale(
+                scaAnime,
+            )
+            .clip(RoundedCornerShape(roundedCorner))
+            .noRippleClickable {
+                if (state.isOpen) {
+                    state.closeMenu()
+                }
+            },
     ) {
         if (state.previewBitmap != null) {
             bitmapDisplay(bitmap = state.previewBitmap!!)
@@ -179,7 +182,7 @@ private fun mainDisplay(
 private fun bitmapDisplay(bitmap: Bitmap) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Image(painter = BitmapPainter(bitmap.asImageBitmap()), contentDescription = "")
     }
@@ -192,7 +195,8 @@ fun UnderMenuScaffoldPreview() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White), contentAlignment = Alignment.Center
+                .background(Color.White),
+            contentAlignment = Alignment.Center,
         ) {
             Text(text = "THIS IS SCREEN BODY")
         }

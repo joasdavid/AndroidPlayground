@@ -9,9 +9,8 @@ import pt.joasvpereira.coreui.theme.ThemeOption
 @Composable
 fun ItemDetailScreen(
     viewModel: ItemDetailScreenViewModel,
-    navController: NavController?
+    navController: NavController?,
 ) {
-
     viewModel.notFoundPopupState.onButtonPositiveClick = {
         navController?.popBackStack()
     }
@@ -23,7 +22,7 @@ fun ItemDetailScreen(
             isLoading = viewModel.state.isLoading,
             createPopupState = viewModel.updateDetailsState,
             deleteItemPopupState = viewModel.deleteItemState,
-            notFoundState = viewModel.notFoundPopupState
+            notFoundState = viewModel.notFoundPopupState,
         )
     }
 }

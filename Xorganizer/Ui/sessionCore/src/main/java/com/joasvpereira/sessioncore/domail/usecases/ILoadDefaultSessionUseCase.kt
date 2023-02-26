@@ -9,12 +9,11 @@ import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.core.domain.usecase.EmptyParams
 import pt.joasvpereira.core.repository.CurrentSession
 
-
 interface ILoadSessionUseCase : BaseUseCaseSync<EmptyParams, Boolean>
 
 class LoadSessionUseCase(
     private val sessionsUseCase: ISessionsUseCase,
-    private val sessionPreferencesDataSource: SessionPreferencesDataSource
+    private val sessionPreferencesDataSource: SessionPreferencesDataSource,
 ) : ILoadSessionUseCase {
 
     override suspend fun execute(params: EmptyParams): Boolean = withContext(Dispatchers.IO) {

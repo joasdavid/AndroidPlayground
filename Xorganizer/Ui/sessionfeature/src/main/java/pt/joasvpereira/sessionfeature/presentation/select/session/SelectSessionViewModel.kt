@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pt.joasvpereira.core.domain.usecase.EmptyParams
 
-class SelectSessionViewModel(private val sessionUseCase: ISessionsUseCase): ViewModel() {
+class SelectSessionViewModel(private val sessionUseCase: ISessionsUseCase) : ViewModel() {
 
     val state = mutableStateOf(SelectSessionFeatureState(isLoading = true))
 
@@ -21,11 +21,9 @@ class SelectSessionViewModel(private val sessionUseCase: ISessionsUseCase): View
     }
 
     fun load() {
-
     }
 
     fun toggleEditMode() {
         state.value = state.value.copy(isEditMode = !state.value.isEditMode)
     }
-
 }

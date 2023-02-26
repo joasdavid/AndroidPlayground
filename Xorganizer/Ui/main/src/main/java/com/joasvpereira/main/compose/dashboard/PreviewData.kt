@@ -13,7 +13,7 @@ object PreviewData {
             icon = DivisionIcons.desk,
             boxCount = 0,
             itemCount = 0,
-            themeOption = ThemeOption.THEME_BLUE
+            themeOption = ThemeOption.THEME_BLUE,
         ),
         DashboardDivision(
             id = 1,
@@ -22,7 +22,7 @@ object PreviewData {
             icon = DivisionIcons.garden,
             boxCount = 0,
             itemCount = 0,
-            themeOption = ThemeOption.THEME_DEFAULT
+            themeOption = ThemeOption.THEME_DEFAULT,
         ),
         DashboardDivision(
             id = 2,
@@ -31,7 +31,7 @@ object PreviewData {
             icon = DivisionIcons.hanger,
             boxCount = 0,
             itemCount = 0,
-            themeOption = ThemeOption.THEME_GREEN
+            themeOption = ThemeOption.THEME_GREEN,
         ),
         DashboardDivision(
             id = 3,
@@ -40,7 +40,7 @@ object PreviewData {
             icon = DivisionIcons.bathtub,
             boxCount = 0,
             itemCount = 0,
-            themeOption = ThemeOption.THEME_GREEN
-        )
+            themeOption = ThemeOption.THEME_GREEN,
+        ),
     )
 }

@@ -10,10 +10,9 @@ val LightGreen200 = Color(0xFFA5D6A7)
 val LightGreen500 = Color(0xFF4CAF50)
 val LightGreen700 = Color(0xFF689F38)
 val Cyan200 = Color(0xFF80DEEA)
-    val Cyan500 = Color(0xFF00BCD4)
+val Cyan500 = Color(0xFF00BCD4)
 val Cyan700 = Color(0xFF0097A7)
 val White = Color.White
-
 
 val Blue10 = Color(0xFF000F5E)
 val Blue20 = Color(0xFF001E92)
@@ -55,7 +54,6 @@ val BlueGrey50 = Color(0xFF767680)
 val BlueGrey60 = Color(0xFF90909A)
 val BlueGrey80 = Color(0xFFC6C5D0)
 val BlueGrey90 = Color(0xFFE2E1EC)
-
 
 val seed = Color(0xFF00bcd4)
 val error = Color(0xFFba1b1b)

@@ -27,7 +27,7 @@ import pt.joasvpereira.xorganizer.presentation.compose.DropdownSelector
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThemeSelector(
-    onThemeChosen: (ThemeOption) -> Unit
+    onThemeChosen: (ThemeOption) -> Unit,
 ) {
     val list = getAllThemesDetails()
     var selection by remember { mutableStateOf(list.firstOrNull()?.first) }
@@ -53,12 +53,13 @@ fun ThemeSelector(
         onSelectedOptionChanges = {
             selection = it.first
             onThemeChosen(it.first)
-        }
+        },
     ) {
         Row(
             Modifier
                 .heightIn(min = 48.dp)
-                .padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically
+                .padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             ThemeColorsIndicator(size = 24.dp, themeOption = it.first)
             SimpleSpace(size = 5.dp)
@@ -70,7 +71,7 @@ fun ThemeSelector(
 @Preview
 @Composable
 fun ThemeSelectorPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         ThemeSelector(onThemeChosen = {})
     }
 }
