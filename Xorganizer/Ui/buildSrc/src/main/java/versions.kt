@@ -3,6 +3,7 @@
 object Versions {
     const val gradlePlugin = "7.3.1"
     const val kotlin = "1.7.20"
+    const val ktlint = "11.2.0"
     const val kotlinCompiler = "1.5.21"
 
     const val androidXCore = "1.9.0"
