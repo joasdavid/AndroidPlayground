@@ -19,12 +19,6 @@ import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
-fun ThemePreference.ThemeMode.getId(): Int = when (this) {
-    ThemePreference.ThemeMode.DEFAULT -> 0
-    ThemePreference.ThemeMode.LIGHT -> 1
-    ThemePreference.ThemeMode.DARK -> 2
-}
-
 @Composable
 fun SettingsMainView(
     onBackClick: () -> Unit,
@@ -68,17 +62,8 @@ fun SettingsMainView(
                     hasMaterialYou = hasMaterialYou,
                     isMaterialYouEnabled = isMaterialYouEnabled,
                     onMaterialYouSwitchChange = onMaterialYouSwitchChange,
-                    themeModeSelectedOption = themeModeSelectedOption.getId(),
-                    onThemeModeChange = {
-                        // TODO: this need to be refactor
-                        onThemeModeChange(
-                            when (it) {
-                                1 -> ThemePreference.ThemeMode.LIGHT
-                                2 -> ThemePreference.ThemeMode.DARK
-                                else -> ThemePreference.ThemeMode.DEFAULT
-                            },
-                        )
-                    },
+                    themeModeSelectedOption = themeModeSelectedOption,
+                    onThemeModeChange = onThemeModeChange,
                 )
             }
         }
@@ -118,7 +103,7 @@ fun SettingsMainViewPreview(@PreviewParameter(ThemesProvider::class) theme: Them
             hasMaterialYou = true,
             isMaterialYouEnabled = false,
             onMaterialYouSwitchChange = {},
-            themeModeSelectedOption = ThemePreference.ThemeMode.LIGHT,
+            themeModeSelectedOption = ThemePreference.ThemeMode.DEFAULT,
             onThemeModeChange = {},
             onLogout = {},
         )

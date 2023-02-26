@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_mode_default_lable">Default</string>
+    <string name="theme_mode_light_lable">Light</string>
+    <string name="theme_mode_dark_lable">Dark</string>
+</resources>
