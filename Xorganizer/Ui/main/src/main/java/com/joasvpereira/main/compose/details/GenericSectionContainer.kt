@@ -28,27 +28,28 @@ import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class HeaderClickableIcon(
     val iconPainter: Painter,
-    val onClick: () -> Unit
+    val onClick: () -> Unit,
 )
 
 @Composable
 fun GenericSectionContainer(
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     headerText: String,
     headerStartPadding: Dp = 10.dp,
     headerEndPadding: Dp = 10.dp,
     clickableIcon: HeaderClickableIcon? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(modifier) {
-        Row(modifier = Modifier
-            .padding(start = headerStartPadding)
-            .padding(end = headerEndPadding)
+        Row(
+            modifier = Modifier
+                .padding(start = headerStartPadding)
+                .padding(end = headerEndPadding),
         ) {
             Text(
                 text = headerText,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
             clickableIcon?.run {
                 Icon(
@@ -58,14 +59,15 @@ fun GenericSectionContainer(
                         .size(24.dp)
                         .padding(2.dp)
                         .clip(CircleShape)
-                        .clickable { onClick() }
+                        .clickable { onClick() },
                 )
             }
         }
         SimpleSpace(size = 5.dp)
-        Card(Modifier
-            .fillMaxWidth(),
-            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp)
+        Card(
+            Modifier
+                .fillMaxWidth(),
+            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp),
         ) {
             content()
         }
@@ -81,9 +83,9 @@ private fun GenericSectionContainerPreview() {
             headerText = "Header",
             clickableIcon = HeaderClickableIcon(
                 iconPainter = rememberVectorPainter(image = Icons.Default.Edit),
-                onClick = {}
+                onClick = {},
             ),
-            content = { SimpleSpace(size = 100.dp) }
+            content = { SimpleSpace(size = 100.dp) },
         )
     }
 }

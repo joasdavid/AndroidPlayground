@@ -16,7 +16,7 @@ import pt.joasvpereira.coreui.theme.ThemeOption
 class MyDivisionsUseCase(
     private val dataSource: DivisionDataSource,
     private val boxDataSource: BoxDataSource,
-    private val itemDataSource: ItemDataSource
+    private val itemDataSource: ItemDataSource,
 ) : IDivisionsUseCase {
     override suspend fun execute(params: EmptyParams): Flow<List<DashboardDivision>> {
         val divisionsFlow = dataSource.getDivisions()
@@ -35,10 +35,10 @@ class MyDivisionsUseCase(
                         icon = DivisionIcons.getBy(it.iconId) ?: DivisionIcons.home,
                         boxCount = boxCountAndParentIds.find { singleCount -> singleCount.parentDivisionId == it.id!! }?.count ?: 0,
                         itemCount = itemCountAndParentIds.find { singleCount -> singleCount.parentDivisionId == it.id!! }?.count ?: 0,
-                        themeOption = ThemeOption.values()[it.themeId]
+                        themeOption = ThemeOption.values()[it.themeId],
                     )
                 }
-            }
+            },
         )
     }
 }

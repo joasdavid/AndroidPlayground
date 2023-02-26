@@ -40,19 +40,19 @@ import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
-import pt.joasvpereira.sessionfeature.R
 import pt.joasvpereira.core.domain.data.SessionItem
+import pt.joasvpereira.sessionfeature.R
 
 @Composable
 internal fun SelectSessionScreen(
     sessionItems: List<SessionItem>?,
     isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
-    onProfileClicked: () -> Unit
+    onProfileClicked: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         SimpleSpace(100.dp)
         Text("Please Select your profile:", style = MaterialTheme.typography.titleLarge)
@@ -68,7 +68,7 @@ private fun SessionsContent(
     sessionItems: List<SessionItem>,
     isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
-    onCreateNewSession: () -> Unit
+    onCreateNewSession: () -> Unit,
 ) {
     if (sessionItems.isEmpty()) {
         SessionsContentEmpty(onCreateNewSession)
@@ -81,7 +81,6 @@ private sealed class SessionsContentItemTypes {
     data class SessionType(val item: SessionItem) : SessionsContentItemTypes()
     object CreateType : SessionsContentItemTypes()
 }
-
 
 @Composable
 private fun SessionsContentList(
@@ -105,12 +104,12 @@ private fun SessionsContentList(
             val isLast = it.value.size == 1
             Pair(
                 it.value[0].value,
-                if (isLast) null else it.value[1].value
+                if (isLast) null else it.value[1].value,
             )
         }
     LazyColumn(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         items(workingList) {
             ContentListLine(pair = it, isEditMode, onSessionSelected = onSessionSelected, onCreateNewSession = onCreateNewSession)
@@ -129,7 +128,7 @@ private fun ContentListLine(
         Modifier
             .fillMaxWidth()
             .padding(bottom = 30.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         pair.toList().forEach {
             when (it) {
@@ -144,7 +143,7 @@ private fun ContentListLine(
                 is SessionsContentItemTypes.SessionType -> ContentListLineItemSession(
                     sessionItem = it.item,
                     isEditMode = isEditMode,
-                    onSessionSelected = onSessionSelected
+                    onSessionSelected = onSessionSelected,
                 )
 
                 null -> SimpleSpace(size = 60.dp)
@@ -159,7 +158,6 @@ private fun ContentListLineItemSession(
     isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
 ) {
-
     var modifier: Modifier = Modifier
     if (isEditMode) {
         val infiniteTransition = rememberInfiniteTransition()
@@ -168,8 +166,8 @@ private fun ContentListLineItemSession(
             targetValue = 25F,
             animationSpec = infiniteRepeatable(
                 animation = tween(1000, easing = LinearEasing),
-                repeatMode = RepeatMode.Reverse
-            )
+                repeatMode = RepeatMode.Reverse,
+            ),
         )
         modifier = modifier.rotate(angle)
     }
@@ -179,14 +177,14 @@ private fun ContentListLineItemSession(
             modifier = modifier,
             onClick = {
                 onSessionSelected(sessionItem)
-            }
+            },
         ) {
             if (sessionItem.image != null) {
                 Image(
                     bitmap = sessionItem.image!!.asImageBitmap(),
                     contentDescription = "",
                     Modifier.size(60.dp),
-                    contentScale = ContentScale.FillBounds
+                    contentScale = ContentScale.FillBounds,
                 )
             } else {
                 Image(
@@ -196,7 +194,7 @@ private fun ContentListLineItemSession(
                         .size(60.dp)
                         .padding(10.dp),
                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer),
-                    contentScale = ContentScale.FillBounds
+                    contentScale = ContentScale.FillBounds,
                 )
             }
         }
@@ -206,14 +204,14 @@ private fun ContentListLineItemSession(
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
             textAlign = TextAlign.Center,
-            modifier = Modifier.width(80.dp)
+            modifier = Modifier.width(80.dp),
         )
     }
 }
 
 @Composable
 private fun ContentListLineItemCreateSession(
-    onCreateNewSession: () -> Unit
+    onCreateNewSession: () -> Unit,
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         CreateProfileButton {
@@ -227,14 +225,14 @@ private fun SessionsContentEmpty(onCreateNewSession: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CreateProfileButton(onCreateNewSession)
         SimpleSpace(size = 48.dp)
         Text(
             text = "No profile is yet created\nplese tap on the button to create the first profile",
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.labelMedium
+            style = MaterialTheme.typography.labelMedium,
         )
     }
 }
@@ -245,7 +243,7 @@ private fun CreateProfileButton(onCreateNewSession: () -> Unit) {
         Icon(
             imageVector = LineAwesomeIcons.PlusSolid,
             contentDescription = "",
-            tint = MaterialTheme.colorScheme.onPrimaryContainer
+            tint = MaterialTheme.colorScheme.onPrimaryContainer,
         )
     }
 }
@@ -261,7 +259,7 @@ private fun ItemContainer(modifier: Modifier = Modifier, onClick: () -> Unit, co
                 onClick()
             }
             .then(modifier),
-        color = MaterialTheme.colorScheme.primaryContainer
+        color = MaterialTheme.colorScheme.primaryContainer,
     ) {
         content()
     }
@@ -270,28 +268,32 @@ private fun ItemContainer(modifier: Modifier = Modifier, onClick: () -> Unit, co
 @Preview
 @Composable
 private fun SelectSessionScreenPreview() {
-    SelectSessionScreen(sessionItems = listOf(
-        SessionItem(
-            id = 0,
-            image = null,
-            name = "session 1"
+    SelectSessionScreen(
+        sessionItems = listOf(
+            SessionItem(
+                id = 0,
+                image = null,
+                name = "session 1",
+            ),
+            SessionItem(
+                id = 0,
+                image = null,
+                name = "Casa",
+            ),
+            SessionItem(
+                id = 0,
+                image = null,
+                name = "Garagem",
+            ),
+            SessionItem(
+                id = 0,
+                image = null,
+                name = "Garagem",
+            ),
         ),
-        SessionItem(
-            id = 0,
-            image = null,
-            name = "Casa"
-        ),
-        SessionItem(
-            id = 0,
-            image = null,
-            name = "Garagem"
-        ),
-        SessionItem(
-            id = 0,
-            image = null,
-            name = "Garagem"
-        ),
-    ), onSessionSelected = {}, onProfileClicked = {})
+        onSessionSelected = {},
+        onProfileClicked = {},
+    )
 }
 
 @Preview

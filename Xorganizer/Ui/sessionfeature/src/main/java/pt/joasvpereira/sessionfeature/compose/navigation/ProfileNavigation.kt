@@ -20,10 +20,10 @@ internal fun NavController.navigateToSelectProfile() {
 private const val SELECT_PROFILE_ROUTE = "select_profile"
 fun NavGraphBuilder.composableSelectProfile(
     navController: NavController,
-    onProfileSelected: (session: SessionItem) -> Unit
+    onProfileSelected: (session: SessionItem) -> Unit,
 ) {
     composable(
-        SELECT_PROFILE_ROUTE
+        SELECT_PROFILE_ROUTE,
     ) {
         SelectSessionFeatureScreen(getViewModel(), navController = navController) {
             CurrentSession.sessionIdFlow.value = it.id
@@ -42,14 +42,15 @@ internal fun NavController.navigateToCreateProfile() {
     navigate(CREATE_OR_UPDATE_BASE_ROUTE)
 }
 
-fun NavController.navigateToUpdateProfile(profileId : Int) {
+fun NavController.navigateToUpdateProfile(profileId: Int) {
     navigate("$CREATE_OR_UPDATE_BASE_ROUTE?$CREATE_OR_UPDATE_PARAM_ID=$profileId")
 }
 
 private const val CREATE_OR_UPDATE_FULL_ROUTE = "$CREATE_OR_UPDATE_BASE_ROUTE?$CREATE_OR_UPDATE_PARAM_ID={$CREATE_OR_UPDATE_PARAM_ID}"
 fun NavGraphBuilder.composableCreateSession(navController: NavController) {
-    composable(CREATE_OR_UPDATE_FULL_ROUTE,
-        arguments = listOf(navArgument(CREATE_OR_UPDATE_PARAM_ID) { defaultValue = -1 })
+    composable(
+        CREATE_OR_UPDATE_FULL_ROUTE,
+        arguments = listOf(navArgument(CREATE_OR_UPDATE_PARAM_ID) { defaultValue = -1 }),
     ) {
         val id = it.arguments?.getInt(CREATE_OR_UPDATE_PARAM_ID)
         CreateSessionFeatureScreen(id, getViewModel(), navController = navController)

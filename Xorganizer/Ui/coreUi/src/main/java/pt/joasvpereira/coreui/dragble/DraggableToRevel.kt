@@ -50,18 +50,18 @@ import kotlin.math.roundToInt
 
 class DraggableToRevelState(
     var offsetXInit: Float = 0f,
-    val direction: RevelDirection
+    val direction: RevelDirection,
 ) {
 
     enum class RevelDirection {
         LEFT,
-        RIGHT
+        RIGHT,
     }
 
     private fun <T : Number> valueBetween(
         currentValue: T,
         max: T,
-        min: T
+        min: T,
     ): T {
         if (currentValue.toDouble() >= min.toDouble() && currentValue.toDouble() <= max.toDouble()) return currentValue
         if (currentValue.toDouble() < min.toDouble()) return min
@@ -75,7 +75,7 @@ class DraggableToRevelState(
         offsetX.value = valueBetween(
             currentValue = finalValue,
             max = if (direction == RevelDirection.RIGHT) 0f else maxGap,
-            min = if (direction == RevelDirection.RIGHT) 0 - maxGap else 0f
+            min = if (direction == RevelDirection.RIGHT) 0 - maxGap else 0f,
         )
     }
     private var onDeltaState = mutableStateOf(onDelta)
@@ -85,10 +85,11 @@ class DraggableToRevelState(
     var maxGap by mutableStateOf(0f)
 
     suspend fun endPosition() {
-        if (abs(offsetX.value) > maxGap/3)
+        if (abs(offsetX.value) > maxGap / 3) {
             open()
-        else
+        } else {
             close()
+        }
     }
 
     suspend fun toggle() {
@@ -108,7 +109,7 @@ class DraggableToRevelState(
 
     suspend fun open() {
         val anim = AnimationState(offsetX.value)
-        anim.animateTo(if (direction == RevelDirection.LEFT) maxGap else 0-maxGap) {
+        anim.animateTo(if (direction == RevelDirection.LEFT) maxGap else 0 - maxGap) {
             offsetX.value = this.value
         }
     }
@@ -117,11 +118,11 @@ class DraggableToRevelState(
 @Composable
 fun rememberDraggableToRevelState(
     offsetX: Float = 0f,
-    direction: DraggableToRevelState.RevelDirection = DraggableToRevelState.RevelDirection.LEFT
+    direction: DraggableToRevelState.RevelDirection = DraggableToRevelState.RevelDirection.LEFT,
 ): DraggableToRevelState {
     return DraggableToRevelState(
         offsetXInit = offsetX,
-        direction = direction
+        direction = direction,
     )
 }
 
@@ -142,28 +143,30 @@ fun DraggableToRevel(
         mutableStateOf(0f)
     }
     val maxHeight = with(localDensity) { columnHeightPx.toDp() }
-    Box() {
+    Box {
         maxHeight.takeIf { it > 0.dp }?.let { height ->
             Surface(
                 modifier = modifier.clip(shape),
-                color = contentBehindColor
+                color = contentBehindColor,
             ) {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                 ) {
                     Row(
                         modifier = Modifier
                             .height(height)
-                            //.background(Color.Green.copy(alpha = .25f))
+                            // .background(Color.Green.copy(alpha = .25f))
                             .onGloballyPositioned { coordinates ->
                                 // Set column height using the LayoutCoordinates
                                 draggableToRevelState.maxGap = coordinates.size.width.toFloat()
                             }
                             .align(
-                                if (draggableToRevelState.direction == DraggableToRevelState.RevelDirection.RIGHT)
+                                if (draggableToRevelState.direction == DraggableToRevelState.RevelDirection.RIGHT) {
                                     Alignment.CenterEnd
-                                else
+                                } else {
                                     Alignment.CenterStart
+                                },
                             ),
                     ) {
                         contentBehind()
@@ -172,29 +175,30 @@ fun DraggableToRevel(
             }
         }
 
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            //.offset { IntOffset(offsetX.roundToInt(), 0) }
-            .offset { draggableToRevelState.provideIntOffset() }
-            .draggable(
-                state = draggableToRevelState.draggableState,
-                orientation = Orientation.Horizontal,
-                onDragStarted = {
-                    draggableToRevelState.isDragging = true
-                    "START DRAGGING".logThis(tag = "MotionEvent")
-                },
-                onDragStopped = {
-                    draggableToRevelState.isDragging = false
-                    draggableToRevelState.endPosition()
-                    "STOP DRAGGING".logThis(tag = "MotionEvent")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                // .offset { IntOffset(offsetX.roundToInt(), 0) }
+                .offset { draggableToRevelState.provideIntOffset() }
+                .draggable(
+                    state = draggableToRevelState.draggableState,
+                    orientation = Orientation.Horizontal,
+                    onDragStarted = {
+                        draggableToRevelState.isDragging = true
+                        "START DRAGGING".logThis(tag = "MotionEvent")
+                    },
+                    onDragStopped = {
+                        draggableToRevelState.isDragging = false
+                        draggableToRevelState.endPosition()
+                        "STOP DRAGGING".logThis(tag = "MotionEvent")
+                    },
+                )
+                .onGloballyPositioned { coordinates ->
+                    // Set column height using the LayoutCoordinates
+                    columnHeightPx = coordinates.size.height.toFloat()
                 }
-            )
-            .onGloballyPositioned { coordinates ->
-                // Set column height using the LayoutCoordinates
-                columnHeightPx = coordinates.size.height.toFloat()
-            }
-            .clip(shape)
-            .then(modifier)
+                .clip(shape)
+                .then(modifier),
         ) {
             content()
         }
@@ -204,7 +208,7 @@ fun DraggableToRevel(
 @Preview
 @Composable
 private fun DraggableToRevelPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         Column {
             val draggableToRevelState = rememberDraggableToRevelState(offsetX = 0f)
             DraggableToRevel(
@@ -215,7 +219,7 @@ private fun DraggableToRevelPreview() {
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(100.dp)
-                            .background(Color.Red)
+                            .background(Color.Red),
                     ) {
                         Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                     }
@@ -223,22 +227,23 @@ private fun DraggableToRevelPreview() {
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(100.dp)
-                            .background(Color.Yellow)
+                            .background(Color.Yellow),
                     ) {
                         Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                     }
-                }
+                },
             ) {
-                val scopo : CoroutineScope = rememberCoroutineScope()
-                Box(modifier = Modifier
-                    .height(70.dp)
-                    .fillMaxWidth()
-                    .background(Color.Green)
-                    .clickable {
-                        scopo.launch {
-                            draggableToRevelState.toggle()
-                        }
-                    }
+                val scopo: CoroutineScope = rememberCoroutineScope()
+                Box(
+                    modifier = Modifier
+                        .height(70.dp)
+                        .fillMaxWidth()
+                        .background(Color.Green)
+                        .clickable {
+                            scopo.launch {
+                                draggableToRevelState.toggle()
+                            }
+                        },
                 ) {
                     Text(text = "qwertyuiop")
                 }
@@ -254,9 +259,9 @@ private fun DraggableToRevelPreview() {
                         orientation = Orientation.Horizontal,
                         state = rememberDraggableState { delta ->
                             offsetX += delta
-                        }
+                        },
                     ),
-                text = "Drag me!"
+                text = "Drag me!",
             )
         }
     }

@@ -10,5 +10,5 @@ class DashboardDivision(
     icon: DivisionIcon,
     val boxCount: Int,
     val itemCount: Int,
-    val themeOption: ThemeOption = ThemeOption.THEME_DEFAULT
+    val themeOption: ThemeOption = ThemeOption.THEME_DEFAULT,
 ) : DivisionData(id = id, name = name, description = description, icon = icon)

@@ -65,7 +65,7 @@ import kotlin.math.max
 @Composable
 internal fun ColumnScope.AlertDialogBaselineLayout(
     title: @Composable (() -> Unit)?,
-    text: @Composable (() -> Unit)?
+    text: @Composable (() -> Unit)?,
 ) {
     Layout(
         {
@@ -73,7 +73,7 @@ internal fun ColumnScope.AlertDialogBaselineLayout(
                 Box(
                     TitlePadding
                         .layoutId("title")
-                        .align(Alignment.Start)
+                        .align(Alignment.Start),
                 ) {
                     title()
                 }
@@ -82,21 +82,21 @@ internal fun ColumnScope.AlertDialogBaselineLayout(
                 Box(
                     TextPadding
                         .layoutId("text")
-                        .align(Alignment.Start)
+                        .align(Alignment.Start),
                 ) {
                     text()
                 }
             }
         },
-        Modifier.weight(1f, false)
+        Modifier.weight(1f, false),
     ) { measurables, constraints ->
         // Measure with loose constraints for height as we don't want the text to take up more
         // space than it needs
         val titlePlaceable = measurables.firstOrNull { it.layoutId == "title" }?.measure(
-            constraints.copy(minHeight = 0)
+            constraints.copy(minHeight = 0),
         )
         val textPlaceable = measurables.firstOrNull { it.layoutId == "text" }?.measure(
-            constraints.copy(minHeight = 0)
+            constraints.copy(minHeight = 0),
         )
 
         val layoutWidth = max(titlePlaceable?.width ?: 0, textPlaceable?.width ?: 0)
@@ -161,7 +161,7 @@ internal fun ColumnScope.AlertDialogBaselineLayout(
     }
 }
 
-//@Preview
+// @Preview
 @Composable
 private fun AlertDialogBaselineLayoutPreview() {
     Column {
@@ -190,12 +190,12 @@ private val TextBaselineDistanceFromTop = 38.sp
 fun BaseDialog(
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Dialog(onDismissRequest = onDismissRequest, properties = properties) {
             content()
@@ -209,7 +209,7 @@ fun SimpleDialog(
     properties: DialogProperties = DialogProperties(),
     confirmationText: String,
     onConfirmationClick: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     BaseDialog(onDismissRequest = onDismissRequest, properties = properties) {
         Surface {
@@ -223,14 +223,13 @@ fun SimpleDialog(
                         modifier = Modifier
                             .clickable { onConfirmationClick() }
                             .padding(vertical = 4.dp)
-                            .padding(8.dp)
+                            .padding(8.dp),
                     )
                 }
             }
         }
     }
 }
-
 
 @Composable
 fun AlertDialogWithSingleButton(
@@ -242,7 +241,7 @@ fun AlertDialogWithSingleButton(
     buttonColor: Color = MaterialTheme.colorScheme.primary,
     buttonText: String,
     onButtonClick: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     AlertDialogWithSingleButton(
         onDismissRequest = onDismissRequest,
@@ -267,7 +266,7 @@ fun AlertDialogWithSingleButton(
     buttonColor: Color = MaterialTheme.colorScheme.primary,
     buttonText: String,
     onButtonClick: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val painter = remember(indicatorIcon) { BitmapPainter(indicatorIcon) }
     AlertDialogWithSingleButton(
@@ -293,7 +292,7 @@ fun AlertDialogWithSingleButton(
     buttonColor: Color = MaterialTheme.colorScheme.primary,
     buttonText: String,
     onButtonClick: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     BasedStyledDialog(
         onDismissRequest = onDismissRequest,
@@ -306,7 +305,8 @@ fun AlertDialogWithSingleButton(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = buttonColor)
-                    .clickable { onButtonClick() }, contentAlignment = Alignment.Center
+                    .clickable { onButtonClick() },
+                contentAlignment = Alignment.Center,
             ) {
                 Text(text = buttonText, fontWeight = FontWeight.Bold, color = contentColorFor(buttonColor))
             }
@@ -326,11 +326,12 @@ fun BasedStyledDialog(
     content: @Composable () -> Unit,
 ) {
     BaseDialog(onDismissRequest = onDismissRequest, properties = properties) {
-        Box(modifier = Modifier
-            .clip(shape = RoundedCornerShape(bottomStart = 50.dp, bottomEnd = 50.dp))
+        Box(
+            modifier = Modifier
+                .clip(shape = RoundedCornerShape(bottomStart = 50.dp, bottomEnd = 50.dp)),
         ) {
             ConstraintLayout(
-                modifier = Modifier
+                modifier = Modifier,
             ) {
                 val (
                     contentBoxRef,
@@ -346,7 +347,7 @@ fun BasedStyledDialog(
                             end.linkTo(parent.end)
                             width = Dimension.wrapContent
                         },
-                    color = surfaceColor
+                    color = surfaceColor,
                 ) {
                     Box(
                         modifier = Modifier
@@ -355,7 +356,7 @@ fun BasedStyledDialog(
                             .padding(horizontal = 16.dp)
                             .padding(top = 40.dp)
                             .padding(bottom = 15.dp),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         content()
                     }
@@ -385,7 +386,7 @@ fun BasedStyledDialog(
                             end.linkTo(parent.end)
                             top.linkTo(parent.top)
                         },
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     Icon(painter = indicatorIcon, contentDescription = null, tint = contentColorFor(indicatorColor))
                 }
@@ -409,7 +410,7 @@ fun DialogWithTwoButton(
     buttonNegativeText: String,
     onButtonNegativeClick: () -> Unit,
     isButtonNegativeEnabled: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     BasedStyledDialog(
         onDismissRequest = onDismissRequest,
@@ -420,12 +421,13 @@ fun DialogWithTwoButton(
         buttonAreaContent = {
             val alphaPositive = if (isButtonPositiveEnabled) 1f else .25f
             val alphaNegative = if (isButtonNegativeEnabled) 1f else .25f
-            Box(modifier = Modifier
-                .background(buttonPositiveColor.copy(alphaPositive))
-                .fillMaxSize()
-                .weight(1f)
-                .then(if (isButtonPositiveEnabled) Modifier.clickable { onButtonPositiveClick() } else Modifier),
-                contentAlignment = Alignment.Center
+            Box(
+                modifier = Modifier
+                    .background(buttonPositiveColor.copy(alphaPositive))
+                    .fillMaxSize()
+                    .weight(1f)
+                    .then(if (isButtonPositiveEnabled) Modifier.clickable { onButtonPositiveClick() } else Modifier),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(text = buttonPositiveText, fontWeight = FontWeight.Bold, color = contentColorFor(backgroundColor = buttonPositiveColor).copy(alphaPositive))
             }
@@ -434,7 +436,8 @@ fun DialogWithTwoButton(
                     .background(buttonNegativeColor.copy(alphaNegative))
                     .fillMaxSize()
                     .weight(1f)
-                    .clickable { onButtonNegativeClick() }, contentAlignment = Alignment.Center
+                    .clickable { onButtonNegativeClick() },
+                contentAlignment = Alignment.Center,
             ) {
                 Text(text = buttonNegativeText, fontWeight = FontWeight.Bold, color = contentColorFor(backgroundColor = buttonNegativeColor).copy(alphaNegative))
             }
@@ -458,7 +461,7 @@ fun DialogWithTwoButton(
     buttonNegativeText: String,
     onButtonNegativeClick: () -> Unit,
     isButtonNegativeEnabled: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     DialogWithTwoButton(
         onDismissRequest = onDismissRequest,
@@ -493,7 +496,7 @@ fun DialogWithTwoButton(
     buttonNegativeText: String,
     onButtonNegativeClick: () -> Unit,
     isButtonNegativeEnabled: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val painter = remember(indicatorIcon) { BitmapPainter(indicatorIcon) }
     DialogWithTwoButton(
@@ -524,17 +527,17 @@ private fun DialogWithTwoButtonPreview() {
         }
         Box(modifier = Modifier.fillMaxSize()) {
             DialogWithTwoButton(
-                onDismissRequest = { /*TODO*/ },
+                onDismissRequest = { },
                 indicatorIcon = Icons.Default.Delete,
                 indicatorColor = MaterialTheme.colorScheme.error,
                 buttonPositiveText = "DELETE",
                 buttonPositiveColor = MaterialTheme.colorScheme.error,
                 isButtonPositiveEnabled = !test.isBlank(),
-                onButtonPositiveClick = { /*TODO*/ },
+                onButtonPositiveClick = { },
                 buttonNegativeText = "CANCEL",
                 buttonNegativeColor = MaterialTheme.colorScheme.error,
-                onButtonNegativeClick = { /*TODO*/ }) {
-
+                onButtonNegativeClick = { },
+            ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = "To delete division write it's name in all caps \n \"LIVING ROOM`", textAlign = TextAlign.Center)
                     SimpleSpace(size = 20.dp)
@@ -545,7 +548,6 @@ private fun DialogWithTwoButtonPreview() {
         }
     }
 }
-
 
 @Preview
 @Composable

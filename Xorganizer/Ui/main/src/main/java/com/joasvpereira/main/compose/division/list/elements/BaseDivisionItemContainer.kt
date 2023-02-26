@@ -31,23 +31,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import kotlinx.coroutines.launch
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.dragble.DraggableToRevel
 import pt.joasvpereira.coreui.dragble.DraggableToRevelState
 import pt.joasvpereira.coreui.dragble.rememberDraggableToRevelState
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 @Composable
 internal fun BaseDivisionItemContainer(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.primaryContainer,
-    onClick : () -> Unit,
+    onClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onEditClick: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val state = rememberDraggableToRevelState(
-        direction = DraggableToRevelState.RevelDirection.RIGHT
+        direction = DraggableToRevelState.RevelDirection.RIGHT,
     )
     DraggableToRevel(
         modifier = modifier
@@ -58,14 +58,15 @@ internal fun BaseDivisionItemContainer(
             ContentBehind(
                 state = state,
                 onDeleteClick = onDeleteClick,
-                onEditClick = onEditClick
+                onEditClick = onEditClick,
             )
         },
-        shape = RoundedCornerShape(15.dp)
+        shape = RoundedCornerShape(15.dp),
     ) {
-        Surface(modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min),
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
             color = color,
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -78,19 +79,21 @@ internal fun BaseDivisionItemContainer(
 
 @Composable
 private fun BoxScope.DragIndicator() {
-    Spacer(modifier = Modifier
-        .padding(end = 10.dp)
-        .width(1.5.dp)
-        .height(12.dp)
-        .background(MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100))
-        .align(Alignment.CenterEnd)
+    Spacer(
+        modifier = Modifier
+            .padding(end = 10.dp)
+            .width(1.5.dp)
+            .height(12.dp)
+            .background(MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100))
+            .align(Alignment.CenterEnd),
     )
-    Spacer(modifier = Modifier
-        .padding(end = 15.dp)
-        .width(1.5.dp)
-        .height(24.dp)
-        .background(MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100))
-        .align(Alignment.CenterEnd)
+    Spacer(
+        modifier = Modifier
+            .padding(end = 15.dp)
+            .width(1.5.dp)
+            .height(24.dp)
+            .background(MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100))
+            .align(Alignment.CenterEnd),
     )
 }
 
@@ -103,27 +106,29 @@ private fun RowScope.ContentBehind(
     val coroutineScope = rememberCoroutineScope()
 
     SimpleSpace(size = 15.dp)
-    Box(modifier = Modifier
-        .aspectRatio(1f)
-        .clickable {
-            coroutineScope.launch {
-                state.close()
-                onDeleteClick()
-            }
-        },
-        contentAlignment = Alignment.Center
+    Box(
+        modifier = Modifier
+            .aspectRatio(1f)
+            .clickable {
+                coroutineScope.launch {
+                    state.close()
+                    onDeleteClick()
+                }
+            },
+        contentAlignment = Alignment.Center,
     ) {
         Icon(imageVector = Icons.Default.Delete, contentDescription = null)
     }
-    Box(modifier = Modifier
-        .aspectRatio(1f)
-        .clickable {
-            coroutineScope.launch {
-                state.close()
-                onEditClick()
-            }
-        },
-        contentAlignment = Alignment.Center
+    Box(
+        modifier = Modifier
+            .aspectRatio(1f)
+            .clickable {
+                coroutineScope.launch {
+                    state.close()
+                    onEditClick()
+                }
+            },
+        contentAlignment = Alignment.Center,
     ) {
         Icon(imageVector = Icons.Default.Edit, contentDescription = null)
     }
@@ -141,6 +146,7 @@ private fun BaseDivisionItemContainerPreview() {
         }
     }
 }
+
 @Preview(backgroundColor = 1L)
 @Composable
 private fun ContentBehindPreview() {
@@ -149,7 +155,7 @@ private fun ContentBehindPreview() {
             ContentBehind(
                 state = DraggableToRevelState(0f, direction = DraggableToRevelState.RevelDirection.LEFT),
                 onDeleteClick = { },
-                onEditClick = {}
+                onEditClick = {},
             )
         }
     }

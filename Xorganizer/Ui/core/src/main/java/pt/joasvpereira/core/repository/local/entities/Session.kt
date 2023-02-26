@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import pt.joasvpereira.core.repository.local.entities.Session.Companion.TABLE_NAME
 
 @Entity(
-    tableName = TABLE_NAME
+    tableName = TABLE_NAME,
 )
 data class Session(
     @PrimaryKey(autoGenerate = true)
@@ -15,7 +15,7 @@ data class Session(
     @ColumnInfo(name = DISPLAY_NAME)
     var displayName: String = "Session $id",
     @ColumnInfo(name = IMAGE)
-    var image: String?
+    var image: String?,
 ) {
 
     companion object {

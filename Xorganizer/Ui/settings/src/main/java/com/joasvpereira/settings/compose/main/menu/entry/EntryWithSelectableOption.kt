@@ -36,8 +36,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 fun EntryWithSelectableOption(
@@ -69,7 +69,7 @@ fun EntryWithSelectableOption(
                 text = text,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(2f)
+                modifier = Modifier.weight(2f),
             )
             SimpleSpace(size = 5.dp)
 
@@ -87,13 +87,13 @@ fun EntryWithSelectableOption(
                             dropMenuWidth = coordinates.size.width.toDp()
                         }
                     },
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Spacer(
                     modifier = Modifier
                         .width(1.5.dp)
                         .fillMaxHeight(.85f)
-                        .background(color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100))
+                        .background(color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100)),
                 )
                 SimpleSpace(size = 5.dp)
                 Text(
@@ -103,22 +103,23 @@ fun EntryWithSelectableOption(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .width(IntrinsicSize.Min)
-                        .weight(2f)
+                        .weight(2f),
                 )
                 SimpleSpace(size = 3.dp)
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
                     contentDescription = null,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
                 )
                 if (listOfOptions.isNotEmpty()) {
                     DropdownMenu(
                         modifier = Modifier.widthIn(min = dropMenuWidth),
                         expanded = isOptionsOpen,
-                        onDismissRequest = { isOptionsOpen = false }
+                        onDismissRequest = { isOptionsOpen = false },
                     ) {
                         listOfOptions.forEachIndexed { index, it ->
-                            Text(text = it,
+                            Text(
+                                text = it,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier
@@ -128,7 +129,8 @@ fun EntryWithSelectableOption(
                                     .clickable {
                                         isOptionsOpen = false
                                         onOptionChanged(index)
-                                    })
+                                    },
+                            )
                         }
                     }
                 }
@@ -144,11 +146,11 @@ fun EntryWithSelectableOption(
 @UiModePreview
 @Composable
 private fun EntryWithSelectebleOptionPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         var seleced by remember {
             mutableStateOf(0)
         }
-        val list = listOf("A", "DArk", "other","XPTO", "A Long option this is!", "see")
+        val list = listOf("A", "DArk", "other", "XPTO", "A Long option this is!", "see")
         Surface(modifier = Modifier.fillMaxSize()) {
             Column {
                 EntryWithSelectableOption(
@@ -158,7 +160,7 @@ private fun EntryWithSelectebleOptionPreview() {
                     selectedOption = seleced,
                     description = "asdasd\nasdas\nsadas\nasda",
                     onOptionChanged = {
-                                      seleced = it
+                        seleced = it
                     },
                 )
             }

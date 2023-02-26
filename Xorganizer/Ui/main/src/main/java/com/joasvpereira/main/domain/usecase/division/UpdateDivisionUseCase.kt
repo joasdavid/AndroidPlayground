@@ -7,7 +7,7 @@ import pt.joasvpereira.core.repository.local.entities.Division
 
 class UpdateDivisionUseCase(
     private val dataSource: DivisionDataSource,
-    private val sessionId: Int
+    private val sessionId: Int,
 ) : IUpdateDivisionUseCase {
     override suspend fun execute(params: UpdateDivisionParam) = withContext(Dispatchers.IO) {
         dataSource.updateDivision(
@@ -17,8 +17,8 @@ class UpdateDivisionUseCase(
                 description = params.description ?: "",
                 iconId = params.icon.resId,
                 themeId = params.themeId,
-                sessionId = sessionId
-            )
+                sessionId = sessionId,
+            ),
         )
     }
 }

@@ -6,13 +6,12 @@ import com.joasvpereira.main.repository.BoxDataSource
 import com.joasvpereira.main.repository.ItemDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import pt.joasvpereira.core.repository.local.entities.Box
 import pt.joasvpereira.core.repository.local.entities.Item
 
 class GetDivisionElementsUseCase(
     private val boxDataSource: BoxDataSource,
-    private val itemDataSource: ItemDataSource
+    private val itemDataSource: ItemDataSource,
 ) : IGetDivisionElementsUseCase {
     override suspend fun execute(params: GetDivisionElementsParams): Flow<DivisionElements> = filter(params)
 
@@ -24,7 +23,7 @@ class GetDivisionElementsUseCase(
                 GetDivisionElementsParams.Filter.All -> boxList.map {
                     it.mapToDivisionElement()
                 }.plus(
-                    itemList.map { it.mapToDivisionElement() }
+                    itemList.map { it.mapToDivisionElement() },
                 )
 
                 GetDivisionElementsParams.Filter.OnlyBoxes -> boxList.map { it.mapToDivisionElement() }
@@ -37,13 +36,12 @@ class GetDivisionElementsUseCase(
     private fun Box.mapToDivisionElement() = DivisionElement.Box(
         id = id!!,
         name = name,
-        description = description
+        description = description,
     )
 
     private fun Item.mapToDivisionElement() = DivisionElement.Item(
         id = id!!,
         name = name,
-        description = description
+        description = description,
     )
-
 }

@@ -6,4 +6,4 @@ data class DivisionCreationInfo(
     val name: String,
     val description: String,
     val themeId: Int,
-): Params()
+) : Params()

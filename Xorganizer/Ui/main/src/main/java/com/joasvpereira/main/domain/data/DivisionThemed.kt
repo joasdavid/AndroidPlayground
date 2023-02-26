@@ -8,10 +8,10 @@ class DivisionThemed(
     name: String,
     description: String?,
     icon: DivisionIcon,
-    val themeOption: ThemeOption
+    val themeOption: ThemeOption,
 ) : DivisionData(
     id,
     name,
     description,
-    icon
+    icon,
 )

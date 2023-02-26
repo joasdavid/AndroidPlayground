@@ -12,8 +12,8 @@ fun SessionFeatureEntryPoint(
     onFinished: () -> Unit,
 ) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = START_DISTINCTION ) {
-        composableSelectProfile(navController, onProfileSelected = {onFinished()})
+    NavHost(navController = navController, startDestination = START_DISTINCTION) {
+        composableSelectProfile(navController, onProfileSelected = { onFinished() })
         composableCreateSession(navController)
     }
 }

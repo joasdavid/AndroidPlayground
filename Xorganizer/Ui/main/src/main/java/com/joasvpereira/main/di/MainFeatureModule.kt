@@ -52,7 +52,7 @@ val MainFeatureModule = module {
         DashboardFeatureScreenViewModel(
             divisionsUseCase = get(),
             deleteUseCase = get(),
-            getSessionUseCase = get()
+            getSessionUseCase = get(),
         )
     }
 
@@ -60,7 +60,7 @@ val MainFeatureModule = module {
         CreateDivisionViewModel(
             divisionUseCase = get(),
             createDivisionUseCase = get(),
-            updateDivisionUseCase = get()
+            updateDivisionUseCase = get(),
         )
     }
 
@@ -83,7 +83,7 @@ val MainFeatureModule = module {
             itemId = itemId,
             getDetails = get(),
             updateItemUseCase = get(),
-            deleteItemUseCase = get()
+            deleteItemUseCase = get(),
         )
     }
 
@@ -94,8 +94,8 @@ val MainFeatureModule = module {
             getBoxElementsUseCase = get(),
             createItemUseCase = get(),
             deleteItemUseCase = get(),
-            updateItemUseCase = get()
-            )
+            updateItemUseCase = get(),
+        )
     }
 
     single<IDivisionUseCase> { DivisionUseCase(get()) }
@@ -108,24 +108,25 @@ val MainFeatureModule = module {
 
     single<IUpdateBoxUseCase> { UpdateBoxUseCase(get()) }
 
-    single<IGetItemDetailsUseCase> { GetItemDetailsUseCase(
-        boxDataSource = get(),
-        itemDataSource = get(),
-        divisionDataSource = get()
-    )
+    single<IGetItemDetailsUseCase> {
+        GetItemDetailsUseCase(
+            boxDataSource = get(),
+            itemDataSource = get(),
+            divisionDataSource = get(),
+        )
     }
 
     factory<ICreateDivisionUseCase> {
         CreateDivisionUseCase(
             dataSource = get(),
-            sessionId = get(named("SESSION_ID"))
+            sessionId = get(named("SESSION_ID")),
         )
     }
 
     factory<IUpdateDivisionUseCase> {
         UpdateDivisionUseCase(
             dataSource = get(),
-            sessionId = get(named("SESSION_ID"))
+            sessionId = get(named("SESSION_ID")),
         )
     }
 
@@ -133,7 +134,7 @@ val MainFeatureModule = module {
         MyDivisionsUseCase(
             dataSource = get(),
             boxDataSource = get(),
-            itemDataSource = get()
+            itemDataSource = get(),
         )
     }
 
@@ -144,26 +145,26 @@ val MainFeatureModule = module {
     single<IGetDivisionElementsUseCase> {
         GetDivisionElementsUseCase(
             boxDataSource = get(),
-            itemDataSource = get()
+            itemDataSource = get(),
         )
     }
 
     single<ICreateBoxUseCase> {
         CreateBoxUseCase(
-            boxDataSource = get()
+            boxDataSource = get(),
         )
     }
 
     single<ICreateItemUseCase> {
         CreateItemUseCase(
-            itemDataSource = get()
+            itemDataSource = get(),
         )
     }
 
     single<IGetBoxUseCase> {
         GetBoxUseCase(
             boxDataSource = get(),
-            divisionDataSource = get()
+            divisionDataSource = get(),
         )
     }
 

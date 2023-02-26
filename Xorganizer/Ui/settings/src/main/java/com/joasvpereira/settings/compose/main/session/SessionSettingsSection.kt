@@ -17,22 +17,22 @@ import com.joasvpereira.settings.compose.main.SettingsSection
 import com.joasvpereira.settings.compose.main.menu.entry.EntryClickable
 import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSwitch
 import pt.joasvpereira.core.domain.data.SessionItem
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.R
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 internal fun SessionSettingsSection(
     modifier: Modifier = Modifier,
-    currentSession : SessionItem,
-    isKeepSession : Boolean,
-    onKeepSessionChange : (Boolean) -> Unit,
-    onEditProfile : () -> Unit,
-    onLogout : () -> Unit,
+    currentSession: SessionItem,
+    isKeepSession: Boolean,
+    onKeepSessionChange: (Boolean) -> Unit,
+    onEditProfile: () -> Unit,
+    onLogout: () -> Unit,
 ) {
     SettingsSection(
         modifier = modifier,
-        sectionName = "Session"
+        sectionName = "Session",
     ) {
         SimpleSpace(size = 20.dp)
         SettingsSessionIndicator(currentSession = currentSession)
@@ -43,7 +43,7 @@ internal fun SessionSettingsSection(
             text = "Should keep session",
             description = "When turn on will keep the session even after the app is killed, this mean that the app will login with the same profile that was selected whe the app was closed.",
             checked = isKeepSession,
-            onCheckedChange = onKeepSessionChange
+            onCheckedChange = onKeepSessionChange,
         )
 
         SimpleSpace(size = 20.dp)
@@ -75,7 +75,7 @@ private fun SessionSettingsSectionPreview() {
                 onKeepSessionChange = {},
                 onEditProfile = {},
                 onLogout = {},
-                )
+            )
         }
     }
 }

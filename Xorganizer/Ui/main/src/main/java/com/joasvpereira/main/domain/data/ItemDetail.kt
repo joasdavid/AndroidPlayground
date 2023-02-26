@@ -8,17 +8,17 @@ data class ItemDetail(
     val name: String,
     val description: String,
     val parentDivision: ParentDivision,
-    val parentBox: ParentBox?
+    val parentBox: ParentBox?,
 ) {
     data class ParentDivision(
         val id: Int,
         val name: String,
         val divisionIcon: DivisionIcon?,
-        val themeOption: ThemeOption?
+        val themeOption: ThemeOption?,
     )
 
     data class ParentBox(
         val id: Int,
-        val name: String
+        val name: String,
     )
 }

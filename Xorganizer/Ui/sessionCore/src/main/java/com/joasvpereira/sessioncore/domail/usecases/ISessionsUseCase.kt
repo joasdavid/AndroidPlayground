@@ -10,7 +10,6 @@ import pt.joasvpereira.core.domain.usecase.EmptyParams
 import pt.joasvpereira.core.ext.toBitmap
 import pt.joasvpereira.sessionfeature.repository.SessionDataSource
 
-
 interface ISessionsUseCase : BaseUseCaseSync<EmptyParams, Flow<List<SessionItem>>>
 
 class SessionsUseCase(private val sessionsDataSource: SessionDataSource) : ISessionsUseCase {

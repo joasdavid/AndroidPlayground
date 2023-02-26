@@ -9,7 +9,6 @@ import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.compose.common.popup.CreateItemPopupStateHolder
 import com.joasvpereira.main.compose.common.popup.DeleteItemPopupStateHolder
 import com.joasvpereira.main.compose.details.ItemNotFoundPopupStateHolder
-import com.joasvpereira.main.domain.data.ItemDetail
 import com.joasvpereira.main.domain.usecase.division.DeleteItemParam
 import com.joasvpereira.main.domain.usecase.division.GetItemDetailsParams
 import com.joasvpereira.main.domain.usecase.division.IDeleteItemUseCase
@@ -24,7 +23,7 @@ class ItemDetailScreenViewModel(
     private val itemId: Int,
     getDetails: IGetItemDetailsUseCase,
     updateItemUseCase: IUpdateItemUseCase,
-    deleteItemUseCase: IDeleteItemUseCase
+    deleteItemUseCase: IDeleteItemUseCase,
 ) : ViewModel() {
 
     private var _state by mutableStateOf(ItemDetailScreenState(isLoading = true))
@@ -41,7 +40,7 @@ class ItemDetailScreenViewModel(
     )
 
     val notFoundPopupState = ItemNotFoundPopupStateHolder(
-        isVisible = false
+        isVisible = false,
     )
 
     init {
@@ -50,7 +49,7 @@ class ItemDetailScreenViewModel(
                 if (it != null) {
                     _state = state.copy(
                         itemDetail = it.logThis(tag = "DetailsScreen") { value -> "Collecting state: $value" },
-                        isLoading = false
+                        isLoading = false,
                     )
                     updateDetailsState.name = state.itemDetail.name
                     updateDetailsState.description = state.itemDetail.description

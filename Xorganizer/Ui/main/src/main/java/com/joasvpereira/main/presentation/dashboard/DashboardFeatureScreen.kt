@@ -25,7 +25,7 @@ import pt.joasvpereira.coreui.text.field.AppTextField
 fun DashboardFeatureScreen(
     viewModel: DashboardFeatureScreenViewModel,
     navController: NavController? = null,
-    onSettingsClicked: () -> Unit
+    onSettingsClicked: () -> Unit,
 ) {
     DeletePopup(viewModel)
     DashboardScreen(
@@ -58,8 +58,8 @@ private fun DeletePopup(viewModel: DashboardFeatureScreenViewModel) {
                 onButtonPositiveClick = { viewModel.deleteDivision() },
                 buttonNegativeText = "CANCEL",
                 buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
-                onButtonNegativeClick = { viewModel.cancelDelete() }) {
-
+                onButtonNegativeClick = { viewModel.cancelDelete() },
+            ) {
                 val nameUppercase = deleteEvent.division.name.toUpperCase(Locale.current)
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = "To delete division write it's name in all caps \n \"$nameUppercase", textAlign = TextAlign.Center)
@@ -69,7 +69,7 @@ private fun DeletePopup(viewModel: DashboardFeatureScreenViewModel) {
                         onValueChange = { viewModel.askToDelete(deleteEvent.division, it) },
                         placeholder = "",
                         keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Send),
-                        keyboardActions = KeyboardActions(onSend = { viewModel.deleteDivision() })
+                        keyboardActions = KeyboardActions(onSend = { viewModel.deleteDivision() }),
                     )
                     SimpleSpace(size = 20.dp)
                 }

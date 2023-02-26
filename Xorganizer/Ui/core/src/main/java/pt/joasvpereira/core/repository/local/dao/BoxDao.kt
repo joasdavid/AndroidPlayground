@@ -14,7 +14,7 @@ import pt.joasvpereira.core.repository.local.entities.Box.Companion.TABLE_NAME
 import pt.joasvpereira.core.repository.local.entities.BoxCountAndParentId
 
 @Dao
-interface  BoxDao {
+interface BoxDao {
     @Query("SELECT * FROM $TABLE_NAME WHERE $PARENT_DIVISION_ID = :fromDivision")
     fun getAll(fromDivision: Int): Flow<List<Box>>
 

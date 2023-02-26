@@ -14,15 +14,12 @@ import com.joasvpereira.main.domain.usecase.division.CreateItemParam
 import com.joasvpereira.main.domain.usecase.division.DeleteItemParam
 import com.joasvpereira.main.domain.usecase.division.GetBoxElementsParams
 import com.joasvpereira.main.domain.usecase.division.GetBoxParams
-import com.joasvpereira.main.domain.usecase.division.GetDivisionElementsParams
 import com.joasvpereira.main.domain.usecase.division.ICreateItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IDeleteItemUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetBoxElementsUseCase
 import com.joasvpereira.main.domain.usecase.division.IGetBoxUseCase
-import com.joasvpereira.main.domain.usecase.division.IGetDivisionElementsUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateItemUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateItemParam
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class BoxScreenViewModel(
@@ -31,7 +28,7 @@ class BoxScreenViewModel(
     private val getBoxElementsUseCase: IGetBoxElementsUseCase,
     private val createItemUseCase: ICreateItemUseCase,
     private val deleteItemUseCase: IDeleteItemUseCase,
-    private val updateItemUseCase: IUpdateItemUseCase
+    private val updateItemUseCase: IUpdateItemUseCase,
 ) : ViewModel() {
 
     val deleteItemPopupStateHolder: DeleteItemPopupStateHolder = DeleteItemPopupStateHolder()
@@ -72,8 +69,8 @@ class BoxScreenViewModel(
                             UpdateItemParam(
                                 id = itemIdToUpdate,
                                 name = name,
-                                description = description
-                            )
+                                description = description,
+                            ),
                         )
                     } else {
                         createItemUseCase.execute(
@@ -81,8 +78,8 @@ class BoxScreenViewModel(
                                 name = name,
                                 description = description,
                                 parentId = state.box.parentDivision!!.id,
-                                parentBoxId = boxId
-                            )
+                                parentBoxId = boxId,
+                            ),
                         )
                     }
                 }
@@ -116,10 +113,9 @@ class BoxScreenViewModel(
             isVisible = true
         }
     }
-
 }
 
-class StateTemp() {
+class StateTemp {
     var list: List<DivisionElement.Item> by mutableStateOf(emptyList())
     var box: ParentBox by mutableStateOf(ParentBox(id = 0, name = "", description = "", parentDivision = null))
     var isLoading by mutableStateOf(true)

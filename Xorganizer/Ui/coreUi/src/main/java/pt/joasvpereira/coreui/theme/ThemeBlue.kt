@@ -128,12 +128,12 @@ private val DarkBlueColorPalette = darkColorScheme(
 )
 
 @Composable
-fun blueTheme(darkTheme: Boolean,): Theme {
+fun blueTheme(darkTheme: Boolean): Theme {
     return Theme(
         color = if (darkTheme) {
             DarkBlueColorPalette
         } else {
             LightBlueColorPalette
-        }
+        },
     )
 }

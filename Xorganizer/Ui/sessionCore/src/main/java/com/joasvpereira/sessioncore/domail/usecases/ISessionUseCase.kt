@@ -21,7 +21,7 @@ class SessionUseCase(private val sessionsDataSource: SessionDataSource) : ISessi
             SessionItem(
                 id = it.id!!,
                 name = it.displayName,
-                image = it.image?.toBitmap()
+                image = it.image?.toBitmap(),
             )
         }
     }

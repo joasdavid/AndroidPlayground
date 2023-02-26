@@ -1,7 +1,6 @@
 package com.joasvpereira.settings.compose.main
 
 import android.os.Build
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,12 +12,12 @@ import com.joasvpereira.settings.compose.main.session.SessionSettingsSection
 import com.joasvpereira.settings.compose.main.theme.ThemeSettingsSection
 import pt.joasvpereira.core.domain.data.SessionItem
 import pt.joasvpereira.core.settings.domain.data.ThemePreference
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 fun ThemePreference.ThemeMode.getId(): Int = when (this) {
     ThemePreference.ThemeMode.DEFAULT -> 0
@@ -38,16 +37,16 @@ fun SettingsMainView(
     isMaterialYouEnabled: Boolean,
     onMaterialYouSwitchChange: (Boolean) -> Unit,
     themeModeSelectedOption: ThemePreference.ThemeMode,
-    onThemeModeChange: (ThemePreference.ThemeMode) -> Unit
+    onThemeModeChange: (ThemePreference.ThemeMode) -> Unit,
 ) {
     AppScaffold(
         toolBarConfig = ToolBarConfig(
             title = "Settings",
-            onLeftIconClick = onBackClick
+            onLeftIconClick = onBackClick,
         ),
-        shouldUseBackgroundImage = false
+        shouldUseBackgroundImage = false,
     ) {
-        LazyColumn() {
+        LazyColumn {
             item { SimpleSpace(size = 20.dp) }
 
             item {
@@ -57,7 +56,7 @@ fun SettingsMainView(
                     isKeepSession = isKeepSession,
                     onKeepSessionChange = onKeepSessionChange,
                     onEditProfile = onEditProfile,
-                    onLogout = onLogout
+                    onLogout = onLogout,
                 )
             }
 
@@ -74,13 +73,12 @@ fun SettingsMainView(
                         // TODO: this need to be refactor
                         onThemeModeChange(
                             when (it) {
-
                                 1 -> ThemePreference.ThemeMode.LIGHT
                                 2 -> ThemePreference.ThemeMode.DARK
                                 else -> ThemePreference.ThemeMode.DEFAULT
-                            }
+                            },
                         )
-                    }
+                    },
                 )
             }
         }
@@ -90,7 +88,7 @@ fun SettingsMainView(
 @Preview(group = "Single")
 @Composable
 fun SettingsMainViewPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         SettingsMainView(
             onBackClick = {},
             currentSessionItem = SessionItem(id = 1, name = "HOME 2", image = null),
@@ -102,7 +100,7 @@ fun SettingsMainViewPreview() {
             onMaterialYouSwitchChange = {},
             themeModeSelectedOption = ThemePreference.ThemeMode.LIGHT,
             onThemeModeChange = {},
-            onLogout = {}
+            onLogout = {},
         )
     }
 }
@@ -122,7 +120,7 @@ fun SettingsMainViewPreview(@PreviewParameter(ThemesProvider::class) theme: Them
             onMaterialYouSwitchChange = {},
             themeModeSelectedOption = ThemePreference.ThemeMode.LIGHT,
             onThemeModeChange = {},
-            onLogout = {}
+            onLogout = {},
         )
     }
 }

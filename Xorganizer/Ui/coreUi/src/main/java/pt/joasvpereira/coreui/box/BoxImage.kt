@@ -9,11 +9,11 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.R
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 @Composable
 fun BoxImage(modifier: Modifier = Modifier, tint: Color = MaterialTheme.colorScheme.onPrimaryContainer) {
@@ -21,7 +21,7 @@ fun BoxImage(modifier: Modifier = Modifier, tint: Color = MaterialTheme.colorSch
         painter = painterResource(id = R.drawable.ic_box_3),
         contentDescription = "",
         colorFilter = ColorFilter.tint(tint),
-        modifier = modifier
+        modifier = modifier,
     )
 }
 

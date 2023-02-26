@@ -7,10 +7,9 @@ import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.repository.local.dao.DivisionDao
 import pt.joasvpereira.core.repository.local.entities.Division
 
-
 interface DivisionDataSource {
     suspend fun getDivisions(): Flow<List<Division>>
-    suspend fun getDivision(id : Int): Division?
+    suspend fun getDivision(id: Int): Division?
     suspend fun createNewDivision(division: Division)
     suspend fun updateDivision(division: Division)
     suspend fun deleteDivision(id: Int)

@@ -20,7 +20,7 @@ val sessionCoreModule = module {
     single<ILoadSessionUseCase> {
         LoadSessionUseCase(
             sessionsUseCase = get(),
-            sessionPreferencesDataSource = get()
+            sessionPreferencesDataSource = get(),
         )
     }
 }

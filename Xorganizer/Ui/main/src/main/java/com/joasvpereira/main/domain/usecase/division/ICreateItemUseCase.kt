@@ -8,6 +8,6 @@ data class CreateItemParam(
     val description: String,
     val parentId: Int,
     val parentBoxId: Int? = null,
-): Params()
+) : Params()
 
 interface ICreateItemUseCase : BaseUseCaseSync<CreateItemParam, Unit>

@@ -34,20 +34,20 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.main.presentation.icons.DivisionIcon
 import com.joasvpereira.main.presentation.icons.DivisionIcons
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 
 private data class DivisionIconSelectorState(
     val currentIconPos: Int,
-    val direction: DivisionIconSelectorDirection = DivisionIconSelectorDirection.NONE
+    val direction: DivisionIconSelectorDirection = DivisionIconSelectorDirection.NONE,
 )
 
 private enum class DivisionIconSelectorDirection {
     RIGHT,
     LEFT,
-    NONE
+    NONE,
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -55,9 +55,8 @@ private enum class DivisionIconSelectorDirection {
 fun DivisionIconSelector(
     modifier: Modifier = Modifier,
     defaultPos: Int = 0,
-    onIconSelected: (DivisionIcon) -> Unit
+    onIconSelected: (DivisionIcon) -> Unit,
 ) {
-
     var selectedPosition by remember(defaultPos) {
         mutableStateOf(DivisionIconSelectorState(currentIconPos = defaultPos))
     }
@@ -68,13 +67,13 @@ fun DivisionIconSelector(
             .border(
                 width = 2.dp,
                 color = MaterialTheme.colorScheme.primary,
-                shape = shape
+                shape = shape,
             )
             .padding(vertical = 10.dp)
             .padding(horizontal = 13.dp)
             .then(modifier),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Icon(
             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -90,13 +89,13 @@ fun DivisionIconSelector(
                         DivisionIconSelectorState((selectedPosition.currentIconPos - 1), DivisionIconSelectorDirection.LEFT)
                     }
                     onIconSelected(DivisionIcons.all[selectedPosition.currentIconPos])
-                }
+                },
         )
 
         Box(
             Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             AnimatedContent(
                 targetState = selectedPosition,
@@ -105,28 +104,28 @@ fun DivisionIconSelector(
                         DivisionIconSelectorDirection.RIGHT -> {
                             slideIntoContainer(
                                 towards = AnimatedContentScope.SlideDirection.Left,
-                                animationSpec = tween(1000)
+                                animationSpec = tween(1000),
                             ) + fadeIn() with
                                     slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
-                                        animationSpec = tween(1000)
+                                        animationSpec = tween(1000),
                                     ) + fadeOut(animationSpec = tween(1000))
                         }
 
                         DivisionIconSelectorDirection.LEFT -> {
                             slideIntoContainer(
                                 towards = AnimatedContentScope.SlideDirection.Right,
-                                animationSpec = tween(1000)
+                                animationSpec = tween(1000),
                             ) + fadeIn() with
                                     slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
-                                        animationSpec = tween(1000)
+                                        animationSpec = tween(1000),
                                     ) + fadeOut(animationSpec = tween(1000))
                         }
 
                         DivisionIconSelectorDirection.NONE -> fadeIn() with fadeOut()
                     }
-                }
+                },
             ) {
                 val currentIconData = DivisionIcons.all[it.currentIconPos]
                 Icon(
@@ -135,7 +134,7 @@ fun DivisionIconSelector(
                     modifier = Modifier
                         .padding(15.dp)
                         .size(50.dp),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
             }
         }
@@ -154,7 +153,7 @@ fun DivisionIconSelector(
                         DivisionIconSelectorState((selectedPosition.currentIconPos + 1), DivisionIconSelectorDirection.RIGHT)
                     }
                     onIconSelected(DivisionIcons.all[selectedPosition.currentIconPos])
-                }
+                },
         )
     }
 }
@@ -163,7 +162,7 @@ fun DivisionIconSelector(
 fun DivisionIconSelector(
     modifier: Modifier = Modifier,
     iconSelected: DivisionIcon = DivisionIcons.all.first(),
-    onIconSelected: (DivisionIcon) -> Unit
+    onIconSelected: (DivisionIcon) -> Unit,
 ) {
     val pos = DivisionIcons.all.indexOf(iconSelected)
     DivisionIconSelector(modifier = modifier, defaultPos = pos, onIconSelected = onIconSelected)
@@ -173,6 +172,6 @@ fun DivisionIconSelector(
 @Composable
 private fun DivisionIconSelectorPreview(@PreviewParameter(ThemesProvider::class) theme: ThemeOption) {
     DynamicTheme(theme) {
-        DivisionIconSelector(modifier =Modifier, defaultPos = 0, onIconSelected = {})
+        DivisionIconSelector(modifier = Modifier, defaultPos = 0, onIconSelected = {})
     }
 }

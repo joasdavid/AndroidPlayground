@@ -42,14 +42,14 @@ import kotlin.reflect.KProperty
 
 @Composable
 fun rememberSideMenuScaffoldState(
-    isMenuOpen : Boolean = false,
-    menuActionSize : Dp? = null,
-    position: SideMenuMenuPosition = SideMenuMenuPosition.ON_LEFT
-) : SideMenuScaffoldState {
+    isMenuOpen: Boolean = false,
+    menuActionSize: Dp? = null,
+    position: SideMenuMenuPosition = SideMenuMenuPosition.ON_LEFT,
+): SideMenuScaffoldState {
     val currentLocalDensity = LocalDensity.current
     val configuration = LocalConfiguration.current
     val sizes = provideScreenDimensions(configuration)
-    val (heigth,width) = sizes
+    val (heigth, width) = sizes
 
     return remember {
         SideMenuScaffoldState(
@@ -57,38 +57,38 @@ fun rememberSideMenuScaffoldState(
             screenHeight = heigth,
             menuActionWidthInit = menuActionSize ?: width,
             isMenuOpenInit = isMenuOpen,
-            position = position
+            position = position,
         )
     }
 }
 
-fun provideScreenDimensions(configuration: Configuration): Pair<Dp,Dp> {
+fun provideScreenDimensions(configuration: Configuration): Pair<Dp, Dp> {
     return Pair(
         configuration.screenHeightDp.dp,
-        configuration.screenWidthDp.dp
+        configuration.screenWidthDp.dp,
     )
 }
 
 enum class SideMenuMenuPosition {
     ON_LEFT,
-    ON_RIGHT
+    ON_RIGHT,
 }
 
 class SideMenuScaffoldState(
-    val screenWidth : Dp,
-    val screenHeight : Dp,
-    menuActionWidthInit : Dp,
-    isMenuOpenInit : Boolean,
-    val position : SideMenuMenuPosition = SideMenuMenuPosition.ON_LEFT
+    val screenWidth: Dp,
+    val screenHeight: Dp,
+    menuActionWidthInit: Dp,
+    isMenuOpenInit: Boolean,
+    val position: SideMenuMenuPosition = SideMenuMenuPosition.ON_LEFT,
 ) {
 
     var isMenuOpen: MutableState<Boolean> = mutableStateOf(isMenuOpenInit)
     private val menuActionWidth: MutableState<Dp> = mutableStateOf(menuActionWidthInit)
 
-    val currentMenuWidth : Dp
-    get() = screenWidth.minus(menuActionWidth.value)
+    val currentMenuWidth: Dp
+        get() = screenWidth.minus(menuActionWidth.value)
 
-    fun provideMenuOffSet() : Dp =  if (isMenuOpen.value) {
+    fun provideMenuOffSet(): Dp = if (isMenuOpen.value) {
         Log.d("JVP", "menuWidthOpen")
         screenWidth.minus(menuActionWidth.value)
     } else {
@@ -97,10 +97,10 @@ class SideMenuScaffoldState(
     }
 
     fun toggleMenu() {
-       isMenuOpen.value = !isMenuOpen.value
+        isMenuOpen.value = !isMenuOpen.value
     }
 
-    fun updateMenuWidth(func : () -> Dp){
+    fun updateMenuWidth(func: () -> Dp) {
         val widthInDp = func()
         Log.d("JVP", "updateMenuWidth {$widthInDp}")
         menuActionWidth.value = widthInDp
@@ -113,33 +113,35 @@ class SideMenuScaffoldState(
 fun SideMenuScaffold(
     sideMenuScaffoldState: SideMenuScaffoldState = rememberSideMenuScaffoldState(),
     menuContent: @Composable (scope: BoxScope) -> Unit = {},
-    menuAction: @Composable (isMenuOpen : Boolean) -> Unit = { MenuActionDefault(false) },
+    menuAction: @Composable (isMenuOpen: Boolean) -> Unit = { MenuActionDefault(false) },
     menuBackgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Log.d("JVP", sideMenuScaffoldState.toString())
     val currentLocalDensity = LocalDensity.current
     Box {
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         ) {
             content()
         }
 
-        val menuOffset : Dp by animateDpAsState(targetValue = sideMenuScaffoldState.provideMenuOffSet())
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .width(sideMenuScaffoldState.screenWidth)
-            .offset {
-                IntOffset(
-                    x = menuOffset
-                        .times(if (sideMenuScaffoldState.position == SideMenuMenuPosition.ON_LEFT) -1 else 1)
-                        .roundToPx(), y = 0
-                ).also {
-                    Log.d("JVP", "offset = $it")
-                }
-            }
+        val menuOffset: Dp by animateDpAsState(targetValue = sideMenuScaffoldState.provideMenuOffSet())
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(sideMenuScaffoldState.screenWidth)
+                .offset {
+                    IntOffset(
+                        x = menuOffset
+                            .times(if (sideMenuScaffoldState.position == SideMenuMenuPosition.ON_LEFT) -1 else 1)
+                            .roundToPx(),
+                        y = 0,
+                    ).also {
+                        Log.d("JVP", "offset = $it")
+                    }
+                },
         ) {
             Row {
                 if (sideMenuScaffoldState.position == SideMenuMenuPosition.ON_LEFT) {
@@ -161,43 +163,45 @@ private fun ToggleMenuAction(
     menuBackgroundColor: Color,
     menuAction: @Composable (isMenuOpen: Boolean) -> Unit,
 ) {
-
-    val (alignment ,shape) = if (sideMenuScaffoldState.position == SideMenuMenuPosition.ON_LEFT) {
-        Pair(Alignment.BottomStart,RoundedCornerShape(
-            topStartPercent = 0,
-            topEndPercent = 100,
-            bottomStartPercent = 0,
-            bottomEndPercent = 100
-        )
+    val (alignment, shape) = if (sideMenuScaffoldState.position == SideMenuMenuPosition.ON_LEFT) {
+        Pair(
+            Alignment.BottomStart,
+            RoundedCornerShape(
+                topStartPercent = 0,
+                topEndPercent = 100,
+                bottomStartPercent = 0,
+                bottomEndPercent = 100,
+            ),
         )
     } else {
-        Pair(Alignment.BottomEnd,RoundedCornerShape(
-        topStartPercent = 100,
-        topEndPercent = 0,
-        bottomStartPercent = 100,
-        bottomEndPercent = 0
-        )
+        Pair(
+            Alignment.BottomEnd,
+            RoundedCornerShape(
+                topStartPercent = 100,
+                topEndPercent = 0,
+                bottomStartPercent = 100,
+                bottomEndPercent = 0,
+            ),
         )
     }
 
-    //val shape =
+    // val shape =
 
     Box(
         modifier = Modifier
             .fillMaxHeight()
             .padding(vertical = 50.dp),
-        contentAlignment = alignment
+        contentAlignment = alignment,
     ) {
-
         Surface(
             modifier = Modifier
                 .shadow(
                     if (!sideMenuScaffoldState.isMenuOpen.value) 0.dp else 4.dp,
                     shape = shape,
-                    clip = true
+                    clip = true,
                 )
                 .clip(
-                    shape = shape
+                    shape = shape,
                 )
                 .clickable {
                     Log.d("JVP", "action clicked")
@@ -239,12 +243,13 @@ private fun MenuSurfaceContent(
 }
 
 @Composable
-fun MenuActionDefault(isMenuOpen : Boolean) {
+fun MenuActionDefault(isMenuOpen: Boolean) {
     Box(modifier = Modifier.padding(8.dp)) {
-        if(!isMenuOpen)
+        if (!isMenuOpen) {
             Text(text = "MENU", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-        else
+        } else {
             Text(text = "X", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        }
     }
 }
 
@@ -253,11 +258,6 @@ fun MenuActionDefault(isMenuOpen : Boolean) {
 fun SideMenuScaffoldPreview() {
     Column {
         Box(modifier = Modifier.fillMaxWidth()) {
-
         }
     }
 }
-
-
-
-

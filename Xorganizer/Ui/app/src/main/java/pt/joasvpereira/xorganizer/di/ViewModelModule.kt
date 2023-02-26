@@ -45,9 +45,9 @@ val repository = module {
         val v = Room.databaseBuilder(
             androidApplication(),
             Db::class.java,
-            "database-name"
+            "database-name",
         ).addCallback(object : Callback() {
         }).build()
-       v
+        v
     }
 }

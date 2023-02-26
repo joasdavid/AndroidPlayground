@@ -21,12 +21,11 @@ import pt.joasvpereira.sessionfeature.domain.usecase.IDeleteSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.IUpdateSessionUseCase
 import pt.joasvpereira.sessionfeature.domain.usecase.UpdateSessionParams
 
-
 open class CreateSessionFeatureScreenViewModel(
     private val sessionUseCase: ISessionUseCase,
     private val createSessionUseCase: ICreateSessionUseCase,
     private val updateSessionUseCase: IUpdateSessionUseCase,
-    private val deleteSessionUseCase: IDeleteSessionUseCase
+    private val deleteSessionUseCase: IDeleteSessionUseCase,
 ) : ViewModel() {
 
     private var _state = mutableStateOf(CreateSessionFeatureScreenState())
@@ -47,7 +46,7 @@ open class CreateSessionFeatureScreenViewModel(
                     sessionName = it.name,
                     isLoading = false,
                     isButtonEnabled = true,
-                    mode = Mode.Edit
+                    mode = Mode.Edit,
                 )
             }
         }
@@ -84,9 +83,9 @@ open class CreateSessionFeatureScreenViewModel(
                         SessionItem(
                             id = originId,
                             name = state.sessionName,
-                            image = state.bitmap
-                        )
-                    )
+                            image = state.bitmap,
+                        ),
+                    ),
                 )
             } else {
                 updateSessionUseCase.execute(
@@ -94,9 +93,9 @@ open class CreateSessionFeatureScreenViewModel(
                         sessionItem = SessionItem(
                             id = originId,
                             name = state.sessionName,
-                            image = state.bitmap
-                        )
-                    )
+                            image = state.bitmap,
+                        ),
+                    ),
                 )
             }
             withContext(Dispatchers.Main) {

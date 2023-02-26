@@ -15,15 +15,15 @@ import pt.joasvpereira.core.repository.local.entities.Item.Companion.TABLE_NAME
             entity = Box::class,
             parentColumns = arrayOf(Box.ID),
             childColumns = arrayOf(PARENT_BOX_ID),
-            onDelete = ForeignKey.NO_ACTION
+            onDelete = ForeignKey.NO_ACTION,
         ),
         ForeignKey(
             entity = Division::class,
             parentColumns = arrayOf(Division.ID),
             childColumns = arrayOf(PARENT_DIVISION_ID),
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
 )
 data class Item(
     @PrimaryKey(autoGenerate = true)

@@ -44,8 +44,8 @@ class DivisionsFeatureViewModel(
 
     private var _state = mutableStateOf(
         DivisionsFeatureScreenState(
-            division = DivisionThemed(id = 0, name = "", description = null, icon = DivisionIcons.home, themeOption = ThemeOption.THEME_BLUE)
-        )
+            division = DivisionThemed(id = 0, name = "", description = null, icon = DivisionIcons.home, themeOption = ThemeOption.THEME_BLUE),
+        ),
     )
 
     val state: DivisionsFeatureScreenState
@@ -56,7 +56,7 @@ class DivisionsFeatureViewModel(
             divisionUseCase.execute(DivisionIdParam(divisionId)).let { division ->
                 withContext(Dispatchers.Main) {
                     _state.value = state.copy(
-                        division = division
+                        division = division,
                     )
                 }
             }
@@ -65,16 +65,15 @@ class DivisionsFeatureViewModel(
                 _state.value = state.copy(
                     listContent = it.list,
                     nrOfItems = it.nrItems,
-                    nrOfBoxes = it.nrBoxes
+                    nrOfBoxes = it.nrBoxes,
                 )
             }
-
         }
     }
 
     fun showFilter() {
         _state.value = state.copy(
-            filter = state.filter.copy(isVisible = true)
+            filter = state.filter.copy(isVisible = true),
         )
     }
 
@@ -84,26 +83,26 @@ class DivisionsFeatureViewModel(
 
     fun saveNewBox(): () -> Unit = {
         viewModelScope.launch {
-            if (state.createBox.isEditMode){
+            if (state.createBox.isEditMode) {
                 updateBoxUseCase.execute(
                     UpdateBoxParam(
                         divisionElement!!.id,
                         name = state.createBox.name,
-                        description = state.createBox.description
-                    )
+                        description = state.createBox.description,
+                    ),
                 )
-            }else {
+            } else {
                 createBoxUseCase.execute(
                     CreateBoxParam(
                         name = state.createBox.name,
                         description = state.createBox.description,
-                        parentId = divisionId
-                    )
+                        parentId = divisionId,
+                    ),
                 )
             }
 
             _state.value = state.copy(
-                createBox = state.createBox.copy(isVisible = false)
+                createBox = state.createBox.copy(isVisible = false),
             )
         }
     }
@@ -111,14 +110,14 @@ class DivisionsFeatureViewModel(
     fun onBoxNameChanged(): (String) -> Unit = {
         val currBoxState = state.createBox
         _state.value = state.copy(
-            createBox = currBoxState.copy(name = it)
+            createBox = currBoxState.copy(name = it),
         )
     }
 
     fun onBoxDescriptionChanged(): (String) -> Unit = {
         val currBoxState = state.createBox
         _state.value = state.copy(
-            createBox = currBoxState.copy(description = it)
+            createBox = currBoxState.copy(description = it),
         )
     }
 
@@ -134,19 +133,19 @@ class DivisionsFeatureViewModel(
                         id = divisionElement!!.id,
                         name = state.createItem.name,
                         description = state.createItem.description,
-                    )
+                    ),
                 )
             } else {
                 createItemUseCase.execute(
                     CreateItemParam(
                         name = state.createItem.name,
                         description = state.createItem.description,
-                        parentId = divisionId
-                    )
+                        parentId = divisionId,
+                    ),
                 )
             }
             _state.value = state.copy(
-                createItem = state.createItem.copy(isVisible = false)
+                createItem = state.createItem.copy(isVisible = false),
             )
         }
     }
@@ -195,15 +194,19 @@ class DivisionsFeatureViewModel(
         }
         _state.value = state.copy(
             deleteEvent = DivisionsFeatureScreenState.DeleteEvent(
-                isBox = isBox, confirmation = name, name = "", description = "", isVisible = true
+                isBox = isBox,
+                confirmation = name,
+                name = "",
+                description = "",
+                isVisible = true,
 
-            )
+                ),
         )
     }
 
     fun hideDeleteConfirmation() {
         _state.value = state.copy(
-            deleteEvent = state.deleteEvent.copy(isVisible = false)
+            deleteEvent = state.deleteEvent.copy(isVisible = false),
         )
     }
 
@@ -211,8 +214,8 @@ class DivisionsFeatureViewModel(
         state.deleteEvent.run {
             _state.value = state.copy(
                 deleteEvent = this.copy(
-                    name = name
-                )
+                    name = name,
+                ),
             ).logThis("DivisionScreen")
         }
     }
@@ -225,7 +228,7 @@ class DivisionsFeatureViewModel(
                     is DivisionElement.Item -> deleteItemUseCase.execute(DeleteItemParam(element.id))
                 }
                 _state.value = state.copy(
-                    deleteEvent = state.deleteEvent.copy(isVisible = false)
+                    deleteEvent = state.deleteEvent.copy(isVisible = false),
                 )
             }
         }
@@ -233,15 +236,15 @@ class DivisionsFeatureViewModel(
 
     fun hideFilter(): () -> Unit = {
         _state.value = state.copy(
-            filter = state.filter.copy(isVisible = false)
+            filter = state.filter.copy(isVisible = false),
         )
     }
 
     fun changeFilterSelections(selectedOption: FilterOptions) {
         _state.value = state.copy(
             filter = state.filter.copy(
-                selectedFilter = selectedOption
-            )
+                selectedFilter = selectedOption,
+            ),
         )
         applyFilter()
     }
@@ -255,13 +258,13 @@ class DivisionsFeatureViewModel(
                         FilterOptions.OnlyBox -> GetDivisionElementsParams.Filter.OnlyBoxes
                         FilterOptions.OnlyItem -> GetDivisionElementsParams.Filter.OnlyItems
                         else -> GetDivisionElementsParams.Filter.All
-                    }
-                )
+                    },
+                ),
             ).collectLatest {
                 _state.value = state.copy(
                     listContent = it.list,
                     nrOfBoxes = it.nrBoxes,
-                    nrOfItems = it.nrItems
+                    nrOfItems = it.nrItems,
                 )
             }
         }

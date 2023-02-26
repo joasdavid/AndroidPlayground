@@ -2,8 +2,8 @@ package com.joasvpereira.main.presentation.division
 
 import com.joasvpereira.main.compose.division.DivisionCreateButtonsState
 import com.joasvpereira.main.compose.division.popup.FilterOptions
-import com.joasvpereira.main.domain.data.DivisionThemed
 import com.joasvpereira.main.domain.data.DivisionElement
+import com.joasvpereira.main.domain.data.DivisionThemed
 
 data class DivisionsFeatureScreenState(
     val division: DivisionThemed,
@@ -15,7 +15,7 @@ data class DivisionsFeatureScreenState(
     val createItem: CreateItem = CreateItem(name = "", description = "", isVisible = false),
     val createBox: CreateBox = CreateBox(name = "", description = "", isVisible = false),
     val deleteEvent: DeleteEvent = DeleteEvent(),
-    val filter: Filter = Filter(isVisible = false)
+    val filter: Filter = Filter(isVisible = false),
 ) {
 
     data class DeleteEvent(
@@ -28,7 +28,7 @@ data class DivisionsFeatureScreenState(
 
     data class Filter(
         val selectedFilter: FilterOptions = FilterOptions.All,
-        val isVisible: Boolean
+        val isVisible: Boolean,
     )
 
     data class CreateItem(
@@ -36,7 +36,7 @@ data class DivisionsFeatureScreenState(
         val name: String,
         val description: String,
         val isVisible: Boolean,
-        val isEditMode: Boolean = false
+        val isEditMode: Boolean = false,
     )
 
     data class CreateBox(
@@ -44,6 +44,6 @@ data class DivisionsFeatureScreenState(
         val name: String,
         val description: String,
         val isVisible: Boolean,
-        val isEditMode: Boolean = false
+        val isEditMode: Boolean = false,
     )
 }

@@ -10,7 +10,7 @@ import pt.joasvpereira.core.repository.local.entities.BoxCountAndParentId
 
 interface BoxDataSource {
     suspend fun getBoxes(divisionId: Int): Flow<List<Box>>
-    suspend fun getBox(id : Int): Flow<Box?>
+    suspend fun getBox(id: Int): Flow<Box?>
     suspend fun createNewBox(box: Box)
     suspend fun updateBox(box: Box)
     suspend fun deleteBox(id: Int)
@@ -23,19 +23,19 @@ class LocalBoxDataSource(private val boxDao: BoxDao) : BoxDataSource {
         boxDao.getAll(divisionId)
     }
 
-    override suspend fun getBox(id: Int): Flow<Box?> = withContext(Dispatchers.IO){
+    override suspend fun getBox(id: Int): Flow<Box?> = withContext(Dispatchers.IO) {
         boxDao.getBox(id)
     }
 
-    override suspend fun createNewBox(box: Box) = withContext(Dispatchers.IO){
+    override suspend fun createNewBox(box: Box) = withContext(Dispatchers.IO) {
         boxDao.insertBox(box)
     }
 
-    override suspend fun updateBox(box: Box) = withContext(Dispatchers.IO){
+    override suspend fun updateBox(box: Box) = withContext(Dispatchers.IO) {
         boxDao.updateBox(box)
     }
 
-    override suspend fun deleteBox(id: Int) : Unit = withContext(Dispatchers.IO){
+    override suspend fun deleteBox(id: Int): Unit = withContext(Dispatchers.IO) {
         boxDao.getBox(id).first()?.run {
             boxDao.deleteBox(this)
         }

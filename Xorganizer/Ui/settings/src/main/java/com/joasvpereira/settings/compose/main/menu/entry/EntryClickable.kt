@@ -19,15 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 fun EntryClickable(
     modifier: Modifier = Modifier,
     text: String,
     icon: Painter = rememberVectorPainter(image = Icons.Default.ArrowRight),
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -37,13 +37,14 @@ fun EntryClickable(
             .clickable {
                 onClick()
             },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
-            Row(modifier = Modifier
-                .fillMaxWidth(),
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(text = text)
                 Icon(painter = icon, contentDescription = null)
@@ -55,7 +56,7 @@ fun EntryClickable(
 @UiModePreview
 @Composable
 private fun EntryClickablePreview() {
-    DynamicTheme() {
+    DynamicTheme {
         Surface {
             EntryClickable(text = "Click me to do something", onClick = {})
         }

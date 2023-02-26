@@ -5,15 +5,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.repository.local.entities.Box
 
-class CreateBoxUseCase(val boxDataSource: BoxDataSource): ICreateBoxUseCase {
+class CreateBoxUseCase(val boxDataSource: BoxDataSource) : ICreateBoxUseCase {
     override suspend fun execute(params: CreateBoxParam) = withContext(Dispatchers.IO) {
         boxDataSource.createNewBox(
             Box(
                 id = null,
                 name = params.name.trim(),
                 description = params.description.trim(),
-                parentDivisionId = params.parentId
-            )
+                parentDivisionId = params.parentId,
+            ),
         )
     }
 }

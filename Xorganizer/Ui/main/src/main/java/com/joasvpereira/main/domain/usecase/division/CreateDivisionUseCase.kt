@@ -7,8 +7,8 @@ import pt.joasvpereira.core.repository.local.entities.Division
 
 class CreateDivisionUseCase(
     private val dataSource: DivisionDataSource,
-    private val sessionId: Int
-    ) : ICreateDivisionUseCase {
+    private val sessionId: Int,
+) : ICreateDivisionUseCase {
     override suspend fun execute(params: CreateDivisionParams) = withContext(Dispatchers.IO) {
         dataSource.createNewDivision(
             Division(
@@ -17,8 +17,8 @@ class CreateDivisionUseCase(
                 description = params.description ?: "",
                 iconId = params.icon.resId,
                 themeId = params.themeId,
-                sessionId = sessionId
-            )
+                sessionId = sessionId,
+            ),
         )
     }
 }

@@ -20,12 +20,12 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.compose.common.container.element.ElementAction
 import com.joasvpereira.main.compose.common.container.element.ElementsContainer
 import com.joasvpereira.main.domain.data.DivisionElement
-import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.main.R
 
 @Composable
@@ -34,7 +34,7 @@ fun BoxContentView(
     itemsList: List<DivisionElement.Item> = emptyList(),
     isLoading: Boolean = false,
     emptyText: String = "It looks like you don't have any items yet, but don't worry, you can easily add items by clicking the 'Add' button.",
-    onClick: (divisionElement: DivisionElement, elementAction: ElementAction) -> Unit = {_,_ ->},
+    onClick: (divisionElement: DivisionElement, elementAction: ElementAction) -> Unit = { _, _ -> },
     onAddButtonClick: () -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -42,7 +42,7 @@ fun BoxContentView(
         toolBarConfig = ToolBarConfig(
             title = box.name,
             onLeftIconClick = onBackClick,
-            horizontalPadding = 20.dp
+            horizontalPadding = 20.dp,
         ),
         isLoading = isLoading,
         paddingValues = PaddingValues(0.dp),
@@ -60,7 +60,7 @@ fun BoxContentView(
                     .padding(20.dp)
                     .padding(bottom = it.calculateBottomPadding())
                     .align(Alignment.BottomEnd),
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary,
             ) {
                 Row(modifier = Modifier.padding(10.dp)) {
                     Icon(painter = painterResource(id = R.drawable.ic_item), contentDescription = null)
@@ -76,8 +76,10 @@ private val previewList = mutableListOf<DivisionElement.Item>().apply {
     (1..40).forEach {
         add(
             DivisionElement.Item(
-                id = it, name = "Item $it", description = ""
-            )
+                id = it,
+                name = "Item $it",
+                description = "",
+            ),
         )
     }
 }
@@ -85,12 +87,12 @@ private val previewList = mutableListOf<DivisionElement.Item>().apply {
 @Preview(group = "Single")
 @Composable
 fun BoxContentViewPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         BoxContentView(
             box = DivisionElement.Box(id = 1, name = "Box num one", description = ""),
             itemsList = previewList,
             onBackClick = {},
-            onAddButtonClick = {  }
+            onAddButtonClick = { },
         )
     }
 }
@@ -98,9 +100,12 @@ fun BoxContentViewPreview() {
 @Preview(group = "SingleEmpty")
 @Composable
 fun BoxContentViewPreview_empty() {
-    DynamicTheme() {
-        BoxContentView(box = DivisionElement.Box(id = 1, name = "Box num one", description = ""), onBackClick = {},
-            onAddButtonClick = {  })
+    DynamicTheme {
+        BoxContentView(
+            box = DivisionElement.Box(id = 1, name = "Box num one", description = ""),
+            onBackClick = {},
+            onAddButtonClick = { },
+        )
     }
 }
 
@@ -108,14 +113,15 @@ fun BoxContentViewPreview_empty() {
 @Composable
 fun BoxContentViewPreview(@PreviewParameter(ThemesProvider::class) theme: ThemeOption) {
     DynamicTheme(theme) {
-        BoxContentView(box = DivisionElement.Box(
-            id = 1,
-            name = "Box num one",
-            description = ""
-        ),
+        BoxContentView(
+            box = DivisionElement.Box(
+                id = 1,
+                name = "Box num one",
+                description = "",
+            ),
             itemsList = previewList,
             onBackClick = {},
-            onAddButtonClick = {  }
+            onAddButtonClick = { },
         )
     }
 }

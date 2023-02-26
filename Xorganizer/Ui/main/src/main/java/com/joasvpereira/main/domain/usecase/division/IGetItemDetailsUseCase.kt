@@ -13,7 +13,7 @@ import pt.joasvpereira.core.domain.usecase.Params
 import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class GetItemDetailsParams(
-    val id: Int
+    val id: Int,
 ) : Params()
 
 interface IGetItemDetailsUseCase : BaseUseCaseSync<GetItemDetailsParams, Flow<ItemDetail?>>
@@ -21,7 +21,7 @@ interface IGetItemDetailsUseCase : BaseUseCaseSync<GetItemDetailsParams, Flow<It
 class GetItemDetailsUseCase(
     private val boxDataSource: BoxDataSource,
     private val itemDataSource: ItemDataSource,
-    private val divisionDataSource: DivisionDataSource
+    private val divisionDataSource: DivisionDataSource,
 ) : IGetItemDetailsUseCase {
     override suspend fun execute(params: GetItemDetailsParams): Flow<ItemDetail?> =
         itemDataSource.getItem(params.id).map {
@@ -41,11 +41,9 @@ class GetItemDetailsUseCase(
                 parentBox = box?.run {
                     ItemDetail.ParentBox(
                         id = id!!,
-                        name = name
+                        name = name,
                     )
-                }
+                },
             )
         }
-
-
 }

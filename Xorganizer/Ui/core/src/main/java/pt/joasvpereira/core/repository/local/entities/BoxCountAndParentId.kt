@@ -3,7 +3,6 @@ package pt.joasvpereira.core.repository.local.entities
 import androidx.room.ColumnInfo
 import pt.joasvpereira.core.repository.local.entities.Box.Companion.PARENT_DIVISION_ID
 
-
 data class BoxCountAndParentId(
     @ColumnInfo(name = COUNT)
     var count: Int,

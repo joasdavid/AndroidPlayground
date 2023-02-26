@@ -22,25 +22,25 @@ fun GenericItemDetailsSection(
     name: String,
     description: String,
     onEditClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    if(id < 1) return
+    if (id < 1) return
     GenericSectionContainer(
         headerText = "Main Details",
         clickableIcon = HeaderClickableIcon(
             iconPainter = rememberVectorPainter(image = Icons.Default.Edit),
-            onClick = onEditClick
+            onClick = onEditClick,
         ),
-        modifier = modifier
+        modifier = modifier,
     ) {
         Column(Modifier.padding(10.dp)) {
             Text(
                 text = AnnotatedString(
                     text = "ID: ",
-                    spanStyle = SpanStyle(fontWeight = FontWeight.Bold)
+                    spanStyle = SpanStyle(fontWeight = FontWeight.Bold),
                 ).plus(
-                    AnnotatedString(text = "$id")
-                )
+                    AnnotatedString(text = "$id"),
+                ),
             )
 
             SimpleSpace(size = 5.dp)
@@ -48,10 +48,10 @@ fun GenericItemDetailsSection(
             Text(
                 text = AnnotatedString(
                     text = "Name: ",
-                    spanStyle = SpanStyle(fontWeight = FontWeight.Bold)
+                    spanStyle = SpanStyle(fontWeight = FontWeight.Bold),
                 ).plus(
-                    AnnotatedString(text = name)
-                )
+                    AnnotatedString(text = name),
+                ),
             )
 
             SimpleSpace(size = 5.dp)
@@ -59,10 +59,10 @@ fun GenericItemDetailsSection(
             Text(
                 text = AnnotatedString(
                     text = "Description: ",
-                    spanStyle = SpanStyle(fontWeight = FontWeight.Bold)
+                    spanStyle = SpanStyle(fontWeight = FontWeight.Bold),
                 ).plus(
-                    AnnotatedString(text = description)
-                )
+                    AnnotatedString(text = description),
+                ),
             )
         }
     }
@@ -71,7 +71,7 @@ fun GenericItemDetailsSection(
 @Preview
 @Composable
 private fun GenericItemDetailsSectionPreview() {
-    DynamicTheme() {
-        GenericItemDetailsSection(id = 1, name = "Item XPTO", description = "This is my looooooooooooooooong description", onEditClick = {} )
+    DynamicTheme {
+        GenericItemDetailsSection(id = 1, name = "Item XPTO", description = "This is my looooooooooooooooong description", onEditClick = {})
     }
 }

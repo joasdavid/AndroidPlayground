@@ -40,15 +40,17 @@ import pt.joasvpereira.coreui.scaffold.ToolbarTitleCentered
 fun CollapseHeaderScaffold(
     modifier: Modifier = Modifier,
     header: @Composable (headerMaxHeight: Dp) -> Unit,
-    body: @Composable () -> Unit
+    body: @Composable () -> Unit,
 ) {
     Box(modifier.fillMaxSize()) {
         val scroll = rememberScrollState(0)
         var headerHeight: Dp by remember { mutableStateOf(0.dp) }
         val localDensity = LocalDensity.current
-        Box(modifier = Modifier.onGloballyPositioned { coordinates ->
-            headerHeight = with(localDensity) { coordinates.size.height.toDp() }
-        }) {
+        Box(
+            modifier = Modifier.onGloballyPositioned { coordinates ->
+                headerHeight = with(localDensity) { coordinates.size.height.toDp() }
+            },
+        ) {
             header(headerHeight)
         }
         BodyContainer(scroll, headerHeight, body)
@@ -67,11 +69,11 @@ fun BodyContainer(scrollState: ScrollState, headerMaxHeight: Dp, body: @Composab
                 .verticalScroll(state = scrollState)
                 .offset {
                     IntOffset(x = 0, y = offset)
-                }
+                },
         ) {
             val shape = RoundedCornerShape(
                 topStart = 20.dp,
-                topEnd = 20.dp
+                topEnd = 20.dp,
             )
             Box(
                 modifier = Modifier
@@ -79,7 +81,7 @@ fun BodyContainer(scrollState: ScrollState, headerMaxHeight: Dp, body: @Composab
                     .shadow(elevation = 4.dp, shape = shape)
                     .clip(shape = shape)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.background)
+                    .background(MaterialTheme.colorScheme.background),
             ) {
                 Box(modifier = Modifier.padding(top = 20.dp), content = { body() })
             }
@@ -92,8 +94,7 @@ fun BodyContainer(scrollState: ScrollState, headerMaxHeight: Dp, body: @Composab
 fun CollapseHeaderScaffoldPreview() {
     CollapseHeaderScaffold(
         header = { headerMaxHeight ->
-            Column(
-            ) {
+            Column {
                 ToolbarTitleCentered(
                     toolBarConfig = ToolBarConfig(title = "divisionName", onLeftIconClick = {}),
                 )
@@ -104,11 +105,10 @@ fun CollapseHeaderScaffoldPreview() {
                     5,
                     .5f,
                     DivisionIcons.desk.resId,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
                 SimpleSpace(size = 20.dp)
             }
-
         },
         body = {
             Column {
@@ -117,6 +117,6 @@ fun CollapseHeaderScaffoldPreview() {
                 }
                 Text(text = "EOF")
             }
-        }
+        },
     )
 }

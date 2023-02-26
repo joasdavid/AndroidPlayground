@@ -14,9 +14,9 @@ import pt.joasvpereira.core.repository.local.entities.Box.Companion.TABLE_NAME
             entity = Division::class,
             parentColumns = arrayOf(Division.ID),
             childColumns = arrayOf(PARENT_DIVISION_ID),
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
 )
 data class Box(
     @PrimaryKey(autoGenerate = true)

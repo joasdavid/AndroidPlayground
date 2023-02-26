@@ -20,11 +20,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,10 +42,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.R
 import pt.joasvpereira.coreui.shield.First2WordsHighlight
 import pt.joasvpereira.coreui.shield.NameShield
+import pt.joasvpereira.coreui.theme.DynamicTheme
 
 @Composable
 fun RequestContentPermission() {
@@ -59,11 +59,11 @@ fun RequestContentPermission() {
 
     val launcher = rememberLauncherForActivityResult(
         contract =
-        ActivityResultContracts.GetContent()
+        ActivityResultContracts.GetContent(),
     ) { uri: Uri? ->
         imageUri = uri
     }
-    Column() {
+    Column {
         Button(onClick = {
             launcher.launch("image/*")
         }) {
@@ -76,7 +76,6 @@ fun RequestContentPermission() {
             if (Build.VERSION.SDK_INT < 28) {
                 bitmap.value = MediaStore.Images
                     .Media.getBitmap(context.contentResolver, it)
-
             } else {
                 val source = ImageDecoder
                     .createSource(context.contentResolver, it)
@@ -87,11 +86,10 @@ fun RequestContentPermission() {
                 Image(
                     bitmap = btm.asImageBitmap(),
                     contentDescription = null,
-                    modifier = Modifier.size(400.dp)
+                    modifier = Modifier.size(400.dp),
                 )
             }
         }
-
     }
 }
 
@@ -112,7 +110,7 @@ fun UploadImagePlaceHolder(
                     .fillMaxSize()
                     .clip(CircleShape)
                     .border(border = BorderStroke(2.dp, MaterialTheme.colorScheme.primaryContainer), shape = CircleShape),
-                contentScale = ContentScale.FillBounds
+                contentScale = ContentScale.FillBounds,
             )
             Surface(
                 Modifier
@@ -125,13 +123,13 @@ fun UploadImagePlaceHolder(
                     .align(Alignment.TopStart),
                 color = MaterialTheme.colorScheme.tertiaryContainer,
                 tonalElevation = 100.dp,
-                shadowElevation = 100.dp
+                shadowElevation = 100.dp,
             ) {
                 Box {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_trash_can_outline),
                         contentDescription = "",
-                        modifier.align(Alignment.Center)
+                        modifier.align(Alignment.Center),
                     )
                 }
             }
@@ -142,8 +140,8 @@ fun UploadImagePlaceHolder(
                 textStrategy = First2WordsHighlight(emptySymbol = ' '),
                 textStyle = MaterialTheme.typography.displayLarge.copy(
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold
-                )
+                    fontWeight = FontWeight.Bold,
+                ),
             )
         }
 
@@ -157,13 +155,13 @@ fun UploadImagePlaceHolder(
                 .align(Alignment.BottomEnd),
             color = MaterialTheme.colorScheme.tertiaryContainer,
             tonalElevation = 100.dp,
-            shadowElevation = 100.dp
+            shadowElevation = 100.dp,
         ) {
             Box {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_upload),
                     contentDescription = "",
-                    modifier.align(Alignment.Center)
+                    modifier.align(Alignment.Center),
                 )
             }
         }
@@ -176,6 +174,6 @@ fun UploadImagePlaceHolderPreview() {
     DynamicTheme {
         val context = LocalContext.current
         val drawable = AppCompatResources.getDrawable(context, R.drawable.background)
-        UploadImagePlaceHolder(modifier = Modifier, drawable?.toBitmap(),"", onUploadClick = {}) {}
+        UploadImagePlaceHolder(modifier = Modifier, drawable?.toBitmap(), "", onUploadClick = {}) {}
     }
 }

@@ -6,7 +6,7 @@ import pt.joasvpereira.core.domain.usecase.Params
 data class CreateBoxParam(
     val name: String,
     val description: String,
-    val parentId: Int
-): Params()
+    val parentId: Int,
+) : Params()
 
 interface ICreateBoxUseCase : BaseUseCaseSync<CreateBoxParam, Unit>

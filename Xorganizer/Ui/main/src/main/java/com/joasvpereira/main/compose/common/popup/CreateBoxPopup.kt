@@ -12,21 +12,21 @@ import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField
+import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.main.R
 
 @Composable
 fun CreateBoxPopup(
-    onDismissRequest : () -> Unit,
-    onButtonPositiveClick : () -> Unit,
-    onButtonNegativeClick : () -> Unit,
-    boxName : String,
+    onDismissRequest: () -> Unit,
+    onButtonPositiveClick: () -> Unit,
+    onButtonNegativeClick: () -> Unit,
+    boxName: String,
     onBoxNameChange: (String) -> Unit,
-    description : String,
+    description: String,
     onDescriptionChange: (String) -> Unit,
-    isOnEditMode : Boolean
+    isOnEditMode: Boolean,
 ) {
     DialogWithTwoButton(
         onDismissRequest = onDismissRequest,
@@ -38,7 +38,8 @@ fun CreateBoxPopup(
         onButtonPositiveClick = onButtonPositiveClick,
         buttonNegativeText = "Close",
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
-        onButtonNegativeClick = onButtonNegativeClick) {
+        onButtonNegativeClick = onButtonNegativeClick,
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (isOnEditMode) {
                 Text(text = "Update box".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
@@ -57,7 +58,7 @@ fun CreateBoxPopup(
 @Preview
 @Composable
 private fun CreateItemPopupPreview() {
-    DynamicTheme() {
+    DynamicTheme {
         CreateBoxPopup(
             onDismissRequest = {},
             onButtonPositiveClick = {},
@@ -66,7 +67,7 @@ private fun CreateItemPopupPreview() {
             onBoxNameChange = {},
             description = "",
             onDescriptionChange = {},
-        true
+            true,
         )
     }
 }
