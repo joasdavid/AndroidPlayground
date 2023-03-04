@@ -10,11 +10,4 @@ data class DashboardFeatureScreenState(
     val sessionName: String = "",
     val sessionImage: Bitmap? = null,
     val divisions: List<DashboardDivision> = listOf(),
-    val deleteEvent: DeleteEvent? = null,
-)
-
-data class DeleteEvent(
-    val division: DashboardDivision,
-    val confirmationText: String,
-    val isNameMatchingConfirmation: Boolean = division.name.toUpperCase(Locale.current) == confirmationText,
 )

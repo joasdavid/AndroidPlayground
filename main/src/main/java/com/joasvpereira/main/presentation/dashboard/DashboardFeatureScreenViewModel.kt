@@ -19,7 +19,6 @@ import pt.joasvpereira.core.repository.CurrentSession
 class DashboardFeatureScreenViewModel(
     private val divisionsUseCase: IDivisionsUseCase,
     private val getSessionUseCase: ISessionUseCase,
-    private val deleteUseCase: IDeleteDivisionUseCase,
 ) : ViewModel() {
     private var _state = mutableStateOf(DashboardFeatureScreenState())
     val state: DashboardFeatureScreenState
@@ -58,33 +57,6 @@ class DashboardFeatureScreenViewModel(
                 divisions = it,
                 isLoading = false,
             )
-        }
-    }
-
-    fun askToDelete(division: DashboardDivision, confirmationName: String = "") {
-        _state.value = _state.value.copy(
-            deleteEvent = DeleteEvent(
-                division = division,
-                confirmationText = confirmationName,
-            ),
-        )
-    }
-
-    fun cancelDelete() {
-        _state.value = _state.value.copy(
-            deleteEvent = null,
-        )
-    }
-
-    fun deleteDivision() {
-        _state.value = _state.value.copy(isLoading = true)
-        _state.value.deleteEvent?.let {
-            viewModelScope.launch(Dispatchers.IO) {
-                deleteUseCase.execute(DeleteDivisionParam(it.division.id)).also {
-                    cancelDelete()
-                }
-                fetchDivisions()
-            }
         }
     }
 }
