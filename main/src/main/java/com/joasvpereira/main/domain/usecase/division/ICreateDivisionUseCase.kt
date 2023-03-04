@@ -9,6 +9,6 @@ open class CreateDivisionParams(
     val description: String?,
     val icon: DivisionIcon,
     val themeId: Int,
-) : Params()
+) : Params
 
 interface ICreateDivisionUseCase : BaseUseCaseSync<CreateDivisionParams, Unit>

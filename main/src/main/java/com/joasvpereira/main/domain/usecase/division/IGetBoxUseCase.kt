@@ -13,7 +13,7 @@ import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class GetBoxParams(
     val id: Int,
-) : Params()
+) : Params
 
 interface IGetBoxUseCase : BaseUseCaseSync<GetBoxParams, Flow<ParentBox?>>
 

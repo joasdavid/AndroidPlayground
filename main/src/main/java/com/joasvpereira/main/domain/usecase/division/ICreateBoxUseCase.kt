@@ -7,6 +7,6 @@ data class CreateBoxParam(
     val name: String,
     val description: String,
     val parentId: Int,
-) : Params()
+) : Params
 
 interface ICreateBoxUseCase : BaseUseCaseSync<CreateBoxParam, Unit>

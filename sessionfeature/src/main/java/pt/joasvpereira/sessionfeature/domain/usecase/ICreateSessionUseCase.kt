@@ -10,7 +10,7 @@ import pt.joasvpereira.core.ext.toBase64String
 import pt.joasvpereira.core.repository.local.entities.Session
 import pt.joasvpereira.sessionfeature.repository.SessionDataSource
 
-data class CreateSessionParams(val sessionItem: SessionItem) : Params()
+data class CreateSessionParams(val sessionItem: SessionItem) : Params
 
 interface ICreateSessionUseCase : BaseUseCaseSync<CreateSessionParams, Unit>
 

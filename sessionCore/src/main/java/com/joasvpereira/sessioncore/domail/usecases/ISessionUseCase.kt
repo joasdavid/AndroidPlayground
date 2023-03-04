@@ -10,7 +10,7 @@ import pt.joasvpereira.core.domain.usecase.Params
 import pt.joasvpereira.core.ext.toBitmap
 import pt.joasvpereira.sessionfeature.repository.SessionDataSource
 
-data class SessionIdParam(val id: Int) : Params()
+data class SessionIdParam(val id: Int) : Params
 
 interface ISessionUseCase : BaseUseCaseSync<SessionIdParam, Flow<SessionItem>>
 
