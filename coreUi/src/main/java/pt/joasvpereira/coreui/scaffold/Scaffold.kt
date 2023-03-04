@@ -184,13 +184,21 @@ fun AppScaffold(
         }
     }
     if (isLoading) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .clickable { }
-            .background(MaterialTheme.colorScheme.background.copy(alpha = .75f))) {
-            CircularProgressIndicator(modifier = Modifier
-                .size(50.dp)
-                .align(Alignment.Center))
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable { }
+                .background(
+                    MaterialTheme.colorScheme.background.copy(
+                        alpha = .75f,
+                    ),
+                ),
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(size = 50.dp)
+                    .align(Alignment.Center),
+            )
         }
     }
 }

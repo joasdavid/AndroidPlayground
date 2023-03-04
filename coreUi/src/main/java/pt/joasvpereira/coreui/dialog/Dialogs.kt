@@ -147,8 +147,7 @@ internal fun ColumnScope.AlertDialogBaselineLayout(
             if (lastTitleBaseline == 0) {
                 textPlaceable.height + textOffset - firstTextBaseline
             } else {
-                textPlaceable.height + textOffset - firstTextBaseline -
-                        ((titlePlaceable?.height ?: 0) - lastTitleBaseline)
+                textPlaceable.height + textOffset - firstTextBaseline - ((titlePlaceable?.height ?: 0) - lastTitleBaseline)
             }
         } ?: 0
 
