@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.core.domain.usecase.Params
 
-data class UpdateItemParam(val id: Int, val name: String? = null, val description: String? = null) : Params()
+data class UpdateItemParam(val id: Int, val name: String? = null, val description: String? = null) : Params
 
 interface IUpdateItemUseCase : BaseUseCaseSync<UpdateItemParam, Unit>
 

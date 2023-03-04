@@ -6,7 +6,7 @@ import pt.joasvpereira.xorganizer.domain.model.Box
 import pt.joasvpereira.xorganizer.domain.repo.BoxDataSource
 import pt.joasvpereira.xorganizer.domain.repo.FromDivision
 
-data class SourceDivision(val id: Int) : Params()
+data class SourceDivision(val id: Int) : Params
 
 interface IBoxesUseCase : BaseUseCaseSync<SourceDivision?, List<Box>>
 

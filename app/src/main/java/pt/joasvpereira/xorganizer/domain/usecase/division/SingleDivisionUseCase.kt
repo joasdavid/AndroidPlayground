@@ -5,7 +5,7 @@ import pt.joasvpereira.core.domain.usecase.Params
 import pt.joasvpereira.xorganizer.domain.model.Division
 import pt.joasvpereira.xorganizer.domain.repo.DivisionDataSource
 
-data class DivisionId(val id: Int) : Params()
+data class DivisionId(val id: Int) : Params
 
 interface ISingleDivisionUseCase : BaseUseCaseSync<DivisionId, Division?>
 

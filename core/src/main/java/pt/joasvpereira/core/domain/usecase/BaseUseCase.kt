@@ -1,5 +1,6 @@
 package pt.joasvpereira.core.domain.usecase
 
+@Suppress("unused")
 interface BaseUseCase<INPUT : Params?, OUTPUT> {
     fun execute(params: INPUT): OUTPUT
 }
@@ -7,8 +8,6 @@ interface BaseUseCase<INPUT : Params?, OUTPUT> {
 interface BaseUseCaseSync<INPUT : Params?, OUTPUT> {
     suspend fun execute(params: INPUT): OUTPUT
 }
+interface Params
 
-// TODO: this can be a simple interface
-abstract class Params
-
-class EmptyParams : Params()
+class EmptyParams : Params

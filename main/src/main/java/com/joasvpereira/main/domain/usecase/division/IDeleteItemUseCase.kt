@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 import pt.joasvpereira.core.domain.usecase.BaseUseCaseSync
 import pt.joasvpereira.core.domain.usecase.Params
 
-data class DeleteItemParam(val id: Int) : Params()
+data class DeleteItemParam(val id: Int) : Params
 
 interface IDeleteItemUseCase : BaseUseCaseSync<DeleteItemParam, Unit>
 

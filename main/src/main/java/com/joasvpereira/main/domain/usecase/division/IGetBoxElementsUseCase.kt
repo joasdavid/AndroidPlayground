@@ -12,7 +12,7 @@ import pt.joasvpereira.core.domain.usecase.Params
 
 data class GetBoxElementsParams(
     val boxId: Int,
-) : Params()
+) : Params
 
 interface IGetBoxElementsUseCase : BaseUseCaseSync<GetBoxElementsParams, Flow<List<DivisionElement.Item>>>
 

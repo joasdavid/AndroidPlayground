@@ -14,7 +14,7 @@ import pt.joasvpereira.coreui.theme.ThemeOption
 
 data class GetItemDetailsParams(
     val id: Int,
-) : Params()
+) : Params
 
 interface IGetItemDetailsUseCase : BaseUseCaseSync<GetItemDetailsParams, Flow<ItemDetail?>>
 
