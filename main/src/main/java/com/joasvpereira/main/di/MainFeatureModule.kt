@@ -51,7 +51,6 @@ val MainFeatureModule = module {
     viewModel {
         DashboardFeatureScreenViewModel(
             divisionsUseCase = get(),
-            deleteUseCase = get(),
             getSessionUseCase = get(),
         )
     }

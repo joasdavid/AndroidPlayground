@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,30 +13,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -45,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.IconAndCounter
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.IconData
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import com.joasvpereira.main.domain.data.DashboardDivision
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
@@ -57,7 +46,6 @@ internal fun DashboardDivisionsSection(
     divisions: List<DashboardDivision>,
     onDivisionClick: (DashboardDivision) -> Unit,
     onEditClick: (DashboardDivision) -> Unit,
-    onDeleteClick: (DashboardDivision) -> Unit,
     onAddNewItemClick: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -76,7 +64,6 @@ internal fun DashboardDivisionsSection(
                     division = divisions[index],
                     onItemClicked = { onDivisionClick(divisions[index]) },
                     onEditClick = { onEditClick(divisions[index]) },
-                    onDeleteClick = { onDeleteClick(divisions[index]) },
                 )
             }
             item {
@@ -116,7 +103,6 @@ private fun DivisionItem(
     division: DashboardDivision,
     onItemClicked: () -> Unit,
     onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit,
 ) {
     DynamicTheme(division.themeOption) {
         ItemContainer(
@@ -124,19 +110,13 @@ private fun DivisionItem(
             clickAction = onItemClicked,
             color = MaterialTheme.colorScheme.primaryContainer,
         ) {
-            var isExtraMenuOpen by remember {
-                mutableStateOf(false)
-            }
 
             Box(modifier = Modifier.fillMaxSize()) {
                 StyleShape(modifier = Modifier.align(Alignment.BottomEnd))
-                DivisionExtraOptions(isExtraMenuOpen, division, onOpenStateChange = { isExtraMenuOpen = it }) {
-                    isExtraMenuOpen = false
-                    when (it) {
-                        DivisionExtraOptionType.EDIT -> onEditClick()
-                        DivisionExtraOptionType.DELETE -> onDeleteClick()
-                    }
-                }
+                DivisionExtraOptions(
+                    division =  division,
+                    onEditClick = onEditClick
+                )
                 Column(
                     Modifier
                         .fillMaxSize()
@@ -155,31 +135,20 @@ private fun DivisionItem(
                                 tint = MaterialTheme.colorScheme.primaryContainer,
                             )
                         }
-
-                        Spacer(modifier = Modifier.size(10.dp))
-
-                        Text(
-                            text = division.name,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            fontWeight = FontWeight.Bold,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 2,
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.size(16.dp))
-
-                    division.description?.takeIf { it.isNotBlank() }?.run {
-                        Text(
-                            text = this,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        )
                     }
 
                     Spacer(modifier = Modifier.size(8.dp))
+
+                    Text(
+                        text = division.name,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        fontWeight = FontWeight.Bold,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        modifier = Modifier.weight(1f),
+                    )
+
+                    Spacer(modifier = Modifier.size(5.dp))
 
                     Row(
                         modifier = Modifier,
@@ -214,74 +183,22 @@ private enum class DivisionExtraOptionType {
 
 @Composable
 private fun BoxScope.DivisionExtraOptions(
-    isExtraMenuOpen: Boolean,
     division: DashboardDivision,
-    onOpenStateChange: (Boolean) -> Unit,
-    onOptionClick: (DivisionExtraOptionType) -> Unit,
+    onEditClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier.Companion
             .align(Alignment.TopEnd)
+            .size(48.dp)
             .padding(top = 16.dp, end = 12.dp)
             .clip(CircleShape)
-            .clickable { onOpenStateChange(!isExtraMenuOpen) },
+            .clickable { onEditClick() },
+        contentAlignment = Alignment.Center
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_small_options),
-            contentDescription = "Options for division ${division.name}",
+            imageVector = Icons.Default.Edit,
+            contentDescription = "Edit division named ${division.name}",
         )
-        DropdownMenu(expanded = isExtraMenuOpen, onDismissRequest = { onOpenStateChange(false) }) {
-            SingleExtraOption(
-                iconPainter = rememberVectorPainter(Icons.Default.Create),
-                text = "edit",
-                onClick = { onOptionClick(DivisionExtraOptionType.EDIT) },
-            )
-            SingleExtraOption(
-                iconPainter = rememberVectorPainter(Icons.Default.Delete),
-                text = "delete",
-                onClick = { onOptionClick(DivisionExtraOptionType.DELETE) },
-            )
-        }
-    }
-}
-
-@Composable
-fun SingleExtraOption(
-    iconPainter: Painter,
-    text: String,
-    onClick: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .height(48.dp)
-            .fillMaxWidth()
-            .clickable { onClick() },
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        SimpleSpace(size = 2.dp)
-        Icon(painter = iconPainter, contentDescription = null)
-        SimpleSpace(size = 6.dp)
-        Text(text = text.uppercase())
-        SimpleSpace(size = 6.dp)
-    }
-}
-
-@Preview
-@Composable
-private fun SingleExtraOptionPreview() {
-    DynamicTheme {
-        Column(modifier = Modifier.width(IntrinsicSize.Min)) {
-            SingleExtraOption(
-                iconPainter = rememberVectorPainter(Icons.Default.Delete),
-                text = "delete",
-                onClick = {},
-            )
-            SingleExtraOption(
-                iconPainter = rememberVectorPainter(Icons.Default.Create),
-                text = "edit",
-                onClick = {},
-            )
-        }
     }
 }
 
@@ -347,13 +264,13 @@ private fun StyleShape(modifier: Modifier) {
 @Preview
 @Composable
 private fun DashboardDivisionsSectionPreview() {
-    DashboardDivisionsSection(divisions = PreviewData.divisions, onDivisionClick = {}, onAddNewItemClick = {}, onEditClick = {}, onDeleteClick = {})
+    DashboardDivisionsSection(divisions = PreviewData.divisions, onDivisionClick = {}, onAddNewItemClick = {}, onEditClick = {})
 }
 
 @Preview
 @Composable
 private fun DivisionItemPreview() {
-    DivisionItem(modifier = Modifier.fillMaxWidth(1f), division = PreviewData.divisions[0], onItemClicked = {}, onEditClick = {}, onDeleteClick = {})
+    DivisionItem(modifier = Modifier.fillMaxWidth(1f), division = PreviewData.divisions[0], onItemClicked = {}, onEditClick = {})
 }
 
 @Preview

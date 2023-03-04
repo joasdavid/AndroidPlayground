@@ -27,7 +27,6 @@ fun DashboardFeatureScreen(
     navController: NavController? = null,
     onSettingsClicked: () -> Unit,
 ) {
-    DeletePopup(viewModel)
     DashboardScreen(
         isLoading = viewModel.state.isLoading,
         sessionName = viewModel.state.sessionName,
@@ -36,44 +35,6 @@ fun DashboardFeatureScreen(
         onDivisionClick = { navController?.navigate("DivisionFeatureScreen?id=${it.id}") },
         onAddNewItemClick = { navController?.navigate("CreateDivisionsFeatureScreen") },
         onEditClick = { navController?.navigate("CreateDivisionsFeatureScreen?id=${it.id}") },
-        onDeleteClick = {
-            viewModel.askToDelete(it)
-        },
         onSettingClicked = onSettingsClicked,
     )
-}
-
-@Composable
-private fun DeletePopup(viewModel: DashboardFeatureScreenViewModel) {
-    val deleteEvent = viewModel.state.deleteEvent
-    AnimatedVisibility(visible = deleteEvent != null) {
-        deleteEvent?.run {
-            DialogWithTwoButton(
-                onDismissRequest = { viewModel.cancelDelete() },
-                indicatorIcon = Icons.Default.Delete,
-                indicatorColor = MaterialTheme.colorScheme.error,
-                buttonPositiveText = "DELETE",
-                buttonPositiveColor = MaterialTheme.colorScheme.error,
-                isButtonPositiveEnabled = deleteEvent.isNameMatchingConfirmation,
-                onButtonPositiveClick = { viewModel.deleteDivision() },
-                buttonNegativeText = "CANCEL",
-                buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
-                onButtonNegativeClick = { viewModel.cancelDelete() },
-            ) {
-                val nameUppercase = deleteEvent.division.name.toUpperCase(Locale.current)
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "To delete division write it's name in all caps \n \"$nameUppercase", textAlign = TextAlign.Center)
-                    SimpleSpace(size = 20.dp)
-                    AppTextField(
-                        value = deleteEvent.confirmationText,
-                        onValueChange = { viewModel.askToDelete(deleteEvent.division, it) },
-                        placeholder = "",
-                        keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Send),
-                        keyboardActions = KeyboardActions(onSend = { viewModel.deleteDivision() }),
-                    )
-                    SimpleSpace(size = 20.dp)
-                }
-            }
-        }
-    }
 }

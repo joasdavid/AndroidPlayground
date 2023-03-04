@@ -22,7 +22,6 @@ internal fun DashboardScreen(
     divisions: List<DashboardDivision>,
     onDivisionClick: (DashboardDivision) -> Unit,
     onEditClick: (DashboardDivision) -> Unit,
-    onDeleteClick: (DashboardDivision) -> Unit,
     onAddNewItemClick: () -> Unit,
     onSettingClicked: () -> Unit,
 ) {
@@ -41,7 +40,6 @@ internal fun DashboardScreen(
             onDivisionClick = onDivisionClick,
             onAddNewItemClick = onAddNewItemClick,
             onEditClick = onEditClick,
-            onDeleteClick = onDeleteClick,
         )
     }
 }
@@ -59,7 +57,6 @@ private fun DashboardScreenPreview() {
             onDivisionClick = {},
             onAddNewItemClick = {},
             onEditClick = {},
-            onDeleteClick = {},
             onSettingClicked = {},
         )
     }
