@@ -1,11 +1,14 @@
 package com.joasvpereira.main.presentation.create
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joasvpereira.main.domain.usecase.division.CreateDivisionParams
+import com.joasvpereira.main.domain.usecase.division.DeleteDivisionParam
 import com.joasvpereira.main.domain.usecase.division.DivisionIdParam
 import com.joasvpereira.main.domain.usecase.division.ICreateDivisionUseCase
+import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateDivisionParam
@@ -15,11 +18,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.coreui.theme.ThemeOption
+import java.util.Locale
 
 class CreateDivisionViewModel(
     private val divisionUseCase: IDivisionUseCase,
     private val createDivisionUseCase: ICreateDivisionUseCase,
     private val updateDivisionUseCase: IUpdateDivisionUseCase,
+    private val deleteDivisionUseCase: IDeleteDivisionUseCase,
 ) : ViewModel() {
 
     private var _state = mutableStateOf(CreateDivisionScreenState())
@@ -41,6 +46,7 @@ class CreateDivisionViewModel(
                         theme = themeOption,
                         isLoading = false,
                         mode = Mode.EDIT,
+                        deleteData = DeleteData("", name.uppercase(Locale.getDefault()), false)
                     )
                 }
             }
@@ -107,4 +113,35 @@ class CreateDivisionViewModel(
     fun descriptionChanged(description: String) {
         _state.value = _state.value.copy(description = description)
     }
+
+    fun showDeletePopup() {
+        _state.value = _state.value.copy(
+            deleteData = _state.value.deleteData.copy(isPopupShowing = true)
+        )
+    }
+
+    fun hideDeletePopup() {
+        _state.value = _state.value.copy(
+            deleteData = _state.value.deleteData.copy(isPopupShowing = false)
+        )
+    }
+
+    fun updateConfirmationNameOnDeletePopup(string: String) {
+        _state.value = _state.value.copy(
+            deleteData = _state.value.deleteData.copy(name = string)
+        )
+    }
+
+    fun deleteDivision() {
+        if (
+            _state.value.deleteData.isNameMatchingConfirmation
+            && internalId > 0
+        ) {
+            viewModelScope.launch {
+                deleteDivisionUseCase.execute(DeleteDivisionParam(id = internalId))
+                _state.value = CreateDivisionScreenState(navigation = CreateDivisionScreenNavigation.DeleteDone)
+            }
+        }
+    }
+
 }

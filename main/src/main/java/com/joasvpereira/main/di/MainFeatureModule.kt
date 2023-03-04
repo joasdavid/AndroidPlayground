@@ -60,6 +60,7 @@ val MainFeatureModule = module {
             divisionUseCase = get(),
             createDivisionUseCase = get(),
             updateDivisionUseCase = get(),
+            deleteDivisionUseCase = get(),
         )
     }
 
