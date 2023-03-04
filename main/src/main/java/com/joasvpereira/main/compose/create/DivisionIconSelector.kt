@@ -105,22 +105,20 @@ fun DivisionIconSelector(
                             slideIntoContainer(
                                 towards = AnimatedContentScope.SlideDirection.Left,
                                 animationSpec = tween(1000),
-                            ) + fadeIn() with
-                                    slideOutOfContainer(
-                                        towards = AnimatedContentScope.SlideDirection.Left,
-                                        animationSpec = tween(1000),
-                                    ) + fadeOut(animationSpec = tween(1000))
+                            ) + fadeIn() with slideOutOfContainer(
+                                towards = AnimatedContentScope.SlideDirection.Left,
+                                animationSpec = tween(1000),
+                            ) + fadeOut(animationSpec = tween(1000))
                         }
 
                         DivisionIconSelectorDirection.LEFT -> {
                             slideIntoContainer(
                                 towards = AnimatedContentScope.SlideDirection.Right,
                                 animationSpec = tween(1000),
-                            ) + fadeIn() with
-                                    slideOutOfContainer(
-                                        towards = AnimatedContentScope.SlideDirection.Right,
-                                        animationSpec = tween(1000),
-                                    ) + fadeOut(animationSpec = tween(1000))
+                            ) + fadeIn() with slideOutOfContainer(
+                                towards = AnimatedContentScope.SlideDirection.Right,
+                                animationSpec = tween(1000),
+                            ) + fadeOut(animationSpec = tween(1000))
                         }
 
                         DivisionIconSelectorDirection.NONE -> fadeIn() with fadeOut()
