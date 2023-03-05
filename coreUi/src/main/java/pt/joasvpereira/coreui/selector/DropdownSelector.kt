@@ -1,3 +1,5 @@
+@file:Suppress("all")
+
 package pt.joasvpereira.xorganizer.presentation.compose
 
 import androidx.compose.animation.core.animateFloatAsState

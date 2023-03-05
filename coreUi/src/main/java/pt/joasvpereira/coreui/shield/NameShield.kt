@@ -1,3 +1,5 @@
+@file:Suppress("all")
+
 package pt.joasvpereira.coreui.shield
 
 import androidx.compose.foundation.background
