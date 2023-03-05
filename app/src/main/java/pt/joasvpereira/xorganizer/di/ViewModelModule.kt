@@ -39,15 +39,13 @@ val usecases = module {
     factory<IItemsUseCase> { ItemsUseCase(storedItemDataSource = get()) }
 }
 
-// TODO: refactor this, a lot of this need to go to the repo
 val repository = module {
     single<Db> {
         val v = Room.databaseBuilder(
             androidApplication(),
             Db::class.java,
             "database-name",
-        ).addCallback(object : Callback() {
-        }).build()
+        ).addCallback(object : Callback() {}).build()
         v
     }
 }

@@ -11,5 +11,6 @@ data class SourceDivision(val id: Int) : Params
 interface IBoxesUseCase : BaseUseCaseSync<SourceDivision?, List<Box>>
 
 class BoxesUseCase(private val boxesDataSource: BoxDataSource) : IBoxesUseCase {
-    override suspend fun execute(params: SourceDivision?): List<Box> = boxesDataSource.getBoxes(FromDivision(params!!.id))
+    override suspend fun execute(params: SourceDivision?): List<Box> =
+        boxesDataSource.getBoxes(FromDivision(params!!.id))
 }

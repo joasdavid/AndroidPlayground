@@ -47,7 +47,13 @@ fun NavController.navigateToSettingsFeature() {
 fun MainNavigation() {
     val navController = rememberNavController()
     CurrentSession.sessionId.logThis(tag = "JVP") { "Current session = $it" }
-    val start = if (CurrentSession.sessionId == null) MainNavGraphRoutes.ProfileFeature.route else MainNavGraphRoutes.MainFeature.route
+
+    val start = if (CurrentSession.sessionId == null) {
+        MainNavGraphRoutes.ProfileFeature.route
+    } else {
+        MainNavGraphRoutes.MainFeature.route
+    }
+
     NavHost(
         navController = navController,
         startDestination = start.logThis(tag = "JVP"),

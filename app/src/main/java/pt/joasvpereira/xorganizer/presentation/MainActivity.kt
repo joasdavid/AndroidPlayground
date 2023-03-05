@@ -39,7 +39,12 @@ class MainActivity : ComponentActivity() {
         splash.setKeepOnScreenCondition { viewModel.isLoading }
         setContent {
             val theme =
-                get<ThemePreferencesDataSource>().getUserFromPreferencesStore().collectAsState(initial = ThemePreference(isMaterialYouEnabled = false, mode = ThemePreference.ThemeMode.DEFAULT))
+                get<ThemePreferencesDataSource>().getUserFromPreferencesStore().collectAsState(
+                    initial = ThemePreference(
+                        isMaterialYouEnabled = false,
+                        mode = ThemePreference.ThemeMode.DEFAULT,
+                    ),
+                )
             theme.value.logThis(tag = "themeTest") {
                 "Value provided to LocalThemeConfig is $it"
             }
