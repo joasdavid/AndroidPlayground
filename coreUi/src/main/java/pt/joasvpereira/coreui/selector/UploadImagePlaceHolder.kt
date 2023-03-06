@@ -13,6 +13,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,6 +48,8 @@ import pt.joasvpereira.coreui.shield.First2WordsHighlight
 import pt.joasvpereira.coreui.shield.NameShield
 import pt.joasvpereira.coreui.theme.DynamicTheme
 
+const val ANDROID_API_28 = 28
+
 @Composable
 fun RequestContentPermission() {
     var imageUri by remember {
@@ -73,7 +76,8 @@ fun RequestContentPermission() {
         Spacer(modifier = Modifier.height(12.dp))
 
         imageUri?.let {
-            if (Build.VERSION.SDK_INT < 28) {
+            if (Build.VERSION.SDK_INT < ANDROID_API_28) {
+                @Suppress("DEPRECATION")
                 bitmap.value = MediaStore.Images
                     .Media.getBitmap(context.contentResolver, it)
             } else {
@@ -103,67 +107,82 @@ fun UploadImagePlaceHolder(
 ) {
     Box(modifier = modifier.size(150.dp)) {
         if (bitmap != null) {
-            Image(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
-                    .border(border = BorderStroke(2.dp, MaterialTheme.colorScheme.primaryContainer), shape = CircleShape),
-                contentScale = ContentScale.FillBounds,
-            )
-            Surface(
-                Modifier
-                    .padding(top = 7.dp, start = 7.dp)
-                    .clip(CircleShape)
-                    .size(30.dp)
-                    .clickable {
-                        onClearImageClick()
-                    }
-                    .align(Alignment.TopStart),
-                color = MaterialTheme.colorScheme.tertiaryContainer,
-                tonalElevation = 100.dp,
-                shadowElevation = 100.dp,
-            ) {
-                Box {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_trash_can_outline),
-                        contentDescription = "",
-                        modifier.align(Alignment.Center),
-                    )
-                }
-            }
+            ImageLoaded(bitmap, onClearImageClick, modifier)
         } else {
-            NameShield(
-                text = emptyText,
-                borderSize = 0.dp,
-                textStrategy = First2WordsHighlight(emptySymbol = ' '),
-                textStyle = MaterialTheme.typography.displayLarge.copy(
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Bold,
-                ),
-            )
+            NoImageLoaded(emptyText)
         }
 
-        Surface(
-            Modifier
-                .clip(CircleShape)
-                .size(48.dp)
-                .clickable {
-                    onUploadClick()
-                }
-                .align(Alignment.BottomEnd),
-            color = MaterialTheme.colorScheme.tertiaryContainer,
-            tonalElevation = 100.dp,
-            shadowElevation = 100.dp,
-        ) {
-            Box {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_upload),
-                    contentDescription = "",
-                    modifier.align(Alignment.Center),
-                )
+        UploadButton(onUploadClick, modifier)
+    }
+}
+
+@Composable
+private fun BoxScope.UploadButton(onUploadClick: () -> Unit, modifier: Modifier) {
+    Surface(
+        Modifier
+            .clip(CircleShape)
+            .size(48.dp)
+            .clickable {
+                onUploadClick()
             }
+            .align(Alignment.BottomEnd),
+        color = MaterialTheme.colorScheme.tertiaryContainer,
+        tonalElevation = 100.dp,
+        shadowElevation = 100.dp,
+    ) {
+        Box {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_upload),
+                contentDescription = "",
+                modifier.align(Alignment.Center),
+            )
+        }
+    }
+}
+
+@Composable
+private fun NoImageLoaded(emptyText: String) {
+    NameShield(
+        text = emptyText,
+        borderSize = 0.dp,
+        textStrategy = First2WordsHighlight(emptySymbol = ' '),
+        textStyle = MaterialTheme.typography.displayLarge.copy(
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Bold,
+        ),
+    )
+}
+
+@Composable
+private fun BoxScope.ImageLoaded(bitmap: Bitmap, onClearImageClick: () -> Unit, modifier: Modifier) {
+    Image(
+        bitmap = bitmap.asImageBitmap(),
+        contentDescription = "",
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(CircleShape)
+            .border(border = BorderStroke(2.dp, MaterialTheme.colorScheme.primaryContainer), shape = CircleShape),
+        contentScale = ContentScale.FillBounds,
+    )
+    Surface(
+        Modifier
+            .padding(top = 7.dp, start = 7.dp)
+            .clip(CircleShape)
+            .size(30.dp)
+            .clickable {
+                onClearImageClick()
+            }
+            .align(Alignment.TopStart),
+        color = MaterialTheme.colorScheme.tertiaryContainer,
+        tonalElevation = 100.dp,
+        shadowElevation = 100.dp,
+    ) {
+        Box {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_trash_can_outline),
+                contentDescription = "",
+                modifier.align(Alignment.Center),
+            )
         }
     }
 }

@@ -103,9 +103,9 @@ complexity:
     active: true
     functionThreshold: 6
     constructorThreshold: 7
-    ignoreDefaultParameters: false
+    ignoreDefaultParameters: true
     ignoreDataClasses: true
-    ignoreAnnotated: []
+    ignoreAnnotated: [Composable]
   MethodOverloading:
     active: false
     threshold: 6
@@ -133,7 +133,7 @@ complexity:
     thresholdInObjects: 11
     thresholdInEnums: 11
     ignoreDeprecated: false
-    ignorePrivate: false
+    ignorePrivate: true
     ignoreOverridden: false
 
 coroutines:
@@ -574,7 +574,7 @@ style:
     active: true
   UnusedPrivateMember:
     active: true
-    allowedNames: '(_|ignored|expected|serialVersionUID)'
+    allowedNames: '(_|ignored|expected|serialVersionUID|.*Preview.*)'
   UseArrayLiteralsInAnnotations:
     active: false
   UseCheckNotNull:
