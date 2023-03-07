@@ -21,6 +21,8 @@ import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
+const val MAX_WIDTH_50_PERCENT = .5f
+
 @Composable
 fun CreateDivisionSection(
     isLoading: Boolean,
@@ -32,6 +34,8 @@ fun CreateDivisionSection(
     onThemeChange: (ThemeOption) -> Unit,
     onSave: () -> Unit,
     onCloseClick: () -> Unit,
+    canDelete: Boolean = false,
+    onDeleteClick: () -> Unit = {},
 ) {
     AppScaffold(
         isLoading = isLoading,
@@ -45,7 +49,11 @@ fun CreateDivisionSection(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SimpleSpace(size = 100.dp)
-            DivisionIconSelector(modifier = Modifier.fillMaxWidth(.75f), defaultPos = 0, onIconSelected = onIconChange)
+            DivisionIconSelector(
+                modifier = Modifier.fillMaxWidth(MAX_WIDTH_50_PERCENT),
+                defaultPos = 0,
+                onIconSelected = onIconChange,
+            )
             Spacer(modifier = Modifier.size(20.dp))
             DivisionNameAndDescription(
                 name = name,
@@ -64,6 +72,15 @@ fun CreateDivisionSection(
             ) {
                 Text(text = "Save")
             }
+            if (canDelete) {
+                SimpleSpace(size = 20.dp)
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = onDeleteClick,
+                ) {
+                    Text(text = "Delete")
+                }
+            }
         }
     }
 }
@@ -71,7 +88,7 @@ fun CreateDivisionSection(
 @UiModePreview
 @Composable
 private fun CreateDivisionSectionPreview(@PreviewParameter(ThemesProvider::class) theme: ThemeOption) {
-    DynamicTheme {
+    DynamicTheme(theme) {
         CreateDivisionSection(
             isLoading = false,
             onCloseClick = {},

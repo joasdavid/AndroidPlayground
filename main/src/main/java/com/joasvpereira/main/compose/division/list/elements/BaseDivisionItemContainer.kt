@@ -77,6 +77,8 @@ internal fun BaseDivisionItemContainer(
     }
 }
 
+const val PERCENT_100 = 100
+
 @Composable
 private fun BoxScope.DragIndicator() {
     Spacer(
@@ -84,7 +86,7 @@ private fun BoxScope.DragIndicator() {
             .padding(end = 10.dp)
             .width(1.5.dp)
             .height(12.dp)
-            .background(MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100))
+            .background(MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(PERCENT_100))
             .align(Alignment.CenterEnd),
     )
     Spacer(
@@ -92,7 +94,7 @@ private fun BoxScope.DragIndicator() {
             .padding(end = 15.dp)
             .width(1.5.dp)
             .height(24.dp)
-            .background(MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100))
+            .background(MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(PERCENT_100))
             .align(Alignment.CenterEnd),
     )
 }

@@ -79,7 +79,10 @@ fun ItemDetailView(
             }
             item {
                 SimpleSpace(size = 20.dp)
-                DetailActionSection(onDeleteClicked = { deleteItemPopupState.isVisible = true }, modifier = Modifier.height(intrinsicSize = IntrinsicSize.Min))
+                DetailActionSection(
+                    onDeleteClicked = { deleteItemPopupState.isVisible = true },
+                    modifier = Modifier.height(intrinsicSize = IntrinsicSize.Min)
+                )
             }
             item {
                 SimpleSpace(size = 10.dp)
@@ -100,7 +103,12 @@ private fun ItemDetailViewPreview() {
                 id = 1,
                 name = "Item XPTO",
                 description = "",
-                parentDivision = ItemDetail.ParentDivision(id = 1, name = "Hall", themeOption = ThemeOption.THEME_DEFAULT, divisionIcon = DivisionIcons.hanger),
+                parentDivision = ItemDetail.ParentDivision(
+                    id = 1,
+                    name = "Hall",
+                    themeOption = ThemeOption.THEME_DEFAULT,
+                    divisionIcon = DivisionIcons.hanger
+                ),
                 parentBox = ItemDetail.ParentBox(id = 1, name = "Shoe box"),
             ),
             onBackClick = {},
@@ -137,7 +145,12 @@ private fun ItemDetailViewPreview(@PreviewParameter(ThemesProvider::class) theme
                 id = 1,
                 name = "",
                 description = "",
-                parentDivision = ItemDetail.ParentDivision(id = 1, name = "Hall", themeOption = theme, divisionIcon = DivisionIcons.lampDesk),
+                parentDivision = ItemDetail.ParentDivision(
+                    id = 1,
+                    name = "Hall",
+                    themeOption = theme,
+                    divisionIcon = DivisionIcons.lampDesk
+                ),
                 parentBox = ItemDetail.ParentBox(id = 1, name = "Shoe box"),
             ),
             onBackClick = {},

@@ -40,62 +40,72 @@ internal fun DashboardHeader(
     onSettingClicked: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "XOrganizer",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.weight(1f),
-            )
-            Box(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .clickable { onSettingClicked() },
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .size(24.dp),
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
-                )
-            }
-        }
+        RowTitleAndSettings(onSettingClicked)
 
         Spacer(modifier = Modifier.height(28.5.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(text = "Welcome", style = MaterialTheme.typography.headlineSmall)
-                Text(text = sessionName, style = MaterialTheme.typography.labelLarge)
-            }
-            Box(
-                Modifier
-                    .align(Alignment.Bottom)
-                    .size(40.dp)
-                    .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
-            ) {
-                sessionImage.let {
-                    if (it == null) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.usericon),
-                            contentDescription = "",
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .size(40.dp),
-                        )
-                    } else {
-                        Image(
-                            bitmap = it.asImageBitmap(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .size(40.dp)
-                                .clip(CircleShape)
-                                .border(1.dp, color = MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
-                        )
-                    }
+        RowUserInfo(sessionName, sessionImage)
+    }
+}
+
+@Composable
+private fun RowUserInfo(sessionName: String, sessionImage: Bitmap?) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = "Welcome", style = MaterialTheme.typography.headlineSmall)
+            Text(text = sessionName, style = MaterialTheme.typography.labelLarge)
+        }
+        Box(
+            Modifier
+                .align(Alignment.Bottom)
+                .size(40.dp)
+                .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
+        ) {
+            sessionImage.let {
+                if (it == null) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.usericon),
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(40.dp),
+                    )
+                } else {
+                    Image(
+                        bitmap = it.asImageBitmap(),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, color = MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
+                    )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun RowTitleAndSettings(onSettingClicked: () -> Unit) {
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            text = "XOrganizer",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.weight(1f),
+        )
+        Box(
+            modifier = Modifier
+                .clip(CircleShape)
+                .clickable { onSettingClicked() },
+        ) {
+            Icon(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(24.dp),
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Settings",
+            )
         }
     }
 }

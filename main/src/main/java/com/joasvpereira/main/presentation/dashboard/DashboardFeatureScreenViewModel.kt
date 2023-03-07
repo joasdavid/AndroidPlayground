@@ -3,13 +3,9 @@ package com.joasvpereira.main.presentation.dashboard
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.joasvpereira.main.domain.data.DashboardDivision
-import com.joasvpereira.main.domain.usecase.division.DeleteDivisionParam
-import com.joasvpereira.main.domain.usecase.division.IDeleteDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.IDivisionsUseCase
 import com.joasvpereira.sessioncore.domail.usecases.ISessionUseCase
 import com.joasvpereira.sessioncore.domail.usecases.SessionIdParam
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch

@@ -1,7 +1,6 @@
 package com.joasvpereira.main.presentation.create
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joasvpereira.main.domain.usecase.division.CreateDivisionParams
@@ -46,7 +45,7 @@ class CreateDivisionViewModel(
                         theme = themeOption,
                         isLoading = false,
                         mode = Mode.EDIT,
-                        deleteData = DeleteData("", name.uppercase(Locale.getDefault()), false)
+                        deleteData = DeleteData("", name.uppercase(Locale.getDefault()), false),
                     )
                 }
             }
@@ -72,7 +71,6 @@ class CreateDivisionViewModel(
     private fun createDivision() {
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch {
-            delay(2000)
             _state.value.run {
                 createDivisionUseCase.execute(
                     CreateDivisionParams(
@@ -90,7 +88,6 @@ class CreateDivisionViewModel(
     private fun updateDivision() {
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch {
-            delay(2000)
             _state.value.run {
                 updateDivisionUseCase.execute(
                     UpdateDivisionParam(
@@ -116,26 +113,26 @@ class CreateDivisionViewModel(
 
     fun showDeletePopup() {
         _state.value = _state.value.copy(
-            deleteData = _state.value.deleteData.copy(isPopupShowing = true)
+            deleteData = _state.value.deleteData.copy(isPopupShowing = true),
         )
     }
 
     fun hideDeletePopup() {
         _state.value = _state.value.copy(
-            deleteData = _state.value.deleteData.copy(isPopupShowing = false)
+            deleteData = _state.value.deleteData.copy(isPopupShowing = false),
         )
     }
 
     fun updateConfirmationNameOnDeletePopup(string: String) {
         _state.value = _state.value.copy(
-            deleteData = _state.value.deleteData.copy(name = string)
+            deleteData = _state.value.deleteData.copy(name = string),
         )
     }
 
     fun deleteDivision() {
         if (
-            _state.value.deleteData.isNameMatchingConfirmation
-            && internalId > 0
+            _state.value.deleteData.isNameMatchingConfirmation &&
+            internalId > 0
         ) {
             viewModelScope.launch {
                 deleteDivisionUseCase.execute(DeleteDivisionParam(id = internalId))
@@ -143,5 +140,4 @@ class CreateDivisionViewModel(
             }
         }
     }
-
 }

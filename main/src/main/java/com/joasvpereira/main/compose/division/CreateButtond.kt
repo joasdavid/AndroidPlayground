@@ -25,44 +25,6 @@ import pt.joasvpereira.coreui.box.BoxImage
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.main.R
 
-class DivisionCreateButtonsState(
-    isOpen: Boolean = false,
-) {
-    private var isOpenState = mutableStateOf(isOpen)
-    var isOpen
-        get() = isOpenState.value
-        private set(value) {
-            isOpenState.value = value
-        }
-
-    private var isButtonsVisibleState = mutableStateOf(isOpen)
-    var isButtonsVisible
-        get() = isButtonsVisibleState.value
-        private set(value) {
-            isButtonsVisibleState.value = value
-        }
-
-    fun toggle() {
-        isOpen = !isOpen
-        if (isOpen) {
-            isButtonsVisible = true
-        }
-    }
-
-    fun animationEnd() {
-        isButtonsVisible = isOpen
-    }
-
-    fun provideBaseMargin(): () -> Dp = {
-        if (isOpen) 100.dp else 0.dp
-    }
-}
-
-@Composable
-fun rememberDivisionCreateButtonsState(isOpen: Boolean = false) = remember {
-    DivisionCreateButtonsState(isOpen = isOpen)
-}
-
 @Composable
 fun DivisionCreateButtons(
     divisionCreateButtonsState: DivisionCreateButtonsState = rememberDivisionCreateButtonsState(),
@@ -74,9 +36,11 @@ fun DivisionCreateButtons(
         targetValue = divisionCreateButtonsState.provideBaseMargin().invoke(),
         finishedListener = { divisionCreateButtonsState.animationEnd() },
     )
-    ConstraintLayout(modifier = Modifier
-        .fillMaxSize()
-        .padding(bottom = bottomEdgePadding)) {
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = bottomEdgePadding),
+    ) {
         val (baseButton, itemButton, boxButton) = createRefs()
         FloatingActionButton(
             onClick = onAddItemClick,
@@ -120,6 +84,44 @@ fun DivisionCreateButtons(
             Icon(imageVector = vecIcon, contentDescription = null)
         }
     }
+}
+
+class DivisionCreateButtonsState(
+    isOpen: Boolean = false,
+) {
+    private var isOpenState = mutableStateOf(isOpen)
+    var isOpen
+        get() = isOpenState.value
+        private set(value) {
+            isOpenState.value = value
+        }
+
+    private var isButtonsVisibleState = mutableStateOf(isOpen)
+    var isButtonsVisible
+        get() = isButtonsVisibleState.value
+        private set(value) {
+            isButtonsVisibleState.value = value
+        }
+
+    fun toggle() {
+        isOpen = !isOpen
+        if (isOpen) {
+            isButtonsVisible = true
+        }
+    }
+
+    fun animationEnd() {
+        isButtonsVisible = isOpen
+    }
+
+    fun provideBaseMargin(): () -> Dp = {
+        if (isOpen) 100.dp else 0.dp
+    }
+}
+
+@Composable
+fun rememberDivisionCreateButtonsState(isOpen: Boolean = false) = remember {
+    DivisionCreateButtonsState(isOpen = isOpen)
 }
 
 @Preview

@@ -72,6 +72,7 @@ fun BoxContentView(
     }
 }
 
+@Suppress("all")
 private val previewList = mutableListOf<DivisionElement.Item>().apply {
     (1..40).forEach {
         add(

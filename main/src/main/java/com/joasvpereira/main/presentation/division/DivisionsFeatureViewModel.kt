@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.coreui.theme.ThemeOption
 
+@Suppress("LongParameterList", "TooManyFunctions")
 class DivisionsFeatureViewModel(
     var divisionId: Int = -1,
     private val divisionUseCase: IDivisionUseCase,
@@ -200,7 +201,7 @@ class DivisionsFeatureViewModel(
                 description = "",
                 isVisible = true,
 
-                ),
+            ),
         )
     }
 

@@ -27,11 +27,7 @@ import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
-sealed interface ElementAction {
-    object Open : ElementAction
-    object Edit : ElementAction
-    object Delete : ElementAction
-}
+const val MAX_WIDTH_50_PERCENT = .5f
 
 @Composable
 fun ElementsContainer(
@@ -53,7 +49,7 @@ fun ElementsContainer(
                         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                             Text(
                                 text = emptyText,
-                                modifier = Modifier.fillMaxWidth(.5f),
+                                modifier = Modifier.fillMaxWidth(MAX_WIDTH_50_PERCENT),
                                 textAlign = TextAlign.Center,
                             )
                         }
@@ -90,6 +86,13 @@ fun ElementsContainer(
     }
 }
 
+sealed interface ElementAction {
+    object Open : ElementAction
+    object Edit : ElementAction
+    object Delete : ElementAction
+}
+
+@Suppress("all")
 private val previewData = mutableListOf<DivisionElement>().apply {
     (1..40).forEach {
         if (it % 2 == 0) {
