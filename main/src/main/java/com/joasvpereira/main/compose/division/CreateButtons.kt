@@ -85,7 +85,7 @@ fun DivisionCreateButtons(
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = null,
-                modifier = Modifier.rotate(rotation.value)
+                modifier = Modifier.rotate(rotation.value),
             )
         }
     }
@@ -123,7 +123,7 @@ class DivisionCreateButtonsState(
         if (isOpen) MARGIN_WHEN_OPEN else MARGIN_WHEN_CLOSED
     }
 
-    fun providesRotation() : () -> Float = {
+    fun providesRotation(): () -> Float = {
         if (isOpen) ROTATION_WHN_OPEN else ROTATION_WHN_CLOSED
     }
 
