@@ -60,6 +60,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     api "androidx.compose.material:material-icons-extended:1.3.1"
     api "androidx.compose.material3:material3:1.1.0-alpha03"
+    api "androidx.compose.material3:material3-window-size-class:1.1.0-alpha03"
     api "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
     api "br.com.devsrsouza.compose.icons.android:font-awesome:1.0.0"

@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
+import com.joasvpereira.loggger.extentions.logThis
 import com.joasvpereira.main.presentation.icons.DivisionIcon
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
@@ -23,6 +24,7 @@ import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.selector.ThemeSelector
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
+import pt.joasvpereira.coreui.util.WindowSizeHelper
 
 @Composable
 fun CreateDivisionSection(
@@ -45,11 +47,19 @@ fun CreateDivisionSection(
             onRightIconClick = { onCloseClick() },
         ),
     ) {
+        val topSpace = when (WindowSizeHelper.currentHeightSize()) {
+            WindowSizeHelper.HeightSize.Compact,
+            WindowSizeHelper.HeightSize.Medium,
+            -> 20.dp
+            WindowSizeHelper.HeightSize.Large,
+            WindowSizeHelper.HeightSize.Expanded,
+            -> 100.dp
+        }.logThis("ScreenSize")
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            SimpleSpace(size = 100.dp)
+            SimpleSpace(size = topSpace)
             DivisionIconSelector(
                 defaultPos = 0,
                 onIconSelected = onIconChange,
