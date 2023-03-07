@@ -55,6 +55,7 @@ import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import pt.joasvpereira.coreui.theme.DynamicTheme
 
 const val DISABLED_BUTTONS_ALPHA_VALUE = .25f
+
 @Composable
 fun BaseDialog(
     onDismissRequest: () -> Unit,

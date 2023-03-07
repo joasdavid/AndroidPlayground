@@ -8,6 +8,7 @@ interface BaseUseCase<INPUT : Params?, OUTPUT> {
 interface BaseUseCaseSync<INPUT : Params?, OUTPUT> {
     suspend fun execute(params: INPUT): OUTPUT
 }
+
 interface Params
 
 class EmptyParams : Params

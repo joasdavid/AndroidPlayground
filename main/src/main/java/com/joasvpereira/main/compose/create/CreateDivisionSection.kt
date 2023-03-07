@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
@@ -20,8 +23,6 @@ import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
-
-const val MAX_WIDTH_50_PERCENT = .5f
 
 @Composable
 fun CreateDivisionSection(
@@ -50,7 +51,6 @@ fun CreateDivisionSection(
         ) {
             SimpleSpace(size = 100.dp)
             DivisionIconSelector(
-                modifier = Modifier.fillMaxWidth(MAX_WIDTH_50_PERCENT),
                 defaultPos = 0,
                 onIconSelected = onIconChange,
             )
@@ -77,11 +77,30 @@ fun CreateDivisionSection(
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = onDeleteClick,
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
                 ) {
                     Text(text = "Delete")
                 }
             }
         }
+    }
+}
+
+@Preview(group = "Single")
+@Composable
+private fun CreateDivisionSectionPreview_single() {
+    DynamicTheme() {
+        CreateDivisionSection(
+            isLoading = false,
+            onCloseClick = {},
+            onIconChange = {},
+            name = "",
+            onNameChange = {},
+            description = "",
+            onDescriptionChange = {},
+            onThemeChange = {},
+            onSave = {},
+        )
     }
 }
 

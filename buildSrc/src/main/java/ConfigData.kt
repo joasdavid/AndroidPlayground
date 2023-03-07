@@ -1,4 +1,3 @@
-
 object ConfigData {
     const val compileSdkVersion = 33
     const val buildToolsVersion = "30.0.3"

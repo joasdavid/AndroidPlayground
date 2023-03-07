@@ -21,6 +21,7 @@ import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.main.R
+
 @Composable
 fun CreateItemPopup(
     stateHolder: CreateItemPopupStateHolder = remember {
@@ -44,13 +45,13 @@ fun CreateItemPopup(
                 Text(
                     text = "Update item".toUpperCase(Locale.current),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
             } else {
                 Text(
                     text = "Create a new item".toUpperCase(Locale.current),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
             }
             SimpleSpace(size = 20.dp)
@@ -115,13 +116,13 @@ fun CreateItemPopup(
                 Text(
                     text = "Update item".toUpperCase(Locale.current),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
             } else {
                 Text(
                     text = "Create a new item".toUpperCase(Locale.current),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
                 )
             }
             SimpleSpace(size = 20.dp)

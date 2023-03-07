@@ -13,7 +13,6 @@ import com.joasvpereira.main.domain.usecase.division.IUpdateDivisionUseCase
 import com.joasvpereira.main.domain.usecase.division.UpdateDivisionParam
 import com.joasvpereira.main.presentation.icons.DivisionIcon
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pt.joasvpereira.coreui.theme.ThemeOption
