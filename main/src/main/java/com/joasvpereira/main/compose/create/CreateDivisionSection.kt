@@ -21,6 +21,7 @@ import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.screen.getActivityWindowHeight
 import pt.joasvpereira.coreui.selector.ThemeSelector
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
@@ -47,7 +48,7 @@ fun CreateDivisionSection(
             onRightIconClick = { onCloseClick() },
         ),
     ) {
-        val topSpace = when (WindowSizeHelper.currentHeightSize()) {
+        val topSpace = when (getActivityWindowHeight()) {
             WindowSizeHelper.HeightSize.Compact,
             WindowSizeHelper.HeightSize.Medium,
             -> 20.dp
