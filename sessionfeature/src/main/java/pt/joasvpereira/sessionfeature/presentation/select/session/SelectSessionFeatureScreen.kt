@@ -23,10 +23,6 @@ fun SelectSessionFeatureScreen(
     navController: NavController? = null,
     onSessionSelected: (SessionItem) -> Unit,
 ) {
-    LaunchedEffect(key1 = null) {
-        viewModel.load()
-    }
-
     val state = viewModel.state.value
     AppScaffold(isLoading = state.isLoading) {
         Box(modifier = Modifier.fillMaxSize()) {
