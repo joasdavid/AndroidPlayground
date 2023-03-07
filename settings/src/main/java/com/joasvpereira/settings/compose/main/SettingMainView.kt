@@ -1,6 +1,8 @@
 package com.joasvpereira.settings.compose.main
 
 import android.os.Build
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,6 +21,8 @@ import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
+
+private const val BOTTOM_MARGIN = 5
 @Composable
 fun SettingsMainView(
     onBackClick: () -> Unit,
@@ -64,6 +68,14 @@ fun SettingsMainView(
                     onMaterialYouSwitchChange = onMaterialYouSwitchChange,
                     themeModeSelectedOption = themeModeSelectedOption,
                     onThemeModeChange = onThemeModeChange,
+                )
+            }
+
+            item {
+                Spacer(
+                    modifier = Modifier.height(
+                        BOTTOM_MARGIN.dp + it.calculateBottomPadding()
+                    )
                 )
             }
         }
