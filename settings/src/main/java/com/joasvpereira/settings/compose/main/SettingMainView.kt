@@ -21,8 +21,8 @@ import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
-
 private const val BOTTOM_MARGIN = 5
+
 @Composable
 fun SettingsMainView(
     onBackClick: () -> Unit,
@@ -74,8 +74,8 @@ fun SettingsMainView(
             item {
                 Spacer(
                     modifier = Modifier.height(
-                        BOTTOM_MARGIN.dp + it.calculateBottomPadding()
-                    )
+                        BOTTOM_MARGIN.dp + it.calculateBottomPadding(),
+                    ),
                 )
             }
         }
