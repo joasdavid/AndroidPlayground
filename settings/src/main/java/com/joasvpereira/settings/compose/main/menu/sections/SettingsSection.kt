@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 

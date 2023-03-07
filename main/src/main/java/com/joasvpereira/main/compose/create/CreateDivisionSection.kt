@@ -14,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ThemeSelector
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import com.joasvpereira.main.presentation.icons.DivisionIcon
 import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.scaffold.ToolBarConfig
+import pt.joasvpereira.coreui.selector.ThemeSelector
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 

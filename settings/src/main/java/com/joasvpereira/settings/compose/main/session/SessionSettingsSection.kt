@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import com.joasvpereira.settings.compose.main.SettingsSection
 import com.joasvpereira.settings.compose.main.menu.entry.EntryClickable
 import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSwitch

@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import com.joasvpereira.main.compose.common.container.element.ElementAction
 import com.joasvpereira.main.compose.common.container.element.ElementsContainer
 import com.joasvpereira.main.domain.data.DivisionElement

@@ -42,7 +42,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import com.joasvpereira.loggger.extentions.logThis
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

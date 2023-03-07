@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import com.joasvpereira.main.compose.create.CreateDivisionSection
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField

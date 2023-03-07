@@ -34,11 +34,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.IconAndCounter
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.IconData
 import com.joasvpereira.main.domain.data.DashboardDivision
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
+import pt.joasvpereira.coreui.counter.IconData
+import pt.joasvpereira.coreui.counter.VerticalCounterWithIcon
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.main.R
 
@@ -142,7 +142,7 @@ private fun DivisionCounters(division: DashboardDivision) {
     Row(
         modifier = Modifier,
     ) {
-        IconAndCounter(
+        VerticalCounterWithIcon(
             iconData = IconData(painterResource(R.drawable.ic_box), ""),
             count = division.boxCount,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -150,7 +150,7 @@ private fun DivisionCounters(division: DashboardDivision) {
 
         Spacer(modifier = Modifier.size(8.dp))
 
-        IconAndCounter(
+        VerticalCounterWithIcon(
             iconData = IconData(
                 painterResource(R.drawable.ic_baseline_build_24),
                 "",

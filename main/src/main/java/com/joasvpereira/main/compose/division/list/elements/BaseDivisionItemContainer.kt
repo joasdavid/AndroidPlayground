@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import kotlinx.coroutines.launch
 import pt.joasvpereira.coreui.dragble.DraggableToRevel
 import pt.joasvpereira.coreui.dragble.DraggableToRevelState

@@ -1,4 +1,4 @@
-package com.joasvpereira.main.compose.create
+package pt.joasvpereira.coreui.selector
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -16,21 +17,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.ThemeColorsIndicator
+import com.joasvpereira.lib.compose.DropdownSelector
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
+import pt.joasvpereira.coreui.indicator.ThemeColorsIndicator
+import pt.joasvpereira.coreui.preview.ThemesProvider
+import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.theme.getAllThemesDetails
-import pt.joasvpereira.xorganizer.presentation.compose.DropdownSelector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThemeSelector(
+    selectedOption: ThemeOption = ThemeOption.THEME_DEFAULT,
     onThemeChosen: (ThemeOption) -> Unit,
 ) {
     val list = getAllThemesDetails()
-    var selection by remember { mutableStateOf(list.firstOrNull()?.first) }
+    var selection = selectedOption
     var expandable by remember { mutableStateOf(false) }
     DropdownSelector(
         modifier = Modifier
@@ -39,8 +44,8 @@ fun ThemeSelector(
             .fillMaxWidth(),
         selectionOpenState = expandable,
         onSelectionOpenStateChanges = { expandable = !expandable },
-        options = list.toList(),
-        selectedOption = list.firstOrNull { it.first == selection },
+        elements = list.toList(),
+        selectedElement = list.firstOrNull { it.first == selection },
         previewContent = { it, _ ->
             it?.let {
                 Row {
@@ -50,7 +55,7 @@ fun ThemeSelector(
                 }
             }
         },
-        onSelectedOptionChanges = {
+        onSelectedElementChanges = {
             selection = it.first
             onThemeChosen(it.first)
         },
@@ -68,10 +73,22 @@ fun ThemeSelector(
     }
 }
 
-@Preview
+@Preview(group = "Single")
 @Composable
-fun ThemeSelectorPreview() {
-    DynamicTheme {
-        ThemeSelector(onThemeChosen = {})
+private fun ThemeSelectorPreview() {
+    DynamicTheme() {
+        Surface(modifier = Modifier.padding(10.dp)) {
+            ThemeSelector(ThemeOption.values()[0]) {}
+        }
+    }
+}
+
+@UiModePreview
+@Composable
+private fun ThemeSelectorPreview(@PreviewParameter(ThemesProvider::class) theme: ThemeOption) {
+    DynamicTheme(theme) {
+        Surface(modifier = Modifier.padding(10.dp)) {
+            ThemeSelector(theme) {}
+        }
     }
 }

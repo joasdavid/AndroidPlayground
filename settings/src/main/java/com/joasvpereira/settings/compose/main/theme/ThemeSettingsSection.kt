@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
+import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import com.joasvpereira.settings.compose.main.SettingsSection
 import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSelectableOption
 import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSwitch
