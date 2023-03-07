@@ -1,12 +1,12 @@
 package com.joasvpereira.main.compose.division
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -80,8 +81,12 @@ fun DivisionCreateButtons(
                 },
             containerColor = MaterialTheme.colorScheme.primary,
         ) {
-            val vecIcon = if (divisionCreateButtonsState.isOpen) Icons.Default.Close else Icons.Default.Add
-            Icon(imageVector = vecIcon, contentDescription = null)
+            val rotation = animateFloatAsState(targetValue = divisionCreateButtonsState.providesRotation().invoke())
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = null,
+                modifier = Modifier.rotate(rotation.value),
+            )
         }
     }
 }
@@ -115,7 +120,18 @@ class DivisionCreateButtonsState(
     }
 
     fun provideBaseMargin(): () -> Dp = {
-        if (isOpen) 100.dp else 0.dp
+        if (isOpen) MARGIN_WHEN_OPEN else MARGIN_WHEN_CLOSED
+    }
+
+    fun providesRotation(): () -> Float = {
+        if (isOpen) ROTATION_WHN_OPEN else ROTATION_WHN_CLOSED
+    }
+
+    companion object {
+        private val MARGIN_WHEN_OPEN = 100.dp
+        private val MARGIN_WHEN_CLOSED = 0.dp
+        private const val ROTATION_WHN_OPEN = 45f
+        private const val ROTATION_WHN_CLOSED = 0f
     }
 }
 
