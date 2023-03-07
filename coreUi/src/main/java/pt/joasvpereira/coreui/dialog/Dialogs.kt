@@ -307,7 +307,7 @@ fun DialogWithTwoButton(
                 Text(
                     text = buttonPositiveText,
                     fontWeight = FontWeight.Bold,
-                    color = contentColorFor(backgroundColor = buttonPositiveColor).copy(alphaPositive)
+                    color = contentColorFor(backgroundColor = buttonPositiveColor).copy(alphaPositive),
                 )
             }
             Box(
@@ -321,7 +321,7 @@ fun DialogWithTwoButton(
                 Text(
                     text = buttonNegativeText,
                     fontWeight = FontWeight.Bold,
-                    color = contentColorFor(backgroundColor = buttonNegativeColor).copy(alphaNegative)
+                    color = contentColorFor(backgroundColor = buttonNegativeColor).copy(alphaNegative),
                 )
             }
         },

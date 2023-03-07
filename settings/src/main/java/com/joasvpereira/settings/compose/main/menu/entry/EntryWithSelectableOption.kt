@@ -67,7 +67,7 @@ fun EntryWithSelectableOption(
             listOfOptions = listOfOptions,
             selectedOption = selectedOption,
             onOptionChanged = onOptionChanged,
-            onOptionsOpenChange = { isOptionsOpen = it }
+            onOptionsOpenChange = { isOptionsOpen = it },
         )
 
         PossibleDescription(description)
@@ -84,7 +84,7 @@ private fun NameAndDropDownMenuRow(
     onOptionsOpenChange: (Boolean) -> Unit,
     listOfOptions: List<String>,
     selectedOption: Int,
-    onOptionChanged: (Int) -> Unit
+    onOptionChanged: (Int) -> Unit,
 ) {
     Row(
         modifier = modifier
