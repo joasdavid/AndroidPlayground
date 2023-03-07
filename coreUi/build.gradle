@@ -65,6 +65,8 @@ dependencies {
     api "br.com.devsrsouza.compose.icons.android:font-awesome:1.0.0"
     api "br.com.devsrsouza.compose.icons.android:line-awesome:1.0.0"
 
+    api "com.github.joasdavid:ComposeViews:v0.0.4-alpha"
+
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
 
 
