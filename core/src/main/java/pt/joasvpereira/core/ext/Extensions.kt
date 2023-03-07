@@ -33,14 +33,14 @@ private fun compressBitmap(bitmap: Bitmap, maxSize: Int): String {
         bitmap,
         (bitmap.width * COMPRESSION_RATIO).roundToInt(),
         (bitmap.width * COMPRESSION_RATIO).roundToInt(),
-        true
+        true,
     )
     val byteArrayOutputStream = ByteArrayOutputStream()
 
     bitmapCompressed.compress(
         Bitmap.CompressFormat.PNG,
         QUALITY,
-        byteArrayOutputStream
+        byteArrayOutputStream,
     )
 
     val byteArray = byteArrayOutputStream.toByteArray()
