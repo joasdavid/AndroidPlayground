@@ -5,6 +5,7 @@ interface Element {
     val name: String
     val description: String
 }
+
 sealed interface DivisionElement : Element {
     data class Item(override val id: Int, override val name: String, override val description: String = "") : DivisionElement
     data class Box(override val id: Int, override val name: String, override val description: String = "") : DivisionElement

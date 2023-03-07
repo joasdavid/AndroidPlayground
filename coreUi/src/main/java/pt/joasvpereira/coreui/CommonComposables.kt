@@ -1,3 +1,5 @@
+@file:Suppress("all")
+
 package com.joasvpereira.dev.mokeupui.compose.screen.organizer.main
 
 import androidx.compose.foundation.BorderStroke

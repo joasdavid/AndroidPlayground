@@ -20,9 +20,6 @@ class SelectSessionViewModel(private val sessionUseCase: ISessionsUseCase) : Vie
         }
     }
 
-    fun load() {
-    }
-
     fun toggleEditMode() {
         state.value = state.value.copy(isEditMode = !state.value.isEditMode)
     }

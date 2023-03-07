@@ -15,7 +15,7 @@ fun SettingsMainMenuScreen(
         onBackClick = { navController?.popBackStack() },
         currentSessionItem = viewModel.state.sessionItem,
         isKeepSession = viewModel.state.isKeepSession,
-        onKeepSessionChange = { viewModel.toggleKeepSession(it) },
+        onKeepSessionChange = { viewModel.toggleKeepSession() },
         onEditProfile = onEditProfile,
         isMaterialYouEnabled = viewModel.state.isMaterialYouEnabled,
         onMaterialYouSwitchChange = { viewModel.toggleMaterialYou(it) },

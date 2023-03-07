@@ -46,6 +46,7 @@ import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
+@Suppress("LongMethod")
 @Composable
 fun DivisionsFeatureScreen(
     viewModel: DivisionsFeatureViewModel,
@@ -221,6 +222,7 @@ fun DivisionsScreen(
     }
 }
 
+@Suppress("all")
 private val previewData = mutableListOf<DivisionElement>().apply {
     (1..40).forEach {
         if (it % 2 == 0) {

@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package pt.joasvpereira.coreui.theme
 
 import android.annotation.SuppressLint

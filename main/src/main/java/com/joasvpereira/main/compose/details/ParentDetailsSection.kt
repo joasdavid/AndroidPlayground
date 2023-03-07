@@ -29,9 +29,11 @@ fun ParentDetailsSection(
 ) {
     division.divisionIcon?.let { divisionIcon ->
         GenericSectionContainer(headerText = "Location", modifier = modifier) {
-            Column(modifier = Modifier
-                .padding(10.dp)
-                .padding(vertical = 10.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .padding(vertical = 10.dp),
+            ) {
                 Row {
                     Icon(painter = painterResource(id = divisionIcon.resId), contentDescription = null, modifier = Modifier.size(24.dp))
                     SimpleSpace(size = 5.dp)

@@ -57,7 +57,7 @@ class ItemDetailScreenViewModel(
                     "update popup -- $updateDetailsState".logThis(tag = "DetailsScreen")
                 } else {
                     _state = ItemDetailScreenState(isLoading = true)
-                    delay(500)
+                    delay(NOT_FOUND_POPUP_STATE_DELAY)
                     notFoundPopupState.isVisible = true
                 }
             }
@@ -80,5 +80,9 @@ class ItemDetailScreenViewModel(
                 deleteItemUseCase.execute(DeleteItemParam(itemId))
             }
         }
+    }
+
+    companion object {
+        private const val NOT_FOUND_POPUP_STATE_DELAY = 500L
     }
 }

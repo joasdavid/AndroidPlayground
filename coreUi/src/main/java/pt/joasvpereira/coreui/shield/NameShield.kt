@@ -1,3 +1,5 @@
+@file:Suppress("all")
+
 package pt.joasvpereira.coreui.shield
 
 import androidx.compose.foundation.background
@@ -37,6 +39,7 @@ class First2WordsHighlight(private val isUpperCase: Boolean = true, val emptySym
                     val secondWord = this[1]
                     "${firstWord[0]}${secondWord[0]}"
                 }
+
                 firstWord.length >= 2 -> "${firstWord[0]}${firstWord[1]}"
                 else -> "${firstWord[0]}"
             }

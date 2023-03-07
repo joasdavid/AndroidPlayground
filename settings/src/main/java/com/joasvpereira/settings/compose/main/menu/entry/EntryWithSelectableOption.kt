@@ -34,6 +34,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
 import pt.joasvpereira.coreui.preview.UiModePreview
@@ -59,91 +60,127 @@ fun EntryWithSelectableOption(
                 isOptionsOpen = !isOptionsOpen
             },
     ) {
+        NameAndDropDownMenuRow(
+            modifier = modifier,
+            text = text,
+            isOptionsOpen = isOptionsOpen,
+            listOfOptions = listOfOptions,
+            selectedOption = selectedOption,
+            onOptionChanged = onOptionChanged,
+            onOptionsOpenChange = { isOptionsOpen = it },
+        )
+
+        PossibleDescription(description)
+    }
+}
+
+private const val MAX_HEIGHT_85_PERCENT = .85f
+
+@Composable
+private fun NameAndDropDownMenuRow(
+    modifier: Modifier,
+    text: String,
+    isOptionsOpen: Boolean,
+    onOptionsOpenChange: (Boolean) -> Unit,
+    listOfOptions: List<String>,
+    selectedOption: Int,
+    onOptionChanged: (Int) -> Unit,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max)
+            .heightIn(min = 50.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(
+            text = text,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(2f),
+        )
+        SimpleSpace(size = 5.dp)
+
+        val currentLocalDensity = LocalDensity.current
+        var dropMenuWidth by remember { mutableStateOf(0.dp) }
         Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Max)
-                .heightIn(min = 50.dp),
+            modifier = Modifier
+                .weight(1f)
+                .width(IntrinsicSize.Min)
+                .clickable { onOptionsOpenChange(!isOptionsOpen) }
+                .onGloballyPositioned { coordinates ->
+                    with(currentLocalDensity) {
+                        dropMenuWidth = coordinates.size.width.toDp()
+                    }
+                },
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(
-                text = text,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(2f),
+            Spacer(
+                modifier = Modifier
+                    .width(1.5.dp)
+                    .fillMaxHeight(MAX_HEIGHT_85_PERCENT)
+                    .background(color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(PERCENT_100)),
             )
             SimpleSpace(size = 5.dp)
-
-            val currentLocalDensity = LocalDensity.current
-            var dropMenuWidth by remember {
-                mutableStateOf(0.dp)
-            }
-            Row(
+            Text(
+                text = if (listOfOptions.isEmpty()) "" else listOfOptions[selectedOption],
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .weight(1f)
                     .width(IntrinsicSize.Min)
-                    .clickable { isOptionsOpen = !isOptionsOpen }
-                    .onGloballyPositioned { coordinates ->
-                        with(currentLocalDensity) {
-                            dropMenuWidth = coordinates.size.width.toDp()
-                        }
-                    },
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Spacer(
-                    modifier = Modifier
-                        .width(1.5.dp)
-                        .fillMaxHeight(.85f)
-                        .background(color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(100)),
-                )
-                SimpleSpace(size = 5.dp)
-                Text(
-                    text = if (listOfOptions.isEmpty()) "" else listOfOptions[selectedOption],
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .width(IntrinsicSize.Min)
-                        .weight(2f),
-                )
-                SimpleSpace(size = 3.dp)
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = null,
-                    modifier = Modifier.weight(1f),
-                )
-                if (listOfOptions.isNotEmpty()) {
-                    DropdownMenu(
-                        modifier = Modifier.widthIn(min = dropMenuWidth),
-                        expanded = isOptionsOpen,
-                        onDismissRequest = { isOptionsOpen = false },
-                    ) {
-                        listOfOptions.forEachIndexed { index, it ->
-                            Text(
-                                text = it,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier
-                                    .height(48.dp)
-                                    .fillMaxWidth()
-                                    .padding(end = 5.dp)
-                                    .clickable {
-                                        isOptionsOpen = false
-                                        onOptionChanged(index)
-                                    },
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        description?.let {
-            Text(text = it, style = MaterialTheme.typography.labelSmall)
+                    .weight(2f),
+            )
+            SimpleSpace(size = 3.dp)
+            Icon(
+                imageVector = Icons.Default.ArrowDropDown,
+                contentDescription = null,
+                modifier = Modifier.weight(1f),
+            )
+            DropDownMenu(listOfOptions, dropMenuWidth, isOptionsOpen, onElementClick = { index ->
+                onOptionsOpenChange(false)
+                onOptionChanged(index)
+            })
         }
     }
 }
+
+@Composable
+private fun DropDownMenu(listOfOptions: List<String>, dropMenuWidth: Dp, isOptionsOpen: Boolean, onElementClick: (Int) -> Unit) {
+    var isOptionsOpen1 = isOptionsOpen
+    if (listOfOptions.isNotEmpty()) {
+        DropdownMenu(
+            modifier = Modifier.widthIn(min = dropMenuWidth),
+            expanded = isOptionsOpen1,
+            onDismissRequest = { isOptionsOpen1 = false },
+        ) {
+            listOfOptions.forEachIndexed { index, it ->
+                Text(
+                    text = it,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .height(48.dp)
+                        .fillMaxWidth()
+                        .padding(end = 5.dp)
+                        .clickable {
+                            onElementClick(index)
+                        },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PossibleDescription(description: String?) {
+    description?.let {
+        Text(text = it, style = MaterialTheme.typography.labelSmall)
+    }
+}
+
+private const val PERCENT_100 = 100
 
 @UiModePreview
 @Composable

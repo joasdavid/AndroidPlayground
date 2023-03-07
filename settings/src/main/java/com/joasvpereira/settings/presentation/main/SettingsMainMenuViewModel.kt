@@ -61,7 +61,7 @@ class SettingsMainMenuViewModel(
         }
     }
 
-    fun toggleKeepSession(isOn: Boolean) {
+    fun toggleKeepSession() {
         val id = if (state.isKeepSession) -1 else CurrentSession.sessionId ?: -1
         viewModelScope.launch {
             sessionPreferencesDataSource.updatePreference(id)

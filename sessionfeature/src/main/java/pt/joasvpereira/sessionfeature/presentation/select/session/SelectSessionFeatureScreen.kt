@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,10 +22,6 @@ fun SelectSessionFeatureScreen(
     navController: NavController? = null,
     onSessionSelected: (SessionItem) -> Unit,
 ) {
-    LaunchedEffect(key1 = null) {
-        viewModel.load()
-    }
-
     val state = viewModel.state.value
     AppScaffold(isLoading = state.isLoading) {
         Box(modifier = Modifier.fillMaxSize()) {

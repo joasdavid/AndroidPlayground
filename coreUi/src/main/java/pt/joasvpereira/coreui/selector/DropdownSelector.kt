@@ -1,3 +1,5 @@
+@file:Suppress("all")
+
 package pt.joasvpereira.xorganizer.presentation.compose
 
 import androidx.compose.animation.core.animateFloatAsState
@@ -124,6 +126,7 @@ fun <T> DropdownSelector(
         isDisabled -> styleConfiguration.disable.copy(
             color = styleConfiguration.disable.color.copy(alpha = ContentAlpha.disabled),
         )
+
         selectionOpenState -> styleConfiguration.focus
         else -> styleConfiguration.unFocus
     }

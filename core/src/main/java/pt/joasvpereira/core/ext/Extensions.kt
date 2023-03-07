@@ -26,10 +26,23 @@ fun Bitmap.compressSize(maxSize: Int = 500000): Bitmap {
     return BitmapFactory.decodeByteArray(decoded, 0, decoded.size)
 }
 
+const val COMPRESSION_RATIO = 0.8
+const val QUALITY = 10
 private fun compressBitmap(bitmap: Bitmap, maxSize: Int): String {
-    val bitmapCompressed = Bitmap.createScaledBitmap(bitmap, (bitmap.width * 0.8).roundToInt(), (bitmap.width * 0.8).roundToInt(), true)
+    val bitmapCompressed = Bitmap.createScaledBitmap(
+        bitmap,
+        (bitmap.width * COMPRESSION_RATIO).roundToInt(),
+        (bitmap.width * COMPRESSION_RATIO).roundToInt(),
+        true,
+    )
     val byteArrayOutputStream = ByteArrayOutputStream()
-    bitmapCompressed.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream)
+
+    bitmapCompressed.compress(
+        Bitmap.CompressFormat.PNG,
+        QUALITY,
+        byteArrayOutputStream,
+    )
+
     val byteArray = byteArrayOutputStream.toByteArray()
     return if (byteArray.size <= maxSize) {
         Base64.encodeToString(byteArray, Base64.DEFAULT)

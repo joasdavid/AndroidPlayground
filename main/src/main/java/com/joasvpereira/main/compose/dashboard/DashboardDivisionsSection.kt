@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -110,75 +111,84 @@ private fun DivisionItem(
             clickAction = onItemClicked,
             color = MaterialTheme.colorScheme.primaryContainer,
         ) {
-
             Box(modifier = Modifier.fillMaxSize()) {
                 StyleShape(modifier = Modifier.align(Alignment.BottomEnd))
                 DivisionExtraOptions(
-                    division =  division,
-                    onEditClick = onEditClick
+                    division = division,
+                    onEditClick = onEditClick,
                 )
                 Column(
                     Modifier
                         .fillMaxSize()
                         .padding(horizontal = 8.dp, vertical = 16.dp),
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Box(
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.onPrimaryContainer, shape = CircleShape)
-                                .padding(7.dp),
-                        ) {
-                            Icon(
-                                painterResource(id = division.icon.resId),
-                                contentDescription = "Icon of ${division.icon.name}",
-                                modifier = Modifier.size(35.dp),
-                                tint = MaterialTheme.colorScheme.primaryContainer,
-                            )
-                        }
-                    }
+                    DivisionIconPlacement(division)
 
                     Spacer(modifier = Modifier.size(8.dp))
 
-                    Text(
-                        text = division.name,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        fontWeight = FontWeight.Bold,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 2,
-                        modifier = Modifier.weight(1f),
-                    )
+                    DivisionName(division)
 
                     Spacer(modifier = Modifier.size(5.dp))
 
-                    Row(
-                        modifier = Modifier,
-                    ) {
-                        IconAndCounter(
-                            iconData = IconData(painterResource(R.drawable.ic_box), ""),
-                            count = division.boxCount,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        )
-
-                        Spacer(modifier = Modifier.size(8.dp))
-
-                        IconAndCounter(
-                            iconData = IconData(
-                                painterResource(R.drawable.ic_baseline_build_24),
-                                "",
-                            ),
-                            count = division.itemCount,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        )
-                    }
+                    DivisionCounters(division)
                 }
             }
         }
     }
 }
 
-private enum class DivisionExtraOptionType {
-    EDIT,
-    DELETE,
+@Composable
+private fun DivisionCounters(division: DashboardDivision) {
+    Row(
+        modifier = Modifier,
+    ) {
+        IconAndCounter(
+            iconData = IconData(painterResource(R.drawable.ic_box), ""),
+            count = division.boxCount,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+        )
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        IconAndCounter(
+            iconData = IconData(
+                painterResource(R.drawable.ic_baseline_build_24),
+                "",
+            ),
+            count = division.itemCount,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+        )
+    }
+}
+
+@Composable
+private fun ColumnScope.DivisionName(division: DashboardDivision) {
+    Text(
+        text = division.name,
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        fontWeight = FontWeight.Bold,
+        overflow = TextOverflow.Ellipsis,
+        maxLines = 2,
+        modifier = Modifier.Companion.weight(1f),
+    )
+}
+
+@Composable
+private fun DivisionIconPlacement(division: DashboardDivision) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.onPrimaryContainer, shape = CircleShape)
+                .padding(7.dp),
+        ) {
+            Icon(
+                painterResource(id = division.icon.resId),
+                contentDescription = "Icon of ${division.icon.name}",
+                modifier = Modifier.size(35.dp),
+                tint = MaterialTheme.colorScheme.primaryContainer,
+            )
+        }
+    }
 }
 
 @Composable
@@ -193,7 +203,7 @@ private fun BoxScope.DivisionExtraOptions(
             .padding(top = 16.dp, end = 12.dp)
             .clip(CircleShape)
             .clickable { onEditClick() },
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             imageVector = Icons.Default.Edit,

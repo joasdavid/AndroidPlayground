@@ -77,7 +77,7 @@ fun DivisionChart(
         Box(contentAlignment = Alignment.Center) {
             CircleChart(
                 items = buildChartItems(percentageFolders, percentageItems),
-                backgroundColor = MaterialTheme.colorScheme.outline.copy(alpha = .5f),
+                backgroundColor = MaterialTheme.colorScheme.outline.copy(alpha = ALPHA_50),
                 radius = 25.dp,
                 strokeSize = 10.dp,
                 innerPadding = 0.dp,
@@ -143,8 +143,8 @@ fun CircleChart(
 ) {
     var animationPlayed by remember { mutableStateOf(shouldDisplayWithoutAnimation) }
     val progressValue: Float by animateFloatAsState(
-        targetValue = if (animationPlayed) 360f else 0f,
-        animationSpec = tween(durationMillis = 3000, delayMillis = delay),
+        targetValue = if (animationPlayed) CHART_ANIM_END_VALUE else CHART_ANIM_START_VALUE,
+        animationSpec = tween(durationMillis = CHART_ANIM_DURATION, delayMillis = delay),
     )
 
     LaunchedEffect(key1 = true) {
@@ -158,8 +158,8 @@ fun CircleChart(
     ) {
         drawArc(
             color = backgroundColor,
-            startAngle = -90f,
-            sweepAngle = 360f,
+            startAngle = CHART_START_ANGLE,
+            sweepAngle = CHART_SWEEP_ANGLE,
             useCenter = false,
             style = Stroke(width = strokeSize.toPx()),
         )
@@ -167,8 +167,8 @@ fun CircleChart(
         items.sortedByDescending { it.percentage }.forEach {
             drawArc(
                 color = it.color,
-                startAngle = -90f,
-                sweepAngle = min(360f * it.percentage, progressValue),
+                startAngle = CHART_START_ANGLE,
+                sweepAngle = min(CHART_SWEEP_ANGLE * it.percentage, progressValue),
                 useCenter = false,
                 style = Stroke(
                     width = strokeSize.toPx(),
@@ -178,6 +178,14 @@ fun CircleChart(
     }
 }
 
+const val ALPHA_50 = .5f
+const val CHART_ANIM_START_VALUE = 0f
+const val CHART_ANIM_END_VALUE = 360f
+const val CHART_ANIM_DURATION = 3000
+const val CHART_START_ANGLE = -90f
+const val CHART_SWEEP_ANGLE = 360f
+
+@Suppress("all")
 @Preview
 @Composable
 private fun CircleChartPreview() {
@@ -196,6 +204,7 @@ private fun CircleChartPreview() {
     }
 }
 
+@Suppress("all")
 @Preview
 @Composable
 fun DivisionChartPreview() {

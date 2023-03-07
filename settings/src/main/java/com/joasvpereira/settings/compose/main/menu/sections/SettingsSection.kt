@@ -42,11 +42,13 @@ internal fun SettingsSection(
                 .height(1.5.dp)
                 .background(
                     MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(100),
+                    shape = RoundedCornerShape(PERCENT_100),
                 ),
         )
     }
 }
+
+private const val PERCENT_100 = 100
 
 @UiModePreview
 @Composable

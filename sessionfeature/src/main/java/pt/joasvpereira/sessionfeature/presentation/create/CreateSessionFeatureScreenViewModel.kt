@@ -54,7 +54,7 @@ open class CreateSessionFeatureScreenViewModel(
 
     fun processContentResult(context: Context, uri: Uri?) {
         uri?.let {
-            val bitmapValue = if (Build.VERSION.SDK_INT < 28) {
+            val bitmapValue = if (Build.VERSION.SDK_INT < API_LEVEL_28) {
                 MediaStore.Images
                     .Media.getBitmap(context.contentResolver, it)
             } else {
@@ -110,5 +110,9 @@ open class CreateSessionFeatureScreenViewModel(
             deleteSessionUseCase.execute(SessionIdParam(originId))
             _state.value = _state.value.copy(isLoading = false, saveState = SaveState.Success)
         }
+    }
+
+    companion object {
+        private const val API_LEVEL_28 = 28
     }
 }

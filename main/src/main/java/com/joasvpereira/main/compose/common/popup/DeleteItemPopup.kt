@@ -25,33 +25,6 @@ import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.coreui.theme.DynamicTheme
 
-class DeleteItemPopupStateHolder(
-    confirmationName: String = "",
-    isVisible: Boolean = false,
-    var onButtonPositiveClick: () -> Unit = {},
-    var onButtonNegativeClick: () -> Unit = {},
-) {
-    var name by mutableStateOf("")
-    var confirmationName by mutableStateOf(confirmationName.toUpperCase(Locale.current))
-    var isVisible by mutableStateOf(isVisible)
-    val isEnabled: Boolean
-        get() = name.equals(confirmationName, ignoreCase = false)
-
-    fun performPositiveClick() {
-        if (isEnabled) {
-            "performPositiveClick".logThis(tag = "DetailsScreen")
-            onButtonPositiveClick()
-            isVisible = false
-        }
-    }
-
-    fun performNegativeClick() {
-        "performNegativeClick".logThis(tag = "DetailsScreen")
-        onButtonNegativeClick()
-        isVisible = false
-    }
-}
-
 @Composable
 fun DeleteItemPopup(
     deleteItemPopupStateHolder: DeleteItemPopupStateHolder = remember {
@@ -83,6 +56,33 @@ fun DeleteItemPopup(
             )
             SimpleSpace(size = 20.dp)
         }
+    }
+}
+
+class DeleteItemPopupStateHolder(
+    confirmationName: String = "",
+    isVisible: Boolean = false,
+    var onButtonPositiveClick: () -> Unit = {},
+    var onButtonNegativeClick: () -> Unit = {},
+) {
+    var name by mutableStateOf("")
+    var confirmationName by mutableStateOf(confirmationName.toUpperCase(Locale.current))
+    var isVisible by mutableStateOf(isVisible)
+    val isEnabled: Boolean
+        get() = name.equals(confirmationName, ignoreCase = false)
+
+    fun performPositiveClick() {
+        if (isEnabled) {
+            "performPositiveClick".logThis(tag = "DetailsScreen")
+            onButtonPositiveClick()
+            isVisible = false
+        }
+    }
+
+    fun performNegativeClick() {
+        "performNegativeClick".logThis(tag = "DetailsScreen")
+        onButtonNegativeClick()
+        isVisible = false
     }
 }
 

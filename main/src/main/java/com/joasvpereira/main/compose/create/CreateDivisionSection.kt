@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.dev.mokeupui.compose.screen.organizer.main.SimpleSpace
@@ -32,6 +35,8 @@ fun CreateDivisionSection(
     onThemeChange: (ThemeOption) -> Unit,
     onSave: () -> Unit,
     onCloseClick: () -> Unit,
+    canDelete: Boolean = false,
+    onDeleteClick: () -> Unit = {},
 ) {
     AppScaffold(
         isLoading = isLoading,
@@ -45,7 +50,10 @@ fun CreateDivisionSection(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SimpleSpace(size = 100.dp)
-            DivisionIconSelector(modifier = Modifier.fillMaxWidth(.75f), defaultPos = 0, onIconSelected = onIconChange)
+            DivisionIconSelector(
+                defaultPos = 0,
+                onIconSelected = onIconChange,
+            )
             Spacer(modifier = Modifier.size(20.dp))
             DivisionNameAndDescription(
                 name = name,
@@ -64,14 +72,42 @@ fun CreateDivisionSection(
             ) {
                 Text(text = "Save")
             }
+            if (canDelete) {
+                SimpleSpace(size = 20.dp)
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = onDeleteClick,
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                ) {
+                    Text(text = "Delete")
+                }
+            }
         }
+    }
+}
+
+@Preview(group = "Single")
+@Composable
+private fun CreateDivisionSectionPreview_single() {
+    DynamicTheme() {
+        CreateDivisionSection(
+            isLoading = false,
+            onCloseClick = {},
+            onIconChange = {},
+            name = "",
+            onNameChange = {},
+            description = "",
+            onDescriptionChange = {},
+            onThemeChange = {},
+            onSave = {},
+        )
     }
 }
 
 @UiModePreview
 @Composable
 private fun CreateDivisionSectionPreview(@PreviewParameter(ThemesProvider::class) theme: ThemeOption) {
-    DynamicTheme {
+    DynamicTheme(theme) {
         CreateDivisionSection(
             isLoading = false,
             onCloseClick = {},

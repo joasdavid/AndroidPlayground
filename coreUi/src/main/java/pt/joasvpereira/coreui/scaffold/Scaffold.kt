@@ -45,6 +45,71 @@ import pt.joasvpereira.coreui.R
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppScaffold(
+    toolBarConfig: ToolBarConfig? = null,
+    isTinted: Boolean = true,
+    isLoading: Boolean = false,
+    paddingValues: PaddingValues = PaddingValues(horizontal = 20.dp),
+    shouldUseBackgroundImage: Boolean = true,
+    content: @Composable (PaddingValues) -> Unit,
+) {
+    Scaffold {
+        if (shouldUseBackgroundImage) {
+            val backgroundRes = R.drawable.background
+            Image(
+                painter = painterResource(id = backgroundRes),
+                contentDescription = "",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+
+        if (isTinted) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f)),
+            )
+        }
+
+        Column(
+            Modifier.padding(
+                top = it.calculateTopPadding() + paddingValues.calculateTopPadding(),
+                start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
+            ),
+        ) {
+            toolBarConfig?.apply {
+                ToolbarTitleCentered(
+                    toolBarConfig = this,
+                    useInsetsPaddingForStatusBars = false,
+                )
+            }
+            content(it)
+        }
+    }
+    if (isLoading) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable { }
+                .background(
+                    MaterialTheme.colorScheme.background.copy(
+                        alpha = .75f,
+                    ),
+                ),
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(size = 50.dp)
+                    .align(Alignment.Center),
+            )
+        }
+    }
+}
+
 data class ToolBarConfig(
     val title: String,
     val leftIcon: ImageVector = Icons.Default.ArrowBack,
@@ -133,71 +198,6 @@ fun ToolbarTitleCenterdPreview() {
                     onLeftIconClick = {},
                     horizontalPadding = 16.dp,
                 ),
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppScaffold(
-    toolBarConfig: ToolBarConfig? = null,
-    isTinted: Boolean = true,
-    isLoading: Boolean = false,
-    paddingValues: PaddingValues = PaddingValues(horizontal = 20.dp),
-    shouldUseBackgroundImage: Boolean = true,
-    content: @Composable (PaddingValues) -> Unit,
-) {
-    Scaffold {
-        if (shouldUseBackgroundImage) {
-            val backgroundRes = R.drawable.background
-            Image(
-                painter = painterResource(id = backgroundRes),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize(),
-            )
-        }
-
-        if (isTinted) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f)),
-            )
-        }
-
-        Column(
-            Modifier.padding(
-                top = it.calculateTopPadding() + paddingValues.calculateTopPadding(),
-                start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
-            ),
-        ) {
-            toolBarConfig?.apply {
-                ToolbarTitleCentered(
-                    toolBarConfig = this,
-                    useInsetsPaddingForStatusBars = false,
-                )
-            }
-            content(it)
-        }
-    }
-    if (isLoading) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable { }
-                .background(
-                    MaterialTheme.colorScheme.background.copy(
-                        alpha = .75f,
-                    ),
-                ),
-        ) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(size = 50.dp)
-                    .align(Alignment.Center),
             )
         }
     }

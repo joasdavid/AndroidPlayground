@@ -23,16 +23,6 @@ import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
-sealed interface FilterOptions {
-    object All : FilterOptions
-    object OnlyBox : FilterOptions
-    object OnlyItem : FilterOptions
-}
-
-fun FilterOptions.isAllOption() = this is FilterOptions.All
-fun FilterOptions.isOnlyBoxOption() = this is FilterOptions.OnlyBox
-fun FilterOptions.isOnlyItemOption() = this is FilterOptions.OnlyItem
-
 @Composable
 fun FilterPopup(
     themeOption: ThemeOption,
@@ -94,6 +84,16 @@ fun FilterPopup(
         }
     }
 }
+
+sealed interface FilterOptions {
+    object All : FilterOptions
+    object OnlyBox : FilterOptions
+    object OnlyItem : FilterOptions
+}
+
+fun FilterOptions.isAllOption() = this is FilterOptions.All
+fun FilterOptions.isOnlyBoxOption() = this is FilterOptions.OnlyBox
+fun FilterOptions.isOnlyItemOption() = this is FilterOptions.OnlyItem
 
 @Preview(group = "Single")
 @Composable

@@ -39,17 +39,6 @@ import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
-private data class DivisionIconSelectorState(
-    val currentIconPos: Int,
-    val direction: DivisionIconSelectorDirection = DivisionIconSelectorDirection.NONE,
-)
-
-private enum class DivisionIconSelectorDirection {
-    RIGHT,
-    LEFT,
-    NONE,
-}
-
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun DivisionIconSelector(
@@ -92,50 +81,7 @@ fun DivisionIconSelector(
                 },
         )
 
-        Box(
-            Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
-            contentAlignment = Alignment.Center,
-        ) {
-            AnimatedContent(
-                targetState = selectedPosition,
-                transitionSpec = {
-                    when (selectedPosition.direction) {
-                        DivisionIconSelectorDirection.RIGHT -> {
-                            slideIntoContainer(
-                                towards = AnimatedContentScope.SlideDirection.Left,
-                                animationSpec = tween(1000),
-                            ) + fadeIn() with slideOutOfContainer(
-                                towards = AnimatedContentScope.SlideDirection.Left,
-                                animationSpec = tween(1000),
-                            ) + fadeOut(animationSpec = tween(1000))
-                        }
-
-                        DivisionIconSelectorDirection.LEFT -> {
-                            slideIntoContainer(
-                                towards = AnimatedContentScope.SlideDirection.Right,
-                                animationSpec = tween(1000),
-                            ) + fadeIn() with slideOutOfContainer(
-                                towards = AnimatedContentScope.SlideDirection.Right,
-                                animationSpec = tween(1000),
-                            ) + fadeOut(animationSpec = tween(1000))
-                        }
-
-                        DivisionIconSelectorDirection.NONE -> fadeIn() with fadeOut()
-                    }
-                },
-            ) {
-                val currentIconData = DivisionIcons.all[it.currentIconPos]
-                Icon(
-                    painter = painterResource(id = currentIconData.resId),
-                    contentDescription = currentIconData.name,
-                    modifier = Modifier
-                        .padding(15.dp)
-                        .size(50.dp),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-            }
-        }
+        SelectedIconPlacement(selectedPosition)
 
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
@@ -157,6 +103,55 @@ fun DivisionIconSelector(
 }
 
 @Composable
+@OptIn(ExperimentalAnimationApi::class)
+private fun SelectedIconPlacement(selectedPosition: DivisionIconSelectorState) {
+    Box(
+        Modifier
+            .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
+        contentAlignment = Alignment.Center,
+    ) {
+        AnimatedContent(
+            targetState = selectedPosition,
+            transitionSpec = {
+                when (selectedPosition.direction) {
+                    DivisionIconSelectorDirection.RIGHT -> {
+                        slideIntoContainer(
+                            towards = AnimatedContentScope.SlideDirection.Left,
+                            animationSpec = tween(SLIDE_ANIM_DURATION),
+                        ) + fadeIn() with slideOutOfContainer(
+                            towards = AnimatedContentScope.SlideDirection.Left,
+                            animationSpec = tween(SLIDE_ANIM_DURATION),
+                        ) + fadeOut(animationSpec = tween(SLIDE_ANIM_DURATION))
+                    }
+
+                    DivisionIconSelectorDirection.LEFT -> {
+                        slideIntoContainer(
+                            towards = AnimatedContentScope.SlideDirection.Right,
+                            animationSpec = tween(SLIDE_ANIM_DURATION),
+                        ) + fadeIn() with slideOutOfContainer(
+                            towards = AnimatedContentScope.SlideDirection.Right,
+                            animationSpec = tween(SLIDE_ANIM_DURATION),
+                        ) + fadeOut(animationSpec = tween(SLIDE_ANIM_DURATION))
+                    }
+
+                    DivisionIconSelectorDirection.NONE -> fadeIn() with fadeOut()
+                }
+            },
+        ) {
+            val currentIconData = DivisionIcons.all[it.currentIconPos]
+            Icon(
+                painter = painterResource(id = currentIconData.resId),
+                contentDescription = currentIconData.name,
+                modifier = Modifier
+                    .padding(15.dp)
+                    .size(50.dp),
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+        }
+    }
+}
+
+@Composable
 fun DivisionIconSelector(
     modifier: Modifier = Modifier,
     iconSelected: DivisionIcon = DivisionIcons.all.first(),
@@ -164,6 +159,19 @@ fun DivisionIconSelector(
 ) {
     val pos = DivisionIcons.all.indexOf(iconSelected)
     DivisionIconSelector(modifier = modifier, defaultPos = pos, onIconSelected = onIconSelected)
+}
+
+const val SLIDE_ANIM_DURATION = 1000
+
+private data class DivisionIconSelectorState(
+    val currentIconPos: Int,
+    val direction: DivisionIconSelectorDirection = DivisionIconSelectorDirection.NONE,
+)
+
+private enum class DivisionIconSelectorDirection {
+    RIGHT,
+    LEFT,
+    NONE,
 }
 
 @UiModePreview

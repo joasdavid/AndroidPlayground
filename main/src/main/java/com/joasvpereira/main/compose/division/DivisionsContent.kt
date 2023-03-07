@@ -19,6 +19,7 @@ fun DivisionContent(
     listBottomPadding: Dp = 0.dp,
     onClick: (DivisionElement, ElementAction) -> Unit,
 ) {
+    @Suppress("MaxLineLength")
     ElementsContainer(
         listItem = listItem,
         onClick = onClick,
@@ -27,6 +28,7 @@ fun DivisionContent(
     )
 }
 
+@Suppress("all")
 private val previewData = mutableListOf<DivisionElement>().apply {
     (1..40).forEach {
         if (it % 2 == 0) {

@@ -152,6 +152,8 @@ private fun ContentListLine(
     }
 }
 
+const val ANIM_DURATION = 1000
+
 @Composable
 private fun ContentListLineItemSession(
     sessionItem: SessionItem,
@@ -165,7 +167,7 @@ private fun ContentListLineItemSession(
             initialValue = -25F,
             targetValue = 25F,
             animationSpec = infiniteRepeatable(
-                animation = tween(1000, easing = LinearEasing),
+                animation = tween(ANIM_DURATION, easing = LinearEasing),
                 repeatMode = RepeatMode.Reverse,
             ),
         )

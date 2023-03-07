@@ -1,3 +1,5 @@
+@file:Suppress("all")
+
 package pt.joasvpereira.coreui.dragble
 
 import androidx.compose.animation.core.AnimationState

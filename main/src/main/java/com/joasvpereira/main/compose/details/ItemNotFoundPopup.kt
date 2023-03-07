@@ -27,19 +27,6 @@ import com.joasvpereira.loggger.extentions.logThis
 import pt.joasvpereira.coreui.dialog.AlertDialogWithSingleButton
 import pt.joasvpereira.coreui.theme.DynamicTheme
 
-class ItemNotFoundPopupStateHolder(
-    isVisible: Boolean = false,
-    var onButtonPositiveClick: () -> Unit = {},
-) {
-    var isVisible by mutableStateOf(isVisible)
-
-    fun performPositiveClick() {
-        "performPositiveClick".logThis(tag = "DetailsScreen")
-        onButtonPositiveClick()
-        isVisible = false
-    }
-}
-
 @Composable
 fun ItemNotFoundPopup(
     state: ItemNotFoundPopupStateHolder = remember {
@@ -78,6 +65,19 @@ fun ItemNotFoundPopup(
             }
         },
     )
+}
+
+class ItemNotFoundPopupStateHolder(
+    isVisible: Boolean = false,
+    var onButtonPositiveClick: () -> Unit = {},
+) {
+    var isVisible by mutableStateOf(isVisible)
+
+    fun performPositiveClick() {
+        "performPositiveClick".logThis(tag = "DetailsScreen")
+        onButtonPositiveClick()
+        isVisible = false
+    }
 }
 
 @Preview
