@@ -30,7 +30,7 @@ import pt.joasvpereira.xorganizer.presentation.compose.navigation.MainNavigation
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
 
-    val viewModel by viewModel<MainViewModel>()
+    private val viewModel by viewModel<MainViewModel>()
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +74,3 @@ class MainViewModel(sessionsUseCase: ILoadSessionUseCase) : ViewModel() {
         }
     }
 }
-/**
-2023-03-07 19:22:44.244  6521-6521  ScreenSize              pt.joasvpereira.xorganizer           D  411.0.dp
-2023-03-07 19:22:44.244  6521-6521  ScreenSize              pt.joasvpereira.xorganizer           D  854.0.dp
- */
