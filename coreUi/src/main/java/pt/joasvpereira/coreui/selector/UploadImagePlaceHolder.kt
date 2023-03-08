@@ -43,9 +43,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
+import com.joasvpereira.lib.compose.namedshield.NamedShield
+import com.joasvpereira.lib.compose.namedshield.strategy.First2WordsHighlight
 import pt.joasvpereira.coreui.R
-import pt.joasvpereira.coreui.shield.First2WordsHighlight
-import pt.joasvpereira.coreui.shield.NameShield
 import pt.joasvpereira.coreui.theme.DynamicTheme
 
 const val ANDROID_API_28 = 28
@@ -142,7 +142,7 @@ private fun BoxScope.UploadButton(onUploadClick: () -> Unit, modifier: Modifier)
 
 @Composable
 private fun NoImageLoaded(emptyText: String) {
-    NameShield(
+    NamedShield(
         text = emptyText,
         borderSize = 0.dp,
         textStrategy = First2WordsHighlight(emptySymbol = ' '),

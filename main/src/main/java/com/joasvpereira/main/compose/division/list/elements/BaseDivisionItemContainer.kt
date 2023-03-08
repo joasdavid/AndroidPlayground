@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,11 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.joasvpereira.lib.compose.draggabletorevel.DraggableToRevel
+import com.joasvpereira.lib.compose.draggabletorevel.DraggableToRevelState
+import com.joasvpereira.lib.compose.draggabletorevel.RevelDirection
+import com.joasvpereira.lib.compose.draggabletorevel.rememberDraggableToRevelState
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import kotlinx.coroutines.launch
-import pt.joasvpereira.coreui.dragble.DraggableToRevel
-import pt.joasvpereira.coreui.dragble.DraggableToRevelState
-import pt.joasvpereira.coreui.dragble.rememberDraggableToRevelState
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 
@@ -47,7 +47,7 @@ internal fun BaseDivisionItemContainer(
     content: @Composable () -> Unit,
 ) {
     val state = rememberDraggableToRevelState(
-        direction = DraggableToRevelState.RevelDirection.RIGHT,
+        direction = RevelDirection.RIGHT,
     )
     DraggableToRevel(
         modifier = modifier
@@ -100,7 +100,7 @@ private fun BoxScope.DragIndicator() {
 }
 
 @Composable()
-private fun RowScope.ContentBehind(
+private fun ContentBehind(
     state: DraggableToRevelState,
     onDeleteClick: () -> Unit,
     onEditClick: () -> Unit,
@@ -155,10 +155,9 @@ private fun ContentBehindPreview() {
     DynamicTheme(ThemeOption.THEME_GREEN, isDarkTheme = true) {
         Row(modifier = Modifier.height(48.dp)) {
             ContentBehind(
-                state = DraggableToRevelState(0f, direction = DraggableToRevelState.RevelDirection.LEFT),
+                state = DraggableToRevelState(0f, direction = RevelDirection.LEFT),
                 onDeleteClick = { },
-                onEditClick = {},
-            )
+            ) {}
         }
     }
 }
