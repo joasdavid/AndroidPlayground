@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
@@ -55,6 +56,29 @@ internal fun SessionSettingsSection(
         EntryClickable(text = "Logout", onClick = onLogout, icon = rememberVectorPainter(image = Icons.Default.Logout))
 
         SimpleSpace(size = 20.dp)
+    }
+}
+
+@Preview(group = "Single")
+@Composable
+private fun SessionSettingsSectionSinglePreview() {
+    DynamicTheme {
+        Surface(modifier = Modifier) {
+            SessionSettingsSection(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 20.dp)
+                    .fillMaxWidth(),
+                currentSession = SessionItem(
+                    id = 1,
+                    name = "Joás V. Pereira",
+                ),
+                isKeepSession = true,
+                onKeepSessionChange = {},
+                onEditProfile = {},
+                onLogout = {},
+            )
+        }
     }
 }
 

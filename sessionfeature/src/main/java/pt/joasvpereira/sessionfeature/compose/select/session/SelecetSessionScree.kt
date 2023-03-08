@@ -6,7 +6,6 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,10 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +36,7 @@ import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
 import pt.joasvpereira.core.domain.data.SessionItem
-import pt.joasvpereira.sessionfeature.R
+import pt.joasvpereira.coreui.session.SessionIconHolder
 
 @Composable
 internal fun SelectSessionScreen(
@@ -181,24 +176,10 @@ private fun ContentListLineItemSession(
                 onSessionSelected(sessionItem)
             },
         ) {
-            if (sessionItem.image != null) {
-                Image(
-                    bitmap = sessionItem.image!!.asImageBitmap(),
-                    contentDescription = "",
-                    Modifier.size(60.dp),
-                    contentScale = ContentScale.FillBounds,
-                )
-            } else {
-                Image(
-                    painterResource(id = R.drawable.usericon),
-                    contentDescription = "",
-                    Modifier
-                        .size(60.dp)
-                        .padding(10.dp),
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer),
-                    contentScale = ContentScale.FillBounds,
-                )
-            }
+            SessionIconHolder(
+                sessionName = sessionItem.name,
+                sessionImage = sessionItem.image,
+            )
         }
         SimpleSpace(size = 2.dp)
         Text(

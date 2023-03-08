@@ -1,9 +1,8 @@
 package com.joasvpereira.main.compose.dashboard
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,15 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.main.presentation.icons.DivisionIcons
 import pt.joasvpereira.coreui.preview.UiModePreview
+import pt.joasvpereira.coreui.session.SessionIconHolder
 import pt.joasvpereira.coreui.theme.DynamicTheme
-import pt.joasvpereira.main.R
 
 @Composable
 internal fun DashboardHeader(
@@ -60,28 +57,10 @@ private fun RowUserInfo(sessionName: String, sessionImage: Bitmap?) {
                 .size(40.dp)
                 .background(MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
         ) {
-            sessionImage.let {
-                if (it == null) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.usericon),
-                        contentDescription = "",
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = .5f),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(40.dp),
-                    )
-                } else {
-                    Image(
-                        bitmap = it.asImageBitmap(),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .border(1.dp, color = MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
-                    )
-                }
-            }
+            SessionIconHolder(
+                sessionName = sessionName,
+                sessionImage = sessionImage,
+            )
         }
     }
 }
@@ -110,6 +89,7 @@ private fun RowTitleAndSettings(onSettingClicked: () -> Unit) {
     }
 }
 
+@SuppressLint("UseCompatLoadingForDrawables")
 @UiModePreview
 @Composable
 private fun DashboardHeaderPreview() {
