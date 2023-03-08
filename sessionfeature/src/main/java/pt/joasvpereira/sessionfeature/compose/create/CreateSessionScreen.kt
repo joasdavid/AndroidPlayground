@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
@@ -22,6 +23,7 @@ import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.selector.UploadImagePlaceHolder
 import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.sessionfeature.R
 
 @Composable
 internal fun CreateSessionScreen(
@@ -60,7 +62,7 @@ internal fun CreateSessionScreen(
                 AppTextField(
                     value = sessionName,
                     onValueChange = onSessionNameChange,
-                    placeholder = "Session Name",
+                    placeholder = stringResource(R.string.session_name),
                 )
 
                 VerticalSpace(height = 45.dp)
@@ -102,9 +104,9 @@ private fun ButtonsColumn(
         ) {
             Text(
                 text = if (isOnEditMode) {
-                    "Save profile"
+                    stringResource(R.string.save_profile)
                 } else {
-                    "Create new profile"
+                    stringResource(R.string.create_new_profile)
                 },
             )
         }
@@ -116,7 +118,7 @@ private fun ButtonsColumn(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = "Delete",
+                    text = stringResource(R.string.delete),
                 )
             }
         }
