@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="theme_mode_default_lable">Default</string>
-    <string name="theme_mode_light_lable">Light</string>
-    <string name="theme_mode_dark_lable">Dark</string>
+    <string name="theme_mode_default_lable">Padrão</string>
+    <string name="theme_mode_light_lable">Dia</string>
+    <string name="theme_mode_dark_lable">Noite</string>
+    <string name="settings_title">Definições</string>
+    <string name="session_section_title">Sessão</string>
+    <string name="label_keep_session">Manter a sessão activa</string>
+    <string name="description_keep_session">Quando ativo a sessão será mantida mesmo após matar o applicativo, isso significa que ao retornar ao aplicativo você irá direto para este perfil.</string>
+    <string name="edit_my_profile">Editar o meu perfil</string>
+    <string name="logout">Sair</string>
+    <string name="theme_section_title">Tema</string>
+    <string name="label_material_you">Usar "Material you"</string>
+    <string name="description_material_you">Quando ativado, usará as cores do sistema como tema padrão em vez do tema padrão do aplicativo.</string>
+    <string name="label_theme_mode">Dia/Noite</string>
+    <string name="description_theme_mode">"Você pode escolher 3 opções diferentes:\n\t- Padrão, que utilizará o modo dia/noite do sistema;\n\t- Dia, forçará o app a ficar no modo dia;\n\t- Noit,
+        forçará o app a ficar no modo noite;"</string>
 </resources>
