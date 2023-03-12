@@ -24,4 +24,15 @@
     <string name="division_without_elements_message">Aparentemente não existem caixas ou objectos nesta divisão de momento, mas não te preocupes! Podes adicionar a qualquer altura caixas e/ou objectos simplesmente carregando no botão de adicionar e preencher os detalhes.</string>
     <string name="update_item">Atualizar objecto</string>
     <string name="new_item">Criar novo objecto</string>
+    <string name="box_without_elements_message">Aparentemente ainda não tens nenhum objecto, mas não te preocupes, podes simplesmente carregar no botão \"Adicionar objecto\" para criar um.</string>
+    <string name="box_add_item">Adicionar objecto</string>
+    <string name="general_go_back">Voltar</string>
+    <string name="item_not_found_1">Ops,\n</string>
+    <string name="item_not_found_2">nenhum objecto encontrado . . . .\n\nÉ possível que tenha sido apagodo.</string>
+    <string name="main_details_section_title">Detalhes principais</string>
+    <string name="main_details_section_name_label">"Nome: "</string>
+    <string name="main_details_section_description_label">"Descrição: "</string>
+    <string name="main_details_section_id_label">"ID: "</string>
+    <string name="location_details_section_title">Lucalização</string>
+    <string name="actions_details_section_title">Acçoes</string>
 </resources>

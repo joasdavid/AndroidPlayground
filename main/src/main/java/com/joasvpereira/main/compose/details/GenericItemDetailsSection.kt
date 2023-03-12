@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -15,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.main.R
 
 @Composable
 fun GenericItemDetailsSection(
@@ -26,7 +28,7 @@ fun GenericItemDetailsSection(
 ) {
     if (id < 1) return
     GenericSectionContainer(
-        headerText = "Main Details",
+        headerText = stringResource(R.string.main_details_section_title),
         clickableIcon = HeaderClickableIcon(
             iconPainter = rememberVectorPainter(image = Icons.Default.Edit),
             onClick = onEditClick,
@@ -36,7 +38,7 @@ fun GenericItemDetailsSection(
         Column(Modifier.padding(10.dp)) {
             Text(
                 text = AnnotatedString(
-                    text = "ID: ",
+                    text = stringResource(R.string.main_details_section_id_label),
                     spanStyle = SpanStyle(fontWeight = FontWeight.Bold),
                 ).plus(
                     AnnotatedString(text = "$id"),
@@ -47,7 +49,7 @@ fun GenericItemDetailsSection(
 
             Text(
                 text = AnnotatedString(
-                    text = "Name: ",
+                    text = stringResource(R.string.main_details_section_name_label),
                     spanStyle = SpanStyle(fontWeight = FontWeight.Bold),
                 ).plus(
                     AnnotatedString(text = name),
@@ -58,7 +60,7 @@ fun GenericItemDetailsSection(
 
             Text(
                 text = AnnotatedString(
-                    text = "Description: ",
+                    text = stringResource(R.string.main_details_section_description_label),
                     spanStyle = SpanStyle(fontWeight = FontWeight.Bold),
                 ).plus(
                     AnnotatedString(text = description),

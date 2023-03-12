@@ -31,11 +31,11 @@ fun CreateItemPopup(
         onDismissRequest = { stateHolder.isVisible = false },
         indicatorIcon = painterResource(id = R.drawable.ic_item),
         indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-        buttonPositiveText = if (stateHolder.isOnEditMode) "Updade" else "Save",
+        buttonPositiveText = stringResource(id = R.string.general_save).uppercase(),
         buttonPositiveColor = MaterialTheme.colorScheme.primary,
         isButtonPositiveEnabled = stateHolder.name.isNotBlank(),
         onButtonPositiveClick = { stateHolder.performPositiveClick() },
-        buttonNegativeText = "Close",
+        buttonNegativeText = stringResource(id = R.string.general_cancel).uppercase(),
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
         onButtonNegativeClick = { stateHolder.performNegativeClick() },
     ) {
@@ -54,9 +54,9 @@ fun CreateItemPopup(
                 )
             }
             SimpleSpace(size = 20.dp)
-            AppTextField(value = stateHolder.name, onValueChange = { stateHolder.name = it }, placeholder = "Item name")
+            AppTextField(value = stateHolder.name, onValueChange = { stateHolder.name = it }, placeholder = stringResource(id = R.string.item_name_hint))
             SimpleSpace(size = 20.dp)
-            AppTextField(value = stateHolder.description, onValueChange = { stateHolder.description = it }, placeholder = "Description")
+            AppTextField(value = stateHolder.description, onValueChange = { stateHolder.description = it }, placeholder = stringResource(id = R.string.item_description_hint))
             SimpleSpace(size = 20.dp)
         }
     }

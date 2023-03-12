@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
@@ -20,6 +21,7 @@ import com.joasvpereira.main.presentation.icons.DivisionIcons
 import pt.joasvpereira.coreui.box.BoxImage
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
+import pt.joasvpereira.main.R
 
 @Composable
 fun ParentDetailsSection(
@@ -28,7 +30,7 @@ fun ParentDetailsSection(
     modifier: Modifier = Modifier,
 ) {
     division.divisionIcon?.let { divisionIcon ->
-        GenericSectionContainer(headerText = "Location", modifier = modifier) {
+        GenericSectionContainer(headerText = stringResource(R.string.location_details_section_title), modifier = modifier) {
             Column(
                 modifier = Modifier
                     .padding(10.dp)

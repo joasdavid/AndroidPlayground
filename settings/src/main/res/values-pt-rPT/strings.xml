@@ -13,6 +13,5 @@
     <string name="label_material_you">Usar "Material you"</string>
     <string name="description_material_you">Quando ativado, usará as cores do sistema como tema padrão em vez do tema padrão do aplicativo.</string>
     <string name="label_theme_mode">Dia/Noite</string>
-    <string name="description_theme_mode">"Você pode escolher 3 opções diferentes:\n\t- Padrão, que utilizará o modo dia/noite do sistema;\n\t- Dia, forçará o app a ficar no modo dia;\n\t- Noit,
-        forçará o app a ficar no modo noite;"</string>
+    <string name="description_theme_mode">"Você pode escolher 3 opções diferentes:\n\t- Padrão, que utilizará o modo dia/noite do sistema;\n\t- Dia, forçará o app a ficar no modo dia;\n\t- Noite, forçará o app a ficar no modo noite;"</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +25,7 @@ import com.joasvpereira.loggger.extentions.logThis
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.main.R
 
 @Composable
 fun DeleteItemPopup(
@@ -35,17 +37,17 @@ fun DeleteItemPopup(
         onDismissRequest = { deleteItemPopupStateHolder.isVisible = false },
         indicatorIcon = Icons.Default.Delete,
         indicatorColor = MaterialTheme.colorScheme.error,
-        buttonPositiveText = "DELETE",
+        buttonPositiveText = stringResource(id = R.string.general_save).uppercase(),
         buttonPositiveColor = MaterialTheme.colorScheme.error,
         isButtonPositiveEnabled = deleteItemPopupStateHolder.isEnabled,
         onButtonPositiveClick = { deleteItemPopupStateHolder.performPositiveClick() },
-        buttonNegativeText = "CANCEL",
+        buttonNegativeText = stringResource(id = R.string.general_cancel).uppercase(),
         buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
         onButtonNegativeClick = { deleteItemPopupStateHolder.performNegativeClick() },
     ) {
         val nameUppercase = deleteItemPopupStateHolder.confirmationName.toUpperCase(Locale.current)
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "To delete division write it's name in all caps \n \"$nameUppercase", textAlign = TextAlign.Center)
+            Text(text = stringResource(id = R.string.popup_delete_message, nameUppercase), textAlign = TextAlign.Center)
             SimpleSpace(size = 20.dp)
             AppTextField(
                 value = deleteItemPopupStateHolder.name,

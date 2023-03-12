@@ -24,4 +24,15 @@
     <string name="division_without_elements_message">It seems like there are no items or boxes in your account at the moment, but don\'t worry! You can add them anytime by selecting the \'Add\' option and entering the necessary details.</string>
     <string name="update_item">Update item</string>
     <string name="new_item">New item</string>
+    <string name="box_without_elements_message">It looks like you don\'t have any items yet, but don\'t worry, you can easily add items by clicking the \'Add\' button.</string>
+    <string name="box_add_item">Add Item</string>
+    <string name="general_go_back">Go Back</string>
+    <string name="item_not_found_1">Ops,\n</string>
+    <string name="item_not_found_2">" no Item was found . . . .\n\nIs possible that the item was deleted."</string>
+    <string name="main_details_section_title">Main Details</string>
+    <string name="main_details_section_name_label">"Name: "</string>
+    <string name="main_details_section_description_label">"Description: "</string>
+    <string name="main_details_section_id_label">"ID: "</string>
+    <string name="location_details_section_title">Location</string>
+    <string name="actions_details_section_title">Actions</string>
 </resources>
