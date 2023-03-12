@@ -263,7 +263,8 @@ private fun ContentArea(content: @Composable () -> Unit) {
             .width(IntrinsicSize.Min)
             .padding(horizontal = 16.dp)
             .padding(top = 40.dp)
-            .padding(bottom = 15.dp),
+            .padding(bottom = 15.dp)
+            .width(IntrinsicSize.Max),
         contentAlignment = Alignment.Center,
     ) {
         content()
@@ -440,23 +441,7 @@ private fun AlertDialogPreview() {
         AlertDialogWithSingleButton(indicatorIcon = Icons.Default.Close, onDismissRequest = {}, buttonText = "Close", onButtonClick = {
             Toast.makeText(contxt, "click!!!", Toast.LENGTH_SHORT).show()
         }) {
-            Text(text = "Hello")
+            Text(text = "Hello this is a long text to test this popup....\nHello this is a long text to test this popup....\nHello this is a long text to test this popup....")
         }
     }
 }
-/*
-@Preview
-@Composable
-private fun SimpleDialogPreview() {
-    SimpleDialog(onDismissRequest = {}, confirmationText = "OK", onConfirmationClick = {}, content = {
-        Text(text = "This is a long test")
-    })
-}
-
-@Preview
-@Composable
-private fun BaseDialogPreview() {
-    BaseDialog(onDismissRequest = {}) {
-        Text(text = "Dialog with text only")
-    }
-}*/
