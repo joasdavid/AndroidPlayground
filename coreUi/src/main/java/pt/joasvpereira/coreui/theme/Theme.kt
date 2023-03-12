@@ -1,5 +1,6 @@
 package pt.joasvpereira.coreui.theme
 
+import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -10,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.joasvpereira.loggger.extentions.logThis
 import pt.joasvpereira.core.settings.domain.data.ThemePreference
+import pt.joasvpereira.coreui.R
 
 //region data objects
 data class Theme(
@@ -35,10 +37,10 @@ enum class ThemeOption(val id: Int) {
     }
 }
 
-fun getAllThemesDetails() = listOf(
-    Pair(ThemeOption.THEME_DEFAULT, "System Theme"),
-    Pair(ThemeOption.THEME_BLUE, "Blue Theme"),
-    Pair(ThemeOption.THEME_GREEN, "Green Theme"),
+fun getAllThemesDetails(context: Context) = listOf(
+    Pair(ThemeOption.THEME_DEFAULT, context.getString(R.string.theme_option_system_theme)),
+    Pair(ThemeOption.THEME_BLUE, context.getString(R.string.theme_option_blue_theme)),
+    Pair(ThemeOption.THEME_GREEN, context.getString(R.string.theme_option_green_theme)),
 )
 //endregion
 

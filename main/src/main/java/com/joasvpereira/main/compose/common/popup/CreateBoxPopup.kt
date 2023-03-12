@@ -6,9 +6,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
@@ -32,24 +31,24 @@ fun CreateBoxPopup(
         onDismissRequest = onDismissRequest,
         indicatorIcon = painterResource(id = R.drawable.ic_box_3),
         indicatorColor = MaterialTheme.colorScheme.tertiaryContainer,
-        buttonPositiveText = if (isOnEditMode) "Update" else "Save",
+        buttonPositiveText = stringResource(id = R.string.general_save).uppercase(),
         buttonPositiveColor = MaterialTheme.colorScheme.tertiary,
         isButtonPositiveEnabled = boxName.isNotBlank(),
         onButtonPositiveClick = onButtonPositiveClick,
-        buttonNegativeText = "Close",
+        buttonNegativeText = stringResource(id = R.string.general_cancel).uppercase(),
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
         onButtonNegativeClick = onButtonNegativeClick,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (isOnEditMode) {
-                Text(text = "Update box".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+                Text(text = stringResource(R.string.update_box).uppercase(), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
             } else {
-                Text(text = "Create new box".toUpperCase(Locale.current), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
+                Text(text = stringResource(R.string.create_new_box).uppercase(), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleSmall)
             }
             SimpleSpace(size = 20.dp)
-            AppTextField(value = boxName, onValueChange = onBoxNameChange, placeholder = "Box name")
+            AppTextField(value = boxName, onValueChange = onBoxNameChange, placeholder = stringResource(R.string.box_name_hint))
             SimpleSpace(size = 20.dp)
-            AppTextField(value = description, onValueChange = onDescriptionChange, placeholder = "Description")
+            AppTextField(value = description, onValueChange = onDescriptionChange, placeholder = stringResource(R.string.box_description_hint))
             SimpleSpace(size = 20.dp)
         }
     }

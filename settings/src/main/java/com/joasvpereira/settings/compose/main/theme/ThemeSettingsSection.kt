@@ -7,8 +7,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
+import com.joasvpereira.settings.R
 import com.joasvpereira.settings.compose.main.SettingsSection
 import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSelectableOption
 import com.joasvpereira.settings.compose.main.menu.entry.EntryWithSwitch
@@ -28,12 +31,12 @@ internal fun ThemeSettingsSection(
 ) {
     SettingsSection(
         modifier = modifier,
-        sectionName = "Theme",
+        sectionName = stringResource(R.string.theme_section_title),
     ) {
         if (hasMaterialYou) {
             EntryWithSwitch(
-                text = "Use Material you",
-                description = "When turn on will use the system colors as your default theme instead of the app default theme.",
+                text = stringResource(R.string.label_material_you),
+                description = stringResource(R.string.description_material_you),
                 checked = isMaterialYouEnabled,
                 onCheckedChange = { onMaterialYouSwitchChange(it) },
             )
@@ -50,14 +53,9 @@ internal fun ThemeSettingsSection(
         }
 
         EntryWithSelectableOption(
-            text = "Theme mode",
+            text = stringResource(R.string.label_theme_mode),
             listOfOptions = list,
-            description = """
-                You can choose 3 different options:                 
-                  - Default, that will use the system light or dark mode;
-                  - Light, will force the app to be on Light mode;
-                  - Dark, will force the app to be on Dark mode;
-            """.trimIndent(),
+            description = stringResource(R.string.description_theme_mode).trimIndent(),
             selectedOption = list.indexOf(selectedOptionLabel),
             onOptionChanged = { index ->
                 onThemeModeChange(ThemeModeMapper.mapFromString(context, list[index]))
@@ -71,6 +69,26 @@ internal fun ThemeSettingsSection(
 @UiModePreview
 @Composable
 private fun ThemeSettingsSectionPreview() {
+    DynamicTheme {
+        Surface(modifier = Modifier) {
+            ThemeSettingsSection(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 20.dp)
+                    .fillMaxWidth(),
+                hasMaterialYou = true,
+                isMaterialYouEnabled = false,
+                onMaterialYouSwitchChange = {},
+                themeModeSelectedOption = ThemePreference.ThemeMode.DEFAULT,
+                onThemeModeChange = {},
+            )
+        }
+    }
+}
+
+@Preview(locale = "pt")
+@Composable
+private fun ThemeSettingsSectionPreviewPT() {
     DynamicTheme {
         Surface(modifier = Modifier) {
             ThemeSettingsSection(

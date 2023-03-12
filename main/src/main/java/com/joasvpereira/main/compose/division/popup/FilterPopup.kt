@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
+import pt.joasvpereira.main.R
 
 @Composable
 fun FilterPopup(
@@ -35,7 +37,7 @@ fun FilterPopup(
         AlertDialogWithSingleButton(
             onDismissRequest = onDismissRequest,
             indicatorIcon = Icons.Default.List,
-            buttonText = "Close",
+            buttonText = stringResource(id = R.string.general_cancel),
             onButtonClick = onButtonClick,
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -50,7 +52,7 @@ fun FilterPopup(
                 ) {
                     RadioButton(selected = filterOptionsOption.isAllOption(), onClick = null)
                     SimpleSpace(size = 10.dp)
-                    Text(text = "Show all")
+                    Text(text = stringResource(R.string.filter_show_all))
                 }
 
                 Row(
@@ -63,7 +65,7 @@ fun FilterPopup(
                 ) {
                     RadioButton(selected = filterOptionsOption.isOnlyBoxOption(), onClick = null)
                     SimpleSpace(size = 10.dp)
-                    Text(text = "Show only boxes")
+                    Text(text = stringResource(R.string.filter_show_only_boxes))
                 }
 
                 Row(
@@ -76,7 +78,7 @@ fun FilterPopup(
                 ) {
                     RadioButton(selected = filterOptionsOption.isOnlyItemOption(), onClick = null)
                     SimpleSpace(size = 10.dp)
-                    Text(text = "Show only items")
+                    Text(text = stringResource(R.string.filter_show_only_items))
                 }
 
                 SimpleSpace(size = 20.dp)

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dashboard_welcome">Bem-vindo</string>
+    <string name="settings_content_description">Ir para as definições</string>
+    <string name="dashboard_divisions_header">Divisões:</string>
+    <string name="general_delete">Apagar</string>
+    <string name="general_cancel">Cancelar</string>
+    <string name="popup_delete_message">Para apagar a divisão escreva o nome dela em letras maiúsculas\n\"%s\"</string>
+    <string name="division_name_hint">Nome da divisão</string>
+    <string name="division_description_hint">Descrição da divisão</string>
+    <string name="general_save">Guardar</string>
+    <string name="no_division_found">Nenhuma divisão encontrada . . . .</string>
+    <string name="filter_show_all">Mostrar todo</string>
+    <string name="filter_show_only_boxes">Mostar apenas caixas</string>
+    <string name="filter_show_only_items">Mostar apenas objectos</string>
+    <string name="update_box">Atualizar caixa</string>
+    <string name="create_new_box">Criar nova caixa</string>
+    <string name="box_name_hint">Nome da caixa</string>
+    <string name="box_description_hint">Descrição</string>
+    <string name="item_name_hint">Nome do objecto</string>
+    <string name="item_description_hint">Descrição</string>
+    <string name="boxes_count">Caixas: %s</string>
+    <string name="items_count">Objectos: %s</string>
+    <string name="division_without_elements_message">Aparentemente não existem caixas ou objectos nesta divisão de momento, mas não te preocupes! Podes adicionar a qualquer altura caixas e/ou objectos simplesmente carregando no botão de adicionar e preencher os detalhes.</string>
+    <string name="update_item">Atualizar objecto</string>
+    <string name="new_item">Criar novo objecto</string>
+    <string name="box_without_elements_message">Aparentemente ainda não tens nenhum objecto, mas não te preocupes, podes simplesmente carregar no botão \"Adicionar objecto\" para criar um.</string>
+    <string name="box_add_item">Adicionar objecto</string>
+    <string name="general_go_back">Voltar</string>
+    <string name="item_not_found_1">Ops,\n</string>
+    <string name="item_not_found_2">nenhum objecto encontrado . . . .\n\nÉ possível que tenha sido apagodo.</string>
+    <string name="main_details_section_title">Detalhes principais</string>
+    <string name="main_details_section_name_label">"Nome: "</string>
+    <string name="main_details_section_description_label">"Descrição: "</string>
+    <string name="main_details_section_id_label">"ID: "</string>
+    <string name="location_details_section_title">Lucalização</string>
+    <string name="actions_details_section_title">Acçoes</string>
+</resources>

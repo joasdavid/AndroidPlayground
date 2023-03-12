@@ -1,13 +1,13 @@
 package com.joasvpereira.main.compose.create
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -15,9 +15,10 @@ import androidx.compose.ui.unit.dp
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.main.R
 
 @Composable
-fun ColumnScope.DivisionNameAndDescription(
+fun DivisionNameAndDescription(
     name: String,
     onNameChange: (String) -> Unit,
     description: String,
@@ -27,7 +28,7 @@ fun ColumnScope.DivisionNameAndDescription(
         modifier = Modifier.fillMaxWidth(),
         value = name,
         onValueChange = onNameChange,
-        placeholder = "Division name",
+        placeholder = stringResource(R.string.division_name_hint),
         singleLine = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
     )
@@ -36,7 +37,7 @@ fun ColumnScope.DivisionNameAndDescription(
         modifier = Modifier.fillMaxWidth(),
         value = description,
         onValueChange = onDescriptionChange,
-        placeholder = "Division description",
+        placeholder = stringResource(R.string.division_description_hint),
         singleLine = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
     )
@@ -51,8 +52,7 @@ private fun DivisionNameAndDescriptionPreview(@PreviewParameter(DivisionNameAndD
                 name = data.name,
                 onNameChange = {},
                 description = data.description,
-                onDescriptionChange = {},
-            )
+            ) {}
         }
     }
 }
@@ -67,5 +67,3 @@ class DivisionNameAndDescriptionPreviewProvider : PreviewParameterProvider<NameD
         NameDescriptionData(name = "Test name", description = "Test description"),
     )
 }
-
-object PreviewData

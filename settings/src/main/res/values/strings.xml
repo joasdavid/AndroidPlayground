@@ -3,4 +3,15 @@
     <string name="theme_mode_default_lable">Default</string>
     <string name="theme_mode_light_lable">Light</string>
     <string name="theme_mode_dark_lable">Dark</string>
+    <string name="settings_title">Settings</string>
+    <string name="session_section_title">Session</string>
+    <string name="label_keep_session">Should keep session</string>
+    <string name="description_keep_session">When turn on will keep the session even after the app is killed, this mean that the app will login with the same profile that was selected whe the app was closed.</string>
+    <string name="edit_my_profile">Edit my profile</string>
+    <string name="logout">Logout</string>
+    <string name="theme_section_title">Theme</string>
+    <string name="label_material_you">Use Material you</string>
+    <string name="description_material_you">When turn on will use the system colors as your default theme instead of the app default theme.</string>
+    <string name="label_theme_mode">Theme mode</string>
+    <string name="description_theme_mode">"\n                You can choose 3 different options:                 \n                  - Default, that will use the system light or dark mode;\n                  - Light, will force the app to be on Light mode;\n                  - Dark, will force the app to be on Dark mode;\n            "</string>
 </resources>

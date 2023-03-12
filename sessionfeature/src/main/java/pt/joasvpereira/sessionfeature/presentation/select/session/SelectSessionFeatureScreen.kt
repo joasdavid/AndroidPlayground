@@ -8,10 +8,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pt.joasvpereira.core.domain.data.SessionItem
 import pt.joasvpereira.coreui.scaffold.AppScaffold
+import pt.joasvpereira.sessionfeature.R
 import pt.joasvpereira.sessionfeature.compose.navigation.navigateToCreateProfile
 import pt.joasvpereira.sessionfeature.compose.navigation.navigateToUpdateProfile
 import pt.joasvpereira.sessionfeature.compose.select.session.SelectSessionScreen
@@ -51,7 +53,7 @@ fun SelectSessionFeatureScreen(
                         .padding(bottom = it.calculateBottomPadding()),
                 ) {
                     Button(onClick = { viewModel.toggleEditMode() }) {
-                        Text(text = if (state.isEditMode) "Exit edit mode" else "Enter edit mode")
+                        Text(text = if (state.isEditMode) stringResource(R.string.exit_edit_mode) else stringResource(R.string.enter_edit_mode))
                     }
                 }
             }

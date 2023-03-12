@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ fun BoxContentView(
     box: DivisionElement.Box,
     itemsList: List<DivisionElement.Item> = emptyList(),
     isLoading: Boolean = false,
-    emptyText: String = "It looks like you don't have any items yet, but don't worry, you can easily add items by clicking the 'Add' button.",
+    emptyText: String = stringResource(R.string.box_without_elements_message),
     onClick: (divisionElement: DivisionElement, elementAction: ElementAction) -> Unit = { _, _ -> },
     onAddButtonClick: () -> Unit,
     onBackClick: () -> Unit,
@@ -65,7 +66,7 @@ fun BoxContentView(
                 Row(modifier = Modifier.padding(10.dp)) {
                     Icon(painter = painterResource(id = R.drawable.ic_item), contentDescription = null)
                     SimpleSpace(size = 10.dp)
-                    Text(text = "Add Item")
+                    Text(text = stringResource(R.string.box_add_item))
                 }
             }
         }

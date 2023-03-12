@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,7 @@ import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
 import pt.joasvpereira.core.domain.data.SessionItem
 import pt.joasvpereira.coreui.session.SessionIconHolder
+import pt.joasvpereira.sessionfeature.R
 
 @Composable
 internal fun SelectSessionScreen(
@@ -50,7 +52,10 @@ internal fun SelectSessionScreen(
         modifier = Modifier.fillMaxWidth(),
     ) {
         SimpleSpace(100.dp)
-        Text("Please Select your profile:", style = MaterialTheme.typography.titleLarge)
+        Text(
+            text = stringResource(R.string.please_select_your_profile),
+            style = MaterialTheme.typography.titleLarge,
+        )
         SimpleSpace(60.dp)
         sessionItems?.let {
             SessionsContent(it, onSessionSelected = onSessionSelected, onCreateNewSession = onProfileClicked, isEditMode = isEditMode)
@@ -213,7 +218,7 @@ private fun SessionsContentEmpty(onCreateNewSession: () -> Unit) {
         CreateProfileButton(onCreateNewSession)
         SimpleSpace(size = 48.dp)
         Text(
-            text = "No profile is yet created\nplese tap on the button to create the first profile",
+            text = stringResource(R.string.create_profile_info),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.labelMedium,
         )

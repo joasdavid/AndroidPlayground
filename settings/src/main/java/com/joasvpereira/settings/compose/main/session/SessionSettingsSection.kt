@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
@@ -33,7 +34,7 @@ internal fun SessionSettingsSection(
 ) {
     SettingsSection(
         modifier = modifier,
-        sectionName = "Session",
+        sectionName = stringResource(com.joasvpereira.settings.R.string.session_section_title),
     ) {
         SimpleSpace(size = 20.dp)
         SettingsSessionIndicator(currentSession = currentSession)
@@ -41,19 +42,26 @@ internal fun SessionSettingsSection(
         SimpleSpace(size = 20.dp)
 
         EntryWithSwitch(
-            text = "Should keep session",
-            description = "When turn on will keep the session even after the app is killed, this mean that the app will login with the same profile that was selected whe the app was closed.",
+            text = stringResource(com.joasvpereira.settings.R.string.label_keep_session),
+            description = stringResource(com.joasvpereira.settings.R.string.description_keep_session),
             checked = isKeepSession,
             onCheckedChange = onKeepSessionChange,
         )
 
         SimpleSpace(size = 20.dp)
 
-        EntryClickable(text = "Edit my profile", onClick = onEditProfile)
+        EntryClickable(
+            text = stringResource(com.joasvpereira.settings.R.string.edit_my_profile),
+            onClick = onEditProfile,
+        )
 
         SimpleSpace(size = 20.dp)
 
-        EntryClickable(text = "Logout", onClick = onLogout, icon = rememberVectorPainter(image = Icons.Default.Logout))
+        EntryClickable(
+            text = stringResource(com.joasvpereira.settings.R.string.logout),
+            onClick = onLogout,
+            icon = rememberVectorPainter(image = Icons.Default.Logout),
+        )
 
         SimpleSpace(size = 20.dp)
     }

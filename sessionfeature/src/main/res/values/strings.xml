@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="please_select_your_profile">Please Select your profile:</string>
+    <string name="create_profile_info">No profile is yet created\nplese tap on the button to create the first profile</string>
+    <string name="exit_edit_mode">Exit edit mode</string>
+    <string name="enter_edit_mode">Enter edit mode</string>
+    <string name="session_name">Session Name</string>
+    <string name="save_profile">Save profile</string>
+    <string name="create_new_profile">Create new profile</string>
+    <string name="delete">Delete</string>
+</resources>

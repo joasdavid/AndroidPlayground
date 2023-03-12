@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="please_select_your_profile">Selecione seu perfil:</string>
+    <string name="create_profile_info">Ainda nenhum perfil foi criado\n adicione o seu primeiro perfil</string>
+    <string name="exit_edit_mode">Exit edit mode</string>
+    <string name="enter_edit_mode">Entrar em mode de edição</string>
+    <string name="session_name">Nome do perfil</string>
+    <string name="save_profile">Guardar profile</string>
+    <string name="create_new_profile">Criar novo perfil</string>
+    <string name="delete">Apagar</string>
+</resources>

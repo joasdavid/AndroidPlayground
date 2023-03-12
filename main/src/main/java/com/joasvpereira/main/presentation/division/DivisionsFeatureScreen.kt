@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
@@ -45,6 +46,7 @@ import pt.joasvpereira.coreui.scaffold.ToolBarConfig
 import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
+import pt.joasvpereira.main.R
 
 @Suppress("LongMethod")
 @Composable
@@ -55,13 +57,13 @@ fun DivisionsFeatureScreen(
     if (viewModel.divisionId < 0) {
         AlertDialogWithSingleButton(
             onDismissRequest = { },
-            buttonText = "Close",
+            buttonText = stringResource(id = R.string.general_save),
             indicatorColor = MaterialTheme.colorScheme.error,
             onButtonClick = { navController?.popBackStack() },
             buttonColor = MaterialTheme.colorScheme.error,
         ) {
             Box(modifier = Modifier.padding(vertical = 10.dp)) {
-                Text(text = "No division found . . . .")
+                Text(text = stringResource(R.string.no_division_found))
             }
         }
         return
@@ -72,17 +74,17 @@ fun DivisionsFeatureScreen(
             onDismissRequest = { viewModel.hideDeleteConfirmation() },
             indicatorIcon = Icons.Default.Delete,
             indicatorColor = MaterialTheme.colorScheme.error,
-            buttonPositiveText = "DELETE",
+            buttonPositiveText = stringResource(id = R.string.general_delete).uppercase(),
             buttonPositiveColor = MaterialTheme.colorScheme.error,
             isButtonPositiveEnabled = viewModel.state.deleteEvent.confirmation.toUpperCase(Locale.current) == viewModel.state.deleteEvent.name,
             onButtonPositiveClick = { viewModel.deleteElement() },
-            buttonNegativeText = "CANCEL",
+            buttonNegativeText = stringResource(id = R.string.general_cancel).uppercase(),
             buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
             onButtonNegativeClick = { viewModel.hideDeleteConfirmation() },
         ) {
             val nameUppercase = viewModel.state.deleteEvent.confirmation.toUpperCase(Locale.current)
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "To delete division write it's name in all caps \n \"$nameUppercase", textAlign = TextAlign.Center)
+                Text(text = stringResource(id = R.string.popup_delete_message, nameUppercase), textAlign = TextAlign.Center)
                 SimpleSpace(size = 20.dp)
                 AppTextField(
                     value = viewModel.state.deleteEvent.name,

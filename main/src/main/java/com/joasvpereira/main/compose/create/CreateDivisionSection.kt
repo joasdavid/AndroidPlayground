@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -26,6 +27,7 @@ import pt.joasvpereira.coreui.selector.ThemeSelector
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
 import pt.joasvpereira.coreui.util.WindowSizeHelper
+import pt.joasvpereira.main.R
 
 @Composable
 fun CreateDivisionSection(
@@ -81,7 +83,7 @@ fun CreateDivisionSection(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { onSave() },
             ) {
-                Text(text = "Save")
+                Text(text = stringResource(R.string.general_save))
             }
             if (canDelete) {
                 SimpleSpace(size = 20.dp)
@@ -90,7 +92,7 @@ fun CreateDivisionSection(
                     onClick = onDeleteClick,
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
                 ) {
-                    Text(text = "Delete")
+                    Text(text = stringResource(id = R.string.general_delete))
                 }
             }
         }
