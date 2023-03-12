@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_option_system_theme">System Theme</string>
+    <string name="theme_option_blue_theme">Blue Theme</string>
+    <string name="theme_option_green_theme">Green Theme</string>
+</resources>

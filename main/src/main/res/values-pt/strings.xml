@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dashboard_welcome">Bem-vindo</string>
+    <string name="settings_content_description">Ir para as definições</string>
+    <string name="dashboard_divisions_header">Divisões:</string>
+    <string name="general_delete">Apagar</string>
+    <string name="general_cancel">Cancelar</string>
+    <string name="popup_delete_message">Para apagar a divisão escreva o nome dela em letras maiúsculas\n\"%s\"</string>
+    <string name="division_name_hint">Nome da divisão</string>
+    <string name="division_description_hint">Descrição da divisão</string>
+    <string name="general_save">Guardar</string>
+</resources>

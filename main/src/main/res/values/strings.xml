@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dashboard_welcome">Welcome</string>
+    <string name="settings_content_description">Settings</string>
+    <string name="dashboard_divisions_header">Divisions:</string>
+    <string name="general_delete">Delete</string>
+    <string name="general_cancel">Cancel</string>
+    <string name="popup_delete_message">To delete division write it\'s name in all caps \n \"%s\"</string>
+    <string name="division_name_hint">Division name</string>
+    <string name="division_description_hint">Division description</string>
+    <string name="general_save">Save</string>
+</resources>

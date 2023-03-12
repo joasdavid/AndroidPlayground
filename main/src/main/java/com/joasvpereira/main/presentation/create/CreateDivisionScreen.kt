@@ -1,6 +1,5 @@
 package com.joasvpereira.main.presentation.create
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardActions
@@ -12,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
@@ -23,6 +22,8 @@ import com.joasvpereira.main.compose.create.CreateDivisionSection
 import pt.joasvpereira.coreui.dialog.DialogWithTwoButton
 import pt.joasvpereira.coreui.text.field.AppTextField
 import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.main.R
+import java.util.Locale
 
 @Composable
 fun CreateDivisionScreen(
@@ -30,21 +31,18 @@ fun CreateDivisionScreen(
     viewModel: CreateDivisionViewModel,
     navController: NavController? = null,
 ) {
-    val context = LocalContext.current
     LaunchedEffect(key1 = viewModel.state.navigation) {
         when (viewModel.state.navigation) {
             CreateDivisionScreenNavigation.Idle -> {
-                // do nothing navigation is idle
+                // do nothing, navigation is idle
             }
 
             CreateDivisionScreenNavigation.SaveDone -> {
                 navController?.popBackStack()
-                Toast.makeText(context, "SAVED", Toast.LENGTH_SHORT).show()
             }
 
             CreateDivisionScreenNavigation.DeleteDone -> {
                 navController?.popBackStack()
-                Toast.makeText(context, "${viewModel.state.name} deleted.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -82,17 +80,17 @@ private fun DeletePopup(viewModel: CreateDivisionViewModel) {
             onDismissRequest = { viewModel.hideDeletePopup() },
             indicatorIcon = Icons.Default.Delete,
             indicatorColor = MaterialTheme.colorScheme.error,
-            buttonPositiveText = "DELETE",
+            buttonPositiveText = stringResource(R.string.general_delete).uppercase(Locale.getDefault()),
             buttonPositiveColor = MaterialTheme.colorScheme.error,
             isButtonPositiveEnabled = deleteEvent.isNameMatchingConfirmation,
             onButtonPositiveClick = { viewModel.deleteDivision() },
-            buttonNegativeText = "CANCEL",
+            buttonNegativeText = stringResource(R.string.general_cancel).uppercase(Locale.getDefault()),
             buttonNegativeColor = MaterialTheme.colorScheme.surfaceVariant,
             onButtonNegativeClick = { viewModel.hideDeletePopup() },
         ) {
             val nameUppercase = deleteEvent.matchingName.uppercase()
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "To delete division write it's name in all caps \n \"$nameUppercase\"", textAlign = TextAlign.Center)
+                Text(text = stringResource(R.string.popup_delete_message, nameUppercase), textAlign = TextAlign.Center)
                 SimpleSpace(size = 20.dp)
                 AppTextField(
                     value = deleteEvent.name,

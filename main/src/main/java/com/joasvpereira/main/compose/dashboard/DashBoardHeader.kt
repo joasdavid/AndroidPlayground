@@ -23,12 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.main.presentation.icons.DivisionIcons
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.session.SessionIconHolder
 import pt.joasvpereira.coreui.theme.DynamicTheme
+import pt.joasvpereira.main.R
 
 @Composable
 internal fun DashboardHeader(
@@ -48,8 +50,14 @@ internal fun DashboardHeader(
 private fun RowUserInfo(sessionName: String, sessionImage: Bitmap?) {
     Row(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = "Welcome", style = MaterialTheme.typography.headlineSmall)
-            Text(text = sessionName, style = MaterialTheme.typography.labelLarge)
+            Text(
+                text = stringResource(R.string.dashboard_welcome),
+                style = MaterialTheme.typography.headlineSmall,
+            )
+            Text(
+                text = sessionName,
+                style = MaterialTheme.typography.labelLarge,
+            )
         }
         Box(
             Modifier
@@ -83,7 +91,7 @@ private fun RowTitleAndSettings(onSettingClicked: () -> Unit) {
                     .align(Alignment.Center)
                     .size(24.dp),
                 imageVector = Icons.Default.Settings,
-                contentDescription = "Settings",
+                contentDescription = stringResource(R.string.settings_content_description),
             )
         }
     }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_option_system_theme">Tema do sistema</string>
+    <string name="theme_option_blue_theme">Tema azul</string>
+    <string name="theme_option_green_theme">Tema verde</string>
+</resources>
