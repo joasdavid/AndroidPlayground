@@ -9,4 +9,19 @@
     <string name="division_name_hint">Division name</string>
     <string name="division_description_hint">Division description</string>
     <string name="general_save">Save</string>
+    <string name="no_division_found">No division found . . . .</string>
+    <string name="filter_show_all">Show all</string>
+    <string name="filter_show_only_boxes">Show only boxes</string>
+    <string name="filter_show_only_items">Show only items</string>
+    <string name="update_box">Update box</string>
+    <string name="create_new_box">Create new box</string>
+    <string name="box_name_hint">Box name</string>
+    <string name="box_description_hint">Description</string>
+    <string name="item_name_hint">Item name</string>
+    <string name="item_description_hint">Description</string>
+    <string name="boxes_count">Boxes: %s</string>
+    <string name="items_count">Items: %s</string>
+    <string name="division_without_elements_message">It seems like there are no items or boxes in your account at the moment, but don\'t worry! You can add them anytime by selecting the \'Add\' option and entering the necessary details.</string>
+    <string name="update_item">Update item</string>
+    <string name="new_item">New item</string>
 </resources>

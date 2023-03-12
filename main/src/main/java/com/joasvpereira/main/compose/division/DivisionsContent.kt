@@ -1,6 +1,7 @@
 package com.joasvpereira.main.compose.division
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
@@ -12,6 +13,7 @@ import pt.joasvpereira.coreui.preview.ThemesProvider
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 import pt.joasvpereira.coreui.theme.ThemeOption
+import pt.joasvpereira.main.R
 
 @Composable
 fun DivisionContent(
@@ -19,12 +21,11 @@ fun DivisionContent(
     listBottomPadding: Dp = 0.dp,
     onClick: (DivisionElement, ElementAction) -> Unit,
 ) {
-    @Suppress("MaxLineLength")
     ElementsContainer(
         listItem = listItem,
         onClick = onClick,
         listBottomPadding = listBottomPadding,
-        emptyText = "It seems like there are no items or boxes in your account at the moment, but don't worry! You can add them anytime by selecting the 'Add' option and entering the necessary details.",
+        emptyText = stringResource(R.string.division_without_elements_message),
     )
 }
 
@@ -32,7 +33,7 @@ fun DivisionContent(
 private val previewData = mutableListOf<DivisionElement>().apply {
     (1..40).forEach {
         if (it % 2 == 0) {
-            add(DivisionElement.Item(name = "name $it", id = it))
+            add(DivisionElement.Item(name = "Name $it", id = it))
         } else {
             add(DivisionElement.Box(name = "name $it", id = it))
         }

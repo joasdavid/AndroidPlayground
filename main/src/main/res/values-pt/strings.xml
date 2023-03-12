@@ -9,4 +9,19 @@
     <string name="division_name_hint">Nome da divisão</string>
     <string name="division_description_hint">Descrição da divisão</string>
     <string name="general_save">Guardar</string>
+    <string name="no_division_found">Nenhuma divisão encontrada . . . .</string>
+    <string name="filter_show_all">Mostrar todo</string>
+    <string name="filter_show_only_boxes">Mostar apenas caixas</string>
+    <string name="filter_show_only_items">Mostar apenas objectos</string>
+    <string name="update_box">Atualizar caixa</string>
+    <string name="create_new_box">Criar nova caixa</string>
+    <string name="box_name_hint">Nome da caixa</string>
+    <string name="box_description_hint">Descrição</string>
+    <string name="item_name_hint">Nome do objecto</string>
+    <string name="item_description_hint">Descrição</string>
+    <string name="boxes_count">Caixas: %s</string>
+    <string name="items_count">Objectos: %s</string>
+    <string name="division_without_elements_message">Aparentemente não existem caixas ou objectos nesta divisão de momento, mas não te preocupes! Podes adicionar a qualquer altura caixas e/ou objectos simplesmente carregando no botão de adicionar e preencher os detalhes.</string>
+    <string name="update_item">Atualizar objecto</string>
+    <string name="new_item">Criar novo objecto</string>
 </resources>

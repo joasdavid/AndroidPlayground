@@ -10,9 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
@@ -43,13 +42,13 @@ fun CreateItemPopup(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (stateHolder.isOnEditMode) {
                 Text(
-                    text = "Update item".toUpperCase(Locale.current),
+                    text = stringResource(id = R.string.update_item).uppercase(),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleSmall,
                 )
             } else {
                 Text(
-                    text = "Create a new item".toUpperCase(Locale.current),
+                    text = stringResource(id = R.string.new_item).uppercase(),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleSmall,
                 )
@@ -103,32 +102,32 @@ fun CreateItemPopup(
         onDismissRequest = onDismissRequest,
         indicatorIcon = painterResource(id = R.drawable.ic_item),
         indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-        buttonPositiveText = if (isOnEditMode) "Updade" else "Save",
+        buttonPositiveText = stringResource(id = R.string.general_save).uppercase(),
         buttonPositiveColor = MaterialTheme.colorScheme.primary,
         isButtonPositiveEnabled = itemName.isNotBlank(),
         onButtonPositiveClick = onButtonPositiveClick,
-        buttonNegativeText = "Close",
+        buttonNegativeText = stringResource(id = R.string.general_cancel).uppercase(),
         buttonNegativeColor = MaterialTheme.colorScheme.outline,
         onButtonNegativeClick = onButtonNegativeClick,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (isOnEditMode) {
                 Text(
-                    text = "Update item".toUpperCase(Locale.current),
+                    text = stringResource(id = R.string.update_item).uppercase(),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleSmall,
                 )
             } else {
                 Text(
-                    text = "Create a new item".toUpperCase(Locale.current),
+                    text = stringResource(id = R.string.new_item).uppercase(),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleSmall,
                 )
             }
             SimpleSpace(size = 20.dp)
-            AppTextField(value = itemName, onValueChange = onItemNameChange, placeholder = "Item name")
+            AppTextField(value = itemName, onValueChange = onItemNameChange, placeholder = stringResource(R.string.item_name_hint))
             SimpleSpace(size = 20.dp)
-            AppTextField(value = description, onValueChange = onDescriptionChange, placeholder = "Description")
+            AppTextField(value = description, onValueChange = onDescriptionChange, placeholder = stringResource(R.string.item_description_hint))
             SimpleSpace(size = 20.dp)
         }
     }
