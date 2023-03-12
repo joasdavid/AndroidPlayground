@@ -97,7 +97,7 @@ fun FilterOptions.isAllOption() = this is FilterOptions.All
 fun FilterOptions.isOnlyBoxOption() = this is FilterOptions.OnlyBox
 fun FilterOptions.isOnlyItemOption() = this is FilterOptions.OnlyItem
 
-@Preview(group = "Single")
+@Preview(group = "Single", locale = "pt")
 @Composable
 private fun FilterPopupPreview_single() {
     FilterPopup(themeOption = ThemeOption.THEME_DEFAULT, onDismissRequest = {}, onButtonClick = {}, filterOptionsOption = FilterOptions.All, onFilterOptionChange = {})
