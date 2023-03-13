@@ -147,7 +147,7 @@ private fun DivisionCounters(division: DashboardDivision) {
         modifier = Modifier,
     ) {
         VerticalCounterWithIcon(
-            iconData = IconData(painterResource(R.drawable.ic_box), ""),
+            iconData = IconData(painterResource(R.drawable.ic_box_3), ""),
             count = division.boxCount,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
         )
@@ -156,7 +156,7 @@ private fun DivisionCounters(division: DashboardDivision) {
 
         VerticalCounterWithIcon(
             iconData = IconData(
-                painterResource(R.drawable.ic_baseline_build_24),
+                painterResource(R.drawable.ic_item),
                 "",
             ),
             count = division.itemCount,
