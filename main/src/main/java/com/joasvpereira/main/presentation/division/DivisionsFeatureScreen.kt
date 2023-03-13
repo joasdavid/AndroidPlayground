@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.toUpperCase
@@ -90,7 +91,10 @@ fun DivisionsFeatureScreen(
                     value = viewModel.state.deleteEvent.name,
                     onValueChange = { viewModel.deletePopupNameChange(it) },
                     placeholder = "",
-                    keyboardOptions = KeyboardOptions(autoCorrect = false, imeAction = ImeAction.Send),
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Send,
+                        capitalization = KeyboardCapitalization.Sentences,
+                    ),
                     keyboardActions = KeyboardActions(onSend = { viewModel.deleteElement() }),
                 )
                 SimpleSpace(size = 20.dp)

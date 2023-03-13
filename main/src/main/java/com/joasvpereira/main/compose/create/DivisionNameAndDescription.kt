@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -30,7 +31,10 @@ fun DivisionNameAndDescription(
         onValueChange = onNameChange,
         placeholder = stringResource(R.string.division_name_hint),
         singleLine = true,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.Sentences,
+        ),
     )
     Spacer(modifier = Modifier.size(20.dp))
     AppTextField(
@@ -39,7 +43,10 @@ fun DivisionNameAndDescription(
         onValueChange = onDescriptionChange,
         placeholder = stringResource(R.string.division_description_hint),
         singleLine = true,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            capitalization = KeyboardCapitalization.Sentences,
+        ),
     )
 }
 
