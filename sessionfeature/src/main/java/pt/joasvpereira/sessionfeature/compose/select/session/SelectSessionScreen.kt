@@ -64,7 +64,7 @@ internal fun SelectSessionScreen(
                 columns = GridCells.Fixed(numberOfColumns()),
                 verticalArrangement = Arrangement.spacedBy(40.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 if (isEmpty()) {
                     item(span = { GridItemSpan(numberOfColumns()) }) {
@@ -75,7 +75,7 @@ internal fun SelectSessionScreen(
                         ClickableSessionItem(
                             sessionItem = get(index),
                             isEditMode = isEditMode,
-                            onSessionSelected = onSessionSelected
+                            onSessionSelected = onSessionSelected,
                         )
                     }
 
@@ -165,10 +165,10 @@ private fun SessionsContentEmpty(onCreateNewSession: () -> Unit) {
 private fun CreateProfileButton(modifier: Modifier = Modifier, onCreateNewSession: () -> Unit) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         ItemContainer(
-            onClick = { onCreateNewSession() }
+            onClick = { onCreateNewSession() },
         ) {
             Icon(
                 imageVector = LineAwesomeIcons.PlusSolid,
@@ -253,6 +253,6 @@ private fun ContentListLineItemSessionPreview() {
     ClickableSessionItem(
         sessionItem = SessionItem(id = 0, name = "Test", image = null),
         isEditMode = false,
-        onSessionSelected = {}
+        onSessionSelected = {},
     )
 }
