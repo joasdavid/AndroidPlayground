@@ -1,11 +1,14 @@
 package pt.joasvpereira.coreui.util
 
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.loggger.extentions.logThis
+import org.jetbrains.annotations.TestOnly
 
 object WindowSizeHelper {
     private var widthSizeClass: WindowWidthSizeClass? = null
@@ -22,6 +25,19 @@ object WindowSizeHelper {
     ) {
         this.widthSizeClass = windowSizeClass.widthSizeClass.logThis("ScreenSize")
         this.heightSizeClass = windowSizeClass.heightSizeClass.logThis("ScreenSize")
+        this.dpWidth = dpWidth.logThis("ScreenSize")
+        this.dpHeight = dpHeight.logThis("ScreenSize")
+    }
+
+    @TestOnly
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+    fun load(
+        dpHeight: Dp,
+        dpWidth: Dp,
+    ) {
+        val sizeClass = WindowSizeClass.calculateFromSize(DpSize(dpWidth, dpHeight))
+        this.widthSizeClass = sizeClass.widthSizeClass
+        this.heightSizeClass = sizeClass.heightSizeClass
         this.dpWidth = dpWidth.logThis("ScreenSize")
         this.dpHeight = dpHeight.logThis("ScreenSize")
     }
