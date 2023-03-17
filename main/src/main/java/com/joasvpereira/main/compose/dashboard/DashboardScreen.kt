@@ -1,6 +1,8 @@
 package com.joasvpereira.main.compose.dashboard
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -10,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.joasvpereira.main.domain.data.DashboardDivision
 import com.joasvpereira.main.presentation.icons.DivisionIcons
+import pt.joasvpereira.coreui.preview.FoldablePreview
+import pt.joasvpereira.coreui.preview.LargePreview
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.scaffold.AppScaffold
 import pt.joasvpereira.coreui.theme.DynamicTheme
@@ -29,22 +33,27 @@ internal fun DashboardScreen(
         isTinted = false,
         isLoading = isLoading,
     ) {
-        DashboardHeader(
-            sessionName = sessionName,
-            sessionImage = sessionImage,
-            onSettingClicked = onSettingClicked,
-        )
-        Spacer(modifier = Modifier.size(20.dp))
-        DashboardDivisionsSection(
-            divisions = divisions,
-            onDivisionClick = onDivisionClick,
-            onAddNewItemClick = onAddNewItemClick,
-            onEditClick = onEditClick,
-        )
+        Column {
+            DashboardHeader(
+                sessionName = sessionName,
+                sessionImage = sessionImage,
+                onSettingClicked = onSettingClicked,
+            )
+            Spacer(modifier = Modifier.size(20.dp))
+            DashboardDivisionsSection(
+                divisions = divisions,
+                onDivisionClick = onDivisionClick,
+                onAddNewItemClick = onAddNewItemClick,
+                onEditClick = onEditClick,
+            )
+        }
     }
 }
 
+@SuppressLint("UseCompatLoadingForDrawables")
 @UiModePreview
+@LargePreview
+@FoldablePreview
 @Composable
 private fun DashboardScreenPreview() {
     DynamicTheme {
