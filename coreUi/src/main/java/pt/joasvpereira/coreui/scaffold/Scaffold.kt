@@ -57,21 +57,11 @@ fun AppScaffold(
 ) {
     Scaffold {
         if (shouldUseBackgroundImage) {
-            val backgroundRes = R.drawable.background
-            Image(
-                painter = painterResource(id = backgroundRes),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize(),
-            )
+            Background()
         }
 
         if (isTinted) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f)),
-            )
+            TintedBackgroundOverlay()
         }
 
         Column(
@@ -98,22 +88,47 @@ fun AppScaffold(
         }
     }
     if (isLoading) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable { }
-                .background(
-                    MaterialTheme.colorScheme.background.copy(
-                        alpha = .75f,
-                    ),
+        LoadingView()
+    }
+}
+
+@Composable
+private fun TintedBackgroundOverlay() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f)),
+    )
+}
+
+@Composable
+private fun Background() {
+    val backgroundRes = R.drawable.background
+    Image(
+        painter = painterResource(id = backgroundRes),
+        contentDescription = "",
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier.fillMaxSize(),
+    )
+}
+
+@Composable
+private fun LoadingView() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable { }
+            .background(
+                MaterialTheme.colorScheme.background.copy(
+                    alpha = .75f,
                 ),
-        ) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(size = 50.dp)
-                    .align(Alignment.Center),
-            )
-        }
+            ),
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .size(size = 50.dp)
+                .align(Alignment.Center),
+        )
     }
 }
 
