@@ -51,7 +51,7 @@ fun AppScaffold(
     toolBarConfig: ToolBarConfig? = null,
     isTinted: Boolean = true,
     isLoading: Boolean = false,
-    paddingValues: PaddingValues = PaddingValues(horizontal = 20.dp),
+    paddingValues: PaddingValues = defaultPadding(),
     shouldUseBackgroundImage: Boolean = true,
     content: @Composable (PaddingValues) -> Unit,
 ) {
@@ -75,11 +75,10 @@ fun AppScaffold(
         }
 
         Column(
-            Modifier.padding(
-                top = it.calculateTopPadding() + paddingValues.calculateTopPadding(),
-                start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
-            ),
+            Modifier
+                .padding(
+                    top = it.calculateTopPadding(),
+                ),
         ) {
             toolBarConfig?.apply {
                 ToolbarTitleCentered(
@@ -87,7 +86,15 @@ fun AppScaffold(
                     useInsetsPaddingForStatusBars = false,
                 )
             }
-            content(it)
+            Box(
+                Modifier.padding(
+                    top = paddingValues.calculateTopPadding(),
+                    start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                    end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
+                ),
+            ) {
+                content(it)
+            }
         }
     }
     if (isLoading) {
@@ -116,7 +123,7 @@ data class ToolBarConfig(
     val onLeftIconClick: (() -> Unit)? = null,
     val rightIcon: ImageVector = Icons.Default.Close,
     val onRightIconClick: (() -> Unit)? = null,
-    val horizontalPadding: Dp = 0.dp,
+    val horizontalPadding: Dp = 20.dp,
 )
 
 @Composable
