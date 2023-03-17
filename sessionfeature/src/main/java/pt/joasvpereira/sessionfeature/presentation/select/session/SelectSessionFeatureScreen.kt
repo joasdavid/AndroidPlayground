@@ -39,7 +39,7 @@ fun SelectSessionFeatureScreen(
                             onSessionSelected(it)
                         }
                     },
-                    onProfileClicked = {
+                    onCreateNewSession = {
                         navController?.navigateToCreateProfile()
                     },
                 )

@@ -9,14 +9,13 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +36,8 @@ import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.PlusSolid
 import pt.joasvpereira.core.domain.data.SessionItem
+import pt.joasvpereira.coreui.preview.FoldablePreview
+import pt.joasvpereira.coreui.preview.LargePreview
 import pt.joasvpereira.coreui.session.SessionIconHolder
 import pt.joasvpereira.sessionfeature.R
 
@@ -45,7 +46,7 @@ internal fun SelectSessionScreen(
     sessionItems: List<SessionItem>?,
     isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
-    onProfileClicked: () -> Unit,
+    onCreateNewSession: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -57,96 +58,31 @@ internal fun SelectSessionScreen(
             style = MaterialTheme.typography.titleLarge,
         )
         SimpleSpace(60.dp)
-        sessionItems?.let {
-            SessionsContent(it, onSessionSelected = onSessionSelected, onCreateNewSession = onProfileClicked, isEditMode = isEditMode)
-        }
-    }
-}
 
-@Composable
-private fun SessionsContent(
-    sessionItems: List<SessionItem>,
-    isEditMode: Boolean = false,
-    onSessionSelected: (SessionItem) -> Unit,
-    onCreateNewSession: () -> Unit,
-) {
-    if (sessionItems.isEmpty()) {
-        SessionsContentEmpty(onCreateNewSession)
-    } else {
-        SessionsContentList(sessionItems, isEditMode, onSessionSelected, onCreateNewSession)
-    }
-}
+        sessionItems?.run {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(numberOfColumns()),
+                verticalArrangement = Arrangement.spacedBy(40.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                if (isEmpty()) {
+                    item(span = { GridItemSpan(numberOfColumns()) }) {
+                        SessionsContentEmpty(onCreateNewSession)
+                    }
+                } else {
+                    items(size) { index ->
+                        ClickableSessionItem(
+                            sessionItem = get(index),
+                            isEditMode = isEditMode,
+                            onSessionSelected = onSessionSelected
+                        )
+                    }
 
-private sealed class SessionsContentItemTypes {
-    data class SessionType(val item: SessionItem) : SessionsContentItemTypes()
-    object CreateType : SessionsContentItemTypes()
-}
-
-@Composable
-private fun SessionsContentList(
-    sessionItems: List<SessionItem>,
-    isEditMode: Boolean = false,
-    onSessionSelected: (SessionItem) -> Unit,
-    onCreateNewSession: () -> Unit,
-) {
-    val workingList = ArrayList<SessionsContentItemTypes>()
-        .apply {
-            sessionItems.forEach {
-                add(SessionsContentItemTypes.SessionType(it))
-            }
-            add(SessionsContentItemTypes.CreateType)
-        }
-        .withIndex()
-        .groupBy {
-            it.index / 2
-        }
-        .map {
-            val isLast = it.value.size == 1
-            Pair(
-                it.value[0].value,
-                if (isLast) null else it.value[1].value,
-            )
-        }
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth(),
-    ) {
-        items(workingList) {
-            ContentListLine(pair = it, isEditMode, onSessionSelected = onSessionSelected, onCreateNewSession = onCreateNewSession)
-        }
-    }
-}
-
-@Composable
-private fun ContentListLine(
-    pair: Pair<SessionsContentItemTypes, SessionsContentItemTypes?>,
-    isEditMode: Boolean = false,
-    onSessionSelected: (SessionItem) -> Unit,
-    onCreateNewSession: () -> Unit,
-) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(bottom = 30.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-    ) {
-        pair.toList().forEach {
-            when (it) {
-                SessionsContentItemTypes.CreateType -> {
-                    if (!isEditMode) {
-                        ContentListLineItemCreateSession(onCreateNewSession)
-                    } else {
-                        SimpleSpace(size = 60.dp)
+                    item {
+                        CreateProfileButton(onCreateNewSession = onCreateNewSession)
                     }
                 }
-
-                is SessionsContentItemTypes.SessionType -> ContentListLineItemSession(
-                    sessionItem = it.item,
-                    isEditMode = isEditMode,
-                    onSessionSelected = onSessionSelected,
-                )
-
-                null -> SimpleSpace(size = 60.dp)
             }
         }
     }
@@ -155,7 +91,7 @@ private fun ContentListLine(
 const val ANIM_DURATION = 1000
 
 @Composable
-private fun ContentListLineItemSession(
+private fun ClickableSessionItem(
     sessionItem: SessionItem,
     isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
@@ -215,7 +151,7 @@ private fun SessionsContentEmpty(onCreateNewSession: () -> Unit) {
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        CreateProfileButton(onCreateNewSession)
+        CreateProfileButton(onCreateNewSession = onCreateNewSession)
         SimpleSpace(size = 48.dp)
         Text(
             text = stringResource(R.string.create_profile_info),
@@ -226,13 +162,20 @@ private fun SessionsContentEmpty(onCreateNewSession: () -> Unit) {
 }
 
 @Composable
-private fun CreateProfileButton(onCreateNewSession: () -> Unit) {
-    ItemContainer(onClick = { onCreateNewSession() }) {
-        Icon(
-            imageVector = LineAwesomeIcons.PlusSolid,
-            contentDescription = "",
-            tint = MaterialTheme.colorScheme.onPrimaryContainer,
-        )
+private fun CreateProfileButton(modifier: Modifier = Modifier, onCreateNewSession: () -> Unit) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        ItemContainer(
+            onClick = { onCreateNewSession() }
+        ) {
+            Icon(
+                imageVector = LineAwesomeIcons.PlusSolid,
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+        }
     }
 }
 
@@ -254,6 +197,8 @@ private fun ItemContainer(modifier: Modifier = Modifier, onClick: () -> Unit, co
 }
 
 @Preview
+@LargePreview
+@FoldablePreview
 @Composable
 private fun SelectSessionScreenPreview() {
     SelectSessionScreen(
@@ -280,18 +225,34 @@ private fun SelectSessionScreenPreview() {
             ),
         ),
         onSessionSelected = {},
-        onProfileClicked = {},
+        onCreateNewSession = {},
     )
 }
 
 @Preview
+@LargePreview
+@FoldablePreview
 @Composable
 private fun SelectSessionScreenEmptyPreview() {
-    SelectSessionScreen(sessionItems = listOf(), onSessionSelected = {}, onProfileClicked = {})
+    SelectSessionScreen(sessionItems = listOf(), onSessionSelected = {}, onCreateNewSession = {})
 }
 
 @Preview
+@LargePreview
+@FoldablePreview
 @Composable
 private fun SelectSessionScreenNoListPreview() {
-    SelectSessionScreen(sessionItems = null, onSessionSelected = {}, onProfileClicked = {})
+    SelectSessionScreen(sessionItems = null, onSessionSelected = {}, onCreateNewSession = {})
+}
+
+@Preview
+@LargePreview
+@FoldablePreview
+@Composable
+private fun ContentListLineItemSessionPreview() {
+    ClickableSessionItem(
+        sessionItem = SessionItem(id = 0, name = "Test", image = null),
+        isEditMode = false,
+        onSessionSelected = {}
+    )
 }
