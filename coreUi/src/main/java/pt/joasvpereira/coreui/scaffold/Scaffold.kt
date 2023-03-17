@@ -51,35 +51,24 @@ fun AppScaffold(
     toolBarConfig: ToolBarConfig? = null,
     isTinted: Boolean = true,
     isLoading: Boolean = false,
-    paddingValues: PaddingValues = PaddingValues(horizontal = 20.dp),
+    paddingValues: PaddingValues = defaultPadding(),
     shouldUseBackgroundImage: Boolean = true,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold {
         if (shouldUseBackgroundImage) {
-            val backgroundRes = R.drawable.background
-            Image(
-                painter = painterResource(id = backgroundRes),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize(),
-            )
+            Background()
         }
 
         if (isTinted) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f)),
-            )
+            TintedBackgroundOverlay()
         }
 
         Column(
-            Modifier.padding(
-                top = it.calculateTopPadding() + paddingValues.calculateTopPadding(),
-                start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
-            ),
+            Modifier
+                .padding(
+                    top = it.calculateTopPadding(),
+                ),
         ) {
             toolBarConfig?.apply {
                 ToolbarTitleCentered(
@@ -87,26 +76,59 @@ fun AppScaffold(
                     useInsetsPaddingForStatusBars = false,
                 )
             }
-            content(it)
+            Box(
+                Modifier.padding(
+                    top = paddingValues.calculateTopPadding(),
+                    start = it.calculateStartPadding(LayoutDirection.Ltr) + paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                    end = it.calculateEndPadding(LayoutDirection.Ltr) + paddingValues.calculateEndPadding(LayoutDirection.Ltr),
+                ),
+            ) {
+                content(it)
+            }
         }
     }
     if (isLoading) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable { }
-                .background(
-                    MaterialTheme.colorScheme.background.copy(
-                        alpha = .75f,
-                    ),
+        LoadingView()
+    }
+}
+
+@Composable
+private fun TintedBackgroundOverlay() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .11f)),
+    )
+}
+
+@Composable
+private fun Background() {
+    val backgroundRes = R.drawable.background
+    Image(
+        painter = painterResource(id = backgroundRes),
+        contentDescription = "",
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier.fillMaxSize(),
+    )
+}
+
+@Composable
+private fun LoadingView() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable { }
+            .background(
+                MaterialTheme.colorScheme.background.copy(
+                    alpha = .75f,
                 ),
-        ) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(size = 50.dp)
-                    .align(Alignment.Center),
-            )
-        }
+            ),
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .size(size = 50.dp)
+                .align(Alignment.Center),
+        )
     }
 }
 
@@ -116,7 +138,7 @@ data class ToolBarConfig(
     val onLeftIconClick: (() -> Unit)? = null,
     val rightIcon: ImageVector = Icons.Default.Close,
     val onRightIconClick: (() -> Unit)? = null,
-    val horizontalPadding: Dp = 0.dp,
+    val horizontalPadding: Dp = 20.dp,
 )
 
 @Composable
