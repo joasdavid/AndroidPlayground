@@ -8,4 +8,5 @@
     <string name="save_profile">Guardar profile</string>
     <string name="create_new_profile">Criar novo perfil</string>
     <string name="delete">Apagar</string>
+    <string name="create_a_new_profile">Criar um novo perfil</string>
 </resources>

@@ -1,5 +1,6 @@
 package pt.joasvpereira.sessionfeature.presentation.select.session
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -53,7 +54,14 @@ fun SelectSessionFeatureScreen(
                         .padding(bottom = it.calculateBottomPadding()),
                 ) {
                     Button(onClick = { viewModel.toggleEditMode() }) {
-                        Text(text = if (state.isEditMode) stringResource(R.string.exit_edit_mode) else stringResource(R.string.enter_edit_mode))
+                        Text(
+                            modifier = Modifier.animateContentSize(),
+                            text = if (state.isEditMode) {
+                                stringResource(R.string.exit_edit_mode)
+                            } else {
+                                stringResource(R.string.enter_edit_mode)
+                            },
+                        )
                     }
                 }
             }
