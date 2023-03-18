@@ -38,6 +38,7 @@ import compose.icons.lineawesomeicons.PlusSolid
 import pt.joasvpereira.core.domain.data.SessionItem
 import pt.joasvpereira.coreui.preview.FoldablePreview
 import pt.joasvpereira.coreui.preview.LargePreview
+import pt.joasvpereira.coreui.preview.PreviewWrapper
 import pt.joasvpereira.coreui.session.SessionIconHolder
 import pt.joasvpereira.sessionfeature.R
 
@@ -190,32 +191,34 @@ private fun ItemContainer(modifier: Modifier = Modifier, onClick: () -> Unit, co
 @FoldablePreview
 @Composable
 private fun SelectSessionScreenPreview() {
-    SelectSessionScreen(
-        sessionItems = listOf(
-            SessionItem(
-                id = 0,
-                image = null,
-                name = "session 1",
+    PreviewWrapper {
+        SelectSessionScreen(
+            sessionItems = listOf(
+                SessionItem(
+                    id = 0,
+                    image = null,
+                    name = "session 1",
+                ),
+                SessionItem(
+                    id = 0,
+                    image = null,
+                    name = "Casa",
+                ),
+                SessionItem(
+                    id = 0,
+                    image = null,
+                    name = "Garagem",
+                ),
+                SessionItem(
+                    id = 0,
+                    image = null,
+                    name = "Garagem",
+                ),
             ),
-            SessionItem(
-                id = 0,
-                image = null,
-                name = "Casa",
-            ),
-            SessionItem(
-                id = 0,
-                image = null,
-                name = "Garagem",
-            ),
-            SessionItem(
-                id = 0,
-                image = null,
-                name = "Garagem",
-            ),
-        ),
-        onSessionSelected = {},
-        onCreateNewSession = {},
-    )
+            onSessionSelected = {},
+            onCreateNewSession = {},
+        )
+    }
 }
 
 @Preview
@@ -223,7 +226,9 @@ private fun SelectSessionScreenPreview() {
 @FoldablePreview
 @Composable
 private fun SelectSessionScreenEmptyPreview() {
-    SelectSessionScreen(sessionItems = listOf(), onSessionSelected = {}, onCreateNewSession = {})
+    PreviewWrapper {
+        SelectSessionScreen(sessionItems = listOf(), onSessionSelected = {}, onCreateNewSession = {})
+    }
 }
 
 @Preview
@@ -231,7 +236,9 @@ private fun SelectSessionScreenEmptyPreview() {
 @FoldablePreview
 @Composable
 private fun SelectSessionScreenNoListPreview() {
-    SelectSessionScreen(sessionItems = null, onSessionSelected = {}, onCreateNewSession = {})
+    PreviewWrapper {
+        SelectSessionScreen(sessionItems = null, onSessionSelected = {}, onCreateNewSession = {})
+    }
 }
 
 @Preview
@@ -239,9 +246,11 @@ private fun SelectSessionScreenNoListPreview() {
 @FoldablePreview
 @Composable
 private fun ContentListLineItemSessionPreview() {
-    ClickableSessionItem(
-        sessionItem = SessionItem(id = 0, name = "Test", image = null),
-        isEditMode = false,
-        onSessionSelected = {},
-    )
+    PreviewWrapper {
+        ClickableSessionItem(
+            sessionItem = SessionItem(id = 0, name = "Test", image = null),
+            isEditMode = false,
+            onSessionSelected = {},
+        )
+    }
 }

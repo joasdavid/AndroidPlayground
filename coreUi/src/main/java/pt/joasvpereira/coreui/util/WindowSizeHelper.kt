@@ -71,9 +71,9 @@ object WindowSizeHelper {
         object Expanded : WidthSize
     }
 
-    fun currentWidthSize(): WidthSize = when {
-        widthSizeClass == WindowWidthSizeClass.Expanded -> WidthSize.Expanded
-        widthSizeClass == WindowWidthSizeClass.Medium -> WidthSize.Medium
+    fun currentWidthSize(): WidthSize = when (widthSizeClass) {
+        WindowWidthSizeClass.Expanded -> WidthSize.Expanded
+        WindowWidthSizeClass.Medium -> WidthSize.Medium
         else -> WidthSize.Compact
     }
 }
