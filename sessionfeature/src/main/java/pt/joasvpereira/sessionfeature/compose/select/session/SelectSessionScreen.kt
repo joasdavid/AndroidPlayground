@@ -134,7 +134,6 @@ private fun ClickableSessionItemCompact(
     sessionItem: SessionItem,
     isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
-    isExpanded: Boolean = false,
 ) {
     var modifier: Modifier = Modifier
     if (isEditMode) {
@@ -178,7 +177,6 @@ private fun ClickableSessionItemExpanded(
     sessionItem: SessionItem,
     isEditMode: Boolean = false,
     onSessionSelected: (SessionItem) -> Unit,
-    isExpanded: Boolean = false,
 ) {
     var modifier: Modifier = Modifier
     if (isEditMode) {
@@ -217,10 +215,12 @@ private fun ClickableSessionItemExpanded(
     }
 }
 
+private const val PERCENT_30 = 30
+
 @SuppressLint("ComposableModifierFactory")
 @Composable
 private fun Modifier.expandedBorderWithClick(clickAction: () -> Unit): Modifier {
-    val outShape = RoundedCornerShape(30)
+    val outShape = RoundedCornerShape(PERCENT_30)
     return this
         .clip(outShape)
         .border(
