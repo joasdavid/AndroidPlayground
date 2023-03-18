@@ -53,14 +53,16 @@ fun SelectSessionFeatureScreen(
                         .padding(bottom = 20.dp)
                         .padding(bottom = it.calculateBottomPadding()),
                 ) {
+                    val buttonText = if (state.isEditMode) {
+                        stringResource(R.string.exit_edit_mode)
+                    } else {
+                        stringResource(R.string.enter_edit_mode)
+                    }
+
                     Button(onClick = { viewModel.toggleEditMode() }) {
                         Text(
                             modifier = Modifier.animateContentSize(),
-                            text = if (state.isEditMode) {
-                                stringResource(R.string.exit_edit_mode)
-                            } else {
-                                stringResource(R.string.enter_edit_mode)
-                            },
+                            text = buttonText,
                         )
                     }
                 }
