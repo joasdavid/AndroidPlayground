@@ -134,17 +134,6 @@ private fun ClickableSessionItem(
 }
 
 @Composable
-private fun ContentListLineItemCreateSession(
-    onCreateNewSession: () -> Unit,
-) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        CreateProfileButton {
-            onCreateNewSession()
-        }
-    }
-}
-
-@Composable
 private fun SessionsContentEmpty(onCreateNewSession: () -> Unit) {
     Column(
         modifier = Modifier
