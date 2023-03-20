@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
@@ -27,11 +28,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -42,6 +45,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.joasvpereira.lib.compose.spacer.SimpleSpace
 import pt.joasvpereira.coreui.R
+import pt.joasvpereira.coreui.preview.PreviewWrapperWithTheme
 import pt.joasvpereira.coreui.preview.UiModePreview
 import pt.joasvpereira.coreui.theme.DynamicTheme
 
@@ -139,6 +143,7 @@ data class ToolBarConfig(
     val rightIcon: ImageVector = Icons.Default.Close,
     val onRightIconClick: (() -> Unit)? = null,
     val horizontalPadding: Dp = 20.dp,
+    val backgroundColor: Color = Color.Transparent,
 )
 
 @Composable
@@ -146,48 +151,103 @@ fun ToolbarTitleCentered(
     toolBarConfig: ToolBarConfig,
     useInsetsPaddingForStatusBars: Boolean = true,
 ) {
-    Box(
-        modifier = Modifier
-            .then(
-                if (useInsetsPaddingForStatusBars) {
-                    Modifier.windowInsetsPadding(WindowInsets.statusBars)
-                } else {
-                    Modifier
-                },
+    Surface(color = toolBarConfig.backgroundColor) {
+        Box(
+            modifier = Modifier
+                .then(
+                    if (useInsetsPaddingForStatusBars) {
+                        Modifier.windowInsetsPadding(WindowInsets.statusBars)
+                    } else {
+                        Modifier
+                    },
+                )
+                .fillMaxWidth()
+                .height(48.dp)
+                .padding(horizontal = toolBarConfig.horizontalPadding),
+        ) {
+            toolBarConfig.onLeftIconClick?.let { click ->
+                Icon(
+                    imageVector = toolBarConfig.leftIcon,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clip(CircleShape)
+                        .clickable { click() }
+                        .align(Alignment.CenterStart),
+                )
+            }
+
+            Text(
+                text = toolBarConfig.title,
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.align(Alignment.Center),
             )
-            .fillMaxWidth()
-            .height(48.dp)
-            .padding(horizontal = toolBarConfig.horizontalPadding),
-    ) {
-        toolBarConfig.onLeftIconClick?.let { click ->
-            Icon(
-                imageVector = toolBarConfig.leftIcon,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clip(CircleShape)
-                    .clickable { click() }
-                    .align(Alignment.CenterStart),
-            )
+
+            toolBarConfig.onRightIconClick?.let { click ->
+                Icon(
+                    imageVector = toolBarConfig.rightIcon,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clip(CircleShape)
+                        .clickable { click() }
+                        .align(Alignment.CenterEnd),
+                )
+            }
         }
+    }
+}
 
-        Text(
-            text = toolBarConfig.title,
-            style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.Center),
-        )
+@Composable
+fun AppDialogScaffold(
+    modifier: Modifier = Modifier,
+    title: String,
+    onCloseClick: () -> Unit,
+    closeIcon: ImageVector = Icons.Default.Close,
+    titleBarColor: Color = MaterialTheme.colorScheme.primary,
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
+    isLoading: Boolean = false,
+    content: @Composable () -> Unit,
+) {
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(40.dp),
+        color = backgroundColor,
+        content = {
+            Column {
+                ToolbarTitleCentered(
+                    toolBarConfig = ToolBarConfig(
+                        title = title,
+                        rightIcon = closeIcon,
+                        onRightIconClick = onCloseClick,
+                        backgroundColor = titleBarColor,
+                    ),
+                )
+                content()
+            }
+        },
+    )
+    if (isLoading) {
+        LoadingView()
+    }
+}
 
-        toolBarConfig.onRightIconClick?.let { click ->
-            Icon(
-                imageVector = toolBarConfig.rightIcon,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clip(CircleShape)
-                    .clickable { click() }
-                    .align(Alignment.CenterEnd),
-            )
+@Preview
+@Composable
+private fun AppDialogScaffoldPreview() {
+    PreviewWrapperWithTheme {
+        AppDialogScaffold(
+            isLoading = false,
+            title = "Title test",
+            onCloseClick = {},
+        ) {
+            Box(
+                modifier = Modifier.size(40.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(text = "Text")
+            }
         }
     }
 }
@@ -219,6 +279,7 @@ fun ToolbarTitleCenterdPreview() {
                     title = "divisionName",
                     onLeftIconClick = {},
                     horizontalPadding = 16.dp,
+                    backgroundColor = Color.Green,
                 ),
             )
         }
