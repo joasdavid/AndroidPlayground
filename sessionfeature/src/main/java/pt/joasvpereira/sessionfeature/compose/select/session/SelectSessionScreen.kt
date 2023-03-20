@@ -107,6 +107,7 @@ internal fun SelectSessionScreen(
                     }
                 }
 
+
                 item(span = { GridItemSpan(numberOfColumns) }) {
                     VerticalSpace(height = 40.dp)
                 }
