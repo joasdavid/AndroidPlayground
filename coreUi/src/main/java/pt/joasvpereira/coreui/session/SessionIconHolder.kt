@@ -27,33 +27,33 @@ import pt.joasvpereira.coreui.theme.ThemeOption
 fun SessionIconHolder(
     sessionName: String,
     sessionImage: Bitmap?,
+    modifier: Modifier = Modifier.size(40.dp)
 ) {
     if (sessionImage == null) {
-        HolderWithoutImage(sessionName)
+        HolderWithoutImage(sessionName, modifier)
     } else {
-        HolderWithImage(sessionImage)
+        HolderWithImage(sessionImage, modifier)
     }
 }
 
 @Composable
-private fun HolderWithImage(sessionImage: Bitmap) {
+private fun HolderWithImage(sessionImage: Bitmap, modifier: Modifier) {
     Image(
         bitmap = sessionImage.asImageBitmap(),
         contentDescription = "",
-        modifier = Modifier
-            .size(40.dp)
+        modifier = modifier
             .clip(CircleShape)
             .border(1.dp, color = MaterialTheme.colorScheme.primaryContainer, shape = CircleShape),
     )
 }
 
 @Composable
-private fun HolderWithoutImage(sessionName: String) {
+private fun HolderWithoutImage(sessionName: String, modifier: Modifier) {
     NamedShield(
         text = sessionName,
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
         borderSize = 0.dp,
-        modifier = Modifier.size(40.dp),
+        modifier = modifier,
     )
 }
 

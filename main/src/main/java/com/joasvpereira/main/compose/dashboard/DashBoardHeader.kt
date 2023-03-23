@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -57,21 +58,22 @@ internal fun DashboardHeader(
                 },
         )
 
-        ProfileIndicator(
+        /*ProfileIndicator(
             sessionName = sessionName,
             sessionImage = sessionImage,
             isExpanded = isExpanded,
             modifier = Modifier.constrainAs(sessionRef) {
                 end.linkTo(parent.end)
             },
-        )
+        )*/
 
         SettingsButton(
             modifier = Modifier
                 .constrainAs(settingsRef) {
-                    top.linkTo(sessionRef.bottom, 20.dp)
-                    end.linkTo(sessionRef.end)
-                    start.linkTo(sessionRef.start)
+                    top.linkTo(titleRef.top)
+                    bottom.linkTo(titleRef.bottom)
+                    end.linkTo(parent.end)
+                    //start.linkTo(sessionRef.start)
                 },
             isExpanded,
             onSettingClicked,
@@ -93,7 +95,7 @@ fun SettingsButton(modifier: Modifier, isExpanded: Boolean, onSettingClicked: ()
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(24.dp),
-                    imageVector = Icons.Default.Settings,
+                    imageVector = Icons.Default.Menu,
                     contentDescription = stringResource(R.string.settings_content_description),
                 )
             }
@@ -104,7 +106,7 @@ fun SettingsButton(modifier: Modifier, isExpanded: Boolean, onSettingClicked: ()
                 .clip(CircleShape)
                 .size(24.dp)
                 .clickable { onSettingClicked() },
-            imageVector = Icons.Default.Settings,
+            imageVector = Icons.Default.Menu,
             contentDescription = stringResource(R.string.settings_content_description),
         )
     }
