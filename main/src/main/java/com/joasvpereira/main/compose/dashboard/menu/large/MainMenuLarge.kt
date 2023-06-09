@@ -1,4 +1,4 @@
-package com.joasvpereira.main.compose.dashboard
+package com.joasvpereira.main.compose.dashboard.menu.large
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.BorderStroke
@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,6 +40,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.UiComposable
 import androidx.compose.ui.graphics.Color
@@ -57,88 +59,103 @@ import pt.joasvpereira.coreui.session.SessionIconHolder
 import pt.joasvpereira.coreui.theme.ThemeOption
 
 @Composable
-fun MainMenuCompact(
+fun MainMenuLargeScreens(
     sessionName: String,
     sessionImage: Bitmap?,
     onLogout: () -> Unit,
     modifier: Modifier = Modifier,
     isCompact: Boolean = false,
+    color: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.primary,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    Slots(
-        header = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 5.dp),
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    SessionIconHolder(
-                        sessionName = sessionName,
-                        sessionImage = sessionImage,
-                        modifier = Modifier.size(70.dp),
-                    )
+    Row {
+        SimpleSpace(size = 5.dp)
+        Spacer(
+            modifier = Modifier
+                .width(2.dp)
+                .fillMaxHeight(.95f)
+                .align(CenterVertically)
+                .background(color = MaterialTheme.colorScheme.outline, shape = CircleShape),
+        )
+        SimpleSpace(size = 5.dp)
 
-                    if (!isCompact) {
-                        HorizontalSpace(width = 10.dp)
-                        Column {
+        Slots(
+            header = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 5.dp),
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        SessionIconHolder(
+                            sessionName = sessionName,
+                            sessionImage = sessionImage,
+                            modifier = Modifier.size(70.dp),
+                        )
+
+                        if (!isCompact) {
+                            VerticalSpace(height = 10.dp)
                             Text(
                                 text = "Welcome:",
                                 style = MaterialTheme.typography.labelSmall,
                             )
+                            VerticalSpace(height = 5.dp)
                             Text(text = sessionName, maxLines = 2, overflow = TextOverflow.Ellipsis)
                         }
                     }
+                    VerticalSpace(height = 10.dp)
                 }
-                VerticalSpace(height = 10.dp)
-            }
-        },
-        body = {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(state = rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(50.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                SimpleSpace(size = 0.dp)
-                TextButton(
-                    onClick = onLogout,
-                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.background),
+            },
+            body = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(state = rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(50.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    if (!isCompact) {
-                        Icon(imageVector = Icons.Filled.Settings, contentDescription = "")
-                        HorizontalSpace(width = 5.dp)
-                        Text(text = "Settings")
-                    } else {
-                        Icon(
-                            imageVector = Icons.Filled.Settings,
-                            contentDescription = "",
-                            modifier = Modifier.size(32.dp),
-                        )
+                    SimpleSpace(size = 0.dp)
+                    TextButton(
+                        onClick = onLogout,
+                        colors = ButtonDefaults.textButtonColors(
+                            containerColor = contentColorFor(backgroundColor = LocalContentColor.current),
+                            contentColor = LocalContentColor.current,
+                        ),
+                    ) {
+                        if (!isCompact) {
+                            Icon(imageVector = Icons.Filled.Settings, contentDescription = "")
+                            HorizontalSpace(width = 5.dp)
+                            Text(text = "Settings")
+                        } else {
+                            Icon(
+                                imageVector = Icons.Filled.Settings,
+                                contentDescription = "",
+                                modifier = Modifier.size(32.dp),
+                            )
+                        }
                     }
                 }
-            }
-        },
-        footer = {
-            Text(
-                text = "v1.0.0",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 5.dp),
-            )
-        },
-        modifier = modifier.background(MaterialTheme.colorScheme.inversePrimary),
-        color = MaterialTheme.colorScheme.onBackground.copy(alpha = .90f),
-        contentColor = MaterialTheme.colorScheme.background,
-        contentPadding = contentPadding,
-    )
+            },
+            footer = {
+                Text(
+                    text = "v1.0.0",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 5.dp),
+                )
+            },
+            modifier = modifier,
+            color = color,
+            contentColor = contentColor,
+            contentPadding = contentPadding,
+        )
+    }
 }
 
 @Composable
@@ -209,7 +226,8 @@ private fun Slots(
                         bottom.linkTo(divBodyFooter.top)
                         height = Dimension.preferredWrapContent
                     },
-            ) { body() }
+                content = body,
+            )
             Box(
                 modifier = Modifier
                     .constrainAs(footerRef) {
@@ -256,7 +274,7 @@ fun SmallTextButton(
 @Composable
 fun MainMenuCompactPreview() {
     PreviewWrapperWithTheme(ThemeOption.THEME_DEFAULT, isDynamicColor = false) {
-        MainMenuCompact(
+        MainMenuLargeScreens(
             sessionName = "Test",
             sessionImage = null,
             isCompact = false,

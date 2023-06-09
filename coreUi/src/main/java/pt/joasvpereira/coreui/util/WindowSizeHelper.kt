@@ -76,4 +76,18 @@ object WindowSizeHelper {
         WindowWidthSizeClass.Medium -> WidthSize.Medium
         else -> WidthSize.Compact
     }
+
+    val isWidthCompact: Boolean
+        get() = currentWidthSize() == WidthSize.Compact
+    val isWidthMedium: Boolean
+        get() = currentWidthSize() == WidthSize.Medium
+    val isWidthExpanded: Boolean
+        get() = currentWidthSize() == WidthSize.Expanded
+
+    val isHeightCompact: Boolean
+        get() = currentHeightSize() == HeightSize.Compact
+    val isHeightMedium: Boolean
+        get() = currentHeightSize() == HeightSize.Medium
+    val isHeightExpanded: Boolean
+        get() = currentHeightSize() == HeightSize.Expanded
 }

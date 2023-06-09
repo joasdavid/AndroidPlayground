@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -41,7 +39,6 @@ internal fun DashboardHeader(
     sessionName: String,
     sessionImage: Bitmap?,
     onSettingClicked: () -> Unit,
-    isExpanded: Boolean = WindowSizeHelper.currentWidthSize() == WindowSizeHelper.WidthSize.Expanded,
 ) {
     ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (
@@ -67,49 +64,31 @@ internal fun DashboardHeader(
             },
         )*/
 
-        SettingsButton(
-            modifier = Modifier
-                .constrainAs(settingsRef) {
-                    top.linkTo(titleRef.top)
-                    bottom.linkTo(titleRef.bottom)
-                    end.linkTo(parent.end)
-                    //start.linkTo(sessionRef.start)
-                },
-            isExpanded,
-            onSettingClicked,
-        )
+        if (!WindowSizeHelper.isWidthExpanded) {
+            SettingsButton(
+                modifier = Modifier
+                    .constrainAs(settingsRef) {
+                        top.linkTo(titleRef.top)
+                        bottom.linkTo(titleRef.bottom)
+                        end.linkTo(parent.end)
+                        // start.linkTo(sessionRef.start)
+                    },
+                onSettingClicked,
+            )
+        }
     }
 }
 
 @Composable
-fun SettingsButton(modifier: Modifier, isExpanded: Boolean, onSettingClicked: () -> Unit) {
-    if (isExpanded) {
-        Button(
-            modifier = modifier,
-            onClick = onSettingClicked,
-        ) {
-            Row {
-                Text(text = "Settings")
-                HorizontalSpace(width = 10.dp)
-                Icon(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .size(24.dp),
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = stringResource(R.string.settings_content_description),
-                )
-            }
-        }
-    } else {
-        Icon(
-            modifier = modifier
-                .clip(CircleShape)
-                .size(24.dp)
-                .clickable { onSettingClicked() },
-            imageVector = Icons.Default.Menu,
-            contentDescription = stringResource(R.string.settings_content_description),
-        )
-    }
+fun SettingsButton(modifier: Modifier, onSettingClicked: () -> Unit) {
+    Icon(
+        modifier = modifier
+            .clip(CircleShape)
+            .size(24.dp)
+            .clickable { onSettingClicked() },
+        imageVector = Icons.Default.Menu,
+        contentDescription = stringResource(R.string.settings_content_description),
+    )
 }
 
 @Composable
